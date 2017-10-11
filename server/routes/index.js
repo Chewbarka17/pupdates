@@ -10,3 +10,9 @@ router.post('/dogs', dogs.addDog);
 router.delete('/dogs', dogs.removeDog);
 router.patch('/dogs/:dogid', dogs.updateDog);
 
+// users
+router.get('/users', users.getAllUsers);
+router.get('/users/:userid', users.getUsers);
+router.post('/users', users.addUsers);
+router.delete('/users', users.removeUsers);
+router.patch('/users/:userid', users.updateUsers);
