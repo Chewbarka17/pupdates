@@ -41,9 +41,25 @@ module.exports = {
       });
   },
 
-  // updateUser: (req, res) => {
-  //   // patch user by user id
-  // },
+  updateUser: (req, res) => {
+    db.Owners.findOneAndUpdate({ _id: req.body.id }, {
+      // console.log("trying to update user");
+      $set: {
+        name: req.body.name,
+        age: req.body.age,
+        location: req.body.location,
+        picture: req.body.picture,
+        bio: req.body.bio,
+        rating: req.body.rating,
+      },
+    }, (err, data) => {
+      if (err) {
+        console.log('update error', err);
+        res.status(500).send('error', err);
+      }
+      res.status(201).send(data);
+    })
+  },
 
   // removeUser: (req, res) => {
   //   // delete user from db
