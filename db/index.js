@@ -27,7 +27,7 @@ const dogSchema = new Schema({
   name: String,
   breed: String,
   age: { type: Number, min: 0, max: 30 },
-  pictures: [String],
+  pictures: [String], //blobs //filestack api
   owner: { type: Schema.Types.ObjectId, ref: 'Owners' },
 });
 
