@@ -34,9 +34,15 @@ module.exports = {
     })
       .then((data) => {
         // update owners dogs array by owner id
-        res.status(201).send(data);
+        db.Owners.findOneAndUpdate({ _id: req.body.owner }, { $push: { dogs: data._id } }, (err) => {
+          if (err) {
+            console.log('HEEELLLPP', err);
+          }
+          res.status(201).send(data);
+        });
       })
       .catch((err) => {
+        console.log(err);
         res.status(500).send(err);
       });
   },
