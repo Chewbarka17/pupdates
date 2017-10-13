@@ -16,6 +16,6 @@ router.post('/dogs', dogs.addDog);
 // router.get('/users/:userid', users.getUser);
 router.post('/users', users.addUser);
 // router.delete('/users', users.removeUser);
-// router.patch('/users/:userid', users.updateUser);
+router.patch('/users', users.updateUser);
 
 module.exports = router;
