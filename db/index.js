@@ -65,8 +65,8 @@ const Dogs = mongoose.model('Dogs', dogSchema);
 // });
 
 function getRandomInt(min, max) {
-  const min = Math.ceil(min);
-  const max = Math.floor(max);
+  let min = Math.ceil(min);
+  let max = Math.floor(max);
   return Math.floor(Math.random() * (max - min)) + min; // The maximum is exclusive and the minimum is inclusive
 }
 
@@ -88,6 +88,7 @@ for (let i = 0; i < 10; i++) {
   owner.save((err) => {
     if (err) {
       console.error('Could not save owner', err);
+      return;
     }
 
     const dog = new Dogs({
