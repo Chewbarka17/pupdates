@@ -1,13 +1,13 @@
 const mongoose = require('mongoose');
-const faker = require('faker');
+// const faker = require('faker');
 
-const options = {
- server: { socketOptions: { keepAlive: 300000, connectTimeoutMS: 30000 } },
-  replset: { socketOptions: { keepAlive: 300000, connectTimeoutMS: 30000 } } 
-};
+// const options = {
+//  server: { socketOptions: { keepAlive: 300000, connectTimeoutMS: 30000 } },
+//   replset: { socketOptions: { keepAlive: 300000, connectTimeoutMS: 30000 } }
+// };
 
 // const mongodbURI = 'mongodb://YOUR_MONGODB_URI';
-const mongodbURI = 'mongodb://127.0.0.1:27017/puptest';
+const mongodbURI = process.env.DB_URL;
 mongoose.connect(mongodbURI, {
   useMongoClient: true,
 });
@@ -47,6 +47,7 @@ const ownerSchema = new Schema({
 const Owners = mongoose.model('Owners', ownerSchema);
 const Dogs = mongoose.model('Dogs', dogSchema);
 
+// ==== DROP DATA EXAMPLE ====
 // db.dropCollection('owners', (err) => {
 //   if (err) {
 //     console.log('owners collection did not delete', err);
@@ -64,48 +65,53 @@ const Dogs = mongoose.model('Dogs', dogSchema);
 //   console.log('dogs collection deleted');
 // });
 
-function getRandomInt(min, max) {
-  let min = Math.ceil(min);
-  let max = Math.floor(max);
-  return Math.floor(Math.random() * (max - min)) + min; // The maximum is exclusive and the minimum is inclusive
-}
+// ==== SEED DATA ====
+// function getRandomInt(minimum, maximum) {
+//   let min = Math.ceil(minimum);
+//   let max = Math.floor(maximum);
+//   return Math.floor(Math.random() * (max - min)) + min; // The maximum is exclusive and the minimum is inclusive
+// }
 
-for (let i = 0; i < 10; i++) {
-  const dog_id = new mongoose.Types.ObjectId();
+// for (let i = 0; i < 10; i++) {
+//   const dog_id = new mongoose.Types.ObjectId();
 
-  const owner = new Owners({
-    _id: new mongoose.Types.ObjectId(),
-    name: faker.name.findName(),
-    age: getRandomInt(18, 101),
-    location: faker.address.zipCode(),
-    picture: faker.image.avatar(),
-    bio: faker.lorem.paragraph(),
-    rating: getRandomInt(1, 6),
-  });
+//   const owner = new Owners({
+//     _id: new mongoose.Types.ObjectId(),
+//     name: faker.name.findName(),
+//     age: getRandomInt(18, 101),
+//     location: faker.address.zipCode(),
+//     picture: faker.image.avatar(),
+//     bio: faker.lorem.paragraph(),
+//     rating: getRandomInt(1, 6),
+//   });
 
-  owner.dogs.push(dog_id);
+//   owner.dogs.push(dog_id);
 
-  owner.save((err) => {
-    if (err) {
-      console.error('Could not save owner', err);
-      return;
-    }
+//   owner.save((err) => {
+//     if (err) {
+//       console.error('Could not save owner', err);
+//       return;
+//     }
 
-    const dog = new Dogs({
-      _id: dog_id,
-      name: faker.name.findName(),
-      owner: owner._id,
-      age: getRandomInt(0, 30),
-    });
+// const dog = new Dogs({
+//   _id: dog_id,
+//   name: faker.name.findName(),
+//   owner: owner._id,
+//   age: getRandomInt(0, 30),
+// });
 
-    dog.pictures.push(faker.image.cats());
+//     dog.pictures.push(faker.image.cats());
 
-    dog.save((err) => {
-      if (err) {
-        console.error('Could not save dog', err);
-      }
-    });
-  });
-}
+//     dog.save((err) => {
+//       if (err) {
+//         console.error('Could not save dog', err);
+//       }
+//     });
+//   });
+// }
 
-module.exports = db;
+module.exports = {
+  Owners,
+  Dogs,
+  db,
+};
