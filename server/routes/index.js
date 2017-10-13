@@ -2,6 +2,7 @@ const router = require('express').Router();
 
 // require controllers
 const dogs = require('../controllers/dogController');
+const users = require('../controllers/userController');
 
 // dogs
 router.get('/dogs', dogs.getAllDogs);
