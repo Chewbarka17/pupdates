@@ -1,8 +1,10 @@
 const mongoose = require('mongoose');
 const faker = require('faker');
 
-const options = { server: { socketOptions: { keepAlive: 300000, connectTimeoutMS: 30000 } }, 
-                  replset: { socketOptions: { keepAlive: 300000, connectTimeoutMS : 30000 } } };
+const options = {
+ server: { socketOptions: { keepAlive: 300000, connectTimeoutMS: 30000 } },
+  replset: { socketOptions: { keepAlive: 300000, connectTimeoutMS: 30000 } } 
+};
 
 // const mongodbURI = 'mongodb://YOUR_MONGODB_URI';
 const mongodbURI = 'mongodb://127.0.0.1:27017/puptest';
@@ -24,22 +26,22 @@ const dogSchema = new Schema({
   _id: Schema.Types.ObjectId,
   name: String,
   breed: String,
-  age: { type: Number, min: 0, max: 30},
+  age: { type: Number, min: 0, max: 30 },
   pictures: [String],
-  owner: { type: Schema.Types.ObjectId, ref: 'Owners' }
+  owner: { type: Schema.Types.ObjectId, ref: 'Owners' },
 });
 
 const ownerSchema = new Schema({
   _id: Schema.Types.ObjectId,
   name: String,
   location: String,
-  age: { type: Number, min: 18, max: 101},
+  age: { type: Number, min: 18, max: 101 },
   picture: String,
   bio: String,
   rating: Number,
-  dogs: [{type: Schema.Types.ObjectId, ref: 'Dogs'}],
-  dogsSeen: [{type: Schema.Types.ObjectId, ref: 'Dogs'}],
-  dogsLiked: [{type: Schema.Types.ObjectId, ref: 'Dogs'}]
+  dogs: [{ type: Schema.Types.ObjectId, ref: 'Dogs' }],
+  dogsSeen: [{ type: Schema.Types.ObjectId, ref: 'Dogs' }],
+  dogsLiked: [{ type: Schema.Types.ObjectId, ref: 'Dogs' }],
 });
 
 const Owners = mongoose.model('Owners', ownerSchema);
@@ -63,15 +65,15 @@ const Dogs = mongoose.model('Dogs', dogSchema);
 // });
 
 function getRandomInt(min, max) {
-  min = Math.ceil(min);
-  max = Math.floor(max);
-  return Math.floor(Math.random() * (max - min)) + min; //The maximum is exclusive and the minimum is inclusive
+  const min = Math.ceil(min);
+  const max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min)) + min; // The maximum is exclusive and the minimum is inclusive
 }
 
 for (let i = 0; i < 10; i++) {
-  let dog_id = new mongoose.Types.ObjectId();
+  const dog_id = new mongoose.Types.ObjectId();
 
-  let owner = new Owners({
+  const owner = new Owners({
     _id: new mongoose.Types.ObjectId(),
     name: faker.name.findName(),
     age: getRandomInt(18, 101),
@@ -88,7 +90,7 @@ for (let i = 0; i < 10; i++) {
       console.error('Could not save owner', err);
     }
 
-    let dog = new Dogs({
+    const dog = new Dogs({
       _id: dog_id,
       name: faker.name.findName(),
       owner: owner._id,
