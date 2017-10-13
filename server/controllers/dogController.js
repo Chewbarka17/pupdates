@@ -1,7 +1,7 @@
 // require dogs database
 const db = require('../../db/index');
 const mongoose = require('mongoose');
-const owners = require('./userController');
+const owners = require('./userController'); // don't need this?
 
 const mongodbURI = process.env.DB_URL;
 mongoose.connect(mongodbURI, {
@@ -36,7 +36,8 @@ module.exports = {
         // update owners dogs array by owner id
         db.Owners.findOneAndUpdate({ _id: req.body.owner }, { $push: { dogs: data._id } }, (err) => {
           if (err) {
-            console.log('HEEELLLPP', err);
+            console.log('add dog update error', err);
+            res.status(500).send('error', err);
           }
           res.status(201).send(data);
         });
