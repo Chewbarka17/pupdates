@@ -78,8 +78,13 @@ module.exports = {
     });
   },
 
-  // removeUser: (req, res) => {
-  //   // delete user from db
-  // }
+  removeUser: (req, res) => {
+    db.Owners.remove({ _id: req.params.userid }, (err, data) => {
+      if (err) {
+        res.status(500).send('error removing user', err);
+      }
+      res.status(202).send('User successfully deleted');
+    });
+  },
 
 };
