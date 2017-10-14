@@ -9,7 +9,7 @@ const users = require('../controllers/userController');
 // router.get('/dogs/:dogid', dogs.getDog);
 router.post('/dogs', dogs.addDog);
 // router.delete('/dogs', dogs.removeDog);
-// router.patch('/dogs/:dogid', dogs.updateDog);
+router.patch('/dogs/:dogid', dogs.updateDog);
 
 // users
 // router.get('/users', users.getAllUser);

@@ -52,13 +52,13 @@ module.exports = {
         bio: req.body.bio,
         rating: req.body.rating,
       },
-    }, (err, data) => {
+    }, { new: true }, (err, data) => {
       if (err) {
         console.log('update error', err);
         res.status(500).send('error', err);
       }
       res.status(201).send(data);
-    })
+    });
   },
 
   // removeUser: (req, res) => {
