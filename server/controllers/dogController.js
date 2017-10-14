@@ -9,9 +9,16 @@ mongoose.connect(mongodbURI, {
 
 module.exports = {
 
-  // getAllDogs: (req, res) => {
-  //   // dogs.findAll
-  // },
+  getAllDogs: (req, res) => {
+    db.Dogs.find({}, (err, dogs) => {
+      let dogMap = {};
+
+      dogs.forEach((dog) => {
+        dogMap[dog._id] = dog;
+      });
+      res.status(200).send(dogMap);
+    });
+  },
 
   // getDog: (req, res) => {
   //   // get dog by id
