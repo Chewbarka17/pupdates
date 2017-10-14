@@ -20,9 +20,15 @@ module.exports = {
     });
   },
 
-  // getDog: (req, res) => {
-  //   // get dog by id
-  // },
+  getDog: (req, res) => {
+    db.Dogs.find({ _id: req.params.dogid }, (err, dog) => {
+      if (err) {
+        console.log('error getting this dog ', err);
+        res.status(500).send(err);
+      }
+      res.status(200).send(dog);
+    });
+  },
 
   addDog: (req, res) => {
     const dog = new db.Dogs({
