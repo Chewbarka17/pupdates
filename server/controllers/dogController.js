@@ -2,11 +2,6 @@
 const db = require('../../db/index');
 const mongoose = require('mongoose');
 
-// const mongodbURI = process.env.DB_URL;
-// mongoose.connect(mongodbURI, {
-//   useMongoClient: true,
-// });
-
 module.exports = {
 
   getAllDogs: (req, res) => {
