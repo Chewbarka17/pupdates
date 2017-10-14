@@ -3,6 +3,7 @@ const router = require('express').Router();
 // require controllers
 const dogs = require('../controllers/dogController');
 const users = require('../controllers/userController');
+const messages = require('../controllers/messageController');
 
 // dogs
 router.get('/dogs', dogs.getAllDogs);
@@ -17,5 +18,10 @@ router.get('/users/:userid', users.getUser);
 router.post('/users', users.addUser);
 router.delete('/users/:userid', users.removeUser);
 router.patch('/users', users.updateUser);
+
+// messages
+router.get('/messages/:roomid', messages.getMessages);
+router.post('/messages/:roomid', messages.addMessage);
+
 
 module.exports = router;

@@ -1,12 +1,6 @@
 const mongoose = require('mongoose');
 // const faker = require('faker');
 
-// const options = {
-//  server: { socketOptions: { keepAlive: 300000, connectTimeoutMS: 30000 } },
-//   replset: { socketOptions: { keepAlive: 300000, connectTimeoutMS: 30000 } }
-// };
-
-// const mongodbURI = 'mongodb://YOUR_MONGODB_URI';
 const mongodbURI = process.env.DB_URL;
 mongoose.connect(mongodbURI, {
   useMongoClient: true,
@@ -44,6 +38,17 @@ const ownerSchema = new Schema({
   dogsLiked: [{ type: Schema.Types.ObjectId, ref: 'Dogs' }],
 });
 
+const messagesSchema = new Schema({
+  _id: Schema.Types.ObjectId,
+  users: [String],
+  messages: [{
+    user: String,
+    text: String,
+    // createdAt: new Date(),
+  }],
+});
+
+const Messages = mongoose.model('Messages', messagesSchema);
 const Owners = mongoose.model('Owners', ownerSchema);
 const Dogs = mongoose.model('Dogs', dogSchema);
 
@@ -113,5 +118,6 @@ const Dogs = mongoose.model('Dogs', dogSchema);
 module.exports = {
   Owners,
   Dogs,
+  Messages,
   db,
 };
