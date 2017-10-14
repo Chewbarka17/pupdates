@@ -1,7 +1,6 @@
 // require dogs database
 const db = require('../../db/index');
 const mongoose = require('mongoose');
-const owners = require('./userController'); // don't need this?
 
 const mongodbURI = process.env.DB_URL;
 mongoose.connect(mongodbURI, {
@@ -48,9 +47,23 @@ module.exports = {
       });
   },
 
-  // updateDog: (req, res) => {
-  //   // patch dog by dog id
-  // },
+  updateDog: (req, res) => {
+    console.log(req.params.dogid);
+    db.Dogs.findOneAndUpdate({ _id: req.params.dogid }, {
+      $set: {
+        name: req.body.name,
+        age: req.body.age,
+        breed: req.body.breed,
+      },
+    }, { new: true }, (err, data) => {
+      console.log('callback', data);
+      if (err) {
+        console.log('update error', err);
+        res.status(500).send('error', err);
+      }
+      res.status(201).send(data);
+    });
+  },
 
   // removeDog: (req, res) => {
   //   // delete dog from db
