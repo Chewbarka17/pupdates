@@ -11,7 +11,11 @@ module.exports = {
 
   getAllUsers: (req, res) => {
     db.Owners.find({}, (err, owners) => {
-      let ownerMap = {};
+      if (err) {
+        console.log('error getting all users ', err);
+        res.status(500).send(err);
+      }
+      const ownerMap = {};
 
       owners.forEach((owner) => {
         ownerMap[owner._id] = owner;
@@ -20,9 +24,15 @@ module.exports = {
     });
   },
 
-  // getUser: (req, res) => {
-  //   // get user by id
-  // },
+  getUser: (req, res) => {
+    db.Owners.find({ _id: req.params.userid }, (err, owner) => {
+      if (err) {
+        console.log('error getting this user ', err);
+        res.status(500).send(err);
+      }
+      res.status(200).send(owner);
+    });
+  },
 
   addUser: (req, res) => {
     console.log(req.body);
