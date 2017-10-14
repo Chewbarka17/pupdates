@@ -9,9 +9,16 @@ mongoose.connect(mongodbURI, {
 
 module.exports = {
 
-  // getAllUsers: (req, res) => {
-  //   // users.findAll
-  // },
+  getAllUsers: (req, res) => {
+    db.Owners.find({}, (err, owners) => {
+      let ownerMap = {};
+
+      owners.forEach((owner) => {
+        ownerMap[owner._id] = owner;
+      });
+      res.status(200).send(ownerMap);
+    });
+  },
 
   // getUser: (req, res) => {
   //   // get user by id
