@@ -78,8 +78,19 @@ module.exports = {
     });
   },
 
-  // removeDog: (req, res) => {
-  //   // delete dog from db
-  // }
+  removeDog: (req, res) => {
+    db.Owners.findOneAndUpdate({ _id: req.body.owner }, { $pull: { dogs: req.params.dogid } }, (err) => {
+      if (err) {
+        console.log('add dog update error', err);
+      }
+    });
+
+    db.Dogs.remove({ _id: req.params.dogid }, (err, data) => {
+      if (err) {
+        res.status(500).send('error removing dog', err);
+      }
+      res.status(202).send('Dog successfully deleted');
+    });
+  },
 
 };
