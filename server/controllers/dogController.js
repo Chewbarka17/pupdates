@@ -1,26 +1,72 @@
 // require dogs database
-const dogs = require('../../db/index');
+const db = require('../../db/index');
+const mongoose = require('mongoose');
+
+const mongodbURI = process.env.DB_URL;
+mongoose.connect(mongodbURI, {
+  useMongoClient: true,
+});
 
 module.exports = {
 
-  getAllDogs: (req, res) => {
-    // dogs.findAll
-  },
+  // getAllDogs: (req, res) => {
+  //   // dogs.findAll
+  // },
 
-  getDog: (req, res) => {
-    // get dog by id
-  },
+  // getDog: (req, res) => {
+  //   // get dog by id
+  // },
 
   addDog: (req, res) => {
-    // post dog to db
+    const dog = new db.Dogs({
+      _id: new mongoose.Types.ObjectId(),
+      name: req.body.name,
+      owner: req.body.oid,
+      age: req.body.age,
+      breed: req.body.breed,
+      pictures: req.body.pictures,
+    });
+    dog.save((err) => {
+      if (err) {
+        console.log('Failed to save dog ', err);
+      }
+    })
+      .then((data) => {
+        // update owners dogs array by owner id
+        db.Owners.findOneAndUpdate({ _id: req.body.owner }, { $push: { dogs: data._id } }, (err) => {
+          if (err) {
+            console.log('add dog update error', err);
+            res.status(500).send('error', err);
+          }
+          res.status(201).send(data);
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+        res.status(500).send(err);
+      });
   },
 
   updateDog: (req, res) => {
-    // patch dog by dog id
+    console.log(req.params.dogid);
+    db.Dogs.findOneAndUpdate({ _id: req.params.dogid }, {
+      $set: {
+        name: req.body.name,
+        age: req.body.age,
+        breed: req.body.breed,
+      },
+    }, { new: true }, (err, data) => {
+      console.log('callback', data);
+      if (err) {
+        console.log('update error', err);
+        res.status(500).send('error', err);
+      }
+      res.status(201).send(data);
+    });
   },
 
-  removeDog: (req, res) => {
-    // delete dog from db
-  }
+  // removeDog: (req, res) => {
+  //   // delete dog from db
+  // }
 
 };
