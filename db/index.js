@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 // const faker = require('faker');
 
-const mongodbURI = process.env.DB_URL;
+const mongodbURI = process.env.DB;
 mongoose.connect(mongodbURI, {
   useMongoClient: true,
 });
@@ -38,9 +38,10 @@ const ownerSchema = new Schema({
   dogsLiked: [{ type: Schema.Types.ObjectId, ref: 'Dogs' }],
 });
 
-const messagesSchema = new Schema({
+const roomSchema = new Schema({
   _id: Schema.Types.ObjectId,
   users: [String],
+  uids: [String],
   messages: [{
     user: String,
     text: String,
@@ -48,7 +49,7 @@ const messagesSchema = new Schema({
   }],
 });
 
-const Messages = mongoose.model('Messages', messagesSchema);
+const Rooms = mongoose.model('Rooms', roomSchema);
 const Owners = mongoose.model('Owners', ownerSchema);
 const Dogs = mongoose.model('Dogs', dogSchema);
 
@@ -118,6 +119,6 @@ const Dogs = mongoose.model('Dogs', dogSchema);
 module.exports = {
   Owners,
   Dogs,
-  Messages,
+  Rooms,
   db,
 };
