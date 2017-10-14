@@ -9,13 +9,26 @@ mongoose.connect(mongodbURI, {
 
 module.exports = {
 
-  // getAllDogs: (req, res) => {
-  //   // dogs.findAll
-  // },
+  getAllDogs: (req, res) => {
+    db.Dogs.find({}, (err, dogs) => {
+      let dogMap = {};
 
-  // getDog: (req, res) => {
-  //   // get dog by id
-  // },
+      dogs.forEach((dog) => {
+        dogMap[dog._id] = dog;
+      });
+      res.status(200).send(dogMap);
+    });
+  },
+
+  getDog: (req, res) => {
+    db.Dogs.find({ _id: req.params.dogid }, (err, dog) => {
+      if (err) {
+        console.log('error getting this dog ', err);
+        res.status(500).send(err);
+      }
+      res.status(200).send(dog);
+    });
+  },
 
   addDog: (req, res) => {
     const dog = new db.Dogs({
@@ -65,8 +78,19 @@ module.exports = {
     });
   },
 
-  // removeDog: (req, res) => {
-  //   // delete dog from db
-  // }
+  removeDog: (req, res) => {
+    db.Owners.findOneAndUpdate({ _id: req.body.owner }, { $pull: { dogs: req.params.dogid } }, (err) => {
+      if (err) {
+        console.log('add dog update error', err);
+      }
+    });
+
+    db.Dogs.remove({ _id: req.params.dogid }, (err, data) => {
+      if (err) {
+        res.status(500).send('error removing dog', err);
+      }
+      res.status(202).send('Dog successfully deleted');
+    });
+  },
 
 };

@@ -9,13 +9,30 @@ mongoose.connect(mongodbURI, {
 
 module.exports = {
 
-  // getAllUsers: (req, res) => {
-  //   // users.findAll
-  // },
+  getAllUsers: (req, res) => {
+    db.Owners.find({}, (err, owners) => {
+      if (err) {
+        console.log('error getting all users ', err);
+        res.status(500).send(err);
+      }
+      const ownerMap = {};
 
-  // getUser: (req, res) => {
-  //   // get user by id
-  // },
+      owners.forEach((owner) => {
+        ownerMap[owner._id] = owner;
+      });
+      res.status(200).send(ownerMap);
+    });
+  },
+
+  getUser: (req, res) => {
+    db.Owners.find({ _id: req.params.userid }, (err, owner) => {
+      if (err) {
+        console.log('error getting this user ', err);
+        res.status(500).send(err);
+      }
+      res.status(200).send(owner);
+    });
+  },
 
   addUser: (req, res) => {
     console.log(req.body);
@@ -61,8 +78,13 @@ module.exports = {
     });
   },
 
-  // removeUser: (req, res) => {
-  //   // delete user from db
-  // }
+  removeUser: (req, res) => {
+    db.Owners.remove({ _id: req.params.userid }, (err, data) => {
+      if (err) {
+        res.status(500).send('error removing user', err);
+      }
+      res.status(202).send('User successfully deleted');
+    });
+  },
 
 };
