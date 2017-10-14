@@ -2,10 +2,10 @@
 const db = require('../../db');
 const mongoose = require('mongoose');
 
-const mongodbURI = process.env.DB_URL;
-mongoose.connect(mongodbURI, {
-  useMongoClient: true,
-});
+// const mongodbURI = process.env.DB_URL;
+// mongoose.connect(mongodbURI, {
+//   useMongoClient: true,
+// });
 
 module.exports = {
 

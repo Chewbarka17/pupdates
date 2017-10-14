@@ -21,7 +21,8 @@ router.patch('/users', users.updateUser);
 
 // messages
 router.get('/messages/:roomid', messages.getMessages);
-router.post('/messages/:roomid', messages.addMessage);
+router.patch('/messages/:roomid', messages.addMessage);
+router.post('/messages', messages.createRoom);
 
 
 module.exports = router;

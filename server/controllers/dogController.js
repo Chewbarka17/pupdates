@@ -2,10 +2,10 @@
 const db = require('../../db/index');
 const mongoose = require('mongoose');
 
-const mongodbURI = process.env.DB_URL;
-mongoose.connect(mongodbURI, {
-  useMongoClient: true,
-});
+// const mongodbURI = process.env.DB_URL;
+// mongoose.connect(mongodbURI, {
+//   useMongoClient: true,
+// });
 
 module.exports = {
 
@@ -61,7 +61,7 @@ module.exports = {
   },
 
   updateDog: (req, res) => {
-    console.log(req.params.dogid);
+    // console.log(req.params.dogid);
     db.Dogs.findOneAndUpdate({ _id: req.params.dogid }, {
       $set: {
         name: req.body.name,
