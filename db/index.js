@@ -10,7 +10,7 @@ mongoose.Promise = global.Promise;
 const db = mongoose.connection;
 
 db.on('error', console.error.bind(console, 'connection error:'));
-db.once('openUri', () => {
+db.once('open', () => {
   // we're connected!
   console.log('mongodb connected');
 });
