@@ -13,12 +13,8 @@
     "body-parser": "^1.18.2",
     "dotenv": "^4.0.0",
     "express": "^4.16.2",
-    "faker": "^4.1.0",
     "mongodb": "^2.2.31",
-    "mongoose": "^4.12.1",
-    "rxjs": "5.4.3",
-    "sw-toolbox": "3.6.0",
-    "zone.js": "0.8.18"
+    "mongoose": "^4.12.1"
   },
   "devDependencies": {
     "eslint": "^4.8.0",
