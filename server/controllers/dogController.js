@@ -2,11 +2,6 @@
 const db = require('../../db/index');
 const mongoose = require('mongoose');
 
-// const mongodbURI = process.env.DB_URL;
-// mongoose.connect(mongodbURI, {
-//   useMongoClient: true,
-// });
-
 module.exports = {
 
   getAllDogs: (req, res) => {
@@ -34,7 +29,7 @@ module.exports = {
     const dog = new db.Dogs({
       _id: new mongoose.Types.ObjectId(),
       name: req.body.name,
-      owner: req.body.oid,
+      owner: req.body.owner,
       age: req.body.age,
       breed: req.body.breed,
       pictures: req.body.pictures,

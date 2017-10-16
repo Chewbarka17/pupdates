@@ -5,13 +5,14 @@
   "homepage": "http://ionicframework.com/",
   "private": true,
   "scripts": {
+    "test": "jest --watch",
     "clean": "ionic-app-scripts clean",
     "build": "ionic-app-scripts build",
     "lint": "ionic-app-scripts lint",
     "ionic:build": "ionic-app-scripts build",
     "ionic:serve": "ionic-app-scripts serve",
     "eslint": "eslint",
-    "start": "nodemon server/server.js"
+    "start": "nodemon server/index.js"
   },
   "dependencies": {
     "@angular/common": "4.4.3",
@@ -44,6 +45,8 @@
     "eslint-config-airbnb-base": "^12.0.2",
     "eslint-plugin-import": "^2.7.0",
     "faker": "^4.1.0",
+    "jest": "^21.2.1",
+    "supertest": "^3.0.0",
     "typescript": "2.3.4"
   },
   "description": "An Ionic project"

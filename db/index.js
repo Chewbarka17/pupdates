@@ -5,6 +5,7 @@ const mongodbURI = process.env.DB;
 mongoose.connect(mongodbURI, {
   useMongoClient: true,
 });
+mongoose.Promise = global.Promise;
 
 const db = mongoose.connection;
 

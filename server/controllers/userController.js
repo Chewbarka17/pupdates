@@ -2,11 +2,6 @@
 const db = require('../../db');
 const mongoose = require('mongoose');
 
-// const mongodbURI = process.env.DB_URL;
-// mongoose.connect(mongodbURI, {
-//   useMongoClient: true,
-// });
-
 module.exports = {
 
   getAllUsers: (req, res) => {
@@ -35,7 +30,6 @@ module.exports = {
   },
 
   addUser: (req, res) => {
-    console.log(req.body);
     const owner = new db.Owners({
       _id: new mongoose.Types.ObjectId(),
       name: req.body.name,
