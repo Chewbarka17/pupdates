@@ -8,7 +8,6 @@ const routes = require('./routes/index.js');
 const db = require('../db/index.js');
 
 // Express Initialization
-const port = process.env.PORT || 8100;
 const app = express();
 
 // MiddleWares
@@ -19,7 +18,4 @@ app.use(parser.urlencoded({ extended: true }));
 app.use(express.static(path.resolve(__dirname, '../src')));
 app.use('/api', routes);
 
-app.listen(port, () => {
-  console.log(`Listening on Port: ${port}`);
-});
 module.exports = app;

@@ -30,7 +30,6 @@ module.exports = {
   },
 
   addUser: (req, res) => {
-    console.log(req.body);
     const owner = new db.Owners({
       _id: new mongoose.Types.ObjectId(),
       name: req.body.name,
