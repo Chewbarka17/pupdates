@@ -1,34 +1,35 @@
 {
-	"name": "Pupdates",
-	"version": "0.0.1",
-	"private": true,
-	"scripts": {
-		"test": "jest --watch",
-		"eslint": "eslint",
-		"start": "nodemon server/index.js"
-	},
-	"dependencies": {
-		"react": "16.0.0-beta.5",
-		"react-native": "0.49.3",
-		"body-parser": "^1.18.2",
-		"dotenv": "^4.0.0",
-		"express": "^4.16.2",
-		"mongodb": "^2.2.31",
-		"mongoose": "^4.12.1",
-		"react-native-cli": "^2.0.1"
-	},
-	"devDependencies": {
-		"eslint": "^4.8.0",
-		"eslint-config-airbnb-base": "^12.0.2",
-		"eslint-plugin-import": "^2.7.0",
-		"faker": "^4.1.0",
-		"jest": "^21.2.1",
-		"supertest": "^3.0.0",
-		"babel-jest": "21.2.0",
-		"babel-preset-react-native": "4.0.0",
-		"react-test-renderer": "16.0.0-beta.5"
-	},
-	"jest": {
-		"preset": "react-native"
-	}
+  "name": "Pupdates",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "test": "jest --watch",
+    "eslint": "eslint",
+    "start": "nodemon server/index.js"
+  },
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "dotenv": "^4.0.0",
+    "express": "^4.16.2",
+    "mongodb": "^2.2.31",
+    "mongoose": "^4.12.1",
+    "react": "16.0.0-beta.5",
+    "react-native": "0.49.3",
+    "react-native-cli": "^2.0.1",
+    "react-navigation": "^1.0.0-beta.14"
+  },
+  "devDependencies": {
+    "eslint": "^4.8.0",
+    "eslint-config-airbnb-base": "^12.0.2",
+    "eslint-plugin-import": "^2.7.0",
+    "faker": "^4.1.0",
+    "jest": "^21.2.1",
+    "supertest": "^3.0.0",
+    "babel-jest": "21.2.0",
+    "babel-preset-react-native": "4.0.0",
+    "react-test-renderer": "16.0.0-beta.5"
+  },
+  "jest": {
+    "preset": "react-native"
+  }
 }
