@@ -1,12 +1,13 @@
-// require dogs database
-const db = require('../../db/index');
+// const db = require('../../db/index');
+const Dogs = require('../../db/Dogs/dogSchema');
+const Owners = require('../../db/Owners/ownerSchema');
 const mongoose = require('mongoose');
 
 module.exports = {
 
   getAllDogs: (req, res) => {
-    db.Dogs.find({}, (err, dogs) => {
-      let dogMap = {};
+    Dogs.find({}, (err, dogs) => {
+      const dogMap = {};
 
       dogs.forEach((dog) => {
         dogMap[dog._id] = dog;
@@ -16,7 +17,7 @@ module.exports = {
   },
 
   getDog: (req, res) => {
-    db.Dogs.find({ _id: req.params.dogid }, (err, dog) => {
+    Dogs.find({ _id: req.params.dogid }, (err, dog) => {
       if (err) {
         console.log('error getting this dog ', err);
         res.status(500).send(err);
@@ -26,7 +27,7 @@ module.exports = {
   },
 
   addDog: (req, res) => {
-    const dog = new db.Dogs({
+    const dog = new Dogs({
       _id: new mongoose.Types.ObjectId(),
       name: req.body.name,
       owner: req.body.owner,
@@ -41,7 +42,7 @@ module.exports = {
     })
       .then((data) => {
         // update owners dogs array by owner id
-        db.Owners.findOneAndUpdate({ _id: req.body.owner }, { $push: { dogs: data._id } }, (err) => {
+        Owners.findOneAndUpdate({ _id: req.body.owner }, { $push: { dogs: data._id } }, (err) => {
           if (err) {
             console.log('add dog update error', err);
             res.status(500).send('error', err);
@@ -57,7 +58,7 @@ module.exports = {
 
   updateDog: (req, res) => {
     // console.log(req.params.dogid);
-    db.Dogs.findOneAndUpdate({ _id: req.params.dogid }, {
+    Dogs.findOneAndUpdate({ _id: req.params.dogid }, {
       $set: {
         name: req.body.name,
         age: req.body.age,
@@ -74,13 +75,13 @@ module.exports = {
   },
 
   removeDog: (req, res) => {
-    db.Owners.findOneAndUpdate({ _id: req.body.owner }, { $pull: { dogs: req.params.dogid } }, (err) => {
+    Owners.findOneAndUpdate({ _id: req.body.owner }, { $pull: { dogs: req.params.dogid } }, (err) => {
       if (err) {
         console.log('add dog update error', err);
       }
     });
 
-    db.Dogs.remove({ _id: req.params.dogid }, (err, data) => {
+    Dogs.remove({ _id: req.params.dogid }, (err, data) => {
       if (err) {
         res.status(500).send('error removing dog', err);
       }
