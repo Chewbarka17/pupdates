@@ -11,48 +11,10 @@ const db = mongoose.connection;
 
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', () => {
-  // we're connected!
   console.log('mongodb connected');
 });
 
 const Schema = mongoose.Schema;
-
-const dogSchema = new Schema({
-  _id: Schema.Types.ObjectId,
-  name: String,
-  breed: String,
-  age: { type: Number, min: 0, max: 30 },
-  pictures: [String], //blobs //filestack api
-  owner: { type: Schema.Types.ObjectId, ref: 'Owners' },
-});
-
-const ownerSchema = new Schema({
-  _id: Schema.Types.ObjectId,
-  name: String,
-  location: String,
-  age: { type: Number, min: 18, max: 101 },
-  picture: String,
-  bio: String,
-  rating: Number,
-  dogs: [{ type: Schema.Types.ObjectId, ref: 'Dogs' }],
-  dogsSeen: [{ type: Schema.Types.ObjectId, ref: 'Dogs' }],
-  dogsLiked: [{ type: Schema.Types.ObjectId, ref: 'Dogs' }],
-});
-
-const roomSchema = new Schema({
-  _id: Schema.Types.ObjectId,
-  users: [String],
-  uids: [String],
-  messages: [{
-    user: String,
-    text: String,
-    // createdAt: new Date(),
-  }],
-});
-
-const Rooms = mongoose.model('Rooms', roomSchema);
-const Owners = mongoose.model('Owners', ownerSchema);
-const Dogs = mongoose.model('Dogs', dogSchema);
 
 // ==== DROP DATA EXAMPLE ====
 // db.dropCollection('owners', (err) => {
@@ -118,8 +80,7 @@ const Dogs = mongoose.model('Dogs', dogSchema);
 // }
 
 module.exports = {
-  Owners,
-  Dogs,
-  Rooms,
   db,
+  Schema,
+  mongoose,
 };
