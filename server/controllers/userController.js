@@ -1,11 +1,12 @@
 // require user database
-const db = require('../../db');
+// const db = require('../../db');
+const Owners = require('../../db/Owners/ownerSchema');
 const mongoose = require('mongoose');
 
 module.exports = {
 
   getAllUsers: (req, res) => {
-    db.Owners.find({}, (err, owners) => {
+    Owners.find({}, (err, owners) => {
       if (err) {
         console.log('error getting all users ', err);
         res.status(500).send(err);
@@ -20,7 +21,7 @@ module.exports = {
   },
 
   getUser: (req, res) => {
-    db.Owners.find({ _id: req.params.userid }, (err, owner) => {
+    Owners.find({ _id: req.params.userid }, (err, owner) => {
       if (err) {
         console.log('error getting this user ', err);
         res.status(500).send(err);
@@ -30,7 +31,7 @@ module.exports = {
   },
 
   addUser: (req, res) => {
-    const owner = new db.Owners({
+    const owner = new Owners({
       _id: new mongoose.Types.ObjectId(),
       name: req.body.name,
       age: req.body.age,
@@ -53,7 +54,7 @@ module.exports = {
   },
 
   updateUser: (req, res) => {
-    db.Owners.findOneAndUpdate({ _id: req.body.id }, {
+    Owners.findOneAndUpdate({ _id: req.body.id }, {
       // console.log("trying to update user");
       $set: {
         name: req.body.name,
@@ -73,7 +74,7 @@ module.exports = {
   },
 
   removeUser: (req, res) => {
-    db.Owners.remove({ _id: req.params.userid }, (err, data) => {
+    Owners.remove({ _id: req.params.userid }, (err, data) => {
       if (err) {
         res.status(500).send('error removing user', err);
       }
