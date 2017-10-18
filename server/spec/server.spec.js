@@ -1,6 +1,9 @@
 const request = require('supertest');
 const app = require('../server');
-const db = require('../../db/index');
+// const db = require('../../db/index');
+// const Dogs = require('../../db/Dogs/dogSchema.js');
+const Owners = require('../../db/Owners/ownerSchema.js');
+// const Rooms = require('../../db/Messages/messageSchema');
 const mongoose = require('mongoose');
 
 let user_id;
@@ -36,7 +39,7 @@ describe('Users routes', () => {
 
       user_id = response.body._id;
 
-      const data = await db.Owners.findById(user_id).lean().exec();
+      const data = await Owners.findById(user_id).lean().exec();
       expect(data).toMatchObject(owner);
     } catch(err) {
       console.error('Unable to save user to database.', err);
@@ -50,7 +53,7 @@ describe('Users routes', () => {
 
       delete response.body[0]['_id'];
 
-      const data = await db.Owners.findById(user_id).lean().exec();
+      const data = await Owners.findById(user_id).lean().exec();
       expect(data).toMatchObject(response.body[0]);
     } catch(err) {
       console.error('User does not exist in database', err);
@@ -78,7 +81,7 @@ describe('Users routes', () => {
       expect(response.body[0]).toHaveProperty('location', '11111');
       expect(response.body[0]).toHaveProperty('bio', 'Man of Steel');
 
-      const data = await db.Owners.findById(user_id).lean().exec();
+      const data = await Owners.findById(user_id).lean().exec();
       expect(data).toHaveProperty('name', 'Superman');
       expect(data).toHaveProperty('location', '11111');
       expect(data).toHaveProperty('bio', 'Man of Steel');
@@ -90,7 +93,7 @@ describe('Users routes', () => {
   xtest('[Users|DELETE It should delete a user with status 202', async () => {
     try {
       const response = await request(app).delete('/api/users/' + user_id);
-      const data = await db.Owners.findById(user_id).lean().exec();
+      const data = await Owners.findById(user_id).lean().exec();
       expect(data).toBe(null);
     } catch(err) {
       console.error('Unable to delete user from database', err);
@@ -137,7 +140,7 @@ describe('Dog routes', () => {
 
       delete response.body[0]['_id'];
 
-      const data = await db.Owners.findById(user_id).lean().exec();
+      const data = await Owners.findById(user_id).lean().exec();
       expect(data).toMatchObject(response.body[0]);
     } catch(err) {
       console.error('User does not exist in database', err);

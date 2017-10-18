@@ -1,16 +1,12 @@
-const db = require('../../db/index');
+// const db = require('../../db/index');
+const Rooms = require('../../db/Messages/messageSchema');
 const mongoose = require('mongoose');
-
-// const mongodbURI = process.env.DB_URL;
-// mongoose.connect(mongodbURI, {
-//   useMongoClient: true,
-// });
 
 module.exports = {
 
   // You need a room id to get the messages associated with that room.
   getMessages: (req, res) => {
-    db.Messages.find({roomid: req.params.roomid}, (err) => {
+    Rooms.find({ roomid: req.params.roomid }, (err) => {
       if (err) {
         console.log('Error getting messages', err);
         res.status(500).send(err);
@@ -21,9 +17,9 @@ module.exports = {
       });
   },
 
-  // I'm putting the names and user ids of the two people involved in the conversation in an array. Will update logic when front end is up. 
+  // I'm putting the names and user ids of the two people involved in the conversation in an array. Will update logic when front end is up.
   createRoom: (req, res) => {
-    const room = new db.Rooms({
+    const room = new Rooms({
       _id: new mongoose.Types.ObjectId(),
       users: [req.body.nameOne, req.body.nameTwo],
       uids: [req.body.uidOne, req.body.uidTwo],
@@ -44,7 +40,7 @@ module.exports = {
 
   // a message is an object with a user and a text. No altering or deleting messages yet.
   addMessage: (req, res) => {
-    db.Rooms.findOneAndUpdate({ _id: req.params.roomid }, {
+    Rooms.findOneAndUpdate({ _id: req.params.roomid }, {
       $push: {
         messages: {
           user: req.body.user,
