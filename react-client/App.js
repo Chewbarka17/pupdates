@@ -6,7 +6,7 @@
 
 // import dependencies
 import React, { Component } from 'react';
-import { StackNavigator} from 'react-navigation';
+import { StackNavigator } from 'react-navigation';
 import {
   Platform,
   StyleSheet,
@@ -16,7 +16,7 @@ import {
 } from 'react-native';
 
 // import files
-import NavigationApp from './src/components/Navbar/menu';
+import NavigationApp from './src/components/NavBar/menu';
 
 export default class App extends Component<{}> {
   render() {
