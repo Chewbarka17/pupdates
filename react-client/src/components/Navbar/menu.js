@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StackNavigator} from 'react-navigation';
+import { StackNavigator } from 'react-navigation';
 import {
   Platform,
   StyleSheet,
@@ -12,7 +12,7 @@ import {
 import ViewDogsScreen from '../ViewDogs/doglist'
 import LikesScreen from '../Likes/likedDogsView'
 import FilterScreen from '../FilterDog/filterDog'
-import OwnerProfileScreen from '../OwnerProfiles/ownerProfile'
+import OwnerProfileScreen from '../Profiles/ownerProfile';
 import LogoutScreen from '../Logout/Logout'
 
 class MenuScreen extends React.Component {
@@ -58,13 +58,13 @@ class MenuScreen extends React.Component {
     }
   }
 
-  const NavigationApp = StackNavigator({
-    Menu: { screen: MenuScreen },
-    Dogs: { screen: ViewDogsScreen },
-    Likes: { screen : LikesScreen },
-    Filter: { screen : FilterScreen },
-    Profile: { screen : OwnerProfileScreen },
-    Logout: { screen: LogoutScreen }
-    });
+const NavigationApp = StackNavigator({
+  Menu: { screen: MenuScreen },
+  Dogs: { screen: ViewDogsScreen },
+  Likes: { screen : LikesScreen },
+  Filter: { screen : FilterScreen },
+  Profile: { screen : OwnerProfileScreen },
+  Logout: { screen: LogoutScreen }
+});
 
   export default NavigationApp;
