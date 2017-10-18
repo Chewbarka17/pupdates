@@ -25,7 +25,7 @@ class FilterScreen extends React.Component {
       return (
         <View style={styles.container}>
           <Text>
-            onPress= { ()=> navigate('Home') }>Navigate to Home
+            Blah
           </Text>
         </View>
       );
