@@ -12,7 +12,7 @@ import {
 import ViewDogsScreen from '../ViewDogs/doglist'
 import LikesScreen from '../Likes/likedDogsView'
 import FilterScreen from '../FilterDog/filterDog'
-import OwnerProfileScreen from '../OwnerProfiles/ownerProfile'
+import OwnerProfileScreen from '../Profiles/ownerProfile';
 import LogoutScreen from '../Logout/Logout'
 
 class MenuScreen extends React.Component {

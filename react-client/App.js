@@ -16,7 +16,8 @@ import {
 } from 'react-native';
 
 // import files
-import NavigationApp from './src/components/NavBar/menu';
+// import NavigationApp from './src/components/NavBar/menu';
+import NavigationApp from './src/components/Navbar/menu';
 
 export default class App extends Component<{}> {
   render() {
