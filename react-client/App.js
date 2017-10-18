@@ -22,9 +22,9 @@ import FilterScreen from './src/components/FilterDog/filterDog'
 import OwnerProfileScreen from './src/components/OwnerProfiles/ownerProfile'
 import LogoutScreen from './src/components/Logout/Logout'
 
-class HomeScreen extends React.Component {
+class MenuScreen extends React.Component {
   static navigationOptions = {
-    title: 'Home',
+    title: 'Menu',
   };
   render() {
     const { navigate } = this.props.navigation;
@@ -66,7 +66,7 @@ class HomeScreen extends React.Component {
 }
 
 const NavigationApp = StackNavigator({
-  Home: { screen: HomeScreen },
+  Menu: { screen: MenuScreen },
   Dogs: { screen: ViewDogsScreen },
   Likes: { screen : LikesScreen },
   Filter: { screen : FilterScreen },
