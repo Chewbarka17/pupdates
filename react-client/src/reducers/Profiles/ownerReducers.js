@@ -23,7 +23,7 @@ const ownerReducer = (state = initialState, action) => {
     case 'POST_OWNER_FULFILLED': {
       return Object.assign({}, state, {
         posted: true,
-        user: action.payload,
+        user: state.user.concat(action.payload),
       });
     }
     case 'POST_OWNER_REJECTED': {
