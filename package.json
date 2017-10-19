@@ -22,6 +22,7 @@
     "react-native-swipe-cards": "^0.1.0",
     "react-native-swipe-out": "^2.0.14",
     "react-native-swipeout": "^2.2.2",
+    "react-native-fbsdk": "^0.6.3",
     "react-native-vector-icons": "^4.4.2",
     "react-navigation": "^1.0.0-beta.14",
     "react-redux": "^5.0.6",
