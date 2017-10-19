@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 
 // import io from 'socket.io-client';
 
-import ChatRoom from './chatRoom';
+import ChatRoom from './chatRoom.js';
 import * as messageActions from '../../actions/MessageActions/messageActions';
 
 
@@ -16,6 +16,7 @@ class ChatList extends React.Component {
   };
 
   componentDidMount(){
+    console.log('hehehehe', ChatRoom)
     // this.socket = io('/')
     // this.socket.on('message', message => {
     //   console.log('socket received message', message);
@@ -24,13 +25,25 @@ class ChatList extends React.Component {
 
     // get rooms associated with user
     // set rooms = to data for FlatList
+    // onPress function to go into room
   }
+
+  _renderItem({item}) {
+    <ChatRoom
+      id={item.id}
+      /* onPressItem={this._onPressItem} */
+      /* selected={!!this.state.selected.get(item.id)} */
+      /* title={item.title} */
+    />
+  };
 
   render() {
     return (
       <FlatList 
       data={[{key: 'row1'}, {key:'row2'}]}
-      renderItem={({item}) => <Text>{item.key}</Text>}
+      renderItem={({item}) =>  <ChatRoom
+        id={item.key}
+      />}
       />
     )
   };
