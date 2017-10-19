@@ -107,11 +107,12 @@ class OwnerProfileScreen extends React.Component {
 
   const ownerState = (store) => {
     return {
-      firstname: store.Owners.user.firstname,
-      lastname: store.Owners.user.lastname,
-      age: store.Owners.user.age,
-      zipcode: store.Owners.user.zipcode,
-      bio: store.Owners.user.bio
+      //I don't think I need these... I'll eventually need users probably
+      // firstname: store.Owners.user.firstname,
+      // lastname: store.Owners.user.lastname,
+      // age: store.Owners.user.age,
+      // zipcode: store.Owners.user.zipcode,
+      // bio: store.Owners.user.bio
     }
   }
 
