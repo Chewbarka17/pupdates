@@ -33,7 +33,6 @@ class OwnerProfileScreen extends React.Component {
 
     handleSubmit() {
       const { firstname, lastname, age, zipcode, bio, actions } = this.state;
-      console.log('what is this', this)
       this.props.actions.postOwners(firstname, lastname, age, zipcode);
     }
 
