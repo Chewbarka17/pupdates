@@ -11,6 +11,7 @@ const ownerSchema = new db.Schema({
   dogs: [{ type: db.Schema.Types.ObjectId, ref: 'Dogs' }],
   dogsSeen: [{ type: db.Schema.Types.ObjectId, ref: 'Dogs' }],
   dogsLiked: [{ type: db.Schema.Types.ObjectId, ref: 'Dogs' }],
+  chatRooms: [{ type: db.Schema.Types.ObjectId, ref: 'Rooms' }],
 });
 
 module.exports = db.mongoose.model('Owners', ownerSchema);
