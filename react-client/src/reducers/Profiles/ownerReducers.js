@@ -21,6 +21,7 @@ const ownerReducer = (state = initialState, action) => {
       });
     }
     case 'POST_OWNER_FULFILLED': {
+      console.log('owner reducer', action.payload)
       return Object.assign({}, state, {
         posted: true,
         user: action.payload,
@@ -36,14 +37,15 @@ const ownerReducer = (state = initialState, action) => {
         error: action.payload,
       });
     }
-    case "UPDATE_OWNER_FULFILLED": {
+    case 'UPDATE_OWNER_FULFILLED': {
       return Object.assign({}, state, {
         updated: true,
         user: action.payload,
-      })
+      });
     }
+    default:
+      return state;
   }
-  return state;
 };
 
 export default ownerReducer;
