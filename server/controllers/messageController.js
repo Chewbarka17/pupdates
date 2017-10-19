@@ -1,4 +1,5 @@
 // const db = require('../../db/index');
+const Owners = require('../../db/Owners/ownerSchema');
 const Rooms = require('../../db/Messages/messageSchema');
 const mongoose = require('mongoose');
 
@@ -21,8 +22,8 @@ module.exports = {
   createRoom: (req, res) => {
     const room = new Rooms({
       _id: new mongoose.Types.ObjectId(),
-      users: [req.body.nameOne, req.body.nameTwo],
-      uids: [req.body.uidOne, req.body.uidTwo],
+      // users: [req.body.nameOne, req.body.nameTwo],
+      uids: [req.body.uid1, req.body.uid2],
       messages: [],
     });
     room.save((err) => {
@@ -31,6 +32,14 @@ module.exports = {
       }
     })
       .then((data) => {
+        room.uids.forEach((uid) => {
+          Owners.findOneAndUpdate({ _id: uid }, { $push: { ChatRooms: data._id } }, (err) => {
+            if (err) {
+              console.log('add dog update error', err);
+              res.status(500).send('error', err);
+            }
+          });
+        });
         res.status(201).send(data);
       })
       .catch((err) => {

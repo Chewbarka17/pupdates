@@ -1,11 +1,11 @@
 const mongoose = require('mongoose');
 // const faker = require('faker');
 
-// const mongodbURI = process.env.DB;
-// mongoose.connect(mongodbURI, {
-//   useMongoClient: true,
-// });
-// mongoose.Promise = global.Promise;
+const mongodbURI = process.env.DB;
+mongoose.connect(mongodbURI, {
+  useMongoClient: true,
+});
+mongoose.Promise = global.Promise;
 
 const db = mongoose.connection;
 

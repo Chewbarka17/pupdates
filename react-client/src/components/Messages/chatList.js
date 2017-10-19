@@ -39,12 +39,14 @@ class ChatList extends React.Component {
 
   render() {
     return (
-      <FlatList 
-      data={[{key: 'row1'}, {key:'row2'}]}
-      renderItem={({item}) =>  <ChatRoom
-        id={item.key}
-      />}
-      />
+      <View>
+        <FlatList 
+          data={[{key: 'row1'}, {key:'row2'}]}
+          renderItem={({item}) =>  <ChatRoom
+            id={item.key}
+          />}
+        />
+      </View>
     )
   };
 }

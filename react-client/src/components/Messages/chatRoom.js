@@ -14,8 +14,9 @@ class ChatRoom extends React.Component {
     this.socket = io('/');
   };
 
-
-
+  handleSubmit() {
+    socket.emit()
+  }
 
   render() {
     return (
