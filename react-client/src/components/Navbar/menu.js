@@ -65,10 +65,6 @@ const NavigationApp = StackNavigator({
   Filter: { screen : FilterScreen },
   Profile: { screen : OwnerProfileScreen },
   Logout: { screen: LogoutScreen }
-<<<<<<< HEAD
 });
-=======
-  });
->>>>>>> [FIX] syntax errors
 
   export default NavigationApp;
