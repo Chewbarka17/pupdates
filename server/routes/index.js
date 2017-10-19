@@ -23,6 +23,7 @@ router.patch('/users', users.updateUser);
 router.get('/messages/:roomid', messages.getMessages);
 router.patch('/messages/:roomid', messages.addMessage);
 router.post('/rooms', messages.createRoom);
+router.get('/rooms/:userid', messages.getRooms);
 
 
 module.exports = router;
