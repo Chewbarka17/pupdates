@@ -9,12 +9,12 @@ import {
 } from 'react-native';
 
 // import files
-import ViewDogsScreen from '../ViewDogs/doglist'
-import LikesScreen from '../Likes/likedDogsView'
-import FilterScreen from '../FilterDog/filterDog'
+import ViewDogsScreen from '../ViewDogs/doglist';
+import LikesScreen from '../Likes/likedDogsView';
+import FilterScreen from '../FilterDog/filterDog';
 import OwnerProfileScreen from '../Profiles/ownerProfile';
-import LogoutScreen from '../Logout/Logout'
-import Chats from '../Messages/chatList'
+import LogoutScreen from '../Logout/Logout';
+import ChatsScreen from '../Messages/chatList';
 
 class MenuScreen extends React.Component {
     static navigationOptions = {
@@ -71,7 +71,8 @@ const NavigationApp = StackNavigator({
   Likes: { screen : LikesScreen },
   Filter: { screen : FilterScreen },
   Profile: { screen : OwnerProfileScreen },
-  Logout: { screen: LogoutScreen }
+  Logout: { screen: LogoutScreen },
+  Chats: { screen: ChatsScreen }
 });
 
   export default NavigationApp;
