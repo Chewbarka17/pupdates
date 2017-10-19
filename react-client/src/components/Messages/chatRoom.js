@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 
 import io from 'socket.io-client';
 
-import * as messageActions from '../../actions/MessageActions/messageActions';
+import * as messageActions from '../../actions/MessageActions/chatRoomActions';
 
 
 class ChatRoom extends React.Component {

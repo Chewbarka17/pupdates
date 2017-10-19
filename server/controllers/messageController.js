@@ -75,7 +75,7 @@ module.exports = {
         res.status(500).send(err);
       }
     })
-    .then((data) => {
+      .then((data) => {
         res.status(200).send(data[0].chatRooms);
       });
   },
