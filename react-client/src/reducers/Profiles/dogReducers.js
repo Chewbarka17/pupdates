@@ -1,0 +1,34 @@
+import actions from '../../actions/Profiles/dogProfileActions';
+
+const initialState = {
+  posted: false,
+  fetched: false,
+  dogs: [],
+};
+
+const dogReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case 'FETCH_DOG_FULFILLED': {
+      return Object.assign({}, state, {
+        fetched: true,
+        dog: action.payload,
+      });
+    }
+    case 'FETCH_OWNER_REJECTED': {
+      return Object.assign({}, state, {
+        error: action.payload,
+      });
+    }
+    case 'POST_DOG_FULFILLED': {
+      return Object.assign({}, state, {
+        posted: true,
+        user: state.dogs.concat(action.payload),
+      });
+    }
+    case 'POST_DOG_REJECTED': {
+      return Object.assign({}, state, {
+        error: action.payload,
+      });
+    }
+  }
+}
