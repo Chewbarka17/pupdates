@@ -14,6 +14,7 @@ import LikesScreen from '../Likes/likedDogsView'
 import FilterScreen from '../FilterDog/filterDog'
 import OwnerProfileScreen from '../Profiles/ownerProfile';
 import LogoutScreen from '../Logout/Logout'
+import Chats from '../Messages/chatList'
 
 class MenuScreen extends React.Component {
     static navigationOptions = {
@@ -51,6 +52,12 @@ class MenuScreen extends React.Component {
             title="Logout"
             onPress={() =>
               navigate('Logout')
+            }
+          />
+          <Button
+            title="Chats"
+            onPress={() =>
+              navigate('Chats')
             }
           />
         </View>

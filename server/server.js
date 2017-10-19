@@ -2,7 +2,8 @@ const express = require('express');
 const parser = require('body-parser');
 const path = require('path');
 require('dotenv').config();
-const cors = require('cors')
+const cors = require('cors');
+const io = require('socket.io-client')('http://localhost');
 
 // File imports
 const routes = require('./routes/index.js');
@@ -19,5 +20,16 @@ app.use(parser.urlencoded({ extended: true }));
 // Routes
 app.use(express.static(path.resolve(__dirname, '../src')));
 app.use('/api', routes);
+
+// Messages
+io.on('connection', (socket) => {
+  socket.on('message', (message) => {
+    console.log('io.on + socket.on', message);
+    socket.emit('received', {
+      user: message.user,
+      text: message.text,
+    });
+  });
+});
 
 module.exports = app;
