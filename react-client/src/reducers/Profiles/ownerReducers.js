@@ -3,7 +3,7 @@ import actions from '../../actions/Profiles/ownerActions';
 const initialState = {
   posted: false,
   fetched: false,
-  user: [],
+  user: {},
 };
 
 const ownerReducer = (state = initialState, action) => {
@@ -23,13 +23,24 @@ const ownerReducer = (state = initialState, action) => {
     case 'POST_OWNER_FULFILLED': {
       return Object.assign({}, state, {
         posted: true,
-        user: state.user.concat(action.payload),
+        user: action.payload,
       });
     }
     case 'POST_OWNER_REJECTED': {
       return Object.assign({}, state, {
         error: action.payload,
       });
+    }
+    case 'UPDATE_OWNER_REJECTED': {
+      return Object.assign({}, state, {
+        error: action.payload,
+      });
+    }
+    case "UPDATE_OWNER_FULFILLED": {
+      return Object.assign({}, state, {
+        updated: true,
+        user: action.payload,
+      })
     }
   }
   return state;
