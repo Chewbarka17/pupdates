@@ -1,12 +1,15 @@
+import actions from '../../actions/Profiles/ownerActions';
+
 const initialState = {
   posted: false,
   fetched: false,
   user: [],
 };
 
-const ownerReducers = (state = initialState, action) => {
-  switch (actions.type) {
-    case 'FETCH_OWNERS_FULFILLED': {
+const ownerReducer = (state = initialState, action) => {
+  console.log('what is actions', action);
+  switch (action.type) {
+    case 'FETCH_OWNER_FULFILLED': {
       return Object.assign({}, state, {
         fetched: true,
         user: action.payload,
@@ -17,13 +20,13 @@ const ownerReducers = (state = initialState, action) => {
         error: action.payload,
       });
     }
-    case 'POST_OWNERS_FULFILLED': {
+    case 'POST_OWNER_FULFILLED': {
       return Object.assign({}, state, {
         posted: true,
         user: action.payload,
       });
     }
-    case 'POST_OWNERS_REJECTED': {
+    case 'POST_OWNER_REJECTED': {
       return Object.assign({}, state, {
         error: action.payload,
       });
@@ -32,4 +35,4 @@ const ownerReducers = (state = initialState, action) => {
   return state;
 };
 
-export default ownerReducers;
+export default ownerReducer;
