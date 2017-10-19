@@ -5,10 +5,13 @@ import {
   StyleSheet,
   Text,
   View,
-  Button,
   TextInput,
 } from 'react-native';
-import { FormLabel, FormInput } from 'react-native-elements';
+import { FormLabel, FormInput, Button } from 'react-native-elements';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+
+import * as ownerActions from '../../actions/Profiles/ownerActions';
 
 class OwnerProfileScreen extends React.Component {
     static navigationOptions = {
@@ -16,14 +19,23 @@ class OwnerProfileScreen extends React.Component {
     };
     constructor(props) {
       super(props);
-  
+
       this.state = {
-        username: '',
-        password: '',
-        email: '',
-        phoneNumber: '',
+        firstname: '',
+        lastname: '',
+        age: '',
+        zipcode: '',
       };
+
+      this.handleSubmit = this.handleSubmit.bind(this);
+
     };
+
+    handleSubmit() {
+      const { firstname, lastname, age, zipcode, bio, actions } = this.state;
+      console.log('what is this', this)
+      this.props.actions.postOwners(firstname, lastname, age, zipcode);
+    }
 
     render() {
       const { navigate } = this.props.navigation;
@@ -37,8 +49,8 @@ class OwnerProfileScreen extends React.Component {
             underlineColorAndroid="transparent"
             placeholder="Enter your First Name"
             returnKeyType="next"
-            ref="firstname"
-            textInputRef="firstnameInput" 
+            id="firstname"
+            onChangeText={firstname => this.setState({ firstname })}
           />
           <FormLabel>Last Name</FormLabel>
           <FormInput
@@ -48,8 +60,8 @@ class OwnerProfileScreen extends React.Component {
             underlineColorAndroid="transparent"
             placeholder="Enter your Last Name"
             returnKeyType="next"
-            ref="lastname"
-            textInputRef="lastnameInput" 
+            id="lastname"
+            onChangeText={lastname => this.setState({ lastname })}
           />
           <FormLabel>Age</FormLabel>
           <FormInput
@@ -59,8 +71,8 @@ class OwnerProfileScreen extends React.Component {
             underlineColorAndroid="transparent"
             placeholder="Enter your Age"
             returnKeyType="next"
-            ref="age"
-            textInputRef="ageInput" 
+            id="age"
+            onChangeText={age => this.setState({ age })}
           />
           <FormLabel>Zipcode</FormLabel>
           <FormInput
@@ -70,12 +82,43 @@ class OwnerProfileScreen extends React.Component {
             underlineColorAndroid="transparent"
             placeholder="Enter your Zipcode"
             returnKeyType="next"
-            ref="zipcode"
-            textInputRef="zipcodeInput" 
+            id="zipcode"
+            onChangeText={zipcode => this.setState({ zipcode })}
           />
+          <FormLabel>Bio</FormLabel>
+          <FormInput
+            editable
+            autoCapitalize="none"
+            autoCorrect={false}
+            underlineColorAndroid="transparent"
+            placeholder="Enter your Bio"
+            returnKeyType="next"
+            id="bio"
+            onChangeText={bio => this.setState({ bio })}
+          />
+          <Button
+            title="Save"
+            onPress={this.handleSubmit}
+            />
         </View>
       );
     }
   }
 
-  export default OwnerProfileScreen;
+  const ownerState = (store) => {
+    return {
+      firstname: store.Owners.user.firstname,
+      lastname: store.Owners.user.lastname,
+      age: store.Owners.user.age,
+      zipcode: store.Owners.user.zipcode,
+      bio: store.Owners.user.bio
+    }
+  }
+
+  const ownerDispatch = (dispatch) => {
+    return {
+      actions: bindActionCreators(ownerActions, dispatch),
+    }
+  };
+
+  export default connect(ownerState, ownerDispatch)(OwnerProfileScreen);
