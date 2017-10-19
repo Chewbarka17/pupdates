@@ -2,7 +2,7 @@ import axios from 'axios';
 
 export const postOwners = (firstname, lastname, age, zipcode, bio) => (dispatch) => {
   axios.post('http://localhost:8000/api/users', {
-    name: firstname + lastname,
+    name: `${firstname}  ${lastname}`,
     age,
     location: zipcode,
     bio,
