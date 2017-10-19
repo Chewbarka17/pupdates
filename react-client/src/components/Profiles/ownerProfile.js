@@ -32,9 +32,10 @@ class OwnerProfileScreen extends Component {
   };
 
   handleSubmit() {
+    console.log('what is props: ', this.props);
     const { name, age, location, bio, actions } = this.state;
-    this.props.actions.postOwners(name, age, location, bio)
-    navigate('viewOwnerProfile');
+    this.props.actions.postOwners(name, age, location, bio);
+    this.props.navigation.navigate('ViewOwnerProfile');
   }
 
   render() {

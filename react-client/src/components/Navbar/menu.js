@@ -15,6 +15,7 @@ import FilterScreen from '../FilterDog/filterDog';
 import OwnerProfileScreen from '../Profiles/ownerProfile';
 import LogoutScreen from '../Logout/Logout';
 import ChatsScreen from '../Messages/chatList';
+import ViewOwnerProfileScreen from '../Profiles/viewOwnerProfile';
 
 class MenuScreen extends React.Component {
     static navigationOptions = {
@@ -43,9 +44,9 @@ class MenuScreen extends React.Component {
             }
           />
           <Button
-            title="Profile"
+            title="View Profile"
             onPress={() =>
-              navigate('Profile')
+              navigate('ViewOwnerProfile')
             }
           />
           <Button
@@ -72,7 +73,8 @@ const NavigationApp = StackNavigator({
   Filter: { screen : FilterScreen },
   Profile: { screen : OwnerProfileScreen },
   Logout: { screen: LogoutScreen },
-  Chats: { screen: ChatsScreen }
+  Chats: { screen: ChatsScreen },
+  ViewOwnerProfile: {screen: ViewOwnerProfileScreen},
 });
 
   export default NavigationApp;
