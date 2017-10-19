@@ -2,6 +2,7 @@ const express = require('express');
 const parser = require('body-parser');
 const path = require('path');
 require('dotenv').config();
+const cors = require('cors')
 
 // File imports
 const routes = require('./routes/index.js');
@@ -11,6 +12,7 @@ const db = require('../db/index.js');
 const app = express();
 
 // MiddleWares
+app.use(cors());
 app.use(parser.json());
 app.use(parser.urlencoded({ extended: true }));
 
