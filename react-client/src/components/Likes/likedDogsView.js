@@ -13,14 +13,9 @@ import Swipeout from 'react-native-swipeout';
 import { StackNavigator } from 'react-navigation';
 import { List, ListItem, SearchBar } from "react-native-elements";
 
-import DogProfileScreen from '../Profiles/dogProfile';
-import likedDogsEntry from '../Likes/likedDogsEntry';
+import DogProfileScreen from '../Likes/likedDogProfile';
 
-let swipeoutBtns = [{
-    text: 'Delete',
-    backgroundColor: 'red',
-    onPress: () => { console.log("this function needs to delete from dogsLiked array!") }
-  }];
+
 
 class LikedDogsView extends Component {
   static navigationOptions = {
@@ -28,6 +23,12 @@ class LikedDogsView extends Component {
   };
   constructor(props) {
     super(props);
+
+      this.swipeoutBtns = [{
+      text: 'Delete',
+      backgroundColor: 'red',
+      onPress: () => {this.deleteLikedDog()}
+    }];
 
     // only need data?
     this.state = {
@@ -79,9 +80,10 @@ class LikedDogsView extends Component {
     );
   };
 
-  alertUserOnPress = (item) => {
-    alert(`name ${item.name.first} ${item.name.last}`);
-
+  deleteLikedDog = () => {
+    // delete request. which updated the dogsLiked array
+    // handleRefresh
+    alert('dog deleted');
   }
 
   render() {
@@ -93,17 +95,11 @@ class LikedDogsView extends Component {
           source={{uri: 'https://mir-s3-cdn-cf.behance.net/project_modules/fs/48d5f148002457.588b581f813d4.gif'}} // hearts corgi
         />
 
-        <Button
-        title="DogProfile"
-                  onPress={() =>
-                    navigate('DogProfile')
-                  }
-        />
         <List containerStyle={{ borderTopWidth: 0, borderBottomWidth: 0 }}>
           <FlatList
             data={this.state.data}
             renderItem={({ item }) => (
-              <Swipeout right={swipeoutBtns}
+              <Swipeout right={this.swipeoutBtns}
                 autoClose={true}
                 backgroundColor= 'transparent'
               >
@@ -112,8 +108,12 @@ class LikedDogsView extends Component {
               >
               <View>
                 <ListItem
+                
+                  onPress={() =>
+                    navigate('DogProfile', item)
+                  }
                   roundAvatar
-                  name={`${item.name.first} ${item.name.last}`}
+                  title={`${item.name.first} ${item.name.last}`}
                   subtitle={item.email}
                   avatar={{ uri: item.picture.thumbnail }}
                   containerStyle={{ borderBottomWidth: 0 }}
