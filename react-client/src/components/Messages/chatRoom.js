@@ -11,11 +11,28 @@ import * as messageActions from '../../actions/MessageActions/chatRoomActions';
 class ChatRoom extends React.Component {
   constructor(props) {
     super(props);
-    this.socket = io('/');
+    this.state = {
+      messages: [],
+      text: '',
+    }
+    // this.props.roomid
   };
+  
+  componentDidMount() {
+    // get messages, or filter messages from store
+    this.socket = io();
+    this.socket.on('message', (message) => {
+      this.setState({
+        messages: [...this.state.message, message]
+      })
+    })
+  }
 
   handleSubmit() {
-    socket.emit()
+    // post message to database
+    this.socket.to(this.props.roomid).emit('message', {
+      // message object with room id
+    })
   }
 
   render() {

@@ -2,6 +2,7 @@ import React from 'react';
 import { Platform, StyleSheet, Text, View, TextInput, FlatList } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import axios from 'axios';
 
 // import io from 'socket.io-client';
 
@@ -30,12 +31,14 @@ class ChatList extends React.Component {
   };
 
   componentDidMount(){
-    console.log('hehehehe', ChatRoom)
+    // console.log('hehehehe', ChatRoom)
     // this.socket = io('/')
     // this.socket.on('message', message => {
     //   console.log('socket received message', message);
       // this.props.actions.messageChange([...this.props.log, message]);
     // })
+
+    axios.get('https://localhost:8000/rooms/' + '59e92041f61b1458b2e847f3')
 
     // get rooms associated with user
     // set rooms = to data for FlatList
