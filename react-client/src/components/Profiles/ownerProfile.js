@@ -32,7 +32,6 @@ class OwnerProfileScreen extends Component {
   };
 
   handleSubmit() {
-    console.log('what is props: ', this.props);
     const { name, age, location, bio, actions } = this.state;
     this.props.actions.postOwners(name, age, location, bio);
     this.props.navigation.navigate('ViewOwnerProfile');
@@ -97,7 +96,6 @@ class OwnerProfileScreen extends Component {
 
   const ownerState = (store) => {
     return {
-      //I don't think I need these... I'll eventually need users probably
       name: store.Owners.user.name,
       age: store.Owners.user.age,
       location: store.Owners.user.location,
