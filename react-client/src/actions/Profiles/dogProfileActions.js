@@ -1,10 +1,11 @@
 import axios from 'axios';
 
-export const postDogs = (name, age, breed) => (dispatch) => {
+export const postDogs = (name, age, breed, owner) => (dispatch) => {
   axios.post('http://localhost:8000/api/dogs', {
     name,
     age,
     breed,
+    owner,
   })
     .then((response) => {
       dispatch({ type: 'POST_DOG_FULFILLED', payload: response.data });
