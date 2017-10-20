@@ -26,8 +26,12 @@ import DrawerMenuScreen from '../Navbar/drawerNav';
 
 =======
 import LogoutScreen from '../Logout/Logout'
+<<<<<<< HEAD
 import SignupScreen from '../Signup/Signup'
 >>>>>>> [Add] signup to navigation bar.
+=======
+import SignupScreen from '../Signup/Signup.js'
+>>>>>>> [Add] Facebook authentication of access token
 
 class MenuScreen extends React.Component {
     static navigationOptions = {
