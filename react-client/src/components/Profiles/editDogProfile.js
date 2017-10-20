@@ -34,7 +34,7 @@ class EditDogProfile extends Component {
   handleSubmit() {
     const { name, age, breed, actions } = this.state;
     this.props.actions.postDogs(name, age, breed, '59e8f89004abdcfd203864ef');
-    this.props.navigation.navigate('ViewDogProfile');
+    this.props.navigation.navigate('ViewOwnerProfile');
   }
 
   render() {
