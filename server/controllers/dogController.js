@@ -26,6 +26,32 @@ module.exports = {
     });
   },
 
+  getDogsByOwner: (req, res) => {
+    Owners.find({ _id: req.params.userid }, (err) => {
+      if (err) {
+        console.log('error getting dogs ', err);
+        res.status(500).send(err);
+      }
+    })
+      .then((data) => {
+        Dogs.find({ _id: { $in: data[0].dogs } }, (err) => {
+          if (err) {
+            console.log('error getting this dog ', err);
+          }
+        })
+          .then((result) => {
+            console.log(result);
+            res.status(200).send(result);
+          })
+          .catch((err) => {
+            console.log('err1', err);
+          });
+      })
+      .catch((err) => {
+        console.log('err2', err);
+      });
+  },
+
   addDog: (req, res) => {
     const dog = new Dogs({
       _id: new mongoose.Types.ObjectId(),
