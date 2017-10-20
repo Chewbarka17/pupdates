@@ -16,6 +16,8 @@ import OwnerProfileScreen from '../Profiles/ownerProfile';
 import LogoutScreen from '../Logout/Logout';
 import ChatsScreen from '../Messages/chatList';
 import ViewOwnerProfileScreen from '../Profiles/viewOwnerProfile';
+import ViewDogProfileScreen from '../Profiles/viewDogProfile';
+import EditDogProfileScreen from '../Profiles/editDogProfile';
 
 class MenuScreen extends React.Component {
     static navigationOptions = {
@@ -75,6 +77,8 @@ const NavigationApp = StackNavigator({
   Logout: { screen: LogoutScreen },
   Chats: { screen: ChatsScreen },
   ViewOwnerProfile: {screen: ViewOwnerProfileScreen},
+  ViewDogProfile: {screen: ViewDogProfileScreen},
+  EditDogProfile: {screen: EditDogProfileScreen},
 });
 
   export default NavigationApp;
