@@ -3,7 +3,7 @@ const initialState = {
   error: null,
 };
 
-const chatReducer = (state=initialState, action) => {
+const chatReducer = (state = initialState, action) => {
   switch (action.type) {
     case 'MESSAGE_CHANGE': {
       // console.log('Messages reducer payload, ', action.payload);
@@ -13,6 +13,11 @@ const chatReducer = (state=initialState, action) => {
     }
     case 'POST_ROOM_FULFILLED': {
       // console.log('Messages reducer payload, ', action.payload);
+      return Object.assign({}, state, {
+        rooms: state.rooms.concat(action.payload),
+      });
+    }
+    case 'SAVE_ROOMS': {
       return Object.assign({}, state, {
         rooms: state.rooms.concat(action.payload),
       });

@@ -27,18 +27,23 @@ class ChatList extends React.Component {
   }
   constructor(props) {
     super(props);
-    // this.socket = io('/');
   };
 
   componentDidMount(){
-    // console.log('hehehehe', ChatRoom)
     // this.socket = io('/')
     // this.socket.on('message', message => {
     //   console.log('socket received message', message);
       // this.props.actions.messageChange([...this.props.log, message]);
     // })
+    console.log(this.props)
 
-    axios.get('https://localhost:8000/rooms/' + '59e92041f61b1458b2e847f3')
+    axios.get('http://localhost:8000/api/rooms/' + '59e92041f61b1458b2e847f3')
+    .then(({data}) => {
+      this.props.actions.saveRooms(data);
+    })
+    .catch((err) => {
+      console.log('cdm can\'t get rooms', err)
+    })
 
     // get rooms associated with user
     // set rooms = to data for FlatList
@@ -58,9 +63,9 @@ class ChatList extends React.Component {
     return (
       <View>
         <FlatList 
-          data={[{key: 'row1'}, {key:'row2'}]}
+          data={[this.props.rooms]}
           renderItem={({item}) =>  <ChatRoom
-            id={item.key}
+            id={item.room}
           />}
         />
         <View>
@@ -79,8 +84,7 @@ class ChatList extends React.Component {
 // add rooms to state
 const state = (store) => {
   return {
-    firstname: store.Owners.user.firstname,
-    lastname: store.Owners.user.lastname,
+    rooms: store.Rooms.rooms
   }
 }
 
