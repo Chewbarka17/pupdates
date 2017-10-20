@@ -12,13 +12,13 @@ import { Provider } from 'react-redux';
 import store from './Store/Store';
 // import files
 // import NavigationApp from './src/components/NavBar/menu';
-import NavigationApp from './src/components/Navbar/menu';
+import Navigator from './src/components/Navbar/menu';
 
 export default class App extends Component<{}> {
   render() {
     return (
       <Provider store={store}>
-        <NavigationApp />
+        <Navigator />
       </Provider>
     );
   }

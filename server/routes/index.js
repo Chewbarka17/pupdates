@@ -12,6 +12,8 @@ router.post('/dogs', dogs.addDog);
 router.delete('/dogs/:dogid', dogs.removeDog);
 router.patch('/dogs/:dogid', dogs.updateDog);
 
+router.get('/users/dogs/:userid', dogs.getDogsByOwner);
+
 // users
 router.get('/users', users.getAllUsers);
 router.get('/users/:userid', users.getUser);

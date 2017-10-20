@@ -11,11 +11,11 @@ import { FormLabel, FormInput, Button } from 'react-native-elements';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import * as ownerActions from '../../actions/Profiles/ownerActions';
+import * as dogActions from '../../actions/Profiles/dogProfileActions';
 
-class OwnerProfileScreen extends Component {
+class EditDogProfile extends Component {
   static navigationOptions = {
-    title: 'Profile',
+    title: 'EditDogProfile',
   };
   constructor(props) {
     super(props);
@@ -23,8 +23,8 @@ class OwnerProfileScreen extends Component {
     this.state = {
       name: '',
       age: '',
-      location: '',
-      bio: '',
+      breed: '',
+      owner: '',
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -32,9 +32,9 @@ class OwnerProfileScreen extends Component {
   };
 
   handleSubmit() {
-    const { name, age, location, bio, actions } = this.state;
-    this.props.actions.postOwners(name, age, location, bio);
-    this.props.navigation.navigate('ViewOwnerProfile');
+    const { name, age, breed, actions } = this.state;
+    this.props.actions.postDogs(name, age, breed, '59e8f89004abdcfd203864ef');
+    this.props.navigation.navigate('ViewDogProfile');
   }
 
   render() {
@@ -63,27 +63,16 @@ class OwnerProfileScreen extends Component {
           id="age"
           onChangeText={age => this.setState({ age })}
         />
-        <FormLabel>Zipcode</FormLabel>
+        <FormLabel>Breed</FormLabel>
         <FormInput
           editable
           autoCapitalize="none"
           autoCorrect={false}
           underlineColorAndroid="transparent"
-          placeholder={this.props.location || 'enter'}
+          placeholder={this.props.breed || 'enter'}
           returnKeyType="next"
-          id="zipcode"
-          onChangeText={location => this.setState({ location })}
-        />
-        <FormLabel>Bio</FormLabel>
-        <FormInput
-          editable
-          autoCapitalize="none"
-          autoCorrect={false}
-          underlineColorAndroid="transparent"
-          placeholder={this.props.bio || 'enter'}
-          returnKeyType="next"
-          id="bio"
-          onChangeText={bio => this.setState({ bio })}
+          id="breed"
+          onChangeText={breed => this.setState({ breed })}
         />
         <Button
           title="Save"
@@ -94,20 +83,20 @@ class OwnerProfileScreen extends Component {
   }
 }
 
-  const ownerState = (store) => {
+  const dogState = (store) => {
     return {
-      name: store.Owners.user.name,
-      age: store.Owners.user.age,
-      location: store.Owners.user.location,
-      bio: store.Owners.user.bio
-      // user: store.
+      name: store.Dogs.dogs.name,
+      age: store.Dogs.dogs.age,
+      location: store.Dogs.dogs.location,
+      bio: store.Dogs.dogs.bio
+      // owner: store.
     }
   }
 
-  const ownerDispatch = (dispatch) => {
+  const dogDispatch = (dispatch) => {
     return {
-      actions: bindActionCreators(ownerActions, dispatch),
+      actions: bindActionCreators(dogActions, dispatch),
     }
   };
 
-  export default connect(ownerState, ownerDispatch)(OwnerProfileScreen);
+  export default connect(dogState, dogDispatch)(EditDogProfile);
