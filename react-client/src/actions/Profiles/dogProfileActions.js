@@ -29,3 +29,6 @@ export const updateDogs = (name, age, breed, dogid) => (dispatch) => {
     });
 };
 
+export const listDogs = dogInfo => (dispatch) => {
+  dispatch({ type: 'LIST_DOGS', payload: dogInfo });
+};

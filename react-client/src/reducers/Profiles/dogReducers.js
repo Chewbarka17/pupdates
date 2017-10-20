@@ -4,6 +4,7 @@ const initialState = {
   posted: false,
   fetched: false,
   dogs: [],
+  dogsInfo: [],
 };
 
 const dogReducer = (state = initialState, action) => {
@@ -22,12 +23,17 @@ const dogReducer = (state = initialState, action) => {
     case 'POST_DOG_FULFILLED': {
       return Object.assign({}, state, {
         posted: true,
-        user: state.dogs.concat(action.payload),
+        dogs: state.dogs.concat(action.payload),
       });
     }
     case 'POST_DOG_REJECTED': {
       return Object.assign({}, state, {
         error: action.payload,
+      });
+    }
+    case 'LIST_DOGS': {
+      return Object.assign({}, state, {
+        dogInfo: state.dogsInfo.concat(action.payload),
       });
     }
     default:
