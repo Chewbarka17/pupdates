@@ -32,10 +32,12 @@ export default class FirstScreen extends React.Component {
       <Text style={{fontSize:30, color:'green'}}>
         Screen 1
       </Text>
-      <Button
-          onPress={() => this.props.navigation.navigate('DrawerOpen')}
-          title="Open DrawNavigator"
-      />
+      <MaterialIcons
+      name="menu"
+      size={24}
+      onPress={() => this.props.navigation.navigate('DrawerOpen')}
+    >
+    </MaterialIcons>
     </View>
   }
 }

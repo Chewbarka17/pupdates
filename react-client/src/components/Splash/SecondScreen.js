@@ -32,10 +32,12 @@ export default class SecondScreen extends React.Component {
       <Text style={{fontSize:30, color:'blue'}}>
         Screen 2
       </Text>
-      <Button
+      <MaterialIcons
+          name="menu"
+          size={24}
           onPress={() => this.props.navigation.navigate('DrawerOpen')}
-          title="Open DrawNavigator"
-      />
+        >
+        </MaterialIcons>
     </View>
   }
 }
