@@ -21,7 +21,7 @@ module.exports = {
   },
 
   getUser: (req, res) => {
-    Owners.find({ _id: req.params.userid }, (err, owner) => {
+    Owners.find({ fb_id: req.params.userid }, (err, owner) => {
       if (err) {
         console.log('error getting this user ', err);
         res.status(500).send(err);
@@ -33,6 +33,7 @@ module.exports = {
   addUser: (req, res) => {
     const owner = new Owners({
       _id: new mongoose.Types.ObjectId(),
+      fb_id: req.body.fb_id,
       name: req.body.name,
       age: req.body.age,
       location: req.body.location,

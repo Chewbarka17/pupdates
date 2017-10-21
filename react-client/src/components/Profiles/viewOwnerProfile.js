@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { StackNavigator } from 'react-navigation';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { View, Text, FlatList } from 'react-native';
+import { View, Text, FlatList, AsyncStorage } from 'react-native';
 import { Button, List, ListItem } from 'react-native-elements';
 import Swipeout from 'react-native-swipeout';
 import axios from 'axios';
@@ -28,6 +28,7 @@ class viewOwnerProfile extends Component {
   constructor(props) {
     super(props);
     // change to register a change for commit.
+    this.ownerProfile = null;
     this.help = this.help.bind(this);
     this.handlePressToEditUser = this.handlePressToEditUser.bind(this);
     this.handlePressToAddDog = this.handlePressToAddDog.bind(this);
@@ -38,6 +39,14 @@ class viewOwnerProfile extends Component {
   }
   
   componentDidMount() {
+    AsyncStorage.getItem('mongoOwner', (error, result) => {
+      if (error) {
+        console.log(error);
+      } else {
+        console.log('what is async owner profile', result);
+        this.ownerProfile = JSON.parse(result);
+      }
+    });
     axios.get('http://localhost:8000/api/users/dogs/59e8f89004abdcfd203864ef')
     .then(({data}) => {
       this.props.actions.listDogs(data);
@@ -49,7 +58,7 @@ class viewOwnerProfile extends Component {
   }
   
   handlePressToEditUser() {
-    this.props.navigation.navigate('Profile');
+    this.props.navigation.navigate('EditOwnerProfile');
   }
   
   handlePressToAddDog() {

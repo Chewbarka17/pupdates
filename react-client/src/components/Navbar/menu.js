@@ -21,8 +21,8 @@ import ViewDogProfileScreen from '../Profiles/viewDogProfile';
 import EditDogProfileScreen from '../Profiles/editDogProfile';
 import DogProfileScreen from '../Likes/likedDogProfile';
 import DrawerMenuScreen from '../Navbar/drawerNav';
-
-
+import SignupScreen from '../Signup/Signup';
+import EditOwnerProfileScreen from '../Profiles/editOwnerProfile';
 
 class MenuScreen extends React.Component {
     static navigationOptions = {
@@ -61,6 +61,12 @@ class MenuScreen extends React.Component {
               navigate('DrawerMenu')
             }
           />
+          <Button
+            title="Signup"
+            onPress={() =>
+              navigate('Signup')
+            }
+          />
         </View>
       );
     }
@@ -71,7 +77,7 @@ const NavigationApp = StackNavigator({
   Dogs: { screen: ViewDogsScreen },
   Likes: { screen : LikesScreen },
   Filter: { screen : FilterScreen },
-  //Profile: { screen : OwnerProfileScreen },
+  EditOwnerProfile: { screen : EditOwnerProfileScreen },
   Logout: { screen: LogoutScreen },
   Chats: { screen: ChatsScreen },
   ViewOwnerProfile: { screen: ViewOwnerProfileScreen },
@@ -79,7 +85,8 @@ const NavigationApp = StackNavigator({
   EditDogProfile: { screen: EditDogProfileScreen },
   DogProfile: { screen: DogProfileScreen },
   DrawerMenu: { screen: DrawerMenuScreen },
-  SplashPage: { screen: SplashPageView }
+  SplashPage: { screen: SplashPageView },
+  Signup: { screen: SignupScreen }, 
 });
 
 export default NavigationApp;
