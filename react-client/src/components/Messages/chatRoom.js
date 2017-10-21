@@ -1,5 +1,5 @@
 import React from 'react';
-import { Platform, StyleSheet, Text, View, TextInput } from 'react-native';
+import { Platform, StyleSheet, Text, View, TextInput, FlatList } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
@@ -41,9 +41,14 @@ class ChatRoom extends React.Component {
     console.log(this.props.navigation.state.params.messages)
     return (
       <View>
-        <Text>
-          {text[0].text}
-        </Text>
+        <FlatList
+          data={text}
+          renderItem={({item}) => 
+            <View>
+              <Text>{item.user}: {item.text}</Text>
+            </View>
+            }
+            />
       </View>
     )
   } 
