@@ -21,6 +21,7 @@ export default class FirstScreen extends React.Component {
       );
     }
   }
+  
   render() {
     return <View style={
       {
@@ -33,11 +34,11 @@ export default class FirstScreen extends React.Component {
         Screen 1
       </Text>
       <MaterialIcons
-      name="menu"
-      size={24}
-      onPress={() => this.props.navigation.navigate('DrawerOpen')}
-    >
-    </MaterialIcons>
+          name="menu"
+          size={24}
+          onPress={() => this.props.navigation.navigate('DrawerOpen')}
+        >
+        </MaterialIcons>
     </View>
   }
 }

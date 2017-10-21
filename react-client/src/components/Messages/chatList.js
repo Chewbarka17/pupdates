@@ -7,9 +7,23 @@ import { connect } from 'react-redux';
 
 import ChatRoom from './chatRoom.js';
 import * as messageActions from '../../actions/MessageActions/chatRoomActions';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 
 class ChatList extends React.Component {
+  static navigationOptions = {
+    drawerLabel: 'Chat',
+    drawerIcon: ({tintColor}) => {
+      return (
+        <MaterialIcons
+          name="favorite-border"
+          size={24}
+          style={{color: tintColor}}
+        >
+        </MaterialIcons>
+      );
+    }
+  }
   constructor(props) {
     super(props);
     // this.socket = io('/');
@@ -46,6 +60,14 @@ class ChatList extends React.Component {
             id={item.key}
           />}
         />
+        <View>
+          <MaterialIcons
+              name="menu"
+              size={24}
+              onPress={() => this.props.navigation.navigate('DrawerOpen')}
+          >
+          </MaterialIcons>
+        </View>
       </View>
     )
   };

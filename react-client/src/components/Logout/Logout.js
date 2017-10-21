@@ -1,32 +1,39 @@
+import {
+  Text,
+  View
+} from 'react-native';
 import React, { Component } from 'react';
 import { StackNavigator} from 'react-navigation';
-import {
-  Platform,
-  StyleSheet,
-  Text,
-  View,
-  Button
-} from 'react-native';
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 class LogoutScreen extends React.Component {
-    static navigationOptions = {
-      title: 'Logout',
-    };
-    render() {
-      const { navigate } = this.props.navigation;
+  static navigationOptions = {
+    drawerLabel: 'Logout',
+    drawerIcon: ({tintColor}) => {
       return (
-        <View style={styles.container}>
+        <MaterialIcons
+          name="favorite-border"
+          size={24}
+          style={{color: tintColor}}
+        >
+        </MaterialIcons>
+      );
+    }
+  }
+    render() {
+      return (
+        <View>
           <Text>
-            Blah
+            This needs to logout user and auto navigates to splash/login page
           </Text>
+          <View>
+      <MaterialIcons
+          name="menu"
+          size={24}
+          onPress={() => this.props.navigation.navigate('DrawerOpen')}
+        >
+        </MaterialIcons>
+    </View>
         </View>
       );
     }

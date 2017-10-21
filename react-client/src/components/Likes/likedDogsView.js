@@ -16,12 +16,23 @@ import {
 import React, { Component } from 'react';
 import Swipeout from 'react-native-swipeout';
 import { List, ListItem } from "react-native-elements";
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 
-class LikedDogsView extends Component {
+class LikedDogsView extends React.Component {
   static navigationOptions = {
-    title: 'Likes',
-  };
+    drawerLabel: 'Likes',
+    drawerIcon: ({tintColor}) => {
+      return (
+        <MaterialIcons
+          name="favorite-border"
+          size={24}
+          style={{color: tintColor}}
+        >
+        </MaterialIcons>
+      );
+    }
+  }
   constructor(props) {
     super(props);
 
@@ -129,6 +140,14 @@ class LikedDogsView extends Component {
             refreshing={this.state.refreshing}
           />
         </List>
+        <View>
+          <MaterialIcons
+            name="menu"
+            size={24}
+            onPress={() => this.props.navigation.navigate('DrawerOpen')}
+          >
+          </MaterialIcons>
+        </View>
       </View>
     );
   }

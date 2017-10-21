@@ -13,7 +13,7 @@ export default class SecondScreen extends React.Component {
     drawerIcon: ({tintColor}) => {
       return (
         <MaterialIcons
-          name="favorite"
+          name="favorite-border"
           size={24}
           style={{color: tintColor}}
         >
