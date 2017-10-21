@@ -20,7 +20,7 @@ const likedDogProfile = (props) => {
           rounded
           source={{uri: props.navigation.state.params.picture.large}}
         />
-      <View>
+        <View>
         <Text>
           Name: {props.navigation.state.params.name.first}
         </Text>

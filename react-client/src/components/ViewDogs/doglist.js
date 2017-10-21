@@ -14,7 +14,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 // each card should have:
 // dog's name, # of miles away
-// clikc on dog's pic to view their profile
+// click on dog's pic to view their profile
 
 // dummy data ====================================
 var image1 = require('./corgi.jpg');
