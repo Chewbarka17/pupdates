@@ -33,13 +33,13 @@ const dogReducer = (state = initialState, action) => {
     }
     case 'LIST_DOGS': {
       return Object.assign({}, state, {
-        dogInfo: state.dogInfo.concat(action.payload),
+        dogInfo: action.payload,
       });
     }
     case 'DELETE_DOG_FULFILLED': {
       return Object.assign({}, state, {
         deleted: true,
-        dogs: state.dogs.filter(dog => (dog.id !== Number(action.payload.id) ? dog : null)),
+        dogs: state.dogs.filter(dog => (dog.id !== Number(action.payload._id) ? dog : null)),
       });
     }
     case 'DELETE_DOG_REJECTED': {

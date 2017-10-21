@@ -15,7 +15,7 @@ import * as ownerActions from '../../actions/Profiles/ownerActions';
 
 class EditOwnerProfile extends Component {
   static navigationOptions = {
-    title: 'Profile',
+    title: 'EditProfile',
   };
   constructor(props) {
     super(props);
