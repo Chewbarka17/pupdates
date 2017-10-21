@@ -1,20 +1,21 @@
+// TODO:
+// makeRemoteRequest (get requests)
+// deleteLikedDog (delete request)
+// get rid of that grey bar
+// add padding to footer to show items at the end
+
 import {  
   View,
   Text,
   Image,
   Button,
   FlatList,
-  NavigatorIOS,
   ActivityIndicator, 
   TouchableHighlight 
 } from 'react-native';
 import React, { Component } from 'react';
 import Swipeout from 'react-native-swipeout';
-import { StackNavigator } from 'react-navigation';
-import { List, ListItem, SearchBar } from "react-native-elements";
-
-import DogProfileScreen from '../Likes/likedDogProfile';
-
+import { List, ListItem } from "react-native-elements";
 
 
 class LikedDogsView extends Component {
@@ -24,12 +25,6 @@ class LikedDogsView extends Component {
   constructor(props) {
     super(props);
 
-      this.swipeoutBtns = [{
-      text: 'Delete',
-      backgroundColor: 'red',
-      onPress: () => {this.deleteLikedDog()}
-    }];
-
     // only need data?
     this.state = {
       loading: false,
@@ -37,7 +32,8 @@ class LikedDogsView extends Component {
       page: 1,
       seed: 1,
       error: null,
-      refreshing: false
+      refreshing: false,
+      item: null
     };
   }
 
@@ -80,10 +76,12 @@ class LikedDogsView extends Component {
     );
   };
 
-  deleteLikedDog = () => {
-    // delete request. which updated the dogsLiked array
-    // handleRefresh
-    alert('dog deleted');
+  // item will be the dog object
+  deleteLikedDog = (item) => {
+    // delete request. which updates the dogsLiked array
+    // handleRefresh() after deleting from DB to show new list with deleted dog gone
+    console.log('delete dog', item);
+    alert('dog deleted ' + item.name.first);
   }
 
   render() {
@@ -99,16 +97,20 @@ class LikedDogsView extends Component {
           <FlatList
             data={this.state.data}
             renderItem={({ item }) => (
-              <Swipeout right={this.swipeoutBtns}
+              <Swipeout
+                right={[{
+                  text: 'Delete',
+                  backgroundColor: 'red',
+                  onPress: () => this.deleteLikedDog(item)
+                }]}
                 autoClose={true}
-                backgroundColor= 'transparent'
+                backgroundColor='transparent'
               >
               <TouchableHighlight
                 underlayColor='rgba(192,192,192,0.6)'
               >
               <View>
                 <ListItem
-                
                   onPress={() =>
                     navigate('DogProfile', item)
                   }
@@ -132,11 +134,4 @@ class LikedDogsView extends Component {
   }
 }
 
-// navigation to each dog's profile
-
-const App = StackNavigator({
-  Likes: { screen: LikedDogsView },
-  DogProfile: { screen: DogProfileScreen },
-});
-
-export default App;
+export default LikedDogsView;
