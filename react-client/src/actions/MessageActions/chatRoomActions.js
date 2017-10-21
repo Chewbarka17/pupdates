@@ -1,24 +1,49 @@
 import axios from 'axios';
 
-export const messageChange = (messages) => {
+export const sendMessage = (message) => {
   return (dispatch) => {
-    console.log('MESSAGE CHANGE DISPATCH: ', messages);
-    dispatch({ type: 'MESSAGE_CHANGE', payload: messages });
+    axios.patch('/messages' + message.roomid, {
+      user: message.user,
+      text: message.text,
+      roomid: message.roomid,
+    })
+      .then((response) => {
+        // something here needs fixing.  What is message?  what is response?
+        console.log('MESSAGE CHANGE DISPATCH: ', response, message);
+        dispatch({ type: 'MESSAGE_CHANGE', payload: message });
+      });
   };
 };
 
-export const getRooms = () => {
-  // axios.get('/api/rooms')
+export const getRooms = (userid) => {
+  return (dispatch) => {
+    axios.get('http://localhost:8000/api/rooms/' + userid)
+      .then(({ data }) => {
+        console.log(data);
+        dispatch({ type: 'SAVE_ROOMS', payload: data });
+      })
+      .catch((err) => {
+        console.log('cdm can\'t get rooms', err);
+      });
+  };
 };
 
+// export const saveRooms = (rooms) => {
+//   return (dispatch) => {
+//     dispatch({ type: 'SAVE_ROOMS', payload: rooms });
+//   };
+// };
+
 export const createRoom = (uid1, uid2) => {
-  axios.post('/api/rooms', {
-    uids: [uid1, uid2],
-  })
-    .then((response) => {
-      dispatch({ type: 'POST_ROOM_FULFILLED', payload: response.data });
+  return (dispatch) => {
+    axios.post('/api/rooms', {
+      uids: [uid1, uid2],
     })
-    .catch((err) => {
-      dispatch({ type: 'POST_OWNER_REJECTED', payload: err });
-    });
+      .then((response) => {
+        dispatch({ type: 'POST_ROOM_FULFILLED', payload: response.data });
+      })
+      .catch((err) => {
+        dispatch({ type: 'POST_ROOM_REJECTED', payload: err });
+      });
+  };
 };

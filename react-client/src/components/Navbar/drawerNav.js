@@ -33,8 +33,8 @@ const DrawerExample = DrawerNavigator(
   },
   {
     initialRouteName: 'Dogs',
-    drawerPosition: 'left'
-  }
+    drawerPosition: 'left',
+  },
 );
 
 export default DrawerExample;

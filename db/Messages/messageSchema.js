@@ -6,8 +6,9 @@ const roomSchema = new db.Schema({
   uids: [String],
   messages: [{
     user: String,
+    uid: String,
     text: String,
-    createdAt: String,
+    // createdAt: String,
   }],
 });
 

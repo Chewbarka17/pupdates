@@ -3,7 +3,7 @@ const parser = require('body-parser');
 const path = require('path');
 require('dotenv').config();
 const cors = require('cors');
-// const io = require('socket.io-client')('http://localhost');
+const io = require('socket.io')();
 
 // File imports
 const routes = require('./routes/index.js');
@@ -22,15 +22,17 @@ app.use(express.static(path.resolve(__dirname, '../src')));
 app.use('/api', routes);
 
 // Messages
-// io.on('connection', (socket) => {
-//   socket.on('message', (message) => {
-//     // put message in database?
-//     console.log('io.on + socket.on', message);
-//     socket.broadcast.emit('message', {
-//       user: message.user,
-//       text: message.text,
-//     });
-//   });
-// });
+io.on('connection', (socket) => {
+  socket.on('message', (message) => {
+    // put message in database?
+    // console.log('io.on + socket.on', message);
+
+    socket.in(message.roomid).emit('message', {
+      user: message.user,
+      text: message.text,
+      //room id
+    });
+  });
+});
 
 module.exports = app;
