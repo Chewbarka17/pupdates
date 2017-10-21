@@ -18,6 +18,9 @@ import ChatsScreen from '../Messages/chatList';
 import ViewOwnerProfileScreen from '../Profiles/viewOwnerProfile';
 import ViewDogProfileScreen from '../Profiles/viewDogProfile';
 import EditDogProfileScreen from '../Profiles/editDogProfile';
+import DogProfileScreen from '../Likes/likedDogProfile';
+import SplashScreen from '../Splash/splashView';
+
 
 class MenuScreen extends React.Component {
     static navigationOptions = {
@@ -63,6 +66,12 @@ class MenuScreen extends React.Component {
               navigate('Chats')
             }
           />
+          <Button
+            title="Splash"
+            onPress={() =>
+              navigate('Splash')
+            }
+          />
         </View>
       );
     }
@@ -76,9 +85,11 @@ const NavigationApp = StackNavigator({
   Profile: { screen : OwnerProfileScreen },
   Logout: { screen: LogoutScreen },
   Chats: { screen: ChatsScreen },
-  ViewOwnerProfile: {screen: ViewOwnerProfileScreen},
-  ViewDogProfile: {screen: ViewDogProfileScreen},
-  EditDogProfile: {screen: EditDogProfileScreen},
+  ViewOwnerProfile: { screen: ViewOwnerProfileScreen },
+  ViewDogProfile: { screen: ViewDogProfileScreen },
+  EditDogProfile: { screen: EditDogProfileScreen },
+  DogProfile: { screen: DogProfileScreen },
+  Splash: { screen: SplashScreen }
 });
 
   export default NavigationApp;
