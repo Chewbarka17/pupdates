@@ -37,11 +37,15 @@ class ChatRoom extends React.Component {
   }
 
   render() {
+    console.log(this.props.navigation.state.params)
     return (
-      <View><Text>test</Text></View>
+      <View>
+        <Text>
+        </Text>
+      </View>
     )
   } 
 
 }
 
-  export default ChatRoom;
+export default ChatRoom;

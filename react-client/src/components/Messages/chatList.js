@@ -1,5 +1,5 @@
 import React from 'react';
-import { Platform, StyleSheet, Text, View, TextInput, FlatList } from 'react-native';
+import { Platform, StyleSheet, Text, View, TextInput, FlatList, TouchableHighlight } from 'react-native';
 import { List, ListItem, SearchBar } from "react-native-elements";
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -39,14 +39,6 @@ class ChatList extends React.Component {
     console.log(this.props)
     this.props.actions.getRooms('59e92041f61b1458b2e847f3');
 
-    // axios.get('http://localhost:8000/api/rooms/' + '59e92041f61b1458b2e847f3')
-    // .then(({data}) => {
-    //   this.props.actions.saveRooms(data);
-    // })
-    // .catch((err) => {
-    //   console.log('cdm can\'t get rooms', err)
-    // })
-
     // get rooms associated with user
     // set rooms = to data for FlatList
     // onPress function to go into room
@@ -63,14 +55,26 @@ class ChatList extends React.Component {
 
   render() {
     console.log(this.props.rooms)
+
     return (
       <View>
         <FlatList 
-          data={[this.props.rooms]}
+          data={this.props.rooms}
           renderItem={({item}) =>  
+          <TouchableHighlight
+          underlayColor='rgba(192,192,192,0.6)'
+        >
+        <View>
           <ListItem
+          onPress={() =>
+            this.props.navigation.navigate('ChatRoom', item)
+          }
+            title={`${item}`}
             id={item.room}
-          />}
+          />
+          </View>
+          </TouchableHighlight>
+          }
         />
         <View>
           <MaterialIcons

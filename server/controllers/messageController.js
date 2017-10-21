@@ -24,6 +24,7 @@ module.exports = {
       $push: {
         messages: {
           user: req.body.user,
+          uid: req.body.uid,
           text: req.body.text,
         },
       },

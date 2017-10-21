@@ -19,7 +19,7 @@ const chatReducer = (state = initialState, action) => {
     }
     case 'SAVE_ROOMS': {
       return Object.assign({}, state, {
-        rooms: state.rooms.concat(action.payload),
+        rooms: action.payload,
       });
     }
     default: {
