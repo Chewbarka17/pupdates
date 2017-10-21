@@ -22,36 +22,30 @@ class SignupScreen extends Component {
     super(props)
   }
 
-  componentDidMount = () => {
-    // const navigateAction = NavigationActions.navigate({
-    //   routeName: 'Dogs',
-    // });
+  // componentDidMount = () => {
+  // }
+
+  _fbAuth = () => {
     AccessToken.getCurrentAccessToken()
     .then(data => {
       let accessToken = data.accessToken;
       if (accessToken !== null) {
         this._getPublicProfile();
-        alert('Access Token');
-        this.props.navigation.navigate('Dogs');
-        // this.props.navigation.dispatch(navigateAction);
       }
     })
     .catch(error => {
       console.log(error);
-    });
-  }
-
-  _fbAuth = () => {
-    LoginManager.logInWithReadPermissions(['public_profile'])
-    .then((result) => {
-        if (result.isCancelled) {
-          alert('Login cancelled');
-        } else {
-          this._getPublicProfile();
-        }
-    })
-    .catch((error) => {
-        alert('Login fail with error: ' + error);
+      LoginManager.logInWithReadPermissions(['public_profile'])
+      .then((result) => {
+          if (result.isCancelled) {
+            alert('Login cancelled');
+          } else {
+            this._getPublicProfile();
+          }
+      })
+      .catch((error) => {
+          alert('Login fail with error: ' + error);
+      });
     });
   }
 
@@ -100,6 +94,7 @@ class SignupScreen extends Component {
           alert('Failure! Could not save user to async storage', error);
         }
       });
+      this.props.navigation.navigate('Dogs');
     })
     .catch((err) => {
       console.log('User not in db, adding user to db', err)
@@ -122,6 +117,7 @@ class SignupScreen extends Component {
           alert('Failure! Could not save user to async storage', error);
         }
       });
+      this.props.navigation.navigate('Dogs');
     })
     .catch((err) => {
       console.log(err)
