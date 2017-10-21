@@ -6,19 +6,35 @@ import { View, Text, FlatList } from 'react-native';
 import { Button, List, ListItem } from 'react-native-elements';
 import Swipeout from 'react-native-swipeout';
 import axios from 'axios';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 import ViewDogProfileScreen from '../Profiles/viewDogProfile';
 import * as dogActions from '../../actions/Profiles/dogProfileActions';
 
 class viewOwnerProfile extends Component {
   static navigationOptions = {
-    title: 'ViewOwnerProfile',
-  };
+    drawerLabel: 'Profile',
+    drawerIcon: ({tintColor}) => {
+      return (
+        <MaterialIcons
+          name="favorite-border"
+          size={24}
+          style={{color: tintColor}}
+        >
+        </MaterialIcons>
+      );
+    }
+  }
   constructor(props) {
     super(props);
-    
+    // change to register a change for commit.
+    this.help = this.help.bind(this);
     this.handlePressToEditUser = this.handlePressToEditUser.bind(this);
     this.handlePressToAddDog = this.handlePressToAddDog.bind(this);
+  }
+
+  help() {
+    //does nothing.  
   }
   
   componentDidMount() {
@@ -74,6 +90,14 @@ class viewOwnerProfile extends Component {
             </Swipeout>
     }
         />
+          <View>
+            <MaterialIcons
+              name="menu"
+              size={24}
+              onPress={() => this.props.navigation.navigate('DrawerOpen')}
+            >
+            </MaterialIcons>
+          </View>
       </View>
     )
   }
