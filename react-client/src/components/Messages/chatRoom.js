@@ -37,10 +37,12 @@ class ChatRoom extends React.Component {
   }
 
   render() {
-    console.log(this.props.navigation.state.params)
+    let text = this.props.navigation.state.params.messages
+    console.log(this.props.navigation.state.params.messages)
     return (
       <View>
         <Text>
+          {text[0].text}
         </Text>
       </View>
     )

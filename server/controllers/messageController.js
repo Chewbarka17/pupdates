@@ -77,7 +77,20 @@ module.exports = {
       }
     })
       .then((data) => {
-        res.status(200).send(data[0].chatRooms);
+        Rooms.find({ _id: { $in: data[0].chatRooms } }, (err) => {
+          if (err) {
+            console.log('error getting message rooms ', err);
+          }
+        })
+          .then((results) => {
+            res.status(200).send(results);
+          })
+          .catch((err) => {
+            console.log('Error getting message rooms', err);
+          });
+      })
+      .catch((err) => {
+        console.log('Error getting user', err);
       });
   },
 

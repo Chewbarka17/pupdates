@@ -19,7 +19,7 @@ export const getRooms = (userid) => {
   return (dispatch) => {
     axios.get('http://localhost:8000/api/rooms/' + userid)
       .then(({ data }) => {
-        console.log(data)
+        console.log(data);
         dispatch({ type: 'SAVE_ROOMS', payload: data });
       })
       .catch((err) => {

@@ -54,7 +54,7 @@ class ChatList extends React.Component {
   };
 
   render() {
-    console.log(this.props.rooms)
+    console.log(this.props.rooms[0])
 
     return (
       <View>
@@ -69,8 +69,8 @@ class ChatList extends React.Component {
           onPress={() =>
             this.props.navigation.navigate('ChatRoom', item)
           }
-            title={`${item}`}
-            id={item.room}
+            title={`${item._id}`}
+            id={item._id}
           />
           </View>
           </TouchableHighlight>
