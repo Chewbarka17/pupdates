@@ -30,6 +30,7 @@ class ChatRoom extends React.Component {
 
   handleSubmit() {
     // post message to database
+    
     this.socket.to(this.props.roomid).emit('message', {
       // message object with room id
     })

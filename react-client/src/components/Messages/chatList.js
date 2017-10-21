@@ -1,5 +1,6 @@
 import React from 'react';
 import { Platform, StyleSheet, Text, View, TextInput, FlatList } from 'react-native';
+import { List, ListItem, SearchBar } from "react-native-elements";
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import axios from 'axios';
@@ -36,14 +37,15 @@ class ChatList extends React.Component {
       // this.props.actions.messageChange([...this.props.log, message]);
     // })
     console.log(this.props)
+    this.props.actions.getRooms('59e92041f61b1458b2e847f3');
 
-    axios.get('http://localhost:8000/api/rooms/' + '59e92041f61b1458b2e847f3')
-    .then(({data}) => {
-      this.props.actions.saveRooms(data);
-    })
-    .catch((err) => {
-      console.log('cdm can\'t get rooms', err)
-    })
+    // axios.get('http://localhost:8000/api/rooms/' + '59e92041f61b1458b2e847f3')
+    // .then(({data}) => {
+    //   this.props.actions.saveRooms(data);
+    // })
+    // .catch((err) => {
+    //   console.log('cdm can\'t get rooms', err)
+    // })
 
     // get rooms associated with user
     // set rooms = to data for FlatList
@@ -60,11 +62,13 @@ class ChatList extends React.Component {
   };
 
   render() {
+    console.log(this.props.rooms)
     return (
       <View>
         <FlatList 
           data={[this.props.rooms]}
-          renderItem={({item}) =>  <ChatRoom
+          renderItem={({item}) =>  
+          <ListItem
             id={item.room}
           />}
         />
