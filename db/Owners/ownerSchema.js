@@ -2,6 +2,7 @@ const db = require('../index.js');
 
 const ownerSchema = new db.Schema({
   _id: db.Schema.Types.ObjectId,
+  fb_id: String,
   name: String,
   location: String,
   age: { type: Number, min: 18, max: 101 },

@@ -19,19 +19,10 @@ import ChatsScreen from '../Messages/chatList';
 import ViewOwnerProfileScreen from '../Profiles/viewOwnerProfile';
 import ViewDogProfileScreen from '../Profiles/viewDogProfile';
 import EditDogProfileScreen from '../Profiles/editDogProfile';
-<<<<<<< HEAD
 import DogProfileScreen from '../Likes/likedDogProfile';
 import DrawerMenuScreen from '../Navbar/drawerNav';
-
-
-=======
-import LogoutScreen from '../Logout/Logout'
-<<<<<<< HEAD
-import SignupScreen from '../Signup/Signup'
->>>>>>> [Add] signup to navigation bar.
-=======
-import SignupScreen from '../Signup/Signup.js'
->>>>>>> [Add] Facebook authentication of access token
+import LogoutScreen from '../Logout/Logout';
+import SignupScreen from '../Signup/Signup';
 
 class MenuScreen extends React.Component {
     static navigationOptions = {

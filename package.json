@@ -5,7 +5,8 @@
   "scripts": {
     "test": "jest --watch",
     "eslint": "eslint",
-    "start": "nodemon server/index.js"
+    "start": "nodemon server/index.js",
+    "ios": "react-native run-ios"
   },
   "dependencies": {
     "axios": "^0.16.2",
