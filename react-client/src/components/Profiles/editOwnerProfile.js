@@ -13,7 +13,7 @@ import { connect } from 'react-redux';
 
 import * as ownerActions from '../../actions/Profiles/ownerActions';
 
-class OwnerProfileScreen extends Component {
+class EditOwnerProfile extends Component {
   static navigationOptions = {
     title: 'Profile',
   };
@@ -110,4 +110,4 @@ class OwnerProfileScreen extends Component {
     }
   };
 
-  export default connect(ownerState, ownerDispatch)(OwnerProfileScreen);
+  export default connect(ownerState, ownerDispatch)(EditOwnerProfile);

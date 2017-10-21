@@ -18,7 +18,7 @@ const DrawerExample = DrawerNavigator(
       path: '/',
       screen: LikesScreen,
     },
-    Profile: {
+    viewProfile: {
       path: '/',
       screen: ViewOwnerProfileScreen,
     },

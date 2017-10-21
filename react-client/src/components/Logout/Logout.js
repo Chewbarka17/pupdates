@@ -1,3 +1,5 @@
+import { LoginManager, AccessToken } from 'react-native-fbsdk';
+
 import {
   Text,
   View
@@ -5,6 +7,8 @@ import {
 import React, { Component } from 'react';
 import { StackNavigator} from 'react-navigation';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+// import { LoginManager } from 'react-native-fbsdk';
+import SplashPageView from '../Splash/splashPageView';
 
 class LogoutScreen extends React.Component {
   static navigationOptions = {
@@ -20,23 +24,30 @@ class LogoutScreen extends React.Component {
       );
     }
   }
-    render() {
-      return (
-        <View>
-          <Text>
-            This needs to logout user and auto navigates to splash/login page
-          </Text>
-          <View>
-      <MaterialIcons
-          name="menu"
-          size={24}
-          onPress={() => this.props.navigation.navigate('DrawerOpen')}
-        >
-        </MaterialIcons>
-    </View>
-        </View>
-      );
-    }
+  constructor(props) {
+    super(props);
+  }
+  
+  componentDidMount() {
+    // logic to logout
+    AccessToken.getCurrentAccessToken()
+    .then(data => {
+      let accessToken = data.accessToken;
+      if (accessToken !== null) {
+        LoginManager.logOut();
+        this.props.navigation.navigate('Menu');
+      }
+    })
+    .catch(error => {
+      this.props.navigation.navigate('Menu');
+    });
   }
 
-  export default LogoutScreen;
+  render() {
+    return (
+      <View></View>
+    )
+  }
+}
+
+export default LogoutScreen;
