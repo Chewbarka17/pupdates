@@ -1,14 +1,15 @@
-import {
+import {  
+  View,
   Text,
-  View
+  Image,
+  Button
 } from 'react-native';
 import React, { Component } from 'react';
-import { StackNavigator} from 'react-navigation';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
-class LogoutScreen extends React.Component {
+export default class FirstScreen extends React.Component {
   static navigationOptions = {
-    drawerLabel: 'Logout',
+    drawerLabel: 'Screen 1',
     drawerIcon: ({tintColor}) => {
       return (
         <MaterialIcons
@@ -20,13 +21,18 @@ class LogoutScreen extends React.Component {
       );
     }
   }
-    render() {
-      return (
-        <View>
-          <Text>
-            This needs to logout user and auto navigates to splash/login page
-          </Text>
-          <View>
+  
+  render() {
+    return <View style={
+      {
+        flex: 1, 
+        justifyContent: 'center',
+        alignItems:'center'
+      }
+    }>
+      <Text style={{fontSize:30, color:'green'}}>
+        Screen 1
+      </Text>
       <MaterialIcons
           name="menu"
           size={24}
@@ -34,9 +40,5 @@ class LogoutScreen extends React.Component {
         >
         </MaterialIcons>
     </View>
-        </View>
-      );
-    }
   }
-
-  export default LogoutScreen;
+}

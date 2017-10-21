@@ -5,62 +5,60 @@ import {
   StyleSheet,
   Text,
   View,
-  Button
+  Button,
+  Image
 } from 'react-native';
 
-// import files
 import ViewDogsScreen from '../ViewDogs/doglist';
+import SplashPageView from '../Splash/splashPageView';
+
 import LikesScreen from '../Likes/likedDogsView';
 import FilterScreen from '../FilterDog/filterDog';
-import OwnerProfileScreen from '../Profiles/ownerProfile';
 import LogoutScreen from '../Logout/Logout';
 import ChatsScreen from '../Messages/chatList';
 import ViewOwnerProfileScreen from '../Profiles/viewOwnerProfile';
 import ViewDogProfileScreen from '../Profiles/viewDogProfile';
 import EditDogProfileScreen from '../Profiles/editDogProfile';
+import DogProfileScreen from '../Likes/likedDogProfile';
+import DrawerMenuScreen from '../Navbar/drawerNav';
+
+
 
 class MenuScreen extends React.Component {
     static navigationOptions = {
-      title: 'Menu',
+      title: 'Splash Page Home',
     };
     render() {
       const { navigate } = this.props.navigation;
       return (
         <View>
-          <Button
-            title="Dogs"
-            onPress={() =>
-              navigate('Dogs')
-            }
+          <View>
+        <View>
+          <Text>
+            Pupdates logo!
+          </Text>
+          <Image
+            style={{width: 200, height: 140}}
+            source={{uri: 'https://en.fontke.com/d/file/content/2017/02/5895352e54002.gif'}}
           />
+          <Text>
+            Sign Up
+          </Text>
+          <Text>
+            Login with FB
+          </Text>
+        </View>
+        <Text>
+           
+        </Text>
+        <Text>
+          logging in will auto navigate to View Dogs
+        </Text>
+      </View>
           <Button
-            title="Likes"
+            title="Dogs (with drawer nav)"
             onPress={() =>
-              navigate('Likes')
-            }
-          />
-          <Button
-            title="Filter"
-            onPress={() =>
-              navigate('Filter')
-            }
-          />
-          <Button
-            title="View Profile"
-            onPress={() =>
-              navigate('ViewOwnerProfile')
-            }
-          />
-          <Button
-            title="Logout"
-            onPress={() =>
-              navigate('Logout')
-            }
-          />
-          <Button
-            title="Chats"
-            onPress={() =>
-              navigate('Chats')
+              navigate('DrawerMenu')
             }
           />
         </View>
@@ -73,12 +71,15 @@ const NavigationApp = StackNavigator({
   Dogs: { screen: ViewDogsScreen },
   Likes: { screen : LikesScreen },
   Filter: { screen : FilterScreen },
-  Profile: { screen : OwnerProfileScreen },
+  //Profile: { screen : OwnerProfileScreen },
   Logout: { screen: LogoutScreen },
   Chats: { screen: ChatsScreen },
-  ViewOwnerProfile: {screen: ViewOwnerProfileScreen},
-  ViewDogProfile: {screen: ViewDogProfileScreen},
-  EditDogProfile: {screen: EditDogProfileScreen},
+  ViewOwnerProfile: { screen: ViewOwnerProfileScreen },
+  ViewDogProfile: { screen: ViewDogProfileScreen },
+  EditDogProfile: { screen: EditDogProfileScreen },
+  DogProfile: { screen: DogProfileScreen },
+  DrawerMenu: { screen: DrawerMenuScreen },
+  SplashPage: { screen: SplashPageView }
 });
 
-  export default NavigationApp;
+export default NavigationApp;
