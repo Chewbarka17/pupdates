@@ -34,13 +34,13 @@ module.exports = {
       }
     })
       .then((data) => {
+        // console.log(data);
         Dogs.find({ _id: { $in: data[0].dogs } }, (err) => {
           if (err) {
             console.log('error getting this dog ', err);
           }
         })
           .then((result) => {
-            console.log(result);
             res.status(200).send(result);
           })
           .catch((err) => {
@@ -107,12 +107,17 @@ module.exports = {
       }
     });
 
-    Dogs.remove({ _id: req.params.dogid }, (err, data) => {
+    Dogs.remove({ _id: req.params.dogid }, (err) => {
       if (err) {
         res.status(500).send('error removing dog', err);
       }
-      res.status(202).send('Dog successfully deleted');
-    });
+    })
+      .then((data) => {
+        res.status(202).send('Dog successfully deleted');
+      })
+      .catch((err) => {
+        res.status(500).send('error removing dog', err);
+      });
   },
 
 };

@@ -5,6 +5,8 @@ import { connect } from 'react-redux';
 import { View, Text } from 'react-native';
 import { Button } from 'react-native-elements';
 
+import * as dogActions from '../../actions/Profiles/dogProfileActions';
+
 class viewDogProfile extends Component {
   static navigationOptions = {
     title: 'ViewDogProfile',
@@ -31,10 +33,16 @@ class viewDogProfile extends Component {
   }
 }
 
-const DogState = (store) => {
+const dogsState = (store) => {
   return {
-    // user: store.User.
+    dogs: store.Dogs.dogsInfo
   }
 }
 
-export default viewDogProfile;
+const dogDispatch = (dispatch) => {
+  return {
+    actions: bindActionCreators(dogActions, dispatch),
+  }
+};
+
+export default connect(dogsState, dogDispatch)(viewDogProfile);

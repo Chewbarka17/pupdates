@@ -29,3 +29,16 @@ export const updateDogs = (name, age, breed, dogid) => (dispatch) => {
     });
 };
 
+export const deleteDogs = dogid => (dispatch) => {
+  axios.delete(`http://localhost:8000/api/dogs/${dogid}`)
+    .then((response) => {
+      dispatch({ type: 'DELETE_DOG_FULFILLED', payload: response.data });
+    })
+    .catch((err) => {
+      dispatch({ type: 'DELETE_DOG_REJECTED', payload: err });
+    });
+};
+
+export const listDogs = dogInfo => (dispatch) => {
+  dispatch({ type: 'LIST_DOGS', payload: dogInfo });
+};
