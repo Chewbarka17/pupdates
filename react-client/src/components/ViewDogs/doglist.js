@@ -20,7 +20,7 @@ class ViewDogsScreen extends React.Component {
     drawerIcon: ({tintColor}) => {
       return (
         <MaterialIcons
-          name="favorite-border"
+          name="pets"
           size={24}
           style={{color: tintColor}}
         >

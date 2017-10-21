@@ -17,7 +17,7 @@ class viewOwnerProfile extends Component {
     drawerIcon: ({tintColor}) => {
       return (
         <MaterialIcons
-          name="favorite-border"
+          name="face"
           size={24}
           style={{color: tintColor}}
         >
