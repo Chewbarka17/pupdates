@@ -16,7 +16,7 @@ class LogoutScreen extends React.Component {
     drawerIcon: ({tintColor}) => {
       return (
         <MaterialIcons
-          name="favorite-border"
+          name="eject"
           size={24}
           style={{color: tintColor}}
         >

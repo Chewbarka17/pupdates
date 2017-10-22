@@ -18,7 +18,7 @@ class ChatList extends React.Component {
     drawerIcon: ({tintColor}) => {
       return (
         <MaterialIcons
-          name="favorite-border"
+          name="chat"
           size={24}
           style={{color: tintColor}}
         >
