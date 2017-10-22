@@ -27,15 +27,8 @@ class viewOwnerProfile extends Component {
   }
   constructor(props) {
     super(props);
-    // change to register a change for commit.
-    this.ownerProfile = null;
-    this.help = this.help.bind(this);
     this.handlePressToEditUser = this.handlePressToEditUser.bind(this);
     this.handlePressToAddDog = this.handlePressToAddDog.bind(this);
-  }
-
-  help() {
-    //does nothing.  
   }
   
   componentDidMount() {
@@ -50,7 +43,6 @@ class viewOwnerProfile extends Component {
     axios.get('http://localhost:8000/api/users/dogs/59e8f89004abdcfd203864ef')
     .then(({data}) => {
       this.props.actions.listDogs(data);
-      console.log('what is this.props.dogs', this.props);
     })
     .catch((err) => {
       console.log(err)
@@ -62,11 +54,11 @@ class viewOwnerProfile extends Component {
   }
   
   handlePressToAddDog() {
-    this.props.navigation.navigate('EditDogProfile');
+    this.props.navigation.navigate('AddDogProfile');
   }
   
   render () {
-    console.log(this.props);
+    const { navigate } = this.props.navigation;
     return (
       <View>
         <Button 
@@ -85,13 +77,15 @@ class viewOwnerProfile extends Component {
               backgroundColor: 'red',
               onPress: (event) => {
                 this.props.actions.deleteDogs(item._id);
-                console.log(item._id);
               }
             }]}
               autoClose={true}
               backgroundColor='transparent'
             >
             <ListItem
+              onPress={() =>
+                this.props.navigation.navigate('ViewDogProfile', item)
+              }
               title={item.name}
               subtitle={`Age: ${item.age} Breed: ${item.breed}`}
               id={item.id}

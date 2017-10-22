@@ -17,16 +17,30 @@ class viewDogProfile extends Component {
     this.handlePress = this.handlePress.bind(this);
   }
 
-  handlePress() {
-    this.props.navigation.navigate('EditDogProfile');
+  componentDidMount() {
+    console.log('this is props', this.props);
+  }
+
+  handlePress(selectedDogInfo) {
+    this.props.navigation.navigate('EditDogProfile', selectedDogInfo);
   }
 
   render () {
+    const { navigation } = this.props
     return (
       <View>
+        <Text>
+          Name: { navigation.state.params.name }
+        </Text>
+        <Text>
+          Age: { navigation.state.params.age }
+        </Text>
+        <Text>
+          Breed: { navigation.state.params.breed }
+        </Text>
         <Button 
         title='Edit'
-        onPress={this.handlePress}
+        onPress={() => this.handlePress(navigation.state.params)}
         />
       </View>
     )

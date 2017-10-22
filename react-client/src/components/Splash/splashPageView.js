@@ -18,7 +18,7 @@ import LogoutScreen from '../Logout/Logout';
 import ChatsScreen from '../Messages/chatList';
 import ViewOwnerProfileScreen from '../Profiles/viewOwnerProfile';
 import ViewDogProfileScreen from '../Profiles/viewDogProfile';
-import EditDogProfileScreen from '../Profiles/editDogProfile';
+import AddDogProfileScreen from '../Profiles/addDogProfile';
 import DogProfileScreen from '../Likes/likedDogProfile';
 
 class SplashPage extends React.Component {
@@ -69,7 +69,7 @@ const NavigationApp = StackNavigator({
   Chats: { screen: ChatsScreen },
   ViewOwnerProfile: { screen: ViewOwnerProfileScreen },
   ViewDogProfile: { screen: ViewDogProfileScreen },
-  EditDogProfile: { screen: EditDogProfileScreen },
+  AddDogProfile: { screen: AddDogProfileScreen },
   DogProfile: { screen: DogProfileScreen },
 });
 
