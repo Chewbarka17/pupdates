@@ -21,8 +21,8 @@ class viewDogProfile extends Component {
     console.log('this is props', this.props);
   }
 
-  handlePress() {
-    this.props.navigation.navigate('EditDogProfile');
+  handlePress(selectedDogInfo) {
+    this.props.navigation.navigate('EditDogProfile', selectedDogInfo);
   }
 
   render () {

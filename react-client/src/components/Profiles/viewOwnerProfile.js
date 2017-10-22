@@ -54,7 +54,7 @@ class viewOwnerProfile extends Component {
   }
   
   handlePressToAddDog() {
-    this.props.navigation.navigate('EditDogProfile');
+    this.props.navigation.navigate('AddDogProfile');
   }
   
   render () {
