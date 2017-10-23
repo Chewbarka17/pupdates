@@ -83,4 +83,15 @@ module.exports = {
     });
   },
 
+  updateSeenDogs: (req, res) => {
+    Owners.findOneAndUpdate({ _id: req.params.userid }, { $push: { dogsSeen: req.body.dogid } },
+      { new: true } , (err, data) => {
+      if(err) {
+        console.log('push to dogsSeen error', err);
+        res.status(500).send('error', err);
+      }
+      res.status(201).send(data);
+    });
+  },
+
 };
