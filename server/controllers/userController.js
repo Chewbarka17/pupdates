@@ -105,4 +105,16 @@ module.exports = {
       res.status(201).send(data);
     });
   },
+
+  removeLikedDog: (req, res) => {
+    Owners.findOneAndUpdate({ _id: req.params.userid }, { $pull: { dogsLiked: req.body.dogid } },
+      { new: true } , (err, data) => {
+        if(err) {
+          console.log('remove dogs from dogsLiked error', err);
+          res.status(500).send('error', err);
+        }
+        res.status(201).send(data);
+    });
+  },
+
 };
