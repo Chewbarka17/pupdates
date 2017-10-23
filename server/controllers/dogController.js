@@ -166,6 +166,9 @@ module.exports = {
         }
       })
         .then((result) => {
+          result = result.map(function(likedDog) { // the result will be an array of dog IDs instead of an array of dog objects
+            return likedDog._id;
+          });
           res.status(200).send(result);
         })
         .catch((err) => {
