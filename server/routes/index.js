@@ -11,8 +11,9 @@ router.get('/dogs/:dogid', dogs.getDog);
 router.post('/dogs', dogs.addDog);
 router.delete('/dogs/:dogid', dogs.removeDog);
 router.patch('/dogs/:dogid', dogs.updateDog);
-
 router.get('/users/dogs/:userid', dogs.getDogsByOwner);
+
+router.get('/likeddogs/:userid', dogs.getLikedDogsByOwner);
 router.get('/newdogs/:userid', dogs.getUnseenDogsByOwner);
 
 // users
@@ -22,6 +23,7 @@ router.post('/users', users.addUser);
 router.delete('/users/:userid', users.removeUser);
 router.patch('/users', users.updateUser);
 
+router.patch('/users/likeddogs/:userid', users.updateLikedDogs);
 router.patch('/users/seendogs/:userid', users.updateSeenDogs);
 
 // messages
