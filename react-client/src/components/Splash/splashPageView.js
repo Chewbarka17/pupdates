@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StackNavigator } from 'react-navigation';
+import { StackNavigator, NavigationActions } from 'react-navigation';
 import {
   Platform,
   StyleSheet,
@@ -9,12 +9,12 @@ import {
   Image
 } from 'react-native';
 
-
 import ViewDogsScreen from '../ViewDogs/doglist';
 import DrawerMenuScreen from '../Navbar/drawerNav';
 import LikesScreen from '../Likes/likedDogsView';
 import FilterScreen from '../FilterDog/filterDog';
-import LogoutScreen from '../Logout/Logout';
+import LogoutScreen from '../Authentication/Logout/logout';
+import LoginScreen from '../Authentication/Login/login';
 import ChatsScreen from '../Messages/chatList';
 import ViewOwnerProfileScreen from '../Profiles/viewOwnerProfile';
 import ViewDogProfileScreen from '../Profiles/viewDogProfile';
@@ -25,6 +25,11 @@ class SplashPage extends React.Component {
   static navigationOptions = {
     title: 'Splash Page Home',
   };
+
+  constructor() {
+    super();
+  }
+
   render() {
     const { navigate } = this.props.navigation;
     return (
@@ -53,6 +58,7 @@ class SplashPage extends React.Component {
             navigate('DrawerMenu')
           }
         />
+        <LoginScreen navigate={navigate}/>
       </View>
     );
   }

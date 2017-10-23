@@ -1,5 +1,4 @@
 import { LoginManager, AccessToken } from 'react-native-fbsdk';
-
 import {
   Text,
   View
@@ -7,8 +6,7 @@ import {
 import React, { Component } from 'react';
 import { StackNavigator} from 'react-navigation';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-// import { LoginManager } from 'react-native-fbsdk';
-import SplashPageView from '../Splash/splashPageView';
+import SplashPageView from '../../Splash/splashPageView';
 
 class LogoutScreen extends React.Component {
   static navigationOptions = {

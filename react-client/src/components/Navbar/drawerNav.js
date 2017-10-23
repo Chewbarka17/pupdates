@@ -6,7 +6,7 @@ import ViewDogsScreen from '../ViewDogs/doglist';
 import LikesScreen from '../Likes/likedDogsView';
 import ViewOwnerProfileScreen from '../Profiles/viewOwnerProfile';
 import ChatsScreen from '../Messages/chatList';
-import LogoutScreen from '../Logout/Logout';
+import LogoutScreen from '../Authentication/Logout/logout';
 
 const DrawerExample = DrawerNavigator(
   {
