@@ -151,4 +151,31 @@ module.exports = {
     })
   },
 
+  getLikedDogsByOwner: (req, res) => {
+    Owners.find({ _id: req.params.userid }, (err) => {
+      if (err) {
+        console.log('error getting user', err);
+        res.status(500).send(err);
+      }
+    })
+    .then((data) => {
+      Dogs.find({ _id: { $in: data[0].dogsLiked }}, (err) => {
+        if (err) {
+          console.log('error getting dogsLiked', err);
+          res.status(500).send(err);
+        }
+      })
+        .then((result) => {
+          res.status(200).send(result);
+        })
+        .catch((err) => {
+          console.log('error getting dogsLiked', err);
+          res.status(500).send(err);
+        });
+    })
+    .catch((err) => {
+      console.log('error getting user', err);
+      res.status(500).send(err);
+    })
+  },
 };
