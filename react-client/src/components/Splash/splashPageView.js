@@ -20,6 +20,7 @@ import ViewOwnerProfileScreen from '../Profiles/viewOwnerProfile';
 import ViewDogProfileScreen from '../Profiles/viewDogProfile';
 import AddDogProfileScreen from '../Profiles/addDogProfile';
 import DogProfileScreen from '../Likes/likedDogProfile';
+import EditDogProfileScreen from '../Profiles/editDogProfile';
 
 class SplashPage extends React.Component {
   static navigationOptions = {
@@ -68,7 +69,6 @@ const NavigationApp = StackNavigator({
   Menu: { screen: SplashPage },
   DrawerMenu: { screen: DrawerMenuScreen },
   Dogs: { screen: ViewDogsScreen },
-
   Likes: { screen : LikesScreen },
   Filter: { screen : FilterScreen },
   Logout: { screen: LogoutScreen },
@@ -77,6 +77,7 @@ const NavigationApp = StackNavigator({
   ViewDogProfile: { screen: ViewDogProfileScreen },
   AddDogProfile: { screen: AddDogProfileScreen },
   DogProfile: { screen: DogProfileScreen },
+  EditDogProfile: { screen : EditDogProfileScreen },
 });
 
 export default NavigationApp;
