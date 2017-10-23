@@ -83,6 +83,7 @@ module.exports = {
     });
   },
 
+  // find owner and add id of dog to dogsSeen array
   updateSeenDogs: (req, res) => {
     Owners.findOneAndUpdate({ _id: req.params.userid }, { $push: { dogsSeen: req.body.dogid } },
       { new: true } , (err, data) => {
@@ -94,4 +95,14 @@ module.exports = {
     });
   },
 
+  updateLikedDogs: (req, res) => {
+    Owners.findOneAndUpdate({ _id: req.params.userid }, { $push: { dogsLiked: req.body.dogid } },
+      { new: true } , (err, data) => {
+      if(err) {
+        console.log('push to dogsLiked error', err);
+        res.status(500).send('error', err);
+      }
+      res.status(201).send(data);
+    });
+  },
 };
