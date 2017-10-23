@@ -23,8 +23,10 @@ router.post('/users', users.addUser);
 router.delete('/users/:userid', users.removeUser);
 router.patch('/users', users.updateUser);
 
-router.patch('/users/likeddogs/:userid', users.updateLikedDogs);
 router.patch('/users/seendogs/:userid', users.updateSeenDogs);
+router.patch('/users/likeddogs/:userid', users.updateLikedDogs);
+
+router.patch('/likeddogs/:userid', users.removeLikedDog);
 
 // messages
 router.get('/messages/:roomid', messages.getMessages);
