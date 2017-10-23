@@ -83,7 +83,6 @@ module.exports = {
   },
 
   updateDog: (req, res) => {
-    // console.log(req.params.dogid);
     Dogs.findOneAndUpdate({ _id: req.params.dogid }, {
       $set: {
         name: req.body.name,
