@@ -1,23 +1,46 @@
 import action from '../../actions/ViewDogs/viewDogsActions';
 
 const initialState = {
-  dogs: [],
+  unseenDogs: [],
+  likedDogs: [],
   fetched: false,
-  deleted: false,
+  updated: false,
   error: null
 }
 
 const viewDogReducer = (state=initialState, action) => {
-  console.log('what is actions', action);
   switch(action.type) {
     case 'FETCH_ALL_DOGS_FULFILLED': {
       return Object.assign({}, state, {
-        fetched: true,
-        dogs: action.payload
+
       }); 
     }
 
     case 'FETCH_ALL_DOGS_REJECTED': {
+      return Object.assign({}, state, {
+        error: action.payload
+      });
+    }
+
+    case 'UPDATE_SEEN_DOGS_FULFILLED': {
+      return Object.assign({}, state, {
+        
+      });
+    }
+
+    case 'UPDATE_SEEN_DOGS_REJECTED': {
+      return Object.assign({}, state, {
+        error: action.payload
+      });
+    }
+
+    case 'UPDATE_LIKED_DOGS_FULFILLED': {
+      return Object.assign({}, state, {
+        
+      });
+    }
+
+    case 'UPDATE_LIKED_DOGS_REJECTED': {
       return Object.assign({}, state, {
         error: action.payload
       });
