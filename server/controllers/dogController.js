@@ -120,4 +120,35 @@ module.exports = {
       });
   },
 
+  // find user by ID
+  // in that user's seenDogs array, 
+  // find dog IDs that are not in that user's seenDogs array
+  getUnseenDogsByOwner: (req, res) => {
+    Owners.find({ _id: req.params.userid }, (err) => {
+      if (err) {
+        console.log('error getting user', err);
+        res.status(500).send(err);
+      }
+    })
+    .then((data) => {
+      Dogs.find({ _id: { $nin: data[0].dogsSeen }}, (err) => {
+        if (err) {
+          console.log('error getting dogsSeen', err);
+          res.status(500).send(err);
+        }
+      })
+        .then((result) => {
+          res.status(200).send(result);
+        })
+        .catch((err) => {
+          console.log('error getting dogsSeen', err);
+          res.status(500).send(err);
+        });
+    })
+    .catch((err) => {
+      console.log('error getting user', err);
+      res.status(500).send(err);
+    })
+  },
+
 };
