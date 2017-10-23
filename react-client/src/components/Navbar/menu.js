@@ -14,7 +14,7 @@ import SplashPageView from '../Splash/splashPageView';
 
 import LikesScreen from '../Likes/likedDogsView';
 import FilterScreen from '../FilterDog/filterDog';
-import LogoutScreen from '../Logout/Logout';
+import LogoutScreen from '../Authentication/Logout/Logout';
 import ChatsScreen from '../Messages/chatList';
 import Chat from '../Messages/chatRoom';
 import ViewOwnerProfileScreen from '../Profiles/viewOwnerProfile';
