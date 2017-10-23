@@ -27,9 +27,11 @@ class viewOwnerProfile extends Component {
   }
   constructor(props) {
     super(props);
+    this.ownerProfile = null;
     this.handlePressToEditUser = this.handlePressToEditUser.bind(this);
     this.handlePressToAddDog = this.handlePressToAddDog.bind(this);
   }
+
   
   componentDidMount() {
     AsyncStorage.getItem('mongoOwner', (error, result) => {
@@ -38,6 +40,8 @@ class viewOwnerProfile extends Component {
       } else {
         console.log('what is async owner profile', result);
         this.ownerProfile = JSON.parse(result);
+        this.ownerProfile = this.ownerProfile[0];
+        console.log('Owner Profile: ' + this.ownerProfile);
       }
     });
     axios.get('http://localhost:8000/api/users/dogs/59e8f89004abdcfd203864ef')
@@ -61,6 +65,12 @@ class viewOwnerProfile extends Component {
     const { navigate } = this.props.navigation;
     return (
       <View>
+        {/* <Text>
+          {this.ownerProfile[0].name}
+        </Text>
+        <Text>
+          {this.ownerProfile[0].picture}
+        </Text> */}
         <Button 
         title='Edit User'
         onPress={this.handlePressToEditUser}

@@ -16,7 +16,7 @@ export const postDogs = (name, age, breed, owner) => (dispatch) => {
 };
 
 export const updateDogs = (name, age, breed, dogid) => (dispatch) => {
-  axios.post(`http://localhost:8000/api/dogs/ + ${dogid}`, {
+  axios.patch(`http://localhost:8000/api/dogs/${dogid}`, {
     name,
     age,
     breed,

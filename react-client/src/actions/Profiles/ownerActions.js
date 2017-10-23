@@ -29,10 +29,10 @@ export const updateOwners = (name, age, location, bio, userid) => (dispatch) => 
     rating: 4, // to be changed
   })
     .then((response) => {
-      dispatch({ type: 'POST_OWNER_FULFILLED', payload: response.data[1] });
+      dispatch({ type: 'UPDATE_OWNER_FULFILLED', payload: response.data[1] });
     })
     .catch((err) => {
-      dispatch({ type: 'POST_OWNER_REJECTED', payload: err });
+      dispatch({ type: 'UPDATE_OWNER_REJECTED', payload: err });
     });
 };
 
