@@ -13,6 +13,7 @@ router.delete('/dogs/:dogid', dogs.removeDog);
 router.patch('/dogs/:dogid', dogs.updateDog);
 
 router.get('/users/dogs/:userid', dogs.getDogsByOwner);
+router.get('/newdogs/:userid', dogs.getUnseenDogsByOwner);
 
 // users
 router.get('/users', users.getAllUsers);
@@ -20,6 +21,8 @@ router.get('/users/:userid', users.getUser);
 router.post('/users', users.addUser);
 router.delete('/users/:userid', users.removeUser);
 router.patch('/users', users.updateUser);
+
+router.patch('/users/seendogs/:userid', users.updateSeenDogs);
 
 // messages
 router.get('/messages/:roomid', messages.getMessages);
