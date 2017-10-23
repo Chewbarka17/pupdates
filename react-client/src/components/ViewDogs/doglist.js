@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 //import Nav from './dogentry';
+import { Avatar } from 'react-native-elements';
 import SwipeCards from 'react-native-swipe-cards';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
@@ -79,20 +80,23 @@ class ViewDogsScreen extends React.Component {
     )
   }
   
-  // don't need these?
   // handleYup(card) {
-  //   console.log(`Yup for ${card.text}`); // ${card.text} is undefined
+  //   console.log(`Yup for ${card.text}`);
   // }
 
   // handleNope(card) {
-  //   console.log(`Nope for ${card.text}`); // ${card.text} is undefined
+  //   console.log(`Nope for ${card.text}`);
   // }
 
-  // gets executed when...?
   noMore() {
     return (
       <View style={styles.card} >
         <Text>No More Dogs</Text>
+        <Avatar
+          xlarge
+          rounded
+          source={require('./sadCorgi.gif')}
+        />
       </View>
     )
   }
