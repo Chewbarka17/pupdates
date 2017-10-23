@@ -3,14 +3,14 @@ import Dogs from './Profiles/dogReducers';
 import Likes from './Likes/likeReducers';
 import Rooms from './MessageReducers/ChatRoomReducers';
 import Owners from './Profiles/ownerReducers';
-// import user
+import Auth from './Authentication/authReducers';
 
 const PupdatesReducers = combineReducers({
   Dogs,
   Likes,
   Rooms,
   Owners,
-  // User,
+  Auth,
 });
 
 export default PupdatesReducers;

@@ -34,16 +34,6 @@ class viewOwnerProfile extends Component {
 
   
   componentDidMount() {
-    AsyncStorage.getItem('mongoOwner', (error, result) => {
-      if (error) {
-        console.log(error);
-      } else {
-        console.log('what is async owner profile', result);
-        this.ownerProfile = JSON.parse(result);
-        this.ownerProfile = this.ownerProfile[0];
-        console.log('Owner Profile: ' + this.ownerProfile);
-      }
-    });
     axios.get('http://localhost:8000/api/users/dogs/59e8f89004abdcfd203864ef')
     .then(({data}) => {
       this.props.actions.listDogs(data);
@@ -66,6 +56,9 @@ class viewOwnerProfile extends Component {
     return (
       <View>
         {/* <Text>
+          {this.ownerProfile[0].fb_id}
+        </Text>
+        <Text>
           {this.ownerProfile[0].name}
         </Text>
         <Text>
