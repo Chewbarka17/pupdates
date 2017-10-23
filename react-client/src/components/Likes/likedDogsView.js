@@ -101,7 +101,7 @@ class LikedDogsView extends React.Component {
       <View>
         <Image
           style={{width: 380, height: 140}}
-          source={{uri: 'https://mir-s3-cdn-cf.behance.net/project_modules/fs/48d5f148002457.588b581f813d4.gif'}} // hearts corgi
+          source={require('../ViewDogs/heartsCorgi.gif')}
         />
 
         <List containerStyle={{ borderTopWidth: 0, borderBottomWidth: 0 }}>
