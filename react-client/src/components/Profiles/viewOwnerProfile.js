@@ -20,8 +20,7 @@ class viewOwnerProfile extends Component {
           name="face"
           size={24}
           style={{color: tintColor}}
-        >
-        </MaterialIcons>
+        />
       );
     }
   }
@@ -56,21 +55,15 @@ class viewOwnerProfile extends Component {
     const { user } = this.props;
     return (
       <View>
-        <Text>
-          {user[0].fb_id}
-        </Text>
-        <Text>
-          {user[0].name}
-        </Text>
-        <Text>
-          {user[0].picture}
-        </Text>
         <Avatar
           large
           rounded
           source={{uri: user[0].picture}}
           activeOpacity={0.7}
         />
+        <Text>
+          {user[0].name}
+        </Text>
         <Button 
         title='Edit User'
         onPress={this.handlePressToEditUser}
@@ -101,15 +94,14 @@ class viewOwnerProfile extends Component {
               id={item.id}
             />
             </Swipeout>
-    }
+          }
         />
           <View>
             <MaterialIcons
               name="menu"
               size={24}
               onPress={() => this.props.navigation.navigate('DrawerOpen')}
-            >
-            </MaterialIcons>
+            />
           </View>
       </View>
     )

@@ -32,9 +32,9 @@ class EditOwnerProfile extends Component {
   };
 
   handleSubmit() {
-    const { name, age, location, bio, actions } = this.state;
-    this.props.actions.postOwners(name, age, location, bio);
-    this.props.navigation.navigate('ViewOwnerProfile');
+    const { name, age, location, bio } = this.state;
+    console.log('props: ', this.props.userId)
+    this.props.actions.updateOwners(name, age, location, bio, this.props.userId);
   }
 
   render() {
@@ -99,8 +99,8 @@ class EditOwnerProfile extends Component {
       name: store.Owners.user.name,
       age: store.Owners.user.age,
       location: store.Owners.user.location,
-      bio: store.Owners.user.bio
-      // user: store.
+      bio: store.Owners.user.bio,
+      userId: store.Auth.ownerInfo[0]._id
     }
   }
 
