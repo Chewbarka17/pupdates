@@ -2,12 +2,15 @@ import React from 'react';
 import { Platform, StyleSheet, Text, View, TextInput, FlatList } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { GiftedChat } from 'react-native-gifted-chat';
+import { GiftedChat, Bubble } from 'react-native-gifted-chat';
 
 import io from 'socket.io-client';
+import axios from 'axios';
 
 import * as messageActions from '../../actions/MessageActions/chatRoomActions';
 
+const messages = [{text: "This is a drill.", uid: "59e92041f61b1458b2e847f3", user: {name: "Bob"}, _id: "59ebd07bc68daf70df6adb25"},
+{text: "I don't believe you.", uid: "59e92113f61b1458b2e847f4", user: {name: "Kyle"}, _id: "59ebd0a5c68daf70df6adb26"}];
 
 class ChatRoom extends React.Component {
   constructor(props) {
@@ -21,17 +24,20 @@ class ChatRoom extends React.Component {
           user: {
             _id: 2,
             name: 'React Native',
-            avatar: 'https://facebook.github.io/react/img/logo_og.png',
           },
         },
       ],
-      text: '',
+      typingText: null,
     }
     // this.props.roomid
+    this.renderBubble = this.renderBubble.bind(this);
+    this.onSend = this.onSend.bind(this);
+    // this.renderFooter = this.renderFooter.bind(this);
   };
   
   componentDidMount() {
     // get messages, or filter messages from store
+    // axios.get()
     this.socket = io();
     this.socket.on('message', (message) => {
       this.setState({
@@ -48,30 +54,90 @@ class ChatRoom extends React.Component {
     })
   }
 
+  onSend(e, messages = []) {
+    axios.patch(`http://localhost:8000/messages/${this.props.navigation.state.params._id}`, {
+      user: {
+        uid: this.props.uid,
+        text: e[0].text,
+        createdAt: e[0].createdAt
+      }
+    })
+    console.log('text', e)
+    console.log('props', this.props)
+    this.setState((previousState) => {
+      return {
+        messages: GiftedChat.append(previousState.messages, messages),
+      };
+    });
+
+  }
+
+  renderBubble(props) {
+    return (
+      <Bubble
+        {...props}
+        wrapperStyle={{
+          left: {
+            backgroundColor: '#e9ffaa',
+          },
+          right: {
+            backgroundColor: '#aafaff',
+          }
+        }}
+      />
+    );
+  }
+
+  // renderFooter(props) {
+  //   if (this.state.typingText) {
+  //     return (
+  //       <View style={styles.footerContainer}>
+  //         <Text style={styles.footerText}>
+  //           {this.state.typingText}
+  //         </Text>
+  //       </View>
+  //     );
+  //   }
+  //   return null;
+  // }
+
   render() {
     let text = this.props.navigation.state.params.messages
     console.log(this.props.navigation.state.params.messages)
     return (
       <GiftedChat
-        messages={this.state.messages}
+        messages={messages}
+        onSend={this.onSend}
         user={{
           _id: 1,
         }}
+        renderBubble={this.renderBubble}
       />
     )
   } 
   
+  // renderFooter={this.renderFooter}
   // {/* onSend={(messages) => this.onSend(messages)} */}
-//   <View>
-// </View>
-  // <FlatList
-  //   data={text}
-  //   renderItem={({item}) => 
-  //     <View>
-  //       <Text>{item.user}: {item.text}</Text>
-  //     </View>
-  //     }
-  //     />
+
 }
 
-export default ChatRoom;
+const styles = StyleSheet.create({
+  footerContainer: {
+    marginTop: 5,
+    marginLeft: 10,
+    marginRight: 10,
+    marginBottom: 10,
+  },
+  footerText: {
+    fontSize: 14,
+    color: '#aaa',
+  },
+});
+
+const userState = (store) => {
+  return {
+    uid: store.Auth.ownerInfo[0]._id,
+  }
+}
+
+export default connect(userState, null)(ChatRoom);
