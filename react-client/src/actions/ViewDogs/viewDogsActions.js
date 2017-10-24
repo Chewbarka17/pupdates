@@ -30,7 +30,7 @@ export const updateLikedDogs = (userid, dogid) => {
     dogid: dogid
   })
   .then((data) => {
-    dispatch({type: 'UPDATE_LIKED_DOGS_FULFILLED', payload: data});
+    dispatch({type: 'UPDATE_LIKED_DOGS_FULFILLED', payload: data[0].dogsLiked});
   })
   .catch(err => {
     dispatc({type: 'UPDATE_LIKED_DOGS_REJECTED', payload: err});
