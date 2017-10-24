@@ -7,6 +7,8 @@ const {
 } = FBSDK;
 
 import React, { Component } from 'react';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 import { StackNavigator, NavigationActions } from 'react-navigation';
 import {
   Text,
@@ -16,6 +18,7 @@ import {
 
 import { SocialIcon, FormLabel, FormInput } from 'react-native-elements';
 import axios from 'axios';
+import * as authActions from '../../../actions/Authentication/authActions';
 
 class LoginScreen extends Component {
   constructor(props){
@@ -73,51 +76,7 @@ class LoginScreen extends Component {
   }
 
   _checkUserInDB = (fb) => {
-    // if user not in db add to db
-      // navigate to view dogs
-    console.log('facebook', fb);
-
-    axios.get('http://localhost:8000/api/users/' + fb.id)
-    .then(({data}) => {
-      console.log('User retrieved from data base', data);
-      if (data.length === 0) {
-        this._addUserToDB(fb);
-      } else {
-        AsyncStorage.setItem('mongoOwner', JSON.stringify(data), (error) => {
-          if (error) {
-            alert('Failure! Could not save user to async storage', error);
-          }
-        });
-        this.props.navigate('DrawerMenu');
-      }
-      
-    })
-    .catch((err) => {
-      console.log('User not in db, adding user to db', err)
-      this._addUserToDB(fb);
-    });
-  }
-
-  _addUserToDB = (fb) => {
-    const user = {
-      fb_id: fb.id,
-      name: fb.name,
-      picture: fb.picture.data.url
-    }
-    console.log('add user to db', user);
-    axios.post('http://localhost:8000/api/users', user)
-    .then(({data}) => {
-      console.log(data);
-      AsyncStorage.setItem('mongoOwner', JSON.stringify(data), (error) => {
-        if (error) {
-          alert('Failure! Could not save user to async storage', error);
-        }
-      });
-      this.props.navigate('DrawerMenu');
-    })
-    .catch((err) => {
-      console.log(err)
-    });
+    this.props.actions.getOwner(fb, this.props.navigate);
   }
 
   render() {
@@ -133,4 +92,16 @@ class LoginScreen extends Component {
   }
 } // end of class
 
-export default LoginScreen;
+const authState = (store) => {
+  return {
+    auth: store.Auth.ownerInfo
+  }
+}
+
+const authDispatch = (dispatch) => {
+  return {
+    actions: bindActionCreators(authActions, dispatch),
+  }
+};
+
+export default connect(authState, authDispatch)(LoginScreen);

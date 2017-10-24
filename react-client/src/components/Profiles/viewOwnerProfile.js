@@ -3,7 +3,7 @@ import { StackNavigator } from 'react-navigation';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { View, Text, FlatList, AsyncStorage } from 'react-native';
-import { Button, List, ListItem } from 'react-native-elements';
+import { Button, List, ListItem, Avatar } from 'react-native-elements';
 import Swipeout from 'react-native-swipeout';
 import axios from 'axios';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
@@ -34,16 +34,6 @@ class viewOwnerProfile extends Component {
 
   
   componentDidMount() {
-    AsyncStorage.getItem('mongoOwner', (error, result) => {
-      if (error) {
-        console.log(error);
-      } else {
-        console.log('what is async owner profile', result);
-        this.ownerProfile = JSON.parse(result);
-        this.ownerProfile = this.ownerProfile[0];
-        console.log('Owner Profile: ' + this.ownerProfile);
-      }
-    });
     axios.get('http://localhost:8000/api/users/dogs/59e8f89004abdcfd203864ef')
     .then(({data}) => {
       this.props.actions.listDogs(data);
@@ -63,14 +53,24 @@ class viewOwnerProfile extends Component {
   
   render () {
     const { navigate } = this.props.navigation;
+    const { user } = this.props;
     return (
       <View>
-        {/* <Text>
-          {this.ownerProfile[0].name}
+        <Text>
+          {user[0].fb_id}
         </Text>
         <Text>
-          {this.ownerProfile[0].picture}
-        </Text> */}
+          {user[0].name}
+        </Text>
+        <Text>
+          {user[0].picture}
+        </Text>
+        <Avatar
+          large
+          rounded
+          source={{uri: user[0].picture}}
+          activeOpacity={0.7}
+        />
         <Button 
         title='Edit User'
         onPress={this.handlePressToEditUser}
@@ -118,7 +118,8 @@ class viewOwnerProfile extends Component {
 
 const dogsState = (store) => {
   return {
-    dogs: store.Dogs.dogInfo
+    dogs: store.Dogs.dogInfo,
+    user: store.Auth.ownerInfo
   }
 }
 
