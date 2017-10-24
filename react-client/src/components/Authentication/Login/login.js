@@ -25,18 +25,6 @@ class LoginScreen extends Component {
     super(props);
   }
 
-  componentWillMount() {
-    // AccessToken.getCurrentAccessToken()
-    // .then(data => {
-    //   let accessToken = data.accessToken;
-    //   if (accessToken !== null) {
-    //     this._getPublicProfile(accessToken);
-    //   }
-    // })
-    // .catch(error => {
-    // });
-  }
-
   _fbAuth = () => {
     AccessToken.getCurrentAccessToken()
     .then(data => {
@@ -71,8 +59,6 @@ class LoginScreen extends Component {
         alert('Error fetching data: ' + error.toString());
       } else {
         this._checkUserInDB(data);
-        // utils.checkUserInDB(data, this.props.navigate);
-        // console.log('what utils', utils);
       }
     }
 
@@ -90,57 +76,8 @@ class LoginScreen extends Component {
   }
 
   _checkUserInDB = (fb) => {
-    // if user not in db add to db
-      // navigate to view dogs
-    // console.log('facebook', fb);
-    // this.props.actions.getOwner(fb, this.props.navigate, this._addUserToDB);
     this.props.actions.getOwner(fb, this.props.navigate);
-    // axios.get('http://localhost:8000/api/users/' + fb.id)
-    // .then(({data}) => {
-    //   console.log('User retrieved from data base', data);
-    //   if (data.length === 0) {
-    //     this._addUserToDB(fb);
-    //   } else {
-    //     // dispatch({type: 'GET_OWNER_FROM_MONGO_FULFILLED', payload: data});
-    //     AsyncStorage.setItem('mongoOwner', JSON.stringify(data), (error) => {
-    //       if (error) {
-    //         alert('Failure! Could not save user to async storage', error);
-    //       }
-    //     });
-    //     this.props.navigate('DrawerMenu');
-    //   }
-      
-    // })
-    // .catch((err) => {
-    //   // dispatch({type: 'GET_OWNER_FROM_MONGO_REJECTED', payload: err});
-    //   console.log('User not in db, adding user to db', err)
-    //   this._addUserToDB(fb);
-    // });
   }
-
-  // _addUserToDB = (fb) => {
-  //   const user = {
-  //     fb_id: fb.id,
-  //     name: fb.name,
-  //     picture: fb.picture.data.url
-  //   }
-  //   console.log('add user to db', user);
-  //   axios.post('http://localhost:8000/api/users', user)
-  //   .then(({data}) => {
-  //     console.log(data);
-  //     // dispatch({type: 'POST_OWNER_FROM_MONGO_FULFILLED', payload: data});
-  //     AsyncStorage.setItem('mongoOwner', JSON.stringify(data), (error) => {
-  //       if (error) {
-  //         alert('Failure! Could not save user to async storage', error);
-  //       }
-  //     });
-  //     this.props.navigate('DrawerMenu');
-  //   })
-  //   .catch((err) => {
-  //     // dispatch({type: 'POST_OWNER_FROM_MONGO_REJECTED', payload: err});
-  //     console.log(err);
-  //   });
-  // }
 
   render() {
     return (

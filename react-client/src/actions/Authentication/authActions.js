@@ -1,6 +1,5 @@
 import axios from 'axios';
 import { StackNavigator, NavigationActions } from 'react-navigation';
-// import LoginScreen from '../../components/Authentication/Login/login';
 
 import { AsyncStorage } from 'react-native';
 
