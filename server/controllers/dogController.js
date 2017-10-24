@@ -60,6 +60,9 @@ module.exports = {
       age: req.body.age,
       breed: req.body.breed,
       pictures: req.body.pictures,
+      gender: req.body.gender,
+      bio: req.body.bio,
+      location: req.body.location,
     });
     dog.save((err) => {
       if (err) {
@@ -120,9 +123,6 @@ module.exports = {
       });
   },
 
-  // find user by ID
-  // in that user's seenDogs array, 
-  // find dog IDs that are not in that user's seenDogs array
   getUnseenDogsByOwner: (req, res) => {
     Owners.find({ _id: req.params.userid }, (err) => {
       if (err) {
@@ -166,9 +166,10 @@ module.exports = {
         }
       })
         .then((result) => {
-          result = result.map(function(likedDog) { // the result will be an array of dog IDs instead of an array of dog objects
-            return likedDog._id;
-          });
+          // the result will be an array of dog IDs instead of an array of dog objects
+          // result = result.map(function(likedDog) {
+          //   return likedDog._id;
+          // });
           res.status(200).send(result);
         })
         .catch((err) => {
