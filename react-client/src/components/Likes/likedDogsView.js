@@ -1,7 +1,7 @@
 // TODO:
 // makeRemoteRequest (get requests)
 // deleteLikedDog (delete request)
-// get rid of that grey bar
+// get rid of grey bar
 // add padding to footer to show items at the end
 
 import {  
@@ -13,10 +13,15 @@ import {
   ActivityIndicator, 
   TouchableHighlight 
 } from 'react-native';
+import axios from 'axios';
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import Swipeout from 'react-native-swipeout';
 import { List, ListItem } from "react-native-elements";
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+
+import * as likeActions from '../../actions/Likes/likeActions';
 
 
 class LikedDogsView extends React.Component {
@@ -36,10 +41,9 @@ class LikedDogsView extends React.Component {
   constructor(props) {
     super(props);
 
-    // only need data?
     this.state = {
       loading: false,
-      data: [],
+      likedDogs: [],
       page: 1,
       seed: 1,
       error: null,
@@ -52,25 +56,17 @@ class LikedDogsView extends React.Component {
     this.makeRemoteRequest();
   }
 
-  // get request for user's dogsLiked array
-  // get request for each dog in the dogsLiked array
-  makeRemoteRequest = () => {
-    const { page, seed } = this.state;
-    const url = `https://randomuser.me/api/?seed=${seed}&page=${page}&results=5`;
-    this.setState({ loading: true });
+  // Batman's userid: 59e570f1e46ed4333725a612
 
-    fetch(url)
-      .then(res => res.json())
-      .then(res => {
-        this.setState({
-          data: page === 1 ? res.results : [...this.state.data, ...res.results],
-          error: res.error || null,
-          loading: false,
-          refreshing: false
+  makeRemoteRequest = () => {
+    axios.get('http://localhost:8000/api/likeddogs/' + '59e570f1e46ed4333725a612')
+      .then(({ data }) => {
+        this.setState({ likedDogs: data }, () => {
+          console.log("this.state.likedDogs after get request: ", this.state.likedDogs);
         });
       })
-      .catch(error => {
-        this.setState({ error, loading: false });
+      .catch((err) => {
+        console.log('failed to get liked dogs: ', err)
       });
   };
 
@@ -87,13 +83,21 @@ class LikedDogsView extends React.Component {
     );
   };
 
-  // item will be the dog object
-  deleteLikedDog = (item) => {
-    // delete request. which updates the dogsLiked array
-    // handleRefresh() after deleting from DB to show new list with deleted dog gone
-    console.log('delete dog', item);
-    alert('dog deleted ' + item.name.first);
-  }
+  deleteLikedDog = (item) => { // item = dog obj
+    console.log("this.state.likedDogs before patch request: ", this.state.likedDogs);
+    console.log("this is item._id of dog to delete: ", item._id);
+    // patch should remove the dog from likedDogs array
+    axios.patch('http://localhost:8000/api/likeddogs/' + '59e570f1e46ed4333725a612', {dogid: item._id})
+      .then(() => {
+        // call refresh function which has the get request
+        this.handleRefresh();
+        console.log("this.state.likedDogs after patch request: ", this.state.likedDogs);
+      })
+      .catch((err) => {
+        console.log('failed to get remove liked dog: ', err)
+      });
+    
+  };
 
   render() {
     const { navigate } = this.props.navigation;
@@ -106,7 +110,7 @@ class LikedDogsView extends React.Component {
 
         <List containerStyle={{ borderTopWidth: 0, borderBottomWidth: 0 }}>
           <FlatList
-            data={this.state.data}
+            data={this.state.likedDogs}
             renderItem={({ item }) => (
               <Swipeout
                 right={[{
@@ -126,16 +130,16 @@ class LikedDogsView extends React.Component {
                     navigate('DogProfile', item)
                   }
                   roundAvatar
-                  title={`${item.name.first} ${item.name.last}`}
-                  subtitle={item.email}
-                  avatar={{ uri: item.picture.thumbnail }}
+                  title={`${item.name}`}
+                  subtitle={item.breed}
+                  avatar={{ uri: item.pictures[0] }}
                   containerStyle={{ borderBottomWidth: 0 }}
                 />
                 </View>
                 </TouchableHighlight>
               </Swipeout>
             )}
-            keyExtractor={item => item.email}
+            keyExtractor={item => item.breed}
             onRefresh={this.handleRefresh}
             refreshing={this.state.refreshing}
           />
@@ -153,4 +157,16 @@ class LikedDogsView extends React.Component {
   }
 }
 
-export default LikedDogsView;
+const likedState = (store) => {
+  return {
+    likedDogs: store.LikedDogs.likedDogs
+  }
+}
+
+const likedDispatch = (dispatch) => {
+  return {
+    actions: bindActionCreators(likeActions, dispatch),
+  }
+};
+
+export default connect(likedState, likedDispatch)(LikedDogsView);
