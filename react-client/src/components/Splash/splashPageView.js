@@ -20,6 +20,7 @@ import FilterScreen from '../FilterDog/filterDog';
 import LogoutScreen from '../Authentication/Logout/logout';
 import LoginScreen from '../Authentication/Login/login';
 import ChatsScreen from '../Messages/chatList';
+import ChatRoomScreen from '../Messages/chatRoom';
 import ViewOwnerProfileScreen from '../Profiles/viewOwnerProfile';
 import ViewDogProfileScreen from '../Profiles/viewDogProfile';
 import AddDogProfileScreen from '../Profiles/addDogProfile';
@@ -72,6 +73,7 @@ const NavigationApp = StackNavigator({
   Filter: { screen : FilterScreen },
   Logout: { screen: LogoutScreen },
   Chats: { screen: ChatsScreen },
+  ChatRoom: { screen: ChatRoomScreen},
   ViewOwnerProfile: { screen: ViewOwnerProfileScreen },
   ViewDogProfile: { screen: ViewDogProfileScreen },
   AddDogProfile: { screen: AddDogProfileScreen },
