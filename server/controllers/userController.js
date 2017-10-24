@@ -56,7 +56,6 @@ module.exports = {
 
   updateUser: (req, res) => {
     Owners.findOneAndUpdate({ _id: req.body.id }, {
-      // console.log("trying to update user");
       $set: {
         name: req.body.name,
         age: req.body.age,
@@ -83,7 +82,6 @@ module.exports = {
     });
   },
 
-  // find owner and add id of dog to dogsSeen array
   updateSeenDogs: (req, res) => {
     Owners.findOneAndUpdate({ _id: req.params.userid }, { $push: { dogsSeen: req.body.dogid } },
       { new: true } , (err, data) => {
