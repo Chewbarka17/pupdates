@@ -18,6 +18,7 @@ const { persistor, store } =  configureStore();
 
 export default class App extends Component {
   render() {
+    // console.log('What is PersistGate', persistor)
     return (
       <Provider store={store}>
         <PersistGate 
