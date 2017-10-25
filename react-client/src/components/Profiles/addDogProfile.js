@@ -33,11 +33,12 @@ class AddDogProfile extends Component {
 
   handleSubmit() {
     const { name, age, breed, actions } = this.state;
-    this.props.actions.postDogs(name, age, breed, '59e8f89004abdcfd203864ef');
+    this.props.actions.postDogs(name, age, breed, this.props.userId);
     this.props.navigation.navigate('ViewOwnerProfile');
   }
 
   render() {
+    console.log('what is props: ', this.props);
     const { navigate } = this.props.navigation;
     return (
       <View>
@@ -47,7 +48,7 @@ class AddDogProfile extends Component {
           autoCapitalize="none"
           autoCorrect={false}
           underlineColorAndroid="transparent"
-          placeholder={this.props.name || 'enter'}
+          placeholder={'enter'}
           returnKeyType="next"
           id="name"
           onChangeText={name => this.setState({ name })}
@@ -58,7 +59,7 @@ class AddDogProfile extends Component {
           autoCapitalize="none"
           autoCorrect={false}
           underlineColorAndroid="transparent"
-          placeholder={this.props.age ? this.props.age.toString() : 'enter'}
+          placeholder={'enter'}
           returnKeyType="next"
           id="age"
           onChangeText={age => this.setState({ age })}
@@ -69,7 +70,7 @@ class AddDogProfile extends Component {
           autoCapitalize="none"
           autoCorrect={false}
           underlineColorAndroid="transparent"
-          placeholder={this.props.breed || 'enter'}
+          placeholder={'enter'}
           returnKeyType="next"
           id="breed"
           onChangeText={breed => this.setState({ breed })}
@@ -85,11 +86,7 @@ class AddDogProfile extends Component {
 
   const dogState = (store) => {
     return {
-      name: store.Dogs.dogs.name,
-      age: store.Dogs.dogs.age,
-      location: store.Dogs.dogs.location,
-      bio: store.Dogs.dogs.bio
-      // owner: store.
+      userId: store.Auth.ownerInfo[0]._id
     }
   }
 
