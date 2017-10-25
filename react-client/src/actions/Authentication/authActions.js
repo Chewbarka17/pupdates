@@ -4,12 +4,10 @@ import { StackNavigator, NavigationActions } from 'react-navigation';
 import { AsyncStorage } from 'react-native';
 
 export const getOwner = (fb, navigate) => (dispatch) => {
-  console.log('fb data', fb);
+  // console.log('fb data', fb);
   axios.get('http://localhost:8000/api/users/' + fb.id)
-  .then(({data}) => {
-    // console.log('What is login screen', LoginScreen);
-    
-    console.log('User retrieved from data base', data);
+  .then(({data}) => { 
+    // console.log('User retrieved from data base', data);
     if (data.length === 0) {
       addUserToDB(fb, navigate);
     } else {
@@ -24,7 +22,7 @@ export const getOwner = (fb, navigate) => (dispatch) => {
     
   })
   .catch((err) => {
-    console.log('User not in db, adding user to db', err)
+    // console.log('User not in db, adding user to db', err)
     addUserToDB(fb);
   });
 };
@@ -35,7 +33,7 @@ const addUserToDB = (fb, navigate) => {
     name: fb.name,
     picture: fb.picture.data.url
   }
-  console.log('add user to db', user);
+  // console.log('add user to db', user);
   axios.post('http://localhost:8000/api/users', user)
   .then(({data}) => {
     console.log(data);
