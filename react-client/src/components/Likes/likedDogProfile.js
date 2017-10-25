@@ -25,13 +25,13 @@ const likedDogProfile = (props) => {
           Breed: {props.navigation.state.params.breed}
         </Text>
         <Text>
+          Gender: {props.navigation.state.params.gender}
+        </Text>
+        <Text>
           Age: {props.navigation.state.params.age}
         </Text>
         <Text>
           Location: {props.navigation.state.params.location}
-        </Text>
-        <Text>
-          Gender: {props.navigation.state.params.gender}
         </Text>
         <Text>
           Bio: {props.navigation.state.params.bio}
