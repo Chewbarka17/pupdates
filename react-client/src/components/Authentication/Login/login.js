@@ -44,10 +44,10 @@ class LoginScreen extends Component {
           const accessKeyId = AWS.config.credentials.accessKeyId;
           const secretAccessKey = AWS.config.credentials.secretAccessKey;
           const sessionToken = AWS.config.credentials.sessionToken;
-          console.log(AWS.config.credentials);
-          console.log('accessKeyId', accessKeyId);
-          console.log('secretAccessKey', secretAccessKey);
-          console.log('sessionToken', sessionToken);
+          // console.log(AWS.config.credentials);
+          // console.log('accessKeyId', accessKeyId);
+          // console.log('secretAccessKey', secretAccessKey);
+          // console.log('sessionToken', sessionToken);
         });
 
         // AWS.config.update({
@@ -59,21 +59,21 @@ class LoginScreen extends Component {
         //     }
         //   })
         // });
-        const s3 = new AWS.S3({
-          apiVersion: '2012-10-17',
-        });
-        const params = {
-          Bucket: awsmobile.aws_user_files_s3_bucket,
-          Key: "example-image.png"
-        }
+        // const s3 = new AWS.S3({
+        //   apiVersion: '2012-10-17',
+        // });
+        // const params = {
+        //   Bucket: awsmobile.aws_user_files_s3_bucket,
+        //   Key: "example-image.png"
+        // }
 
-        s3.getObject(params, (error) => {
-          if (error) {
-            console.log(error, error.stack);
-          } else {
-            console.log('what is in s3', data);
-          }
-        })
+        // s3.getObject(params, (error) => {
+        //   if (error) {
+        //     console.log(error, error.stack);
+        //   } else {
+        //     console.log('what is in s3', data);
+        //   }
+        // })
         this._getPublicProfile(accessToken);
       }
     })
@@ -135,10 +135,15 @@ class LoginScreen extends Component {
   }
 
   _checkUserInDB = (fb) => {
-    this.props.actions.getOwner(fb, this.props.navigate);
+    this.props.actions.getOwnerFromDB(fb, this.props.navigate, (error) => {
+      console.log('check user', error);
+      if (error) {
+        this.props.actions.addOwnerToDB(fb, this.props.navigate);
+      }
+    });
   }
 
-  _awsCredentials
+  // _awsCredentials
 
   render() {
     return (
