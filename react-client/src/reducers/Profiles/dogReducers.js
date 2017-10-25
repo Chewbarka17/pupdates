@@ -41,7 +41,7 @@ const dogReducer = (state = initialState, action) => {
         updated: true,
         user: state.dogs.filter((dog) => {
           console.log('what is action.payload', dog);
-          dog._id !== action.payload.dogid ? dog : action.payload;
+          dog._id === action.payload.dogid ? action.payload : dog;
         }),
       });
     }

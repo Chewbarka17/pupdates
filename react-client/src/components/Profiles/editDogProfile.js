@@ -35,8 +35,8 @@ class EditDogProfile extends Component {
     let nameCheck = name || this.props.name;
     let ageCheck = age || this.props.age;
     let breedCheck = breed || this.props.breed;
-    console.log(nameCheck, ageCheck, breedCheck, this.props.userId);
-    this.props.actions.updateDogs(nameCheck, ageCheck, breedCheck, this.props.userId);
+    console.log(nameCheck, ageCheck, breedCheck, this.props.id);
+    this.props.actions.updateDogs(nameCheck, ageCheck, breedCheck, this.props.id);
   }
 
   render() {
@@ -91,6 +91,7 @@ class EditDogProfile extends Component {
       name: store.Dogs.dogs[0].name,
       age: store.Dogs.dogs[0].age,
       breed: store.Dogs.dogs[0].breed,
+      id: store.Dogs.dogs[0]._id,
       userId: store.Auth.ownerInfo[0]._id
     }
   }
