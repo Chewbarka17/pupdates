@@ -112,7 +112,8 @@ module.exports = {
       }
     })
       .then((data) => {
-        res.status(202).send('Dog successfully deleted');
+        // console.log(data._id);
+        res.status(202).send(data);
       })
       .catch((err) => {
         res.status(500).send('error removing dog', err);
