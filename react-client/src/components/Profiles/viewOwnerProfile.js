@@ -33,13 +33,14 @@ class viewOwnerProfile extends Component {
 
   
   componentDidMount() {
-    axios.get('http://localhost:8000/api/users/dogs/59e8f89004abdcfd203864ef')
-    .then(({data}) => {
-      this.props.actions.listDogs(data);
-    })
-    .catch((err) => {
-      console.log(err)
-    })
+    console.log('props are: ', this.props);
+    // axios.get('http://localhost:8000/api/users/dogs/' + this.props.userId)
+    // .then(({data}) => {
+    //   this.props.actions.listDogs(data);
+    // })
+    // .catch((err) => {
+    //   console.log(err)
+    // })
   }
   
   handlePressToEditUser() {
@@ -51,8 +52,9 @@ class viewOwnerProfile extends Component {
   }
   
   render () {
+    console.log('PROPS ARE HERE:', this.props);
     const { navigate } = this.props.navigation;
-    const { user } = this.props;
+    const { user, information } = this.props;
     return (
       <View>
         <Avatar
@@ -62,7 +64,13 @@ class viewOwnerProfile extends Component {
           activeOpacity={0.7}
         />
         <Text>
-          {user[0].name}
+          {information.data.name || user[0].name}
+        </Text>
+        <Text>
+          {information.data.age}
+        </Text>
+        <Text>
+          {information.data.bio}
         </Text>
         <Button 
         title='Edit User'
@@ -110,8 +118,10 @@ class viewOwnerProfile extends Component {
 
 const dogsState = (store) => {
   return {
-    dogs: store.Dogs.dogInfo,
-    user: store.Auth.ownerInfo
+    dogs: store.Dogs.dogs,
+    user: store.Auth.ownerInfo,
+    information: store.Owners.user,
+    userId: store.Auth.ownerInfo[0]._id
   }
 }
 
