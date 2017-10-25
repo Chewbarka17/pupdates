@@ -1,12 +1,11 @@
 import axios from 'axios';
 
 // gets all dogs; data: [{dog}, {dog}, {dog},...]
-export const getAllUnseenDogs = (userid) => {
-  console.log("this is the getAllUnseenDogs action");
+export const getAllUnseenDogs = (userid) => (dispatch) => {
   axios.get('http://localhost:8000/api/newdogs/' + userid)
     .then((data) => {
       console.log("data.data in actions: ", data.data);
-      dispatch({type: 'FETCH_ALL_UNSEEN_DOGS_FULFILLED', payload: data.data}); // data.data: [{dog1}, {dog2}, ...]
+      dispatch({type: 'FETCH_ALL_UNSEEN_DOGS_FULFILLED', payload: data.data}); 
     })
     .catch(err => {
       dispatch({type: 'FETCH_ALL_UNSEEN_DOGS_REJECTED', payload: err});
@@ -14,7 +13,7 @@ export const getAllUnseenDogs = (userid) => {
 };
 
 // patch dogs to dogsSeen array; data: {user}
-export const updateDogsSeen = (userid, dogid) => {
+export const updateDogsSeen = (userid, dogid) => (dispatch) => {
   axios.patch('http://localhost:8000/api/users/seendogs/' + userid, {
     dogid: dogid
   })
@@ -27,7 +26,7 @@ export const updateDogsSeen = (userid, dogid) => {
 };
 
 // patch dogs to dogsLiked array; data: {user}
-export const updateLikedDogs = (userid, dogid) => {
+export const updateLikedDogs = (userid, dogid) => (dispatch) => {
   axios.patch('http://localhost:8000/api/users/likeddogs/' + userid, {
     dogid: dogid
   })

@@ -72,9 +72,9 @@ class ViewDogsScreen extends React.Component {
   }
 
   componentDidMount() {
-    // console.log("this.props: ", this.props);
-    // console.log("this.props.actions: ", this.props.actions); // 3 action functions
-    // console.log("this.props.navigation.state: ", this.props.navigation.state);
+    console.log("this.props: ", this.props);
+    console.log("this.props.actions: ", this.props.actions); // 3 action functions
+    console.log("this.props.navigation.state: ", this.props.navigation.state);
 
     // call getAllUnseenDogs action; this.props.actions.getAllUnseenDogs(userid)
     this.props.actions.getAllUnseenDogs("59e570f1e46ed4333725a612");
@@ -84,12 +84,12 @@ class ViewDogsScreen extends React.Component {
 
   }
 
-  setStateOfCurrentDog = (x) => {
-    this.setState({ currentDog: x }, () => {
-      console.log("this.state.currentDog: ", this.state.currentDog)
+  // setStateOfCurrentDog = (x) => {
+  //   this.setState({ currentDog: x }, () => {
+  //     console.log("this.state.currentDog: ", this.state.currentDog)
       
-    })
-  }
+  //   })
+  // }
 
   // getUnseenDogs = () => {
   //   axios.get('http://localhost:8000/api/newdogs/' + '59e570f1e46ed4333725a612')
