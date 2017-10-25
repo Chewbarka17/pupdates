@@ -1,8 +1,6 @@
-// TODO:
-// makeRemoteRequest (get requests)
-// deleteLikedDog (delete request)
+// Styling:
 // get rid of grey bar
-// add padding to footer to show items at the end
+// add padding to footer to show items at the bottom (scroll?)
 
 import {  
   View,
@@ -15,14 +13,14 @@ import {
 } from 'react-native';
 import axios from 'axios';
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 import Swipeout from 'react-native-swipeout';
-import { List, ListItem } from "react-native-elements";
+import { List, ListItem, Avatar } from "react-native-elements";
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
-import * as likeActions from '../../actions/Likes/likeActions';
+// import { connect } from 'react-redux';
+// import { bindActionCreators } from 'redux';
 
+// import * as likeActions from '../../actions/Likes/likeActions';
 
 class LikedDogsView extends React.Component {
   static navigationOptions = {
@@ -42,12 +40,7 @@ class LikedDogsView extends React.Component {
     super(props);
 
     this.state = {
-      loading: false,
       likedDogs: [],
-      page: 1,
-      seed: 1,
-      error: null,
-      refreshing: false,
       item: null
     };
   }
@@ -56,6 +49,7 @@ class LikedDogsView extends React.Component {
     this.makeRemoteRequest();
   }
 
+  // how to grab logged in user's id ???
   // Batman's userid: 59e570f1e46ed4333725a612
 
   makeRemoteRequest = () => {
@@ -70,33 +64,14 @@ class LikedDogsView extends React.Component {
       });
   };
 
-  handleRefresh = () => {
-    this.setState(
-      {
-        page: 1,
-        seed: this.state.seed + 1,
-        refreshing: true
-      },
-      () => {
-        this.makeRemoteRequest();
-      }
-    );
-  };
-
-  deleteLikedDog = (item) => { // item = dog obj
-    console.log("this.state.likedDogs before patch request: ", this.state.likedDogs);
-    console.log("this is item._id of dog to delete: ", item._id);
-    // patch should remove the dog from likedDogs array
+  deleteLikedDog = (item) => {
     axios.patch('http://localhost:8000/api/likeddogs/' + '59e570f1e46ed4333725a612', {dogid: item._id})
       .then(() => {
-        // call refresh function which has the get request
-        this.handleRefresh();
-        console.log("this.state.likedDogs after patch request: ", this.state.likedDogs);
+        this.makeRemoteRequest();
       })
       .catch((err) => {
-        console.log('failed to get remove liked dog: ', err)
+        console.log('failed to get remove liked dog: ', err);
       });
-    
   };
 
   render() {
@@ -140,8 +115,6 @@ class LikedDogsView extends React.Component {
               </Swipeout>
             )}
             keyExtractor={item => item.breed}
-            onRefresh={this.handleRefresh}
-            refreshing={this.state.refreshing}
           />
         </List>
         <View>
@@ -157,16 +130,18 @@ class LikedDogsView extends React.Component {
   }
 }
 
-const likedState = (store) => {
-  return {
-    likedDogs: store.LikedDogs.likedDogs
-  }
-}
+export default LikedDogsView;
 
-const likedDispatch = (dispatch) => {
-  return {
-    actions: bindActionCreators(likeActions, dispatch),
-  }
-};
+// const likedState = (store) => {
+//   return {
+//     likedDogs: store.LikedDogs.likedDogs
+//   }
+// }
 
-export default connect(likedState, likedDispatch)(LikedDogsView);
+// const likedDispatch = (dispatch) => {
+//   return {
+//     actions: bindActionCreators(likeActions, dispatch),
+//   }
+// };
+
+// export default connect(likedState, likedDispatch)(LikedDogsView);
