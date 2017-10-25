@@ -37,13 +37,17 @@ class ChatRoom extends React.Component {
   
   componentDidMount() {
     // get messages, or filter messages from store
-    // axios.get()
-    this.socket = io();
-    this.socket.on('message', (message) => {
-      this.setState({
-        messages: [...this.state.message, message]
-      })
+    axios.get(`http://localhost:8000/api/messages/${this.props.navigation.state.params._id}`)
+    .then((data) => {
+      console.log(data);
+      this.setState({messages: data.data[0].messages})
     })
+    // this.socket = io();
+    // this.socket.on('message', (message) => {
+    //   this.setState({
+    //     messages: [...this.state.message, message]
+    //   })
+    // })
   }
 
   handleSubmit() {
@@ -55,20 +59,23 @@ class ChatRoom extends React.Component {
   }
 
   onSend(e, messages = []) {
-    // axios.patch(`http://localhost:8000/messages/${this.props.navigation.state.params._id}`, {
-    //   user: {
-    //     name: this.props.name,
-    //   },
-    //   text: e[0].text,
-    //   createdAt: e[0].createdAt
-    // })
+    // console.log(this.props.navigation.state.params._id)
+    axios.patch(`http://localhost:8000/api/messages/${this.props.navigation.state.params._id}`, {
+      user: {
+        name: this.props.name,
+      },
+      text: e[0].text,
+      createdAt: e[0].createdAt
+    })
     // console.log('text', e)
-    console.log(this.props.name, e[0].text, this.props)
-    // .then((data) => {
-    //   this.setState({
-    //       messages: data.messages,
-    //     });
-    // })
+    .then((data) => {
+      this.setState({
+          messages: data.messages,
+        });
+    })
+    .catch((err) => {
+      console.log('Error w/patch', err)
+    })
   }
 
   renderBubble(props) {
@@ -102,10 +109,10 @@ class ChatRoom extends React.Component {
 
   render() {
     let text = this.props.navigation.state.params.messages
-    console.log(this.props.navigation.state.params.messages)
+    // console.log(this.props.navigation.state.params.messages)
     return (
       <GiftedChat
-        messages={messages}
+        messages={this.state.messages}
         onSend={this.onSend}
         user={{
           _id: 1,

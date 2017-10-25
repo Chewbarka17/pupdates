@@ -36,7 +36,7 @@ class ChatList extends React.Component {
     //   console.log('socket received message', message);
       // this.props.actions.messageChange([...this.props.log, message]);
     // })
-    console.log(this.props)
+    // console.log(this.props)
     this.props.actions.getRooms(this.props.uid);
 
     // get rooms associated with user
@@ -54,7 +54,7 @@ class ChatList extends React.Component {
   };
 
   render() {
-    console.log(this.props.rooms[0])
+    // console.log(this.props.rooms[0])
 
     return (
       <View>

@@ -7,7 +7,7 @@ module.exports = {
 
   // You need a room id to get the messages associated with that room.
   getMessages: (req, res) => {
-    Rooms.find({ roomid: req.params.roomid }, (err) => {
+    Rooms.find({ _id: req.params.roomid }, (err) => {
       if (err) {
         console.log('Error getting messages', err);
         res.status(500).send(err);
