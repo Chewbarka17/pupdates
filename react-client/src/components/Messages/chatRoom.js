@@ -37,6 +37,7 @@ class ChatRoom extends React.Component {
   
   componentDidMount() {
     // get messages, or filter messages from store
+    console.log(this.props)
     axios.get(`http://localhost:8000/api/messages/${this.props.navigation.state.params._id}`)
     .then((data) => {
       console.log(data);
@@ -59,7 +60,7 @@ class ChatRoom extends React.Component {
   }
 
   onSend(e, messages = []) {
-    // console.log(this.props.navigation.state.params._id)
+    console.log(this.props.name)
     axios.patch(`http://localhost:8000/api/messages/${this.props.navigation.state.params._id}`, {
       user: {
         name: this.props.name,
@@ -69,9 +70,7 @@ class ChatRoom extends React.Component {
     })
     // console.log('text', e)
     .then((data) => {
-      this.setState({
-          messages: data.messages,
-        });
+      console.log(data)
     })
     .catch((err) => {
       console.log('Error w/patch', err)
