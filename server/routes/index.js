@@ -24,8 +24,8 @@ router.delete('/users/:userid', users.removeUser);
 router.patch('/users', users.updateUser);
 
 router.patch('/users/seendogs/:userid', users.updateSeenDogs);
-router.patch('/users/likeddogs/:userid', users.updateLikedDogs);
 
+router.patch('/users/likeddogs/:userid', users.updateLikedDogs);
 router.patch('/likeddogs/:userid', users.removeLikedDog);
 
 // messages
