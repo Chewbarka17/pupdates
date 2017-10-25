@@ -31,6 +31,7 @@ export const updateOwners = (name, age, location, bio, userid) => (dispatch) => 
     rating: 4, // to be changed
   })
     .then((response) => {
+      console.log(response);
       dispatch({ type: 'UPDATE_OWNER_FULFILLED', payload: response });
       AsyncStorage.setItem('mongoOwner', JSON.stringify(response), (error) => {
         if (error) {

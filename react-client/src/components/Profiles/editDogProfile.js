@@ -31,13 +31,17 @@ class EditDogProfile extends Component {
   };
 
   handleSubmit() {
-    console.log(this.props.navigation.state.params._id);
     const { name, age, breed } = this.state;
-    this.props.actions.updateDogs(name, age, breed, this.props.navigation.state.params._id);
+    let nameCheck = name || this.props.name;
+    let ageCheck = age || this.props.age;
+    let breedCheck = breed || this.props.breed;
+    console.log(nameCheck, ageCheck, breedCheck, this.props.id);
+    this.props.actions.updateDogs(nameCheck, ageCheck, breedCheck, this.props.id);
   }
 
   render() {
     const { navigate } = this.props.navigation;
+    console.log('PROPS: ', this.props);
     return (
       <View>
         <FormLabel>Name</FormLabel>
@@ -84,10 +88,11 @@ class EditDogProfile extends Component {
 
   const dogState = (store) => {
     return {
-      name: store.Dogs.dogs.name,
-      age: store.Dogs.dogs.age,
-      breed: store.Dogs.dogs.breed
-      // user: store.
+      name: store.Dogs.dogs[0].name,
+      age: store.Dogs.dogs[0].age,
+      breed: store.Dogs.dogs[0].breed,
+      id: store.Dogs.dogs[0]._id,
+      userId: store.Auth.ownerInfo[0]._id
     }
   }
 

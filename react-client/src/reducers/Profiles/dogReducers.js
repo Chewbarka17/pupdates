@@ -1,4 +1,4 @@
-import actions from '../../actions/Profiles/dogProfileActions';
+import action from '../../actions/Profiles/dogProfileActions';
 
 const initialState = {
   posted: false,
@@ -31,15 +31,24 @@ const dogReducer = (state = initialState, action) => {
         error: action.payload,
       });
     }
-    case 'LIST_DOGS': {
+    case 'UPDATE_DOG_REJECTED': {
       return Object.assign({}, state, {
-        dogInfo: action.payload,
+        error: action.payload,
+      });
+    }
+    case 'UPDATE_DOG_FULFILLED': {
+      return Object.assign({}, state, {
+        updated: true,
+        user: state.dogs.filter((dog) => {
+          console.log('what is action.payload', dog);
+          dog._id === action.payload.dogid ? action.payload : dog;
+        }),
       });
     }
     case 'DELETE_DOG_FULFILLED': {
       return Object.assign({}, state, {
         deleted: true,
-        dogs: state.dogs.filter(dog => (dog.id !== Number(action.payload._id) ? dog : null)),
+        dogs: state.dogs.filter(dog => (dog._id !== action.payload ? dog : null)),
       });
     }
     case 'DELETE_DOG_REJECTED': {

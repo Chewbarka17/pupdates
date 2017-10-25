@@ -33,11 +33,16 @@ class EditOwnerProfile extends Component {
 
   handleSubmit() {
     const { name, age, location, bio } = this.state;
-    console.log('props: ', this.props.userId)
-    this.props.actions.updateOwners(name, age, location, bio, this.props.userId);
+    let nameCheck = name || this.props.name;
+    let ageCheck = age || this.props.age;
+    let locationCheck = location || this.props.location;
+    let bioCheck = bio || this.props.bio;
+    console.log('props: ', this.props)
+    this.props.actions.updateOwners(nameCheck, ageCheck, locationCheck, bioCheck, this.props.userId);
   }
 
   render() {
+    console.log('what are props: ', this.props);
     const { navigate } = this.props.navigation;
     return (
       <View>
@@ -47,7 +52,7 @@ class EditOwnerProfile extends Component {
           autoCapitalize="none"
           autoCorrect={false}
           underlineColorAndroid="transparent"
-          placeholder={this.props.name || 'enter'}
+          placeholder={this.props.name || 'enter your name'}
           returnKeyType="next"
           id="name"
           onChangeText={name => this.setState({ name })}
@@ -58,7 +63,7 @@ class EditOwnerProfile extends Component {
           autoCapitalize="none"
           autoCorrect={false}
           underlineColorAndroid="transparent"
-          placeholder={this.props.age ? this.props.age.toString() : 'enter'}
+          placeholder={this.props.age ? this.props.age.toString() : 'enter your age'}
           returnKeyType="next"
           id="age"
           onChangeText={age => this.setState({ age })}
@@ -69,7 +74,7 @@ class EditOwnerProfile extends Component {
           autoCapitalize="none"
           autoCorrect={false}
           underlineColorAndroid="transparent"
-          placeholder={this.props.location || 'enter'}
+          placeholder={this.props.location || 'enter your zipcode'}
           returnKeyType="next"
           id="zipcode"
           onChangeText={location => this.setState({ location })}
@@ -77,10 +82,10 @@ class EditOwnerProfile extends Component {
         <FormLabel>Bio</FormLabel>
         <FormInput
           editable
-          autoCapitalize="none"
-          autoCorrect={false}
+          
+          autoCorrect={true}
           underlineColorAndroid="transparent"
-          placeholder={this.props.bio || 'enter'}
+          placeholder={this.props.bio || 'enter a bio'}
           returnKeyType="next"
           id="bio"
           onChangeText={bio => this.setState({ bio })}
@@ -96,10 +101,10 @@ class EditOwnerProfile extends Component {
 
   const ownerState = (store) => {
     return {
-      name: store.Owners.user.name,
-      age: store.Owners.user.age,
-      location: store.Owners.user.location,
-      bio: store.Owners.user.bio,
+      name: store.Owners.user.data.name,
+      age: store.Owners.user.data.age,
+      location: store.Owners.user.data.location,
+      bio: store.Owners.user.data.bio,
       userId: store.Auth.ownerInfo[0]._id
     }
   }

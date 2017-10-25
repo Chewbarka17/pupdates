@@ -22,7 +22,8 @@ export const updateDogs = (name, age, breed, dogid) => (dispatch) => {
     breed,
   })
     .then((response) => {
-      dispatch({ type: 'UPDATE_DOG_FULFILLED', payload: response.data[1] });
+      console.log('this is response.data', JSON.parse(response.config.data));
+      dispatch({ type: 'UPDATE_DOG_FULFILLED', payload: { name, age, breed, dogid } });
     })
     .catch((err) => {
       dispatch({ type: 'UPDATE_DOG_REJECTED', payload: err });
@@ -30,15 +31,16 @@ export const updateDogs = (name, age, breed, dogid) => (dispatch) => {
 };
 
 export const deleteDogs = dogid => (dispatch) => {
+  console.log(dogid);
   axios.delete(`http://localhost:8000/api/dogs/${dogid}`)
-    .then((response) => {
-      dispatch({ type: 'DELETE_DOG_FULFILLED', payload: response.data });
+    .then(() => {
+      dispatch({ type: 'DELETE_DOG_FULFILLED', payload: dogid });
     })
     .catch((err) => {
       dispatch({ type: 'DELETE_DOG_REJECTED', payload: err });
     });
 };
 
-export const listDogs = dogInfo => (dispatch) => {
-  dispatch({ type: 'LIST_DOGS', payload: dogInfo });
-};
+// export const listDogs = dogInfo => (dispatch) => {
+//   dispatch({ type: 'LIST_DOGS', payload: dogInfo });
+// };
