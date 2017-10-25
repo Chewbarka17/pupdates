@@ -24,7 +24,7 @@ module.exports = {
       $push: {
         messages: {
           user: req.body.user,
-          uid: req.body.uid,
+          createdAt: req.body.createdAt,
           text: req.body.text,
         },
       },
@@ -42,7 +42,7 @@ module.exports = {
   createRoom: (req, res) => {
     const room = new Rooms({
       _id: new mongoose.Types.ObjectId(),
-      // users: [req.body.nameOne, req.body.nameTwo],
+      users: req.body.users,
       uids: [req.body.uid1, req.body.uid2],
       messages: [],
     });

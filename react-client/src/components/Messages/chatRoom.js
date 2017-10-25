@@ -55,21 +55,20 @@ class ChatRoom extends React.Component {
   }
 
   onSend(e, messages = []) {
-    axios.patch(`http://localhost:8000/messages/${this.props.navigation.state.params._id}`, {
-      user: {
-        uid: this.props.uid,
-        text: e[0].text,
-        createdAt: e[0].createdAt
-      }
-    })
-    console.log('text', e)
-    console.log('props', this.props)
-    this.setState((previousState) => {
-      return {
-        messages: GiftedChat.append(previousState.messages, messages),
-      };
-    });
-
+    // axios.patch(`http://localhost:8000/messages/${this.props.navigation.state.params._id}`, {
+    //   user: {
+    //     name: this.props.name,
+    //   },
+    //   text: e[0].text,
+    //   createdAt: e[0].createdAt
+    // })
+    // console.log('text', e)
+    console.log(this.props.name, e[0].text, this.props)
+    // .then((data) => {
+    //   this.setState({
+    //       messages: data.messages,
+    //     });
+    // })
   }
 
   renderBubble(props) {
@@ -136,7 +135,7 @@ const styles = StyleSheet.create({
 
 const userState = (store) => {
   return {
-    uid: store.Auth.ownerInfo[0]._id,
+    name: store.Owners.user.name,
   }
 }
 
