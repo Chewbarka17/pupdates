@@ -1,30 +1,32 @@
 import axios from 'axios';
 
-// get request for all dogs for specific user
-export const getAllDogs = (userid) => {
+// gets all dogs; data: [{dog}, {dog}, {dog},...]
+export const getAllUnseenDogs = (userid) => {
+  console.log("this is the getAllUnseenDogs action");
   axios.get('http://localhost:8000/api/newdogs/' + userid)
     .then((data) => {
-      dispatch({type: 'FETCH_ALL_DOGS_FULFILLED', payload: data});
+      console.log("data.data in actions: ", data.data);
+      dispatch({type: 'FETCH_ALL_UNSEEN_DOGS_FULFILLED', payload: data.data}); // data.data: [{dog1}, {dog2}, ...]
     })
     .catch(err => {
-      dispatch({type: 'FETCH_ALL_DOGS_REJECTED', payload: err});
+      dispatch({type: 'FETCH_ALL_UNSEEN_DOGS_REJECTED', payload: err});
     });
 };
 
-// patch dogs to dogsSeen array
+// patch dogs to dogsSeen array; data: {user}
 export const updateDogsSeen = (userid, dogid) => {
   axios.patch('http://localhost:8000/api/users/seendogs/' + userid, {
     dogid: dogid
   })
   .then((data) => {
-    dispatch({type: 'UPDATE_SEEN_DOGS_FULFILLED', payload: data});
+    dispatch({type: 'UPDATE_SEEN_DOGS_FULFILLED', payload: data[0].dogsSeen});
   })
   .catch(err => {
     dispatch({type: 'UPDATE_SEEN_DOGS_REJECTED', payload: err});
   });
 };
 
-// patch dogs to dogsLiked array
+// patch dogs to dogsLiked array; data: {user}
 export const updateLikedDogs = (userid, dogid) => {
   axios.patch('http://localhost:8000/api/users/likeddogs/' + userid, {
     dogid: dogid
