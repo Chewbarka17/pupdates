@@ -7,7 +7,7 @@ const initialState = {
 };
 
 const ownerReducer = (state = initialState, action) => {
-  console.log('what is actions', action);
+  // console.log('what is actions', action);
   switch (action.type) {
     case 'FETCH_OWNER_FULFILLED': {
       return Object.assign({}, state, {

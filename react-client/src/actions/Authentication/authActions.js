@@ -3,15 +3,13 @@ import { StackNavigator, NavigationActions } from 'react-navigation';
 
 import { AsyncStorage } from 'react-native';
 
-export const getOwner = (fb, navigate) => (dispatch) => {
-  console.log('fb data', fb);
+export const getOwnerFromDB = (fb, navigate, callback) => (dispatch) => {
+  // console.log('fb data', fb);
   axios.get('http://localhost:8000/api/users/' + fb.id)
-  .then(({data}) => {
-    // console.log('What is login screen', LoginScreen);
-    
+  .then(({data}) => { 
     console.log('User retrieved from data base', data);
     if (data.length === 0) {
-      addUserToDB(fb, navigate);
+      callback('User doesn\'t exist in collection');
     } else {
       dispatch({type: 'GET_OWNER_FROM_MONGO_FULFILLED', payload: data});
       AsyncStorage.setItem('mongoOwner', JSON.stringify(data), (error) => {
@@ -21,24 +19,22 @@ export const getOwner = (fb, navigate) => (dispatch) => {
       });
       navigate('DrawerMenu');
     }
-    
   })
   .catch((err) => {
-    console.log('User not in db, adding user to db', err)
-    addUserToDB(fb);
+    callback('User doesn\'t exist in collection');
   });
 };
 
-const addUserToDB = (fb, navigate) => {
+export const addOwnerToDB = (fb, navigate) => (dispatch) => {
   const user = {
     fb_id: fb.id,
     name: fb.name,
     picture: fb.picture.data.url
   }
-  console.log('add user to db', user);
+  // console.log('add user to db', user);
   axios.post('http://localhost:8000/api/users', user)
   .then(({data}) => {
-    console.log(data);
+    console.log('data is posted ', data);
     dispatch({type: 'POST_OWNER_FROM_MONGO_FULFILLED', payload: data});
     AsyncStorage.setItem('mongoOwner', JSON.stringify(data), (error) => {
       if (error) {
@@ -52,3 +48,5 @@ const addUserToDB = (fb, navigate) => {
     console.log(err);
   });
 }
+
+export default (getOwnerFromDB)(addOwnerToDB);

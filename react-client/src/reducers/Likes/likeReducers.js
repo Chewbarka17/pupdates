@@ -8,7 +8,7 @@ const initialState = {
 }
 
 const dogReducer = (state=initialState, action) => {
-  console.log('what is actions', action);
+  // console.log('what is actions', action);
   switch(action.type) {
     case 'FETCH_DOGS_LIKED_FULFILLED': {
       return Object.assign({}, state, {
