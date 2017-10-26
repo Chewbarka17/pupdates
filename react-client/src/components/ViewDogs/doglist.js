@@ -1,7 +1,6 @@
 // TODO:
 // calculate # of miles away
-// click on dog's pic to view their profile
-// render userid dynamically ("59e570f1e46ed4333725a612")
+// styling
 
 import React, { Component } from 'react';
 import {
@@ -45,59 +44,30 @@ class ViewDogsScreen extends React.Component {
   }
 
   componentDidMount() {
-    this.props.actions.getAllUnseenDogs("59e570f1e46ed4333725a612");
-    console.log("this.props.viewDogs.unseenDogs", this.props.viewDogs.unseenDogs);
-  }
-
-  Card(x) {
-    return (
-      <View style={styles.card}>
-        <Image
-          source ={{uri: x.pictures[0]}}
-          resizeMode="contain"
-          style ={{width:350, height:350}}
-        />
-        <View style={{width:350, height:70, flexDirection:'row', alignItems:'center', justifyContent:'space-between'}}>
-          <View style={{flexDirection:'row', margin:15, marginTop:25,}} >
-            <Text style={{fontSize:20, fontWeight:'300', color:'#444'}}>{x.name} </Text>
-          </View>
-          <View style={{flexDirection:'row'}}>
-            <View style={{padding:13, borderLeftWidth:1,borderColor:'#e3e3e3', alignItems:'center', justifyContent:'space-between'}}><Icon name='place' size={20} color="#777" /><Text style={{fontSize:16, fontWeight:'200', color:'#555'}}>{x.location} miles</Text></View>
-          </View>
-        </View>
-      </View>
-    )
+    this.props.actions.getAllUnseenDogs(this.props.uid);
   }
   
   // swipe cards
   handleYup(cardData) {
-    this.props.actions.updateDogsSeen("59e570f1e46ed4333725a612", cardData._id);
-    this.props.actions.updateLikedDogs("59e570f1e46ed4333725a612", cardData._id);
-    console.log("swipe yup dog id: ", cardData._id);
+    this.props.actions.updateDogsSeen(this.props.uid, cardData._id);
+    this.props.actions.updateLikedDogs(this.props.uid, cardData._id);
   }
 
   handleNope(cardData) {
-    this.props.actions.updateDogsSeen("59e570f1e46ed4333725a612", cardData._id);
-    console.log("swipe nope dog id: ", cardData._id);
+    this.props.actions.updateDogsSeen(this.props.uid, cardData._id);
   }
 
   // press buttons
   yup() {
-    // console.log("press yup dog arr: ", this.refs['swiper'].props.cards);
-    // console.log("press yup dog obj: ", this.refs['swiper'].props.cards[0]);
-    // console.log("press yup dogid: ", this.refs['swiper'].props.cards[0]._id);
-    this.props.actions.getAllUnseenDogs("59e570f1e46ed4333725a612");
-    this.props.actions.updateDogsSeen("59e570f1e46ed4333725a612", this.refs['swiper'].props.cards[0]._id)
-    this.props.actions.updateLikedDogs("59e570f1e46ed4333725a612", this.refs['swiper'].props.cards[0]._id)
+    this.props.actions.getAllUnseenDogs(this.props.uid);
+    this.props.actions.updateDogsSeen(this.props.uid, this.refs['swiper'].props.cards[0]._id)
+    this.props.actions.updateLikedDogs(this.props.uid, this.refs['swiper'].props.cards[0]._id)
     this.refs['swiper']._goToNextCard();
   }
 
   nope() {
-    // console.log("press nope dog arr: ", this.refs['swiper'].props.cards);
-    // console.log("press nope dog obj: ", this.refs['swiper'].props.cards[0]);
-    // console.log("press nope dogid: ", this.refs['swiper'].props.cards[0]._id);
-    this.props.actions.getAllUnseenDogs("59e570f1e46ed4333725a612");
-    this.props.actions.updateDogsSeen("59e570f1e46ed4333725a612", this.refs['swiper'].props.cards[0]._id)
+    this.props.actions.getAllUnseenDogs(this.props.uid);
+    this.props.actions.updateDogsSeen(this.props.uid, this.refs['swiper'].props.cards[0]._id)
     this.refs['swiper']._goToNextCard();
   }
 
@@ -113,6 +83,11 @@ class ViewDogsScreen extends React.Component {
     )
   }
 
+  navigateToProfile() {
+    const { navigate } = this.props.navigation;
+    navigate('DogProfile', this.refs['swiper'].props.cards[0]);
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -120,7 +95,29 @@ class ViewDogsScreen extends React.Component {
           ref = {'swiper'}
           cards={this.props.viewDogs.unseenDogs}
           containerStyle = {{  backgroundColor: '#f7f7f7', alignItems:'center', margin:20}}
-          renderCard={(cardData) => (this.Card(cardData))}
+          renderCard={(cardData) => (
+            <View 
+              style={styles.card}
+            >
+            <TouchableOpacity
+              onPress = {() => this.navigateToProfile()}
+            >
+              <Image
+                source ={{uri: cardData.pictures[0]}}
+                resizeMode="contain"
+                style ={{width:350, height:350}}
+              />
+              </TouchableOpacity>
+              <View style={{width:350, height:70, flexDirection:'row', alignItems:'center', justifyContent:'space-between'}}>
+                <View style={{flexDirection:'row', margin:15, marginTop:25,}} >
+                  <Text style={{fontSize:20, fontWeight:'300', color:'#444'}}>{cardData.name} </Text>
+                </View>
+                <View style={{flexDirection:'row'}}>
+                  <View style={{padding:13, borderLeftWidth:1,borderColor:'#e3e3e3', alignItems:'center', justifyContent:'space-between'}}><Icon name='place' size={20} color="#777" /><Text style={{fontSize:16, fontWeight:'200', color:'#555'}}>{cardData.location} miles</Text></View>
+                </View>
+              </View>
+            </View>
+          )}
           handleYup={(cardData) => (this.handleYup(cardData))}
           handleNope={(cardData) => (this.handleNope(cardData))}
           renderNoMoreCards={() => this.noMore()}
@@ -199,7 +196,8 @@ const styles = StyleSheet.create({
 
 const viewDogsState = (store) => {
   return {
-    viewDogs: store.ViewDogs
+    viewDogs: store.ViewDogs,
+    uid: store.Auth.ownerInfo[0]._id,
   }
 }
 
