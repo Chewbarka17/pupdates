@@ -60,6 +60,9 @@ module.exports = {
       age: req.body.age,
       breed: req.body.breed,
       pictures: req.body.pictures,
+      gender: req.body.gender,
+      bio: req.body.bio,
+      location: req.body.location,
     });
     dog.save((err) => {
       if (err) {
@@ -120,4 +123,63 @@ module.exports = {
       });
   },
 
+  getUnseenDogsByOwner: (req, res) => {
+    Owners.find({ _id: req.params.userid }, (err) => {
+      if (err) {
+        console.log('error getting user', err);
+        res.status(500).send(err);
+      }
+    })
+    .then((data) => {
+      Dogs.find({ _id: { $nin: data[0].dogsSeen }}, (err) => {
+        if (err) {
+          console.log('error getting dogsSeen', err);
+          res.status(500).send(err);
+        }
+      })
+        .then((result) => {
+          res.status(200).send(result);
+        })
+        .catch((err) => {
+          console.log('error getting dogsSeen', err);
+          res.status(500).send(err);
+        });
+    })
+    .catch((err) => {
+      console.log('error getting user', err);
+      res.status(500).send(err);
+    })
+  },
+
+  getLikedDogsByOwner: (req, res) => {
+    Owners.find({ _id: req.params.userid }, (err) => {
+      if (err) {
+        console.log('error getting user', err);
+        res.status(500).send(err);
+      }
+    })
+    .then((data) => {
+      Dogs.find({ _id: { $in: data[0].dogsLiked }}, (err) => {
+        if (err) {
+          console.log('error getting dogsLiked', err);
+          res.status(500).send(err);
+        }
+      })
+        .then((result) => {
+          // the result will be an array of dog IDs instead of an array of dog objects
+          // result = result.map(function(likedDog) {
+          //   return likedDog._id;
+          // });
+          res.status(200).send(result);
+        })
+        .catch((err) => {
+          console.log('error getting dogsLiked', err);
+          res.status(500).send(err);
+        });
+    })
+    .catch((err) => {
+      console.log('error getting user', err);
+      res.status(500).send(err);
+    })
+  },
 };

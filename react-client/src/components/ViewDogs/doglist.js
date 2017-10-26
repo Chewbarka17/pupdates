@@ -1,3 +1,7 @@
+// TODO:
+// calculate # of miles away
+// styling
+
 import React, { Component } from 'react';
 import {
   StyleSheet,
@@ -6,40 +10,15 @@ import {
   Image,
   TouchableOpacity,
 } from 'react-native';
-//import Nav from './dogentry';
+import axios from 'axios';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { Avatar } from 'react-native-elements';
 import SwipeCards from 'react-native-swipe-cards';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
-
-// each card should have:
-// dog's name, # of miles away
-// click on dog's pic to view their profile
-
-// dummy data ====================================
-var image1 = require('./corgi.jpg');
-var image2 = require('./samoyed.png');
-var image3 = require('./shiba.jpg');
-
-const Cards = [
-{
-  "id": 1,
-  "first_name": "Happy",
-  "distance": 38,
-  "image": image1
-}, {
-  "id": 2,
-  "first_name": "Snuffles",
-  "distance": 49,
-  "image": image2
-}, {
-  "id": 3,
-  "first_name": "Rover",
-  "distance": 39,
-  "image": image3
-}];
-// dummy data ====================================
-
+import * as viewDogActions from '../../actions/ViewDogs/viewDogsActions';
 
 class ViewDogsScreen extends React.Component {
   static navigationOptions = {
@@ -56,80 +35,126 @@ class ViewDogsScreen extends React.Component {
     }
   }
 
-  constructor(props){
-    super(props)
+  constructor(props) {
+    super(props);
+
     this.state = {
-      cards: Cards
+      error: null
     }
   }
 
-  Card(x){
-    return (
-      <View style={styles.card}>
-        <Image source ={x.image} resizeMode="contain" style ={{width:350, height:350}} />
-        <View style={{width:350, height:70, flexDirection:'row', alignItems:'center', justifyContent:'space-between'}}>
-        <View style={{flexDirection:'row', margin:15, marginTop:25,}} >
-        <Text style={{fontSize:20, fontWeight:'300', color:'#444'}}>{x.first_name} </Text>
-        </View>
-        <View style={{flexDirection:'row'}}>
-        <View style={{padding:13, borderLeftWidth:1,borderColor:'#e3e3e3', alignItems:'center', justifyContent:'space-between'}}><Icon name='place' size={20} color="#777" /><Text style={{fontSize:16, fontWeight:'200', color:'#555'}}>{x.distance} miles</Text></View>
-        </View>
-        </View>
-      </View>
-    )
+  componentDidMount() {
+    this.props.actions.getAllUnseenDogs(this.props.uid);
   }
-    handleYup (card) {
-    console.log(`Yup for ${card.text}`)
+  
+  // swipe cards
+  handleYup(cardData) {
+    this.props.actions.updateDogsSeen(this.props.uid, cardData._id);
+    this.props.actions.updateLikedDogs(this.props.uid, cardData._id);
   }
 
-  handleNope (card) {
-    console.log(`Nope for ${card.text}`)
+  handleNope(cardData) {
+    this.props.actions.updateDogsSeen(this.props.uid, cardData._id);
   }
-  noMore(){
+
+  // press buttons
+  yup() {
+    this.props.actions.getAllUnseenDogs(this.props.uid);
+    this.props.actions.updateDogsSeen(this.props.uid, this.refs['swiper'].props.cards[0]._id)
+    this.props.actions.updateLikedDogs(this.props.uid, this.refs['swiper'].props.cards[0]._id)
+    this.refs['swiper']._goToNextCard();
+  }
+
+  nope() {
+    this.props.actions.getAllUnseenDogs(this.props.uid);
+    this.props.actions.updateDogsSeen(this.props.uid, this.refs['swiper'].props.cards[0]._id)
+    this.refs['swiper']._goToNextCard();
+  }
+
+  noMore() {
     return (
       <View style={styles.card} >
-        <Text>No More Cards</Text>
+        <Text>No More Dogs</Text>
+        <Image
+          style={{width: 380, height: 140}}
+          source={require('./sadCorgi.gif')}
+        />
       </View>
     )
   }
 
-  yup(){
-    console.log(this.refs['swiper'])
-this.refs['swiper']._goToNextCard()  }
-
-nope(){
-    console.log(this.refs['swiper'])
-this.refs['swiper']._goToNextCard()  }
+  navigateToProfile() {
+    const { navigate } = this.props.navigation;
+    navigate('DogProfile', this.refs['swiper'].props.cards[0]);
+  }
 
   render() {
     return (
-            <View style={styles.container}>
-      <SwipeCards
-        ref = {'swiper'}
-        cards={this.state.cards}
-        containerStyle = {{  backgroundColor: '#f7f7f7', alignItems:'center', margin:20}}
-        renderCard={(cardData) => this.Card(cardData)}
-        renderNoMoreCards={() => this.noMore()}
-        handleYup={this.handleYup}
-        handleNope={this.handleNope} />
+      <View style={styles.container}>
+        <SwipeCards
+          ref = {'swiper'}
+          cards={this.props.viewDogs.unseenDogs}
+          containerStyle = {{  backgroundColor: '#f7f7f7', alignItems:'center', margin:20}}
+          renderCard={(cardData) => (
+            <View 
+              style={styles.card}
+            >
+            <TouchableOpacity
+              onPress = {() => this.navigateToProfile()}
+            >
+              <Image
+                source ={{uri: cardData.pictures[0]}}
+                resizeMode="contain"
+                style ={{width:350, height:350}}
+              />
+              </TouchableOpacity>
+              <View style={{width:350, height:70, flexDirection:'row', alignItems:'center', justifyContent:'space-between'}}>
+                <View style={{flexDirection:'row', margin:15, marginTop:25,}} >
+                  <Text style={{fontSize:20, fontWeight:'300', color:'#444'}}>{cardData.name} </Text>
+                </View>
+                <View style={{flexDirection:'row'}}>
+                  <View style={{padding:13, borderLeftWidth:1,borderColor:'#e3e3e3', alignItems:'center', justifyContent:'space-between'}}><Icon name='place' size={20} color="#777" /><Text style={{fontSize:16, fontWeight:'200', color:'#555'}}>{cardData.location} miles</Text></View>
+                </View>
+              </View>
+            </View>
+          )}
+          handleYup={(cardData) => (this.handleYup(cardData))}
+          handleNope={(cardData) => (this.handleNope(cardData))}
+          renderNoMoreCards={() => this.noMore()}
+        />
         <View style={{flexDirection:'row', alignItems:'center', justifyContent:'center'}}>
-        <TouchableOpacity style = {styles.buttons} onPress = {() => this.nope()}>
-        <Icon name='close' size={45} color="#888" style={{}} />
-        </TouchableOpacity>
-        <TouchableOpacity style = {styles.buttons} onPress = {() => this.yup()}>
-        <Icon name='favorite-border' size={36} color="#888" style={{marginTop:5}} />
-        </TouchableOpacity>
+          <TouchableOpacity
+            style = {styles.buttons}
+            onPress = {() => this.nope()}
+          >
+            <Icon 
+              name='close'
+              size={45}
+              color="#888"
+              style={{}}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity
+            style = {styles.buttons}
+            onPress = {() => this.yup()}
+          >
+            <Icon
+              name='favorite-border'
+              size={36}
+              color="#888"
+              style={{marginTop:5}}
+            />
+          </TouchableOpacity>
         </View>
         <View>
-        <MaterialIcons
-          name="menu"
-          size={24}
-          onPress={() => this.props.navigation.navigate('DrawerOpen')}
-        >
-        </MaterialIcons>
-      </View>
+          <MaterialIcons
+            name="menu"
+            size={24}
+            onPress={() => this.props.navigation.navigate('DrawerOpen')}
+          >
+          </MaterialIcons>
         </View>
-
+      </View>
     )
   }
 }
@@ -169,4 +194,17 @@ const styles = StyleSheet.create({
  
 });
 
-export default ViewDogsScreen;
+const viewDogsState = (store) => {
+  return {
+    viewDogs: store.ViewDogs,
+    uid: store.Auth.ownerInfo[0]._id,
+  }
+}
+
+const viewDogsDispatch = (dispatch) => {
+  return {
+    actions: bindActionCreators(viewDogActions, dispatch),
+  }
+};
+
+export default connect(viewDogsState, viewDogsDispatch)(ViewDogsScreen);

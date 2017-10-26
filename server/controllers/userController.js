@@ -56,7 +56,6 @@ module.exports = {
 
   updateUser: (req, res) => {
     Owners.findOneAndUpdate({ _id: req.body.id }, {
-      // console.log("trying to update user");
       $set: {
         name: req.body.name,
         age: req.body.age,
@@ -80,6 +79,39 @@ module.exports = {
         res.status(500).send('error removing user', err);
       }
       res.status(202).send('User successfully deleted');
+    });
+  },
+
+  updateSeenDogs: (req, res) => {
+    Owners.findOneAndUpdate({ _id: req.params.userid }, { $push: { dogsSeen: req.body.dogid } },
+      { new: true } , (err, data) => {
+      if(err) {
+        console.log('push to dogsSeen error', err);
+        res.status(500).send('error', err);
+      }
+      res.status(201).send(data);
+    });
+  },
+
+  updateLikedDogs: (req, res) => {
+    Owners.findOneAndUpdate({ _id: req.params.userid }, { $push: { dogsLiked: req.body.dogid } },
+      { new: true } , (err, data) => {
+      if(err) {
+        console.log('push to dogsLiked error', err);
+        res.status(500).send('error', err);
+      }
+      res.status(201).send(data);
+    });
+  },
+
+  removeLikedDog: (req, res) => {
+    Owners.findOneAndUpdate({ _id: req.params.userid }, { $pull: { dogsLiked: req.body.dogid } },
+      { new: true } , (err, data) => {
+        if(err) {
+          console.log('remove dogs from dogsLiked error', err);
+          res.status(500).send('error', err);
+        }
+        res.status(201).send(data);
     });
   },
 

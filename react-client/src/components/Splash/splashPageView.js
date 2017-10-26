@@ -1,3 +1,7 @@
+// TODO:
+// remove button
+// styling
+
 import React, { Component } from 'react';
 import { StackNavigator, NavigationActions } from 'react-navigation';
 import {
@@ -36,29 +40,13 @@ class SplashPage extends React.Component {
     const { navigate } = this.props.navigation;
     return (
       <View>
-        <Text>
-          Pupdates logo!
-        </Text>
-        <Image
-          style={{width: 200, height: 140}}
-          source={{uri: 'https://en.fontke.com/d/file/content/2017/02/5895352e54002.gif'}}
+      <Image
+          style={{width: 390, height: 160}}
+          source={require('./whiteBlueLogo.png')}
         />
-        <Text>
-          Sign Up
-        </Text>
-        <Text>
-          Login with FB
-        </Text>
-        <Text>  
-        </Text>
-        <Text>
-          logging in will auto navigate to View Dogs
-        </Text>
-        <Button
-          title="Dogs (with drawer nav)"
-          onPress={() =>
-            navigate('DrawerMenu')
-          }
+        <Image
+          style={{width: 380, height: 240}}
+          source={require('./laptopCorgi.gif')}
         />
         <LoginScreen navigate={navigate}/>
       </View>
@@ -66,8 +54,18 @@ class SplashPage extends React.Component {
   }
 }
 
+// style={{width: 200, height: 140}}
+
+// style={{flex:1, height: undefined, width: undefined}}
+// resizeMode="contain"
+
 const NavigationApp = StackNavigator({
-  Menu: { screen: SplashPage },
+  Menu: {
+    screen: SplashPage,
+    navigationOptions: {
+      header: null,
+    }
+  },
   DrawerMenu: { screen: DrawerMenuScreen },
   Dogs: { screen: ViewDogsScreen },
   Likes: { screen : LikesScreen },
