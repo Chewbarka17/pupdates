@@ -7,7 +7,7 @@ const io = require('socket.io')();
 
 // File imports
 const routes = require('./routes/index.js');
-const db = require('../db/index.js');
+// const db = require('../db/index.js');
 
 // Express Initialization
 const app = express();
@@ -22,16 +22,13 @@ app.use(express.static(path.resolve(__dirname, '../src')));
 app.use('/api', routes);
 
 // Messages
+// console.log('io.on', io);
 io.on('connection', (socket) => {
+  console.log('connection');
   socket.on('message', (message) => {
     // put message in database?
-    // console.log('io.on + socket.on', message);
 
-    socket.in(message.roomid).emit('message', {
-      user: message.user,
-      text: message.text,
-      //room id
-    });
+    socket.to(message.roomid).emit('message', message);
   });
 });
 

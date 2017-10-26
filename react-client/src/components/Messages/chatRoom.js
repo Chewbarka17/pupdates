@@ -13,18 +13,8 @@ class ChatRoom extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      messages: [
-        {
-          _id: 1,
-          text: 'Hello developer',
-          createdAt: new Date(),
-          user: {
-            _id: 2,
-            name: 'React Native',
-          },
-        },
-      ],
-      typingText: null,
+      messages: [],
+      // typingText: null,
     }
     this.renderBubble = this.renderBubble.bind(this);
     this.onSend = this.onSend.bind(this);
@@ -35,19 +25,20 @@ class ChatRoom extends React.Component {
     console.log(this.props)
     axios.get(`http://localhost:8000/api/messages/${this.props.navigation.state.params._id}`)
     .then((data) => {
-      console.log(data);
+      // console.log(data);
       this.setState({messages: data.data[0].messages})
     })
-    // this.socket = io();
-    // this.socket.on('message', (message) => {
-    //   this.setState({
-    //     messages: [...this.state.message, message]
-    //   })
-    // })
+    // http://localhost:8000
+    this.socket = io('http://localhost:8000');
+    console.log(this.socket)
+    this.socket.on('message', (message) => {
+      this.setState({
+        messages: [...this.state.message, message]
+      })
+    })
   }
   
   onSend(e, messages = []) {
-    console.log(this.props.name)
     axios.patch(`http://localhost:8000/api/messages/${this.props.navigation.state.params._id}`, {
       user: {
         name: this.props.name,
@@ -57,15 +48,20 @@ class ChatRoom extends React.Component {
     })
     // console.log('text', e)
     .then((data) => {
-      console.log(data)
+      // console.log(data)
     })
     .catch((err) => {
       console.log('Error w/patch', err)
     })
     
-    
-    this.socket.to(this.props.roomid).emit('message', {
-      // message object with room id
+    console.log('socket?', this.socket)
+    this.socket.emit('message', {
+      user: {
+        name: this.props.name,
+      },
+      text: e[0].text,
+      createdAt: e[0].createdAt,
+      roomid: this.props.roomid,
     })
   }
 

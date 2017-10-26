@@ -20,7 +20,6 @@ module.exports = {
 
   // a message is an object with a user and a text. No altering or deleting messages yet.
   addMessage: (req, res) => {
-    console.log(req.body.user)
     Rooms.findOneAndUpdate({ _id: req.params.roomid }, {
       $push: {
         messages: {
@@ -33,7 +32,6 @@ module.exports = {
         },
       },
     }, { new: true }, (err, data) => {
-      console.log('callback', data);
       if (err) {
         console.log('update error', err);
         res.status(500).send('error', err);
