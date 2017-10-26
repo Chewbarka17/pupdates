@@ -1,4 +1,4 @@
-// Styling:
+// TODO:
 // get rid of grey bar
 // add padding to footer to show items at the bottom (scroll?)
 
@@ -17,10 +17,10 @@ import Swipeout from 'react-native-swipeout';
 import { List, ListItem, Avatar } from "react-native-elements";
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
-// import { connect } from 'react-redux';
-// import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
-// import * as likeActions from '../../actions/Likes/likeActions';
+import * as likeActions from '../../actions/Likes/likeActions';
 
 class LikedDogsView extends React.Component {
   static navigationOptions = {
@@ -45,15 +45,12 @@ class LikedDogsView extends React.Component {
     };
   }
 
-  componentDidMount() {
+  componentDidMount = () => {
     this.makeRemoteRequest();
   }
 
-  // how to grab logged in user's id ???
-  // Batman's userid: 59e570f1e46ed4333725a612
-
   makeRemoteRequest = () => {
-    axios.get('http://localhost:8000/api/likeddogs/' + '59e570f1e46ed4333725a612')
+    axios.get(`http://localhost:8000/api/likeddogs/${this.props.uid}`)
       .then(({ data }) => {
         this.setState({ likedDogs: data }, () => {
           console.log("this.state.likedDogs after get request: ", this.state.likedDogs);
@@ -65,7 +62,7 @@ class LikedDogsView extends React.Component {
   };
 
   deleteLikedDog = (item) => {
-    axios.patch('http://localhost:8000/api/likeddogs/' + '59e570f1e46ed4333725a612', {dogid: item._id})
+    axios.patch(`http://localhost:8000/api/likeddogs/${this.props.uid}`, {dogid: item._id})
       .then(() => {
         this.makeRemoteRequest();
       })
@@ -130,18 +127,17 @@ class LikedDogsView extends React.Component {
   }
 }
 
-export default LikedDogsView;
+const likedState = (store) => {
+  return {
+    // likedDogs: store.LikedDogs.likedDogs,
+    uid: store.Auth.ownerInfo[0]._id,
+  }
+}
 
-// const likedState = (store) => {
-//   return {
-//     likedDogs: store.LikedDogs.likedDogs
-//   }
-// }
+const likedDispatch = (dispatch) => {
+  return {
+    actions: bindActionCreators(likeActions, dispatch),
+  }
+};
 
-// const likedDispatch = (dispatch) => {
-//   return {
-//     actions: bindActionCreators(likeActions, dispatch),
-//   }
-// };
-
-// export default connect(likedState, likedDispatch)(LikedDogsView);
+export default connect(likedState, likedDispatch)(LikedDogsView);
