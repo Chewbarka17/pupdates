@@ -4,6 +4,7 @@ const initialState = {
   fetched: false,
   posted: false,
   ownerInfo: null,
+  awsSauce: null,
 }
 
 const authReducer = (state = initialState, action) => {
@@ -28,6 +29,11 @@ const authReducer = (state = initialState, action) => {
     case 'POST_OWNER_FROM_MONGO_REJECTED': {
       return Object.assign({}, state, {
         error: action.payload,
+      });
+    }
+    case 'AWS_SECRET_SAUCE_FULFILLED': {
+      return Object.assign({}, state, {
+        awsSauce: action.payload,
       });
     }
     default:

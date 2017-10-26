@@ -1,13 +1,12 @@
 import axios from 'axios';
 import { StackNavigator, NavigationActions } from 'react-navigation';
-
 import { AsyncStorage } from 'react-native';
 
 export const getOwnerFromDB = (fb, navigate, callback) => (dispatch) => {
   // console.log('fb data', fb);
   axios.get('http://localhost:8000/api/users/' + fb.id)
   .then(({data}) => { 
-    console.log('User retrieved from data base', data);
+    // console.log('User retrieved from data base', data);
     if (data.length === 0) {
       callback('User doesn\'t exist in collection');
     } else {
@@ -34,7 +33,7 @@ export const addOwnerToDB = (fb, navigate) => (dispatch) => {
   // console.log('add user to db', user);
   axios.post('http://localhost:8000/api/users', user)
   .then(({data}) => {
-    console.log('data is posted ', data);
+    // console.log('data is posted ', data);
     dispatch({type: 'POST_OWNER_FROM_MONGO_FULFILLED', payload: data});
     AsyncStorage.setItem('mongoOwner', JSON.stringify(data), (error) => {
       if (error) {
@@ -49,4 +48,13 @@ export const addOwnerToDB = (fb, navigate) => (dispatch) => {
   });
 }
 
-export default (getOwnerFromDB)(addOwnerToDB);
+export const saveAwsSecretSauce = (accessKeyId, secretAcessKey, sessionToken) => (dispatch) => {
+  const aws = {
+    accessKeyId: accessKeyId,
+    secretAcessKey: secretAcessKey,
+    sessionToken: sessionToken
+  }
+  dispatch({type: 'AWS_SECRET_SAUCE_FULFILLED', payload: aws});
+}
+
+// export default (getOwnerFromDB)(addOwnerToDB);

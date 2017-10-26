@@ -30,15 +30,30 @@ export const updateDogs = (name, age, breed, dogid) => (dispatch) => {
     });
 };
 
-export const deleteDogs = dogid => (dispatch) => {
-  console.log(dogid);
-  axios.delete(`http://localhost:8000/api/dogs/${dogid}`)
+export const deleteDogs = (dogid, uid) => (dispatch) => {
+  console.log(`http://localhost:8000/api/user/${uid}/dogs/${dogid}`);
+  axios({
+    method: 'delete',
+    url: `http://localhost:8000/api/dogs/${dogid}`,
+    data: {
+      owner: uid,
+      dogid: dogid
+    }
+  })
     .then(() => {
       dispatch({ type: 'DELETE_DOG_FULFILLED', payload: dogid });
     })
     .catch((err) => {
       dispatch({ type: 'DELETE_DOG_REJECTED', payload: err });
     });
+
+  // axios.delete(`http://localhost:8000/api/user/${uid}/dogs/${dogid}`, {data: {owner: uid, dogid: dogid}})
+  //   .then(() => {
+  //     dispatch({ type: 'DELETE_DOG_FULFILLED', payload: dogid });
+  //   })
+  //   .catch((err) => {
+  //     dispatch({ type: 'DELETE_DOG_REJECTED', payload: err });
+  //   });
 };
 
 // export const listDogs = dogInfo => (dispatch) => {

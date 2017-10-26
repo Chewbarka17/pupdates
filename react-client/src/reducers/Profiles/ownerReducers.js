@@ -4,6 +4,7 @@ const initialState = {
   posted: false,
   fetched: false,
   user: {},
+  awsSauce: null,
 };
 
 const ownerReducer = (state = initialState, action) => {
@@ -41,6 +42,33 @@ const ownerReducer = (state = initialState, action) => {
       return Object.assign({}, state, {
         updated: true,
         user: action.payload,
+      });
+    }
+    case 'GET_OWNER_FROM_MONGO_FULFILLED': {
+      return Object.assign({}, state, {
+        fetched: true,
+        user: action.payload,
+      });
+    }
+    case 'GET_OWNER_FROM_MONGO_REJECTED': {
+      return Object.assign({}, state, {
+        error: action.payload,
+      });
+    }
+    case 'POST_OWNER_FROM_MONGO_FULFILLED': {
+      return Object.assign({}, state, {
+        posted: true,
+        user: action.payload,
+      });
+    }
+    case 'POST_OWNER_FROM_MONGO_REJECTED': {
+      return Object.assign({}, state, {
+        error: action.payload,
+      });
+    }
+    case 'AWS_SECRET_SAUCE_FULFILLED': {
+      return Object.assign({}, state, {
+        awsSauce: action.payload,
       });
     }
     default:

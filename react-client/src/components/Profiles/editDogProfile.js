@@ -92,7 +92,7 @@ class EditDogProfile extends Component {
       age: store.Dogs.dogs[0].age,
       breed: store.Dogs.dogs[0].breed,
       id: store.Dogs.dogs[0]._id,
-      userId: store.Auth.ownerInfo[0]._id
+      userId: store.Owners.user.fb_id
     }
   }
 
