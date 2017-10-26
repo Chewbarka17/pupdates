@@ -99,4 +99,3 @@ export const updateOwners = (name, age, location, bio, userid) => (dispatch) => 
       dispatch({ type: 'UPDATE_OWNER_REJECTED', payload: err });
     });
 };
-

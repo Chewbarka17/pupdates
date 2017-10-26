@@ -25,9 +25,11 @@ import * as ownerActions from '../../../actions/Profiles/ownerActions';
 class LoginScreen extends Component {
   constructor(props){
     super(props);
+    this._fbAuth = this._fbAuth.bind(this);
+    this._getPublicProfile = this._getPublicProfile.bind(this);
   }
 
-  _fbAuth = () => {
+  _fbAuth() {
     AccessToken.getCurrentAccessToken()
     .then(data => {
       let accessToken = data.accessToken;
@@ -57,6 +59,7 @@ class LoginScreen extends Component {
     });
   }
 
+<<<<<<< HEAD
   _getAwsSecretSauce = (accessToken) => {
     AWS.config.region = awsmobile.aws_cognito_region;
     AWS.config.credentials = new AWS.CognitoIdentityCredentials({
@@ -96,6 +99,9 @@ class LoginScreen extends Component {
   }
 
   _getPublicProfile = (accessToken) => {
+=======
+  _getPublicProfile(accessToken) {
+>>>>>>> ChatRoom displays messages in correct order.
     const responseInfoCallback = (error, data) => {
       if (error) {
         alert('Error fetching data: ' + error.toString());

@@ -9,9 +9,6 @@ import axios from 'axios';
 
 import * as messageActions from '../../actions/MessageActions/chatRoomActions';
 
-const messages = [{text: "This is a drill.", uid: "59e92041f61b1458b2e847f3", user: {name: "Bob"}, _id: "59ebd07bc68daf70df6adb25"},
-{text: "I don't believe you.", uid: "59e92113f61b1458b2e847f4", user: {name: "Kyle"}, _id: "59ebd0a5c68daf70df6adb26"}];
-
 class ChatRoom extends React.Component {
   constructor(props) {
     super(props);
@@ -29,14 +26,12 @@ class ChatRoom extends React.Component {
       ],
       typingText: null,
     }
-    // this.props.roomid
     this.renderBubble = this.renderBubble.bind(this);
     this.onSend = this.onSend.bind(this);
     // this.renderFooter = this.renderFooter.bind(this);
   };
   
   componentDidMount() {
-    // get messages, or filter messages from store
     console.log(this.props)
     axios.get(`http://localhost:8000/api/messages/${this.props.navigation.state.params._id}`)
     .then((data) => {
@@ -50,15 +45,7 @@ class ChatRoom extends React.Component {
     //   })
     // })
   }
-
-  handleSubmit() {
-    // post message to database
-    
-    this.socket.to(this.props.roomid).emit('message', {
-      // message object with room id
-    })
-  }
-
+  
   onSend(e, messages = []) {
     console.log(this.props.name)
     axios.patch(`http://localhost:8000/api/messages/${this.props.navigation.state.params._id}`, {
@@ -74,6 +61,11 @@ class ChatRoom extends React.Component {
     })
     .catch((err) => {
       console.log('Error w/patch', err)
+    })
+    
+    
+    this.socket.to(this.props.roomid).emit('message', {
+      // message object with room id
     })
   }
 
@@ -141,7 +133,8 @@ const styles = StyleSheet.create({
 
 const userState = (store) => {
   return {
-    name: store.Owners.user.name,
+    // name: store.Owners.user.name,
+    name: store.Auth.ownerInfo[0].name
   }
 }
 

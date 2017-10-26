@@ -24,9 +24,12 @@ module.exports = {
     Rooms.findOneAndUpdate({ _id: req.params.roomid }, {
       $push: {
         messages: {
-          user: req.body.user,
-          createdAt: req.body.createdAt,
-          text: req.body.text,
+          $each: [{
+            user: req.body.user,
+            createdAt: req.body.createdAt,
+            text: req.body.text,
+          }],
+          $position: 0,
         },
       },
     }, { new: true }, (err, data) => {
