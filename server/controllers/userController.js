@@ -55,7 +55,7 @@ module.exports = {
   },
 
   updateUser: (req, res) => {
-    Owners.findOneAndUpdate({ _id: req.body._id }, {
+    Owners.findOneAndUpdate({ _id: req.body.userid }, {
       $set: {
         name: req.body.name,
         age: req.body.age,

@@ -79,7 +79,7 @@ export const saveAwsSecretSauce = (accessKeyId, secretAcessKey, sessionToken) =>
 export const updateOwners = (name, age, location, bio, userid) => (dispatch) => {
 
   axios.patch('http://localhost:8000/api/users', {
-    _id: userid,
+    userid: userid,
     name,
     age,
     location,
