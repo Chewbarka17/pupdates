@@ -3,7 +3,7 @@ const parser = require('body-parser');
 const path = require('path');
 require('dotenv').config();
 const cors = require('cors');
-const io = require('socket.io')();
+const io = require('socket.io')('3000');
 
 // File imports
 const routes = require('./routes/index.js');
@@ -27,8 +27,8 @@ io.on('connection', (socket) => {
   console.log('connection');
   socket.on('message', (message) => {
     // put message in database?
-
-    socket.to(message.roomid).emit('message', message);
+    console.log('socket message', message);
+    socket.emit(message.roomid, message);
   });
 });
 

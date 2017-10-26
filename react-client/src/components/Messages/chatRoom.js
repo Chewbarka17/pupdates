@@ -14,7 +14,6 @@ class ChatRoom extends React.Component {
     super(props);
     this.state = {
       messages: [],
-      // typingText: null,
     }
     this.renderBubble = this.renderBubble.bind(this);
     this.onSend = this.onSend.bind(this);
@@ -29,22 +28,25 @@ class ChatRoom extends React.Component {
       this.setState({messages: data.data[0].messages})
     })
     // http://localhost:8000
-    this.socket = io('http://localhost:8000');
+    this.socket = io('http://localhost:3000/');
+    this.roomid = this.props.navigation.state.params._id
     console.log(this.socket)
-    this.socket.on('message', (message) => {
+    this.socket.on(`${this.props.navigation.state.params._id}`, (message) => {
+      console.log('setting state', message)
       this.setState({
-        messages: [...this.state.message, message]
+        messages: [message, ...this.state.messages]
       })
+      console.log(this.state.messages)
     })
   }
   
   onSend(e, messages = []) {
     axios.patch(`http://localhost:8000/api/messages/${this.props.navigation.state.params._id}`, {
+      text: e[0].text,
+      createdAt: e[0].createdAt,
       user: {
         name: this.props.name,
       },
-      text: e[0].text,
-      createdAt: e[0].createdAt
     })
     // console.log('text', e)
     .then((data) => {
@@ -54,14 +56,15 @@ class ChatRoom extends React.Component {
       console.log('Error w/patch', err)
     })
     
-    console.log('socket?', this.socket)
+    // console.log('socket?', this.props)
     this.socket.emit('message', {
       user: {
         name: this.props.name,
       },
       text: e[0].text,
       createdAt: e[0].createdAt,
-      roomid: this.props.roomid,
+      roomid: this.props.navigation.state.params._id,
+      _id: Math.round(Math.random() * 1000000),
     })
   }
 
@@ -95,8 +98,6 @@ class ChatRoom extends React.Component {
   // }
 
   render() {
-    let text = this.props.navigation.state.params.messages
-    // console.log(this.props.navigation.state.params.messages)
     return (
       <GiftedChat
         messages={this.state.messages}
@@ -114,18 +115,18 @@ class ChatRoom extends React.Component {
 
 }
 
-const styles = StyleSheet.create({
-  footerContainer: {
-    marginTop: 5,
-    marginLeft: 10,
-    marginRight: 10,
-    marginBottom: 10,
-  },
-  footerText: {
-    fontSize: 14,
-    color: '#aaa',
-  },
-});
+// const styles = StyleSheet.create({
+//   footerContainer: {
+//     marginTop: 5,
+//     marginLeft: 10,
+//     marginRight: 10,
+//     marginBottom: 10,
+//   },
+//   footerText: {
+//     fontSize: 14,
+//     color: '#aaa',
+//   },
+// });
 
 const userState = (store) => {
   return {
