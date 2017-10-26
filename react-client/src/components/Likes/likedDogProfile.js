@@ -1,7 +1,5 @@
 // TODO:
 // styling
-// add owner's name & profile which navigates to owner's profile?
-  // {props.navigation.state.params.owner}
 
 import React, { Component } from 'react';
 import { View, Text, Image, StyleSheet } from 'react-native';
