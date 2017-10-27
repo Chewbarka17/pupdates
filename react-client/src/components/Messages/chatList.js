@@ -36,8 +36,8 @@ class ChatList extends React.Component {
     //   console.log('socket received message', message);
       // this.props.actions.messageChange([...this.props.log, message]);
     // })
-    console.log(this.props)
-    this.props.actions.getRooms('59e92041f61b1458b2e847f3');
+    // console.log(this.props)
+    this.props.actions.getRooms(this.props.uid);
 
     // get rooms associated with user
     // set rooms = to data for FlatList
@@ -54,7 +54,7 @@ class ChatList extends React.Component {
   };
 
   render() {
-    console.log(this.props.rooms[0])
+    // console.log(this.props.rooms[0])
 
     return (
       <View>
@@ -92,7 +92,8 @@ class ChatList extends React.Component {
 // add rooms to state
 const state = (store) => {
   return {
-    rooms: store.Rooms.rooms
+    rooms: store.Rooms.rooms,
+    uid: store.Owners.user._id,    
   }
 }
 

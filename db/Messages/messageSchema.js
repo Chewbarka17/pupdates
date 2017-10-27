@@ -5,10 +5,10 @@ const roomSchema = new db.Schema({
   users: [String],
   uids: [String],
   messages: [{
-    user: String,
-    uid: String,
+    user: { name: String },
+    // uid: String,
     text: String,
-    // createdAt: String,
+    createdAt: String,
   }],
 });
 

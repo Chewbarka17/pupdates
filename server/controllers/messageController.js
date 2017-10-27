@@ -7,7 +7,7 @@ module.exports = {
 
   // You need a room id to get the messages associated with that room.
   getMessages: (req, res) => {
-    Rooms.find({ roomid: req.params.roomid }, (err) => {
+    Rooms.find({ _id: req.params.roomid }, (err) => {
       if (err) {
         console.log('Error getting messages', err);
         res.status(500).send(err);
@@ -23,13 +23,15 @@ module.exports = {
     Rooms.findOneAndUpdate({ _id: req.params.roomid }, {
       $push: {
         messages: {
-          user: req.body.user,
-          uid: req.body.uid,
-          text: req.body.text,
+          $each: [{
+            user: req.body.user,
+            createdAt: req.body.createdAt,
+            text: req.body.text,
+          }],
+          $position: 0,
         },
       },
     }, { new: true }, (err, data) => {
-      console.log('callback', data);
       if (err) {
         console.log('update error', err);
         res.status(500).send('error', err);
@@ -42,7 +44,7 @@ module.exports = {
   createRoom: (req, res) => {
     const room = new Rooms({
       _id: new mongoose.Types.ObjectId(),
-      // users: [req.body.nameOne, req.body.nameTwo],
+      users: req.body.users,
       uids: [req.body.uid1, req.body.uid2],
       messages: [],
     });

@@ -3,11 +3,11 @@ const parser = require('body-parser');
 const path = require('path');
 require('dotenv').config();
 const cors = require('cors');
-const io = require('socket.io')();
+const io = require('socket.io')('3000');
 
 // File imports
 const routes = require('./routes/index.js');
-const db = require('../db/index.js');
+// const db = require('../db/index.js');
 
 // Express Initialization
 const app = express();
@@ -22,16 +22,13 @@ app.use(express.static(path.resolve(__dirname, '../src')));
 app.use('/api', routes);
 
 // Messages
+// console.log('io.on', io);
 io.on('connection', (socket) => {
+  console.log('connection');
   socket.on('message', (message) => {
     // put message in database?
-    // console.log('io.on + socket.on', message);
-
-    socket.in(message.roomid).emit('message', {
-      user: message.user,
-      text: message.text,
-      //room id
-    });
+    console.log('socket message', message);
+    socket.emit(message.roomid, message);
   });
 });
 

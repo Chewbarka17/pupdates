@@ -8,7 +8,7 @@ const PupdatesReducers = combineReducers({
   Dogs,
   ViewDogs,
   Rooms,
-  Owners
+  Owners,
 });
 
 export default PupdatesReducers;
