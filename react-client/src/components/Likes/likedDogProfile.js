@@ -1,42 +1,92 @@
 // TODO:
+// show dog's owner avatar & name, click to view owner's profile
+// add message button that creates a new chat room or takes to exisiting chat room
 // styling
 
 import React, { Component } from 'react';
+import axios from 'axios';
 import { View, Text, Image, StyleSheet } from 'react-native';
-import { Avatar } from 'react-native-elements';
+import { Avatar, Button } from 'react-native-elements';
 
-const likedDogProfile = (props) => {
-  console.log("props: ", props);
-  
-  return (
+
+
+class likedDogProfile extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      name: "",
+      picture: ""
+    };
+  }
+
+  componentDidMount = () => {
+    this.getOwnersInfo();
+  };
+
+  getOwnersInfo = () => {
+    axios.get('http://localhost:8000/api/userid/' + this.props.navigation.state.params.owner)
+      .then(({ data }) => {
+        console.log(data)
+        this.setState({ name: data[0].name, picture: data[0].picture }, () => {
+          // console.log("this.state.owner: ", this.state.owner); // [{owner}]
+          // console.log("this.state.owner[0]: ", this.state.owner[0]); // {owner}
+          // console.log("this.state.owner[0].name: ", this.state.owner[0].name); // Ironman
+          
+        });
+      })
+      .catch((err) => {
+        console.log('failed to get owner info: ', err)
+      });
+  };
+
+  render() {
+    return (
       <View>
         <Avatar
           xlarge
           rounded
-          source={{uri: props.navigation.state.params.pictures[0]}}
+          source={{uri: this.props.navigation.state.params.pictures[0]}}
         />
         <View>
         <Text>
-          Name: {props.navigation.state.params.name}
+          Name: {this.props.navigation.state.params.name}
         </Text>
         <Text>
-          Breed: {props.navigation.state.params.breed}
+          Breed: {this.props.navigation.state.params.breed}
         </Text>
         <Text>
-          Gender: {props.navigation.state.params.gender}
+          Gender: {this.props.navigation.state.params.gender}
         </Text>
         <Text>
-          Age: {props.navigation.state.params.age}
+          Age: {this.props.navigation.state.params.age}
         </Text>
         <Text>
-          Location: {props.navigation.state.params.location}
+          Location: {this.props.navigation.state.params.location}
         </Text>
         <Text>
-          Bio: {props.navigation.state.params.bio}
+          Bio: {this.props.navigation.state.params.bio}
         </Text>
+        <Avatar
+          large
+          rounded
+          source={{uri: this.state.picture}}
+        />
+        <Text>
+          Owner: {this.state.name}
+        </Text> 
+        <Button
+          raised
+          small
+          iconRight={{
+            name: 'message' 
+          }}
+          title='Chat'
+        />
       </View>
     </View>
-  )
+    )
+  }
 }
 
 var styles = StyleSheet.create({
