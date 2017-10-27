@@ -68,8 +68,8 @@ class Home extends Component {
        }}
       >
       <MapView.Marker
-          coordinate={{latitude: 33.9863674,
-          longitude: -118.3987271}}
+          coordinate={{latitude: this.state.latitude,
+          longitude: this.state.longitude}}
       />
       </MapView>
       </View>
