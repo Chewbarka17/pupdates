@@ -34,19 +34,52 @@ class Home extends Component {
 
   constructor() {
     super();
+
+    this.state = {
+      latitude: null,
+      longitude: null,
+      error: null,
+    }
+  }
+
+  componentDidMount() {
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        this.setState({
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude,
+          error: null,
+        });
+      },
+      (error) => this.setState({ error: error.message }),
+      { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 },
+    );
   }
 
   render() {
     return (
-      <MapView
-        style={ styles.map }
-        initialRegion={{
-          latitude: 37.78825,
-          longitude: -122.4324,
-          latitudeDelta: 0.0922,
-          longitudeDelta: 0.0421,
-        }}
+      <View style={styles.container}>
+      <MapView style={styles.map}
+       initialRegion={{
+           latitude: 33.9863674,
+           longitude: -118.3987271,
+           latitudeDelta: 0.0,
+           longitudeDelta: 0.0,
+       }}
+      >
+      <MapView.Marker
+          coordinate={{latitude: 33.9863674,
+          longitude: -118.3987271}}
       />
+      </MapView>
+      </View>
+    // title={"title"}
+    // description={"description"}
+    // <View style={{ flexGrow: 1, alignItems: 'center', justifyContent: 'center' }}>
+    //   <Text>Latitude: {this.state.latitude}</Text>
+    //   <Text>Longitude: {this.state.longitude}</Text>
+    //   {this.state.error ? <Text>Error: {this.state.error}</Text> : null}
+    // </View>
     );
   }
 
