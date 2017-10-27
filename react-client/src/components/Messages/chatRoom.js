@@ -27,16 +27,15 @@ class ChatRoom extends React.Component {
       // console.log(data);
       this.setState({messages: data.data[0].messages})
     })
-    // http://localhost:8000
+
     this.socket = io('http://localhost:3000/');
     this.roomid = this.props.navigation.state.params._id
-    console.log(this.socket)
+
     this.socket.on(`${this.props.navigation.state.params._id}`, (message) => {
       console.log('setting state', message)
       this.setState({
         messages: [message, ...this.state.messages]
       })
-      console.log(this.state.messages)
     })
   }
   
