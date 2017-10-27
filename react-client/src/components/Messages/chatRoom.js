@@ -129,8 +129,8 @@ class ChatRoom extends React.Component {
 
 const userState = (store) => {
   return {
-    // name: store.Owners.user.name,
-    name: store.Auth.ownerInfo[0].name
+    name: store.Owners.user.name,
+    // name: store.Auth.ownerInfo[0].name
   }
 }
 

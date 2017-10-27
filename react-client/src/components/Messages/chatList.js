@@ -93,7 +93,7 @@ class ChatList extends React.Component {
 const state = (store) => {
   return {
     rooms: store.Rooms.rooms,
-    uid: store.Auth.ownerInfo[0]._id,    
+    uid: store.Owners.user._id,    
   }
 }
 
