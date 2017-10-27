@@ -1,5 +1,8 @@
 // TODO:
 // calculate # of miles away
+// X <3 buttons buggy
+// viewing dog's profile buggy
+// add "woofsies no more dogs" text to the gif
 // styling
 
 import React, { Component } from 'react';
@@ -8,6 +11,7 @@ import {
   Text,
   View,
   Image,
+  Alert,
   TouchableOpacity,
 } from 'react-native';
 import axios from 'axios';
@@ -59,25 +63,46 @@ class ViewDogsScreen extends React.Component {
 
   // press buttons
   yup() {
-    this.props.actions.getAllUnseenDogs(this.props.uid);
-    this.props.actions.updateDogsSeen(this.props.uid, this.refs['swiper'].props.cards[0]._id)
-    this.props.actions.updateLikedDogs(this.props.uid, this.refs['swiper'].props.cards[0]._id)
-    this.refs['swiper']._goToNextCard();
+    if (this.refs['swiper'].props.cards[0]) {
+      this.props.actions.getAllUnseenDogs(this.props.uid);
+      this.props.actions.updateDogsSeen(this.props.uid, this.refs['swiper'].props.cards[0]._id)
+      this.props.actions.updateLikedDogs(this.props.uid, this.refs['swiper'].props.cards[0]._id)
+      this.refs['swiper']._goToNextCard();
+    } else {
+      Alert.alert(
+        'Woofsies',
+        'No more dogs',
+        [
+          {text: 'OK', onPress: () => console.log('OK Pressed')},
+        ],
+        { cancelable: false }
+      )
+    }
   }
 
   nope() {
-    this.props.actions.getAllUnseenDogs(this.props.uid);
-    this.props.actions.updateDogsSeen(this.props.uid, this.refs['swiper'].props.cards[0]._id)
-    this.refs['swiper']._goToNextCard();
+    if (this.refs['swiper'].props.cards[0]) {
+      this.props.actions.getAllUnseenDogs(this.props.uid);
+      this.props.actions.updateDogsSeen(this.props.uid, this.refs['swiper'].props.cards[0]._id)
+      this.refs['swiper']._goToNextCard();
+    } else {
+      Alert.alert(
+        'Woofsies',
+        'No more dogs',
+        [
+          {text: 'OK', onPress: () => console.log('OK Pressed')},
+        ],
+        { cancelable: false }
+      )
+    }
   }
 
   noMore() {
     return (
-      <View style={styles.card} >
-        <Text>No More Dogs</Text>
+      <View>
         <Image
-          style={{width: 380, height: 140}}
-          source={require('./sadCorgi.gif')}
+          style={{width: 550, height: 300}}
+          source={require('./cryingCorgi.gif')}
         />
       </View>
     )
