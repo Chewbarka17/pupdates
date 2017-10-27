@@ -57,6 +57,8 @@ class Home extends Component {
   }
 
   render() {
+    let lat = this.state.latitude
+    let long = this.state.longitude
     return (
       <View style={styles.container}>
       <MapView style={styles.map}
@@ -68,8 +70,8 @@ class Home extends Component {
        }}
       >
       <MapView.Marker
-          coordinate={{latitude: this.state.latitude,
-          longitude: this.state.longitude}}
+          coordinate={{latitude: lat,
+          longitude: long}}
       />
       </MapView>
       </View>

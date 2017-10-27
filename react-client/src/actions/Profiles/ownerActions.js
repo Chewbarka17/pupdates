@@ -3,23 +3,23 @@ import { AsyncStorage } from 'react-native';
 import { StackNavigator, NavigationActions } from 'react-navigation';
 
 export const getOwnerFromDB = (fb, navigate, callback) => (dispatch) => {
-  axios.get('http://localhost:8000/api/users/' + fb.id)
-  .then(({data}) => { 
-    if (data.length === 0) {
+  axios.get(`http://localhost:8000/api/users/${fb.id}`)
+    .then(({ data }) => {
+      if (data.length === 0) {
+        callback('User doesn\'t exist in collection');
+      } else {
+        dispatch({ type: 'GET_OWNER_FROM_MONGO_FULFILLED', payload: data[0] });
+        AsyncStorage.setItem('mongoOwner', JSON.stringify(data), (error) => {
+          if (error) {
+            alert('Failure! Could not save user to async storage', error);
+          }
+        });
+        navigate('DrawerMenu');
+      }
+    })
+    .catch((err) => {
       callback('User doesn\'t exist in collection');
-    } else {
-      dispatch({type: 'GET_OWNER_FROM_MONGO_FULFILLED', payload: data[0]});
-      AsyncStorage.setItem('mongoOwner', JSON.stringify(data), (error) => {
-        if (error) {
-          alert('Failure! Could not save user to async storage', error);
-        }
-      });
-      navigate('DrawerMenu');
-    }
-  })
-  .catch((err) => {
-    callback('User doesn\'t exist in collection');
-  });
+    });
 };
 
 export const addOwnerToDB = (fb, navigate) => (dispatch) => {
@@ -31,31 +31,31 @@ export const addOwnerToDB = (fb, navigate) => (dispatch) => {
     location: '',
     bio: '',
     rating: null,
-  }
+  };
   axios.post('http://localhost:8000/api/users', user)
-  .then(({data}) => {
-    dispatch({type: 'POST_OWNER_FROM_MONGO_FULFILLED', payload: data});
-    AsyncStorage.setItem('mongoOwner', JSON.stringify(data), (error) => {
-      if (error) {
-        alert('Failure! Could not save user to async storage', error);
-      }
+    .then(({ data }) => {
+      dispatch({ type: 'POST_OWNER_FROM_MONGO_FULFILLED', payload: data });
+      AsyncStorage.setItem('mongoOwner', JSON.stringify(data), (error) => {
+        if (error) {
+          alert('Failure! Could not save user to async storage', error);
+        }
+      });
+      navigate('DrawerMenu');
+    })
+    .catch((err) => {
+      dispatch({ type: 'POST_OWNER_FROM_MONGO_REJECTED', payload: err });
+      console.log(err);
     });
-    navigate('DrawerMenu');
-  })
-  .catch((err) => {
-    dispatch({type: 'POST_OWNER_FROM_MONGO_REJECTED', payload: err});
-    console.log(err);
-  });
-}
+};
 
 export const saveAwsSecretSauce = (accessKeyId, secretAcessKey, sessionToken) => (dispatch) => {
   const aws = {
-    accessKeyId: accessKeyId,
-    secretAcessKey: secretAcessKey,
-    sessionToken: sessionToken
-  }
-  dispatch({type: 'AWS_SECRET_SAUCE_FULFILLED', payload: aws});
-}
+    accessKeyId,
+    secretAcessKey,
+    sessionToken,
+  };
+  dispatch({ type: 'AWS_SECRET_SAUCE_FULFILLED', payload: aws });
+};
 
 // export const postOwners = (name, age, location, bio) => (dispatch) => {
 //   console.log('axios post', typeof age, age);
@@ -77,12 +77,11 @@ export const saveAwsSecretSauce = (accessKeyId, secretAcessKey, sessionToken) =>
 // };
 
 export const updateOwners = (name, age, location, bio, userid) => (dispatch) => {
-
   axios.patch('http://localhost:8000/api/users', {
-    userid: userid,
+    userid,
     name,
     age,
-    location,
+    location: location.formatted_address,
     bio,
     picture: 'http://www.readersdigest.ca/wp-content/uploads/2011/01/4-ways-cheer-up-depressed-cat.jpg', // to be changed
     rating: 4, // to be changed
@@ -98,4 +97,8 @@ export const updateOwners = (name, age, location, bio, userid) => (dispatch) => 
     .catch((err) => {
       dispatch({ type: 'UPDATE_OWNER_REJECTED', payload: err });
     });
+};
+
+export const saveLocation = (latitude, longitude) => (dispatch) => {
+  dispatch({ type: 'SAVE_LOCATION', payload: { latitude, longitude } });
 };

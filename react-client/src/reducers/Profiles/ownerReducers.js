@@ -5,10 +5,10 @@ const initialState = {
   fetched: false,
   user: {},
   awsSauce: null,
+  userLocation: {},
 };
 
 const ownerReducer = (state = initialState, action) => {
-  // console.log('what is actions', action);
   switch (action.type) {
     case 'FETCH_OWNER_FULFILLED': {
       return Object.assign({}, state, {
@@ -21,18 +21,18 @@ const ownerReducer = (state = initialState, action) => {
         error: action.payload,
       });
     }
-    case 'POST_OWNER_FULFILLED': {
-      console.log('owner reducer', action.payload)
-      return Object.assign({}, state, {
-        posted: true,
-        user: action.payload,
-      });
-    }
-    case 'POST_OWNER_REJECTED': {
-      return Object.assign({}, state, {
-        error: action.payload,
-      });
-    }
+    // case 'POST_OWNER_FULFILLED': {
+    //   console.log('owner reducer', action.payload)
+    //   return Object.assign({}, state, {
+    //     posted: true,
+    //     user: action.payload,
+    //   });
+    // }
+    // case 'POST_OWNER_REJECTED': {
+    //   return Object.assign({}, state, {
+    //     error: action.payload,
+    //   });
+    // }
     case 'UPDATE_OWNER_REJECTED': {
       return Object.assign({}, state, {
         error: action.payload,
@@ -69,6 +69,11 @@ const ownerReducer = (state = initialState, action) => {
     case 'AWS_SECRET_SAUCE_FULFILLED': {
       return Object.assign({}, state, {
         awsSauce: action.payload,
+      });
+    }
+    case 'SAVE_LOCATION': {
+      return Object.assign({}, state, {
+        userLocation: action.payload,
       });
     }
     default:

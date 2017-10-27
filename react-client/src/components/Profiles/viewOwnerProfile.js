@@ -10,6 +10,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 import ViewDogProfileScreen from '../Profiles/viewDogProfile';
 import * as dogActions from '../../actions/Profiles/dogProfileActions';
+import * as ownerActions from '../../actions/Profiles/ownerActions';
 
 class viewOwnerProfile extends Component {
   static navigationOptions = {
@@ -26,24 +27,59 @@ class viewOwnerProfile extends Component {
   }
   constructor(props) {
     super(props);
+
+    this.state = {
+      latitude: null,
+      longitude: null,
+      error: null,
+      dogs: null,
+    };
+
     this.ownerProfile = null;
     this.handlePressToEditUser = this.handlePressToEditUser.bind(this);
     this.handlePressToAddDog = this.handlePressToAddDog.bind(this);
   }
-
   
   componentDidMount() {
-    console.log('props are: ', this.props);
-    // axios.get('http://localhost:8000/api/users/dogs/' + this.props.userId)
-    // .then(({data}) => {
-    //   this.props.actions.listDogs(data);
-    // })
-    // .catch((err) => {
-    //   console.log(err)
-    // })
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        this.setState({
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude,
+          error: null,
+        });
+      },
+      (error) => this.setState({ error: error.message }),
+      { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 },
+    );
+    axios.get('http://localhost:8000/api/users/dogs/' + this.props.userId)
+      .then(({data}) => {
+        console.log('this is data from get request ', data);
+        this.setState({
+          dogs: data,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+    axios.get(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${this.props.location.latitude},${this.props.location.longitude}&key=proccess.env.GOOGLE_API`)
+      .then(({data}) => {
+        console.log('api request', JSON.stringify(data.results[0]));
+        this.props.ownerActions.updateOwners(
+          this.props.user.name, 
+          this.props.user.age, 
+          data.results[0],
+          this.props.user.bio,
+          this.props.user._id,
+        )
+      })
+      .catch((err) => {
+        console.log(err);
+      })
   }
   
   handlePressToEditUser() {
+    this.props.ownerActions.saveLocation(this.state.latitude, this.state.longitude)
     this.props.navigation.navigate('EditOwnerProfile');
   }
   
@@ -64,13 +100,16 @@ class viewOwnerProfile extends Component {
           activeOpacity={0.7}
         />
         <Text>
-          {user.name}
+          Name: {user.name}
         </Text>
         <Text>
-          {user.age}
+          Age: {user.age}
         </Text>
         <Text>
-          {user.bio}
+          Bio: {user.bio}
+        </Text>
+        <Text>
+          Location:{user.location.split(',')[1]}
         </Text>
         <Button 
         title='Edit User'
@@ -81,13 +120,13 @@ class viewOwnerProfile extends Component {
         onPress={this.handlePressToAddDog}
         />
         <FlatList
-          data={this.props.dogs}
+          data={this.state.dogs === this.props.dogs ? this.state.dogs : this.props.dogs}
           renderItem={({ item }) => 
             <Swipeout right={[{
               text: 'Delete',
               backgroundColor: 'red',
               onPress: (event) => {
-                this.props.actions.deleteDogs(item._id, this.props.userId);
+                this.props.dogActions.deleteDogs(item._id, this.props.userId);
               }
             }]}
               autoClose={true}
@@ -116,18 +155,20 @@ class viewOwnerProfile extends Component {
   }
 }
 
-const dogsState = (store) => {
+const viewOwnerState = (store) => {
   return {
     dogs: store.Dogs.dogs,
     user: store.Owners.user,
-    userId: store.Owners.user._id
+    userId: store.Owners.user._id,
+    location: store.Owners.userLocation
   }
 }
 
-const dogDispatch = (dispatch) => {
+const viewOwnerDispatch = (dispatch) => {
   return {
-    actions: bindActionCreators(dogActions, dispatch),
+    dogActions: bindActionCreators(dogActions, dispatch),
+    ownerActions: bindActionCreators(ownerActions, dispatch),
   }
 };
 
-export default connect(dogsState, dogDispatch)(viewOwnerProfile);
+export default connect(viewOwnerState, viewOwnerDispatch)(viewOwnerProfile);
