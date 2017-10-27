@@ -69,17 +69,6 @@ class EditOwnerProfile extends Component {
           id="age"
           onChangeText={age => this.setState({ age })}
         />
-        <FormLabel>Zipcode</FormLabel>
-        <FormInput
-          editable
-          autoCapitalize="none"
-          autoCorrect={false}
-          underlineColorAndroid="transparent"
-          placeholder={this.props.location || 'enter your zipcode'}
-          returnKeyType="next"
-          id="zipcode"
-          onChangeText={location => this.setState({ location })}
-        />
         <FormLabel>Bio</FormLabel>
         <FormInput
           editable
@@ -90,6 +79,9 @@ class EditOwnerProfile extends Component {
           id="bio"
           onChangeText={bio => this.setState({ bio })}
         />
+        <Text>
+          Your coordinates have been saved as: Latitude: {this.props.latitude}, Longitude: {this.props.longitude}
+        </Text>
         <Button
           title="Save"
           onPress={this.handleSubmit}
@@ -103,7 +95,8 @@ class EditOwnerProfile extends Component {
     return {
       name: store.Owners.user.name,
       age: store.Owners.user.age,
-      location: store.Owners.user.location,
+      latitude: store.Owners.userLocation.latitude,
+      longitude: store.Owners.userLocation.longitude,
       bio: store.Owners.user.bio,
       userId: store.Owners.user._id
     }
