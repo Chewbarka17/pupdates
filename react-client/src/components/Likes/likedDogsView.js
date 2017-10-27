@@ -130,7 +130,7 @@ class LikedDogsView extends React.Component {
 const likedState = (store) => {
   return {
     // likedDogs: store.LikedDogs.likedDogs,
-    uid: store.Auth.ownerInfo[0]._id, // store.Owners.user._id (no more Auth)
+    uid: store.Owners.user._id,
   }
 }
 
