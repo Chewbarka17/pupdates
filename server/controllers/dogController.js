@@ -133,7 +133,7 @@ module.exports = {
       }
     })
     .then((data) => {
-      Dogs.find({ _id: { $nin: data[0].dogsSeen }}, (err) => {
+      Dogs.find({ _id: { $nin: data[0].dogsSeen.concat(data[0].dogs) }}, (err) => {
         if (err) {
           console.log('error getting dogsSeen', err);
           res.status(500).send(err);
