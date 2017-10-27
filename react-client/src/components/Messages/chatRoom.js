@@ -21,17 +21,8 @@ class ChatRoom extends React.Component {
   };
   
   componentDidMount() {
-    console.log(this.props)
     axios.get(`http://localhost:8000/api/messages/${this.props.navigation.state.params._id}`)
     .then((data) => {
-      // let messages = data.data[0].messages.map((message) => {
-      //   return {
-      //     // ...
-      //     position: (message.uid === this.props.uid ? 'right' : 'left'),
-      //     // ...
-      //   }
-      // });
-      // console.log(messages)
       this.setState({messages: data.data[0].messages})
     })
 
@@ -76,12 +67,34 @@ class ChatRoom extends React.Component {
     return (
       <Bubble
         {...props}
+        containerToNextStyle={{
+          right: {
+            borderBottomRightRadius: 15,
+            borderBottomLeftRadius: 15,
+          },
+          left: {
+            borderBottomRightRadius: 15,
+            borderBottomLeftRadius: 15,
+          }
+        }}
+        containerToPreviousStyle={{
+          right: {
+            borderTopRightRadius: 15,
+            borderTopLeftRadius: 15,
+          },
+          left: {
+            borderTopRightRadius: 15,
+            borderTopLeftRadius: 15,
+          }
+        }}
         wrapperStyle={{
           left: {
-            backgroundColor: '#e9ffaa',
+            marginLeft: 5,
+            backgroundColor: '#CAC9C9',
           },
           right: {
-            backgroundColor: '#aafaff',
+            marginRight: 1,
+            backgroundColor: '#2A86EF',
           }
         }}
       />
@@ -106,9 +119,6 @@ class ChatRoom extends React.Component {
       <GiftedChat
         messages={this.state.messages}
         onSend={this.onSend}
-        user={{
-          _id: this.props.uid,
-        }}
         renderBubble={this.renderBubble}
       />
     )
