@@ -59,7 +59,6 @@ class LoginScreen extends Component {
     });
   }
 
-<<<<<<< HEAD
   _getAwsSecretSauce = (accessToken) => {
     AWS.config.region = awsmobile.aws_cognito_region;
     AWS.config.credentials = new AWS.CognitoIdentityCredentials({
@@ -99,9 +98,6 @@ class LoginScreen extends Component {
   }
 
   _getPublicProfile = (accessToken) => {
-=======
-  _getPublicProfile(accessToken) {
->>>>>>> ChatRoom displays messages in correct order.
     const responseInfoCallback = (error, data) => {
       if (error) {
         alert('Error fetching data: ' + error.toString());
