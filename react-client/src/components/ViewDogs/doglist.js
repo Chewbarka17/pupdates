@@ -1,6 +1,7 @@
 // TODO:
 // calculate # of miles away
 // styling
+// don't show own dog(s)
 
 import React, { Component } from 'react';
 import {
