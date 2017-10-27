@@ -19,7 +19,8 @@ import AWS from 'aws-sdk/dist/aws-sdk-react-native';
 import awsmobile from '../../../../../config/aws-exports';
 import { SocialIcon, FormLabel, FormInput } from 'react-native-elements';
 import axios from 'axios';
-import * as authActions from '../../../actions/Authentication/authActions';
+// import * as authActions from '../../../actions/Authentication/authActions';
+import * as ownerActions from '../../../actions/Profiles/ownerActions';
 
 class LoginScreen extends Component {
   constructor(props){
@@ -31,85 +32,67 @@ class LoginScreen extends Component {
     .then(data => {
       let accessToken = data.accessToken;
       if (accessToken !== null) {
-        console.log('current access token', accessToken);
-        AWS.config.region = awsmobile.aws_cognito_region;
-        AWS.config.credentials = new AWS.CognitoIdentityCredentials({
-          IdentityPoolId: awsmobile.aws_cognito_identity_pool_id,
-          Logins: {
-            'graph.facebook.com': accessToken
-          }
-        });
-
-        AWS.config.credentials.get(() => {
-          const accessKeyId = AWS.config.credentials.accessKeyId;
-          const secretAccessKey = AWS.config.credentials.secretAccessKey;
-          const sessionToken = AWS.config.credentials.sessionToken;
-          // console.log(AWS.config.credentials);
-          // console.log('accessKeyId', accessKeyId);
-          // console.log('secretAccessKey', secretAccessKey);
-          // console.log('sessionToken', sessionToken);
-        });
-
-        // AWS.config.update({
-        //   region: awsmobile.aws_user_files_s3_bucket_region,
-        //   credentials: new AWS.CognitoIdentityCredentials({
-        //     IdentityPoolId: awsmobile.aws_cognito_identity_pool_id,
-        //     Logins: {
-        //       'graph.facebook.com': accessToken
-        //     }
-        //   })
-        // });
-        // const s3 = new AWS.S3({
-        //   apiVersion: '2012-10-17',
-        // });
-        // const params = {
-        //   Bucket: awsmobile.aws_user_files_s3_bucket,
-        //   Key: "example-image.png"
-        // }
-
-        // s3.getObject(params, (error) => {
-        //   if (error) {
-        //     console.log(error, error.stack);
-        //   } else {
-        //     console.log('what is in s3', data);
-        //   }
-        // })
+        // console.log('current access token', accessToken);
+        this._getAwsSecretSauce(accessToken);
         this._getPublicProfile(accessToken);
       }
     })
     .catch(error => {
       LoginManager.logInWithReadPermissions(['public_profile'])
       .then((result) => {
-          if (result.isCancelled) {
-            alert('Login cancelled');
-          } else {
-            AccessToken.getCurrentAccessToken()
-            .then(data => {
-              let accessToken = data.accessToken;
-              AWS.config.credentials = new AWS.CognitoIdentityCredentials({
-                IdentityPoolId: 'us-east-1:2642e269-63f6-47e8-9ce7-4c0b382625e0',
-                Logins: {
-                  'graph.facebook.com': accessToken
-                }
-              });
-
-              AWS.config.credentials.get((error) => {
-                // if (!error) {
-                //   let id = AWS.config.credentials.ide
-                // }
-                console.log(AWS.config.credentials);
-              });
-              
-
-              this._getPublicProfile(accessToken);
-              
-            });
-          }
+        if (result.isCancelled) {
+          alert('Login cancelled');
+        } else {
+          AccessToken.getCurrentAccessToken()
+          .then(data => {
+            let accessToken = data.accessToken;
+            this._getAwsSecretSauce(accessToken);
+            this._getPublicProfile(accessToken);
+          });
+        }
       })
       .catch((error) => {
         alert('Login fail with error: ' + error);
       });
     });
+  }
+
+  _getAwsSecretSauce = (accessToken) => {
+    AWS.config.region = awsmobile.aws_cognito_region;
+    AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+      IdentityPoolId: awsmobile.aws_cognito_identity_pool_id,
+      Logins: {
+        'graph.facebook.com': accessToken
+      }
+    });
+    let accessKeyId;
+    let secretAcessKey;
+    let sessionToken;
+    AWS.config.credentials.get(() => {
+      accessKeyId = AWS.config.credentials.accessKeyId;
+      secretAccessKey = AWS.config.credentials.secretAccessKey;
+      sessionToken = AWS.config.credentials.sessionToken;
+      this.props.actions.saveAwsSecretSauce(accessKeyId, secretAccessKey, sessionToken);
+    });
+    
+    // const s3 = new AWS.S3({
+    //   accessKeyId: accessKeyId,
+    //   secretAccessKey: secretAcessKey,
+    //   sessionToken: sessionToken
+    // });
+    // console.log('then here');
+    // const params = {
+    //   Bucket: awsmobile.aws_user_files_s3_bucket,
+    //   Key: "public/bordercolliesmile.jpg"
+    // }
+
+    // s3.getSignedUrl('getObject', params, (error, data) => {
+    //   if (error) {
+    //     console.log(error, error.stack);
+    //   } else {
+    //     console.log('what is in s3', data);
+    //   }
+    // })
   }
 
   _getPublicProfile = (accessToken) => {
@@ -143,8 +126,6 @@ class LoginScreen extends Component {
     });
   }
 
-  // _awsCredentials
-
   render() {
     return (
       <View>
@@ -158,16 +139,16 @@ class LoginScreen extends Component {
   }
 } // end of class
 
-const authState = (store) => {
+const ownerDispatch = (dispatch) => {
   return {
-    auth: store.Auth.ownerInfo
-  }
-}
-
-const authDispatch = (dispatch) => {
-  return {
-    actions: bindActionCreators(authActions, dispatch),
+    actions: bindActionCreators(ownerActions, dispatch),
   }
 };
 
-export default connect(authState, authDispatch)(LoginScreen);
+// const authDispatch = (dispatch) => {
+//   return {
+//     actions: bindActionCreators(authActions, dispatch),
+//   }
+// };
+
+export default connect(null, ownerDispatch)(LoginScreen);

@@ -33,11 +33,12 @@ class EditOwnerProfile extends Component {
 
   handleSubmit() {
     const { name, age, location, bio } = this.state;
+    console.log('what is props', this.props);
     let nameCheck = name || this.props.name;
     let ageCheck = age || this.props.age;
     let locationCheck = location || this.props.location;
     let bioCheck = bio || this.props.bio;
-    console.log('props: ', this.props)
+
     this.props.actions.updateOwners(nameCheck, ageCheck, locationCheck, bioCheck, this.props.userId);
   }
 
@@ -101,11 +102,11 @@ class EditOwnerProfile extends Component {
 
   const ownerState = (store) => {
     return {
-      name: store.Owners.user.data.name,
-      age: store.Owners.user.data.age,
-      location: store.Owners.user.data.location,
-      bio: store.Owners.user.data.bio,
-      userId: store.Auth.ownerInfo[0]._id
+      name: store.Owners.user.name,
+      age: store.Owners.user.age,
+      location: store.Owners.user.location,
+      bio: store.Owners.user.bio,
+      userId: store.Owners.user._id
     }
   }
 

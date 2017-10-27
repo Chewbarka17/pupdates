@@ -55,7 +55,7 @@ module.exports = {
   },
 
   updateUser: (req, res) => {
-    Owners.findOneAndUpdate({ _id: req.body.id }, {
+    Owners.findOneAndUpdate({ _id: req.body.userid }, {
       $set: {
         name: req.body.name,
         age: req.body.age,
@@ -67,7 +67,7 @@ module.exports = {
     }, { new: true }, (err, data) => {
       if (err) {
         console.log('update error', err);
-        res.status(500).send('error', err);
+        res.status(500).send(err);
       }
       res.status(201).send(data);
     });

@@ -5,7 +5,7 @@ const ownerSchema = new db.Schema({
   fb_id: String,
   name: String,
   location: String,
-  age: { type: Number, min: 18, max: 101 },
+  age: Number,
   picture: String,
   bio: String,
   rating: Number,

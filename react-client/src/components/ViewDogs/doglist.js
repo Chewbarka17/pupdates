@@ -197,7 +197,7 @@ const styles = StyleSheet.create({
 const viewDogsState = (store) => {
   return {
     viewDogs: store.ViewDogs,
-    uid: store.Auth.ownerInfo[0]._id,
+    uid: store.Owners.user._id,
   }
 }
 

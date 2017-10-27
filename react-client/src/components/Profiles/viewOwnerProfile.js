@@ -54,23 +54,23 @@ class viewOwnerProfile extends Component {
   render () {
     console.log('PROPS ARE HERE:', this.props);
     const { navigate } = this.props.navigation;
-    const { user, information } = this.props;
+    const { user } = this.props;
     return (
       <View>
         <Avatar
           large
           rounded
-          source={{uri: user[0].picture}}
+          source={{uri: user.picture}}
           activeOpacity={0.7}
         />
         <Text>
-          {information.data.name || user[0].name}
+          {user.name}
         </Text>
         <Text>
-          {information.data.age}
+          {user.age}
         </Text>
         <Text>
-          {information.data.bio}
+          {user.bio}
         </Text>
         <Button 
         title='Edit User'
@@ -87,7 +87,7 @@ class viewOwnerProfile extends Component {
               text: 'Delete',
               backgroundColor: 'red',
               onPress: (event) => {
-                this.props.actions.deleteDogs(item._id);
+                this.props.actions.deleteDogs(item._id, this.props.userId);
               }
             }]}
               autoClose={true}
@@ -119,9 +119,8 @@ class viewOwnerProfile extends Component {
 const dogsState = (store) => {
   return {
     dogs: store.Dogs.dogs,
-    user: store.Auth.ownerInfo,
-    information: store.Owners.user,
-    userId: store.Auth.ownerInfo[0]._id
+    user: store.Owners.user,
+    userId: store.Owners.user._id
   }
 }
 

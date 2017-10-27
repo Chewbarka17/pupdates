@@ -86,7 +86,7 @@ class AddDogProfile extends Component {
 
   const dogState = (store) => {
     return {
-      userId: store.Auth.ownerInfo[0]._id
+      userId: store.Owners.user._id
     }
   }
 

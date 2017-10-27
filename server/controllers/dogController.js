@@ -27,6 +27,7 @@ module.exports = {
   },
 
   getDogsByOwner: (req, res) => {
+    console.log('get dogs by owner', req.body);
     Owners.find({ _id: req.params.userid }, (err) => {
       if (err) {
         console.log('error getting dogs ', err);
@@ -53,6 +54,7 @@ module.exports = {
   },
 
   addDog: (req, res) => {
+    console.log('adding a dog', req.body);
     const dog = new Dogs({
       _id: new mongoose.Types.ObjectId(),
       name: req.body.name,
@@ -103,7 +105,7 @@ module.exports = {
   },
 
   removeDog: (req, res) => {
-    Owners.findOneAndUpdate({ _id: req.body.owner }, { $pull: { dogs: req.params.dogid } }, (err) => {
+    Owners.findOneAndUpdate({ _id: req.body.owner }, { $pull: { dogs: req.body.dogid } }, (err) => {
       if (err) {
         console.log('add dog update error', err);
       }
