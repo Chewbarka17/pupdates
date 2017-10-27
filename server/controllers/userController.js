@@ -30,6 +30,16 @@ module.exports = {
     });
   },
 
+  getUserByUserid: (req, res) => {
+    Owners.find({ _id: req.params.userid }, (err, owner) => {
+      if (err) {
+        console.log('error getting this user ', err);
+        res.status(500).send(err);
+      }
+      res.status(200).send(owner);
+    });
+  },
+
   addUser: (req, res) => {
     const owner = new Owners({
       _id: new mongoose.Types.ObjectId(),
