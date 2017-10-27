@@ -24,15 +24,11 @@ class ChatRoom extends React.Component {
     console.log(this.props)
     axios.get(`http://localhost:8000/api/messages/${this.props.navigation.state.params._id}`)
     .then((data) => {
-      // console.log(data);
       this.setState({messages: data.data[0].messages})
     })
 
     this.socket = io('http://localhost:3000/');
-    this.roomid = this.props.navigation.state.params._id
-
     this.socket.on(`${this.props.navigation.state.params._id}`, (message) => {
-      console.log('setting state', message)
       this.setState({
         messages: [message, ...this.state.messages]
       })
@@ -45,9 +41,9 @@ class ChatRoom extends React.Component {
       createdAt: e[0].createdAt,
       user: {
         name: this.props.name,
+        uid: this.props.uid
       },
     })
-    // console.log('text', e)
     .then((data) => {
       // console.log(data)
     })
@@ -55,10 +51,10 @@ class ChatRoom extends React.Component {
       console.log('Error w/patch', err)
     })
     
-    // console.log('socket?', this.props)
     this.socket.emit('message', {
       user: {
         name: this.props.name,
+        uid: this.props.uid
       },
       text: e[0].text,
       createdAt: e[0].createdAt,
@@ -68,6 +64,7 @@ class ChatRoom extends React.Component {
   }
 
   renderBubble(props) {
+    console.log({...props})
     return (
       <Bubble
         {...props}
@@ -102,7 +99,7 @@ class ChatRoom extends React.Component {
         messages={this.state.messages}
         onSend={this.onSend}
         user={{
-          _id: 1,
+          _id: this.props.uid,
         }}
         renderBubble={this.renderBubble}
       />
@@ -130,7 +127,7 @@ class ChatRoom extends React.Component {
 const userState = (store) => {
   return {
     name: store.Owners.user.name,
-    // name: store.Auth.ownerInfo[0].name
+    uid: store.Owners.user._id
   }
 }
 
