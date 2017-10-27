@@ -10,10 +10,14 @@ import axios from 'axios';
 import * as messageActions from '../../actions/MessageActions/chatRoomActions';
 
 class ChatRoom extends React.Component {
+  // static navigationOptions = {
+  //   title: this.state.partner
+  // };   
   constructor(props) {
     super(props);
     this.state = {
       messages: [],
+      partner: ''
     }
     this.renderBubble = this.renderBubble.bind(this);
     this.onSend = this.onSend.bind(this);
@@ -23,7 +27,16 @@ class ChatRoom extends React.Component {
   componentDidMount() {
     axios.get(`http://localhost:8000/api/messages/${this.props.navigation.state.params._id}`)
     .then((data) => {
-      this.setState({messages: data.data[0].messages})
+      console.log(data)
+      if (data[1] === this.props.name) {
+        let partner = data[2]
+      } else {
+        let partner = data[1]
+      }
+      this.setState({
+        messages: data.data[0].messages,
+        partner: partner
+      })
     })
 
     this.socket = io('http://localhost:3000/');

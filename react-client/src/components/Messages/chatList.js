@@ -14,6 +14,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 class ChatList extends React.Component {
   static navigationOptions = {
+    title: 'Chats',
     drawerLabel: 'Chat',
     drawerIcon: ({tintColor}) => {
       return (
