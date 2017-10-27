@@ -27,6 +27,7 @@ import AddDogProfileScreen from '../Profiles/addDogProfile';
 import DogProfileScreen from '../Likes/likedDogProfile';
 import EditDogProfileScreen from '../Profiles/editDogProfile';
 import EditOwnerProfileScreen from '../Profiles/editOwnerProfile'
+import Maps from '../Profiles/maps';
 
 class SplashPage extends React.Component {
   static navigationOptions = {
@@ -48,6 +49,12 @@ class SplashPage extends React.Component {
         <Image
           style={{width: 380, height: 240}}
           source={require('./laptopCorgi.gif')}
+        />
+        <Button
+          title="Maps test"
+          onPress={() =>
+            navigate('Maps')
+          }
         />
         <LoginScreen navigate={navigate}/>
       </View>
@@ -80,6 +87,7 @@ const NavigationApp = StackNavigator({
   DogProfile: { screen: DogProfileScreen },
   EditDogProfile: { screen: EditDogProfileScreen },
   EditOwnerProfile: { screen: EditOwnerProfileScreen},
+  Maps: { screen: Maps },
 });
 
 export default NavigationApp;
