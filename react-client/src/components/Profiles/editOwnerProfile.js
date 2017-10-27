@@ -83,7 +83,6 @@ class EditOwnerProfile extends Component {
         <FormLabel>Bio</FormLabel>
         <FormInput
           editable
-          
           autoCorrect={true}
           underlineColorAndroid="transparent"
           placeholder={this.props.bio || 'enter a bio'}
