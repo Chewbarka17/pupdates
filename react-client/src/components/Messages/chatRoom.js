@@ -24,6 +24,14 @@ class ChatRoom extends React.Component {
     console.log(this.props)
     axios.get(`http://localhost:8000/api/messages/${this.props.navigation.state.params._id}`)
     .then((data) => {
+      // let messages = data.data[0].messages.map((message) => {
+      //   return {
+      //     // ...
+      //     position: (message.uid === this.props.uid ? 'right' : 'left'),
+      //     // ...
+      //   }
+      // });
+      // console.log(messages)
       this.setState({messages: data.data[0].messages})
     })
 
@@ -64,7 +72,7 @@ class ChatRoom extends React.Component {
   }
 
   renderBubble(props) {
-    console.log({...props})
+    props.position = (props.currentMessage.user.uid === this.props.uid ? 'right' : 'left')
     return (
       <Bubble
         {...props}

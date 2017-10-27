@@ -31,12 +31,6 @@ class ChatList extends React.Component {
   };
 
   componentDidMount(){
-    // this.socket = io('/')
-    // this.socket.on('message', message => {
-    //   console.log('socket received message', message);
-      // this.props.actions.messageChange([...this.props.log, message]);
-    // })
-    // console.log(this.props)
     this.props.actions.getRooms(this.props.uid);
 
     // get rooms associated with user
@@ -44,17 +38,7 @@ class ChatList extends React.Component {
     // onPress function to go into room
   }
 
-  _renderItem({item}) {
-    <ChatRoom
-      id={item.id}
-      /* onPressItem={this._onPressItem} */
-      /* selected={!!this.state.selected.get(item.id)} */
-      /* title={item.title} */
-    />
-  };
-
   render() {
-    // console.log(this.props.rooms[0])
 
     return (
       <View>
