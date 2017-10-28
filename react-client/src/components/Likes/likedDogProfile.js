@@ -55,7 +55,7 @@ class likedDogProfile extends React.Component {
     })
     .then((data) => {
       // this.props.chatActions.createRoom(this.props.uid, this.state.ownerId)
-      console.log(data)
+      console.log(data.data)
       this.props.navigation.navigate('ChatRoom', data.data)
     })
     .catch((err) => {

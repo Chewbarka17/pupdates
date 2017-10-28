@@ -40,37 +40,62 @@ module.exports = {
     });
   },
 
+  // array1.filter((n) => array2.includes(n))
   // I'm putting the names and user ids of the two people involved in the conversation in an array. Will update logic when front end is up.
   createRoom: (req, res) => {
     console.log('creating room', req.body)
-    const room = new Rooms({
-      _id: new mongoose.Types.ObjectId(),
-      // users: req.body.users,
-      uids: req.body.uids,
-      messages: [],
-    });
-    room.save((err) => {
-      console.log('room saved')
+
+    Owners.find({ _id: req.body.uids }, (err) => {
       if (err) {
-        console.error('Could not save owner', err);
+        res.status(500).send(err);
       }
     })
       .then((data) => {
-        console.log('.then', data);
-        data.uids.forEach((uid) => {
-          console.log(uid)
-          Owners.findOneAndUpdate({ _id: uid }, { $push: { chatRooms: data._id } }, (err) => {
-            if (err) {
-              console.log('add dog update error', err);
-              res.status(500).send('error', err);
-            }
-          });
+        console.log(data[0].chatRooms, data[1].chatRooms)
+        let roomid = data[0].chatRooms.filter((id) => {
+          return data[1].chatRooms.indexOf(id) !== -1;
         });
-        res.status(201).send(data);
+        console.log(roomid)
+        if (roomid) {
+          Rooms.findOne({ _id: roomid }, (err) => {
+            if (err) {
+              console.log(err);
+            }
+          })
+            .then((room) => {
+              console.log(room)
+              res.send(room);
+            })
+        }
       })
-      .catch((err) => {
-        res.status(500).send(err);
-      });
+    // const room = new Rooms({
+    //   _id: new mongoose.Types.ObjectId(),
+    //   // users: req.body.users,
+    //   uids: req.body.uids,
+    //   messages: [],
+    // });
+    // room.save((err) => {
+    //   console.log('room saved')
+    //   if (err) {
+    //     console.error('Could not save owner', err);
+    //   }
+    // })
+    //   .then((data) => {
+    //     console.log('.then', data);
+    //     data.uids.forEach((uid) => {
+    //       console.log(uid)
+    //       Owners.findOneAndUpdate({ _id: uid }, { $push: { chatRooms: data._id } }, (err) => {
+    //         if (err) {
+    //           console.log('add dog update error', err);
+    //           res.status(500).send('error', err);
+    //         }
+    //       });
+    //     });
+    //     res.status(201).send(data);
+    //   })
+    //   .catch((err) => {
+    //     res.status(500).send(err);
+    //   });
   },
 
   getRooms: (req, res) => {
