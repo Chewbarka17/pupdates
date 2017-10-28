@@ -24,17 +24,12 @@ export const getRooms = userid => (dispatch) => {
     });
 };
 
-// export const saveRooms = (rooms) => {
-//   return (dispatch) => {
-//     dispatch({ type: 'SAVE_ROOMS', payload: rooms });
-//   };
-// };
-
 export const createRoom = (uid1, uid2) => (dispatch) => {
   axios.post('/api/rooms', {
     uids: [uid1, uid2],
   })
     .then((response) => {
+      console.log(response)
       dispatch({ type: 'POST_ROOM_FULFILLED', payload: response.data });
     })
     .catch((err) => {

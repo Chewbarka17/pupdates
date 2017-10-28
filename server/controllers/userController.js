@@ -85,7 +85,7 @@ module.exports = {
   },
 
   removeUser: (req, res) => {
-    Owners.remove({ _id: req.params.userid }, (err, data) => {
+    Owners.remove({ _id: req.params.userid }, (err) => {
       if (err) {
         res.status(500).send('error removing user', err);
       }
@@ -95,35 +95,35 @@ module.exports = {
 
   updateSeenDogs: (req, res) => {
     Owners.findOneAndUpdate({ _id: req.params.userid }, { $push: { dogsSeen: req.body.dogid } },
-      { new: true } , (err, data) => {
-      if(err) {
-        console.log('push to dogsSeen error', err);
-        res.status(500).send('error', err);
-      }
-      res.status(201).send(data);
-    });
+      { new: true }, (err, data) => {
+        if (err) {
+          console.log('push to dogsSeen error', err);
+          res.status(500).send('error', err);
+        }
+        res.status(201).send(data);
+      });
   },
 
   updateLikedDogs: (req, res) => {
     Owners.findOneAndUpdate({ _id: req.params.userid }, { $push: { dogsLiked: req.body.dogid } },
       { new: true } , (err, data) => {
-      if(err) {
-        console.log('push to dogsLiked error', err);
-        res.status(500).send('error', err);
-      }
-      res.status(201).send(data);
-    });
+        if(err) {
+          console.log('push to dogsLiked error', err);
+          res.status(500).send('error', err);
+        }
+        res.status(201).send(data);
+      });
   },
 
   removeLikedDog: (req, res) => {
     Owners.findOneAndUpdate({ _id: req.params.userid }, { $pull: { dogsLiked: req.body.dogid } },
-      { new: true } , (err, data) => {
-        if(err) {
+      { new: true }, (err, data) => {
+        if (err) {
           console.log('remove dogs from dogsLiked error', err);
           res.status(500).send('error', err);
         }
         res.status(201).send(data);
-    });
+      });
   },
 
 };

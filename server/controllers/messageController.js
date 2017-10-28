@@ -42,10 +42,11 @@ module.exports = {
 
   // I'm putting the names and user ids of the two people involved in the conversation in an array. Will update logic when front end is up.
   createRoom: (req, res) => {
+    console.log('creating room', req.body)
     const room = new Rooms({
       _id: new mongoose.Types.ObjectId(),
-      users: req.body.users,
-      uids: [req.body.uid1, req.body.uid2],
+      // users: req.body.users,
+      uids: req.body.uids,
       messages: [],
     });
     room.save((err) => {
@@ -55,8 +56,9 @@ module.exports = {
       }
     })
       .then((data) => {
-        console.log('.then', data._id);
-        room.uids.forEach((uid) => {
+        console.log('.then', data);
+        data.uids.forEach((uid) => {
+          console.log(uid)
           Owners.findOneAndUpdate({ _id: uid }, { $push: { chatRooms: data._id } }, (err) => {
             if (err) {
               console.log('add dog update error', err);
