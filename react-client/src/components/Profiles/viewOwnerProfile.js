@@ -48,8 +48,8 @@ class viewOwnerProfile extends Component {
           longitude: position.coords.longitude,
           error: null,
         })
-        console.log('this is the position', position);
-        axios.get(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${position.coords.latitude},${position.coords.longitude}&key=YOURAPIKEYHERE`)
+        console.log('this is the position', this.state);
+        axios.get(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${position.coords.latitude},${position.coords.longitude}&key=AIzaSyB1S52rdgtYi-52GK2b149DGxAZb_rKGdY`)
           .then(({data}) => {
             console.log('api request', data);
             this.props.ownerActions.updateOwners(
@@ -58,12 +58,12 @@ class viewOwnerProfile extends Component {
               data.results[0],
               this.props.user.bio,
               this.props.user._id,
+              [position.coords.latitude, position.coords.longitude],
             )
           })
           .catch((err) => {
             console.log(err);
           })
-        this.props.ownerActions.saveLocation(position.coords.latitude, position.coords.longitude)
       },
       (error) => this.setState({ error: error.message }),
       { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 },

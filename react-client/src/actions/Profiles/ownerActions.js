@@ -76,7 +76,8 @@ export const saveAwsSecretSauce = (accessKeyId, secretAcessKey, sessionToken) =>
 //     });
 // };
 
-export const updateOwners = (name, age, location, bio, userid) => (dispatch) => {
+export const updateOwners = (name, age, location, bio, userid, coords) => (dispatch) => {
+  console.log('update owners location', location);
   location.formatted_address ? location = location.formatted_address : location;
   axios.patch('http://localhost:8000/api/users', {
     userid,
@@ -84,6 +85,7 @@ export const updateOwners = (name, age, location, bio, userid) => (dispatch) => 
     age,
     location,
     bio,
+    coords,
     picture: 'http://www.readersdigest.ca/wp-content/uploads/2011/01/4-ways-cheer-up-depressed-cat.jpg', // to be changed
     rating: 4, // to be changed
   })
@@ -98,8 +100,4 @@ export const updateOwners = (name, age, location, bio, userid) => (dispatch) => 
     .catch((err) => {
       dispatch({ type: 'UPDATE_OWNER_REJECTED', payload: err });
     });
-};
-
-export const saveLocation = (latitude, longitude) => (dispatch) => {
-  dispatch({ type: 'SAVE_LOCATION', payload: { latitude, longitude } });
 };

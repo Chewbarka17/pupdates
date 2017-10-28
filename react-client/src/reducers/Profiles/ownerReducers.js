@@ -71,11 +71,6 @@ const ownerReducer = (state = initialState, action) => {
         awsSauce: action.payload,
       });
     }
-    case 'SAVE_LOCATION': {
-      return Object.assign({}, state, {
-        userLocation: action.payload,
-      });
-    }
     default:
       return state;
   }
