@@ -64,7 +64,7 @@ export const addOwnerToDB = (fb, navigate) => (dispatch) => {
     });
 };
 
-export const saveAwsSecretSauce = (accessKeyId, secretAcessKey, sessionToken) => (dispatch) => {
+export const saveAwsSecretSauce = (accessKeyId, secretAccessKey, sessionToken) => (dispatch) => {
   const aws = {
     accessKeyId,
     secretAcessKey,
@@ -92,7 +92,7 @@ export const saveAwsSecretSauce = (accessKeyId, secretAcessKey, sessionToken) =>
 //     });
 // };
 
-export const updateOwners = (name, age, location, bio, userid, coords) => (dispatch) => {
+export const updateOwners = (name, age, location, bio, userid, coords, picture) => (dispatch) => {
   console.log('update owners location', location);
   location.formatted_address ? location = location.formatted_address : location;
   axios.patch('http://localhost:8000/api/users', {
@@ -102,10 +102,11 @@ export const updateOwners = (name, age, location, bio, userid, coords) => (dispa
     location,
     bio,
     coords,
-    picture: 'http://www.readersdigest.ca/wp-content/uploads/2011/01/4-ways-cheer-up-depressed-cat.jpg', // to be changed
+    picture,
     rating: 4, // to be changed
   })
     .then((response) => {
+      console.log('response data', response.data);
       dispatch({ type: 'UPDATE_OWNER_FULFILLED', payload: response.data });
       AsyncStorage.setItem('mongoOwner', JSON.stringify(response.data), (error) => {
         if (error) {

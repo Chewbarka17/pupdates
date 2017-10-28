@@ -1,0 +1,38 @@
+import AWS from 'aws-sdk/dist/aws-sdk-react-native';
+import RNFetchBlob from 'react-native-fetch-blob';
+import { Buffer } from 'buffer';
+import awsmobile from '../../../../../config/aws-exports';
+
+const uploadProfilePicture = (awsSauce, userid, image, callback) => {
+  const s3 = new AWS.S3({
+    accessKeyId: awsSauce.accessKeyId,
+    secretAccessKey: awsSauce.secretAccessKey,
+    sessionToken: awsSauce.sessionToken
+  });
+
+  photoKey = 'public/' + userid + '/avatar.jpg';
+  RNFetchBlob.fs.readFile(image.path, 'base64').then(data => {
+    let buf = Buffer.from(data, 'base64');
+    console.log('buffer', buf);
+    const params = {
+      Bucket: awsmobile.aws_user_files_s3_bucket,
+      Key: photoKey,
+      ACL: 'public-read',
+      ContentType: image.mime,
+      Body: buf,
+    }
+
+    s3.upload(params, (err, data) => {
+      if (err) {
+        console.log('could not upload profile pic to s3', err);
+        callback(err);
+      }
+      console.log('s3 data', data);
+      callback(null, data);
+    });
+  }).catch(err => {
+    console.log('Could not read file', err);
+  });
+}
+
+export default uploadProfilePicture;

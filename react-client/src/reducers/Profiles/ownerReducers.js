@@ -68,6 +68,7 @@ const ownerReducer = (state = initialState, action) => {
     }
     case 'AWS_SECRET_SAUCE_FULFILLED': {
       return Object.assign({}, state, {
+        posted: true,
         awsSauce: action.payload,
       });
     }

@@ -103,13 +103,13 @@ class viewOwnerProfile extends Component {
   render () {
     //const { navigate } = this.props.navigation;
     // console.log("owner props", this.props);
-    const { user } = this.props;
+    const { user, profilePic } = this.props;
     return (
       <View>
         <Avatar
           large
           rounded
-          source={{uri: user.picture}}
+          source={{uri: profilePic}}
           activeOpacity={0.7}
         />
         <Text>
@@ -181,7 +181,8 @@ const viewOwnerState = (store) => {
     dogs: store.Dogs.dogs,
     user: store.Owners.user,
     userId: store.Owners.user._id,
-    location: store.Owners.userLocation
+    location: store.Owners.userLocation,
+    profilePic: store.Owners.user.picture,
   }
 }
 

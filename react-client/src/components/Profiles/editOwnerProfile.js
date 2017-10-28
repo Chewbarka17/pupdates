@@ -6,11 +6,17 @@ import {
   Text,
   View,
   TextInput,
+  Image,
 } from 'react-native';
 import { FormLabel, FormInput, Button } from 'react-native-elements';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-
+import ImagePicker from 'react-native-image-crop-picker';
+import AWS from 'aws-sdk/dist/aws-sdk-react-native';
+import RNFetchBlob from 'react-native-fetch-blob';
+import { Buffer } from 'buffer';
+import awsmobile from '../../../../config/aws-exports';
+import uploadProfilePicture from '../../components/Profiles/util/uploadProfilePictureUtil';
 import * as ownerActions from '../../actions/Profiles/ownerActions';
 
 class EditOwnerProfile extends Component {
@@ -24,24 +30,60 @@ class EditOwnerProfile extends Component {
       name: '',
       age: '',
       bio: '',
+      image: null,
+      picture: ''
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
-
+    this.selectProfilePhoto = this.selectProfilePhoto.bind(this);
   };
 
+  selectProfilePhoto() {
+    ImagePicker.openPicker({
+      width: 256,
+      height: 256,
+      cropping: true
+    }).then(image => {
+      this.setState({image: image});
+    }).catch(err => {
+      console.log('Image not selected', err);``
+    });
+  }
+
   handleSubmit() {
-    const { name, age, bio } = this.state;
+    const { name, age, bio, picture } = this.state;
     let nameCheck = name || this.props.name;
     let ageCheck = age || this.props.age;
     let bioCheck = bio || this.props.bio;
+    let pictureCheck = picture || this.props.picture;
 
     this.props.actions.updateOwners(nameCheck, ageCheck, this.props.location, bioCheck, this.props.userId, this.props.coords);
+    // image is the image obj
+    // picture contains a url of the picture in MongoDB
+    // should really be called pictureURL
+    // if (this.state.image) {
+    //   uploadProfilePicture(this.props.awsSauce, this.props.userId, this.state.image, (err, data) => {
+    //     if (err) {
+    //       console.log('upload profile picture', err);
+    //     }
+    //     // console.log('s3 data callback', data);
+    //     // console.log('s3 url', data.Location);
+    //     if (data) {
+    //       pictureCheck = data.Location;
+    //     }
+    //     this.props.actions.updateOwners(nameCheck, ageCheck, locationCheck, bioCheck, this.props.userId, pictureCheck);
+    //     this.props.navigation.navigate('ViewOwnerProfile');
+    //   });
+    // } else {
+    // // console.log('s3 data in component state', this.state.image);
+    //   this.props.actions.updateOwners(nameCheck, ageCheck, locationCheck, bioCheck, this.props.userId, pictureCheck);
+    // }
   }
 
   render() {
-    console.log('what are props: ', this.props);
+    // console.log('what are props: ', this.props);
     const { navigate } = this.props.navigation;
+    const pictureSelected = this.state.image;
     return (
       <View>
         <FormLabel>Name</FormLabel>
@@ -76,10 +118,31 @@ class EditOwnerProfile extends Component {
           id="bio"
           onChangeText={bio => this.setState({ bio })}
         />
+        <Text>
+          Your coordinates have been saved as: Latitude: {this.props.latitude}, Longitude: {this.props.longitude}
+        </Text>
+        {pictureSelected !== null ? (
+          <Image
+            style={{width: 200, height: 200}}
+            source={{uri: pictureSelected.path}}
+          />
+        ) : (
+          <Image
+          style={{width: 200, height: 200}}
+          source={{uri: this.props.picture}}
+          />
+          // <View></View>
+        )}
+        <Button
+          title='Choose profile picture'
+          onPress={this.selectProfilePhoto}
+          color="#841584"
+          backgroundColor='#397af8'
+        />
         <Button
           title="Save"
           onPress={this.handleSubmit}
-          />
+        />
       </View>
     );
   }
@@ -93,6 +156,9 @@ class EditOwnerProfile extends Component {
       bio: store.Owners.user.bio,
       userId: store.Owners.user._id,
       coords: store.Owners.user.coords,
+      picture: store.Owners.user.picture,
+      user: store.Owners.user,
+      awsSauce: store.Owners.awsSauce
     }
   }
 
