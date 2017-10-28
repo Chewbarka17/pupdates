@@ -60,6 +60,7 @@ module.exports = {
         name: req.body.name,
         age: req.body.age,
         location: req.body.location,
+        coords: req.body.coords,
         picture: req.body.picture,
         bio: req.body.bio,
         rating: req.body.rating,
