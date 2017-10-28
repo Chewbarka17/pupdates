@@ -77,11 +77,12 @@ export const saveAwsSecretSauce = (accessKeyId, secretAcessKey, sessionToken) =>
 // };
 
 export const updateOwners = (name, age, location, bio, userid) => (dispatch) => {
+  location.formatted_address ? location = location.formatted_address : location;
   axios.patch('http://localhost:8000/api/users', {
     userid,
     name,
     age,
-    location: location.formatted_address,
+    location,
     bio,
     picture: 'http://www.readersdigest.ca/wp-content/uploads/2011/01/4-ways-cheer-up-depressed-cat.jpg', // to be changed
     rating: 4, // to be changed

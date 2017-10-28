@@ -23,7 +23,6 @@ class EditOwnerProfile extends Component {
     this.state = {
       name: '',
       age: '',
-      location: '',
       bio: '',
     };
 
@@ -33,7 +32,7 @@ class EditOwnerProfile extends Component {
 
   handleSubmit() {
     const { name, age, bio } = this.state;
-    console.log('what is props', this.props);
+    console.log('what is props', this.props.location);
     let nameCheck = name || this.props.name;
     let ageCheck = age || this.props.age;
     let bioCheck = bio || this.props.bio;
