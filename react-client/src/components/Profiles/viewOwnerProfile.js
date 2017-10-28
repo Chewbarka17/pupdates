@@ -47,39 +47,40 @@ class viewOwnerProfile extends Component {
           latitude: position.coords.latitude,
           longitude: position.coords.longitude,
           error: null,
-        });
+        })
+        console.log('this is the position', position);
+        axios.get(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${position.coords.latitude},${position.coords.longitude}&key=YOURAPIKEYHERE`)
+          .then(({data}) => {
+            console.log('api request', data);
+            this.props.ownerActions.updateOwners(
+              this.props.user.name, 
+              this.props.user.age, 
+              data.results[0],
+              this.props.user.bio,
+              this.props.user._id,
+            )
+          })
+          .catch((err) => {
+            console.log(err);
+          })
+        this.props.ownerActions.saveLocation(position.coords.latitude, position.coords.longitude)
       },
       (error) => this.setState({ error: error.message }),
       { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 },
     );
     axios.get('http://localhost:8000/api/users/dogs/' + this.props.userId)
-      .then(({data}) => {
-        console.log('this is data from get request ', data);
-        this.setState({
-          dogs: data,
-        });
-      })
-      .catch((err) => {
-        console.log(err);
-      })
-    axios.get(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${this.props.location.latitude},${this.props.location.longitude}&key=proccess.env.GOOGLE_API`)
-      .then(({data}) => {
-        console.log('api request', JSON.stringify(data.results[0]));
-        this.props.ownerActions.updateOwners(
-          this.props.user.name, 
-          this.props.user.age, 
-          data.results[0],
-          this.props.user.bio,
-          this.props.user._id,
-        )
-      })
-      .catch((err) => {
-        console.log(err);
-      })
+    .then(({data}) => {
+      console.log('this is data from get request ', data);
+      this.setState({
+        dogs: data,
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+    })
   }
   
   handlePressToEditUser() {
-    this.props.ownerActions.saveLocation(this.state.latitude, this.state.longitude)
     this.props.navigation.navigate('EditOwnerProfile');
   }
   
@@ -89,6 +90,7 @@ class viewOwnerProfile extends Component {
   
   render () {
     console.log('PROPS ARE HERE:', this.props);
+    console.log('this is the state', this.state);
     const { navigate } = this.props.navigation;
     const { user } = this.props;
     return (
@@ -109,7 +111,7 @@ class viewOwnerProfile extends Component {
           Bio: {user.bio}
         </Text>
         <Text>
-          Location:{user.location.split(',')[1]}
+          Location:{user.location}
         </Text>
         <Button 
         title='Edit User'

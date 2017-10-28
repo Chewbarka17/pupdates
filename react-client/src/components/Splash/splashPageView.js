@@ -50,12 +50,6 @@ class SplashPage extends React.Component {
           style={{width: 380, height: 240}}
           source={require('./laptopCorgi.gif')}
         />
-        <Button
-          title="Maps test"
-          onPress={() =>
-            navigate('Maps')
-          }
-        />
         <LoginScreen navigate={navigate}/>
       </View>
     );
