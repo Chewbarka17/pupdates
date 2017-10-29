@@ -71,7 +71,7 @@ class ViewDogsScreen extends React.Component {
 
   compareLocation(userOfInterestLocation) {
     let value = '';
-    axios.get(`https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=${this.props.currentCoords[0]},${this.props.currentCoords[1]}&destinations=${userOfInterestLocation[0]},${userOfInterestLocation[1]}&key=AIzaSyB1S52rdgtYi-52GK2b149DGxAZb_rKGdY`)
+    axios.get(`https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=${this.props.currentCoords[0]},${this.props.currentCoords[1]}&destinations=${userOfInterestLocation[0]},${userOfInterestLocation[1]}&key=YOURAPIKEYHERE`)
       .then(({data}) => {
         console.log('this is data', data.rows[0].elements[0].distance.text);
         value = data.rows[0].elements[0].distance.text;
