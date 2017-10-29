@@ -7,7 +7,9 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import { View, Text, Image, StyleSheet } from 'react-native';
 import { Avatar, Button } from 'react-native-elements';
-
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import * as chatActions from '../../actions/MessageActions/chatRoomActions';
 
 
 class likedDogProfile extends React.Component {
@@ -15,30 +17,51 @@ class likedDogProfile extends React.Component {
     super(props);
 
     this.state = {
-      name: "",
-      picture: ""
+      name: '',
+      picture: '',
+      ownerId: '',
     };
+    this.createRoom = this.createRoom.bind(this);
   }
 
-  componentDidMount = () => {
+  componentDidMount() {
+    // console.log(this.props.navigation.state.params.owner)
     this.getOwnersInfo();
   };
 
-  getOwnersInfo = () => {
+  getOwnersInfo() {
     axios.get('http://localhost:8000/api/userid/' + this.props.navigation.state.params.owner)
       .then(({ data }) => {
-        console.log(data)
-        this.setState({ name: data[0].name, picture: data[0].picture }, () => {
+        // console.log(data)
+        this.setState({
+          name: data[0].name, 
+          picture: data[0].picture,
+          ownerId: data[0]._id
+        })
           // console.log("this.state.owner: ", this.state.owner); // [{owner}]
           // console.log("this.state.owner[0]: ", this.state.owner[0]); // {owner}
           // console.log("this.state.owner[0].name: ", this.state.owner[0].name); // Ironman
           
-        });
       })
       .catch((err) => {
         console.log('failed to get owner info: ', err)
       });
   };
+
+  createRoom() {
+    console.log(this.props.uid, this.state.ownerId)
+    axios.post('http://localhost:8000/api/rooms', {
+      uids: [this.props.uid, this.state.ownerId],
+    })
+    .then((data) => {
+      // this.props.chatActions.createRoom(this.props.uid, this.state.ownerId)
+      console.log(data.data)
+      this.props.navigation.navigate('ChatRoom', data.data)
+    })
+    .catch((err) => {
+      console.log('error creating room', err)
+    })
+  }
 
   render() {
     return (
@@ -82,6 +105,7 @@ class likedDogProfile extends React.Component {
             name: 'message' 
           }}
           title='Chat'
+          onPress={this.createRoom}
         />
       </View>
     </View>
@@ -97,4 +121,16 @@ var styles = StyleSheet.create({
   }
 });
 
-export default likedDogProfile;
+const chatState = (store) => {
+  return {
+    uid: store.Owners.user._id,    
+  }
+}
+
+const chatDispatch = (dispatch) => {
+  return {
+    chatActions: bindActionCreators(chatActions, dispatch),
+  }
+};
+
+export default connect(chatState, chatDispatch)(likedDogProfile);

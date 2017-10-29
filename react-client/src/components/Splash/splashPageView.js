@@ -81,7 +81,7 @@ const NavigationApp = StackNavigator({
   DogProfile: { screen: DogProfileScreen },
   EditDogProfile: { screen: EditDogProfileScreen },
   EditOwnerProfile: { screen: EditOwnerProfileScreen},
-  Maps: { screen: Maps },
+  // Maps: { screen: Maps },
 });
 
 export default NavigationApp;

@@ -132,25 +132,25 @@ module.exports = {
         res.status(500).send(err);
       }
     })
-    .then((data) => {
-      Dogs.find({ _id: { $nin: data[0].dogsSeen.concat(data[0].dogs) }}, (err) => {
-        if (err) {
-          console.log('error getting dogsSeen', err);
-          res.status(500).send(err);
-        }
-      })
-        .then((result) => {
-          res.status(200).send(result);
+      .then((data) => {
+        Dogs.find({ _id: { $nin: data[0].dogsSeen.concat(data[0].dogs) }}, (err) => {
+          if (err) {
+            console.log('error getting dogsSeen', err);
+            res.status(500).send(err);
+          }
         })
-        .catch((err) => {
-          console.log('error getting dogsSeen', err);
-          res.status(500).send(err);
-        });
-    })
-    .catch((err) => {
-      console.log('error getting user', err);
-      res.status(500).send(err);
-    })
+          .then((result) => {
+            res.status(200).send(result);
+          })
+          .catch((err) => {
+            console.log('error getting dogsSeen', err);
+            res.status(500).send(err);
+          });
+      })
+      .catch((err) => {
+        console.log('error getting user', err);
+        res.status(500).send(err);
+      })
   },
 
   getLikedDogsByOwner: (req, res) => {
@@ -160,28 +160,28 @@ module.exports = {
         res.status(500).send(err);
       }
     })
-    .then((data) => {
-      Dogs.find({ _id: { $in: data[0].dogsLiked }}, (err) => {
-        if (err) {
-          console.log('error getting dogsLiked', err);
-          res.status(500).send(err);
-        }
-      })
-        .then((result) => {
+      .then((data) => {
+        Dogs.find({ _id: { $in: data[0].dogsLiked }}, (err) => {
+          if (err) {
+            console.log('error getting dogsLiked', err);
+            res.status(500).send(err);
+          }
+        })
+          .then((result) => {
           // the result will be an array of dog IDs instead of an array of dog objects
           // result = result.map(function(likedDog) {
           //   return likedDog._id;
           // });
-          res.status(200).send(result);
-        })
-        .catch((err) => {
-          console.log('error getting dogsLiked', err);
-          res.status(500).send(err);
-        });
-    })
-    .catch((err) => {
-      console.log('error getting user', err);
-      res.status(500).send(err);
-    })
+            res.status(200).send(result);
+          })
+          .catch((err) => {
+            console.log('error getting dogsLiked', err);
+            res.status(500).send(err);
+          });
+      })
+      .catch((err) => {
+        console.log('error getting user', err);
+        res.status(500).send(err);
+      })
   },
 };

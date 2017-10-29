@@ -24,7 +24,7 @@ app.use('/api', routes);
 // Messages
 // console.log('io.on', io);
 io.on('connection', (socket) => {
-  console.log('connection');
+  console.log('socket connection');
   socket.on('message', (message) => {
     // put message in database?
     console.log('socket message', message);

@@ -10,10 +10,14 @@ import axios from 'axios';
 import * as messageActions from '../../actions/MessageActions/chatRoomActions';
 
 class ChatRoom extends React.Component {
+  // static navigationOptions = {
+  //   title: '' || this.state.partner
+  // };   
   constructor(props) {
     super(props);
     this.state = {
       messages: [],
+      // partner: ''
     }
     this.renderBubble = this.renderBubble.bind(this);
     this.onSend = this.onSend.bind(this);
@@ -21,18 +25,22 @@ class ChatRoom extends React.Component {
   };
   
   componentDidMount() {
-    console.log(this.props)
     axios.get(`http://localhost:8000/api/messages/${this.props.navigation.state.params._id}`)
     .then((data) => {
-      // console.log(data);
-      this.setState({messages: data.data[0].messages})
+      console.log(data)
+      // if (data[1] === this.props.name) {
+        // let partner = data[2]
+      // } else {
+        // let partner = data[1]
+      // }
+      this.setState({
+        messages: data.data[0].messages,
+        // partner: partner
+      })
     })
 
     this.socket = io('http://localhost:3000/');
-    this.roomid = this.props.navigation.state.params._id
-
     this.socket.on(`${this.props.navigation.state.params._id}`, (message) => {
-      console.log('setting state', message)
       this.setState({
         messages: [message, ...this.state.messages]
       })
@@ -45,9 +53,9 @@ class ChatRoom extends React.Component {
       createdAt: e[0].createdAt,
       user: {
         name: this.props.name,
+        uid: this.props.uid
       },
     })
-    // console.log('text', e)
     .then((data) => {
       // console.log(data)
     })
@@ -55,10 +63,10 @@ class ChatRoom extends React.Component {
       console.log('Error w/patch', err)
     })
     
-    // console.log('socket?', this.props)
     this.socket.emit('message', {
       user: {
         name: this.props.name,
+        uid: this.props.uid
       },
       text: e[0].text,
       createdAt: e[0].createdAt,
@@ -68,15 +76,38 @@ class ChatRoom extends React.Component {
   }
 
   renderBubble(props) {
+    props.position = (props.currentMessage.user.uid === this.props.uid ? 'right' : 'left')
     return (
       <Bubble
         {...props}
+        containerToNextStyle={{
+          right: {
+            borderBottomRightRadius: 15,
+            borderBottomLeftRadius: 15,
+          },
+          left: {
+            borderBottomRightRadius: 15,
+            borderBottomLeftRadius: 15,
+          }
+        }}
+        containerToPreviousStyle={{
+          right: {
+            borderTopRightRadius: 15,
+            borderTopLeftRadius: 15,
+          },
+          left: {
+            borderTopRightRadius: 15,
+            borderTopLeftRadius: 15,
+          }
+        }}
         wrapperStyle={{
           left: {
-            backgroundColor: '#e9ffaa',
+            marginLeft: 5,
+            backgroundColor: '#CAC9C9',
           },
           right: {
-            backgroundColor: '#aafaff',
+            marginRight: 1,
+            backgroundColor: '#2A86EF',
           }
         }}
       />
@@ -101,9 +132,6 @@ class ChatRoom extends React.Component {
       <GiftedChat
         messages={this.state.messages}
         onSend={this.onSend}
-        user={{
-          _id: 1,
-        }}
         renderBubble={this.renderBubble}
       />
     )
@@ -130,7 +158,7 @@ class ChatRoom extends React.Component {
 const userState = (store) => {
   return {
     name: store.Owners.user.name,
-    // name: store.Auth.ownerInfo[0].name
+    uid: store.Owners.user._id
   }
 }
 
