@@ -104,12 +104,16 @@ class viewOwnerProfile extends Component {
         <Text>
           Name: {user.name}
         </Text>
+        { user.age ?
         <Text>
           Age: {user.age}
-        </Text>
+        </Text> : null
+        }
+        { user.bio ?
         <Text>
           Bio: {user.bio}
-        </Text>
+        </Text> : null
+        }
         <Text>
           Location:{user.location}
         </Text>
