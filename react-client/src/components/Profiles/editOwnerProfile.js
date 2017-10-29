@@ -76,9 +76,6 @@ class EditOwnerProfile extends Component {
           id="bio"
           onChangeText={bio => this.setState({ bio })}
         />
-        <Text>
-          Your coordinates have been saved as: Latitude: {this.props.latitude}, Longitude: {this.props.longitude}
-        </Text>
         <Button
           title="Save"
           onPress={this.handleSubmit}
@@ -92,8 +89,6 @@ class EditOwnerProfile extends Component {
     return {
       name: store.Owners.user.name,
       age: store.Owners.user.age,
-      latitude: store.Owners.userLocation.latitude,
-      longitude: store.Owners.userLocation.longitude,
       location: store.Owners.user.location,
       bio: store.Owners.user.bio,
       userId: store.Owners.user._id,
