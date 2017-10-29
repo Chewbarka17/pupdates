@@ -61,7 +61,6 @@ class ViewDogsScreen extends React.Component {
     console.log('dog info here: ', `http://localhost:8000/api/users/${dogInfo.owner}`);
     axios.get(`http://localhost:8000/api/users/${dogInfo.owner}`)
       .then(({data}) => {
-        console.log('handle loc data', data)
         return this.compareLocation(data[0].coords);
       })
       .catch(err => {
