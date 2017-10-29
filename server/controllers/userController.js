@@ -21,7 +21,7 @@ module.exports = {
   },
 
   getUser: (req, res) => {
-    Owners.find({ fb_id: req.params.userid }, (err, owner) => {
+    Owners.find({ _id: req.params.userid }, (err, owner) => {
       if (err) {
         console.log('error getting this user ', err);
         res.status(500).send(err);

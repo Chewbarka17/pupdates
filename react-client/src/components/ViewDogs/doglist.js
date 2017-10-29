@@ -43,16 +43,48 @@ class ViewDogsScreen extends React.Component {
     super(props);
 
     this.state = {
-      error: null
+      error: null,
+      distance: 0,
     }
+
+    this.handleLocation = this.handleLocation.bind(this);
+    this.compareLocation = this.compareLocation.bind(this);
   }
 
   componentDidMount() {
     this.props.actions.getAllUnseenDogs(this.props.uid);
+    // set state based on first dog
+    //counter = 0
+  }
+
+  handleLocation(dogInfo) {
+    console.log('dog info here: ', `http://localhost:8000/api/users/${dogInfo.owner}`);
+    axios.get(`http://localhost:8000/api/users/${dogInfo.owner}`)
+      .then(({data}) => {
+        console.log('handle loc data', data)
+        return this.compareLocation(data[0].coords);
+      })
+      .catch(err => {
+        console.log(err);
+      })
+  }
+
+  compareLocation(userOfInterestLocation) {
+    let value = '';
+    axios.get(`https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=${this.props.currentCoords[0]},${this.props.currentCoords[1]}&destinations=${userOfInterestLocation[0]},${userOfInterestLocation[1]}&key=AIzaSyB1S52rdgtYi-52GK2b149DGxAZb_rKGdY`)
+      .then(({data}) => {
+        console.log('this is data', data.rows[0].elements[0].distance.text);
+        value = data.rows[0].elements[0].distance.text;
+      })
+      .catch(err => {
+        console.log(err);
+      })
+      return value;
   }
   
   // swipe cards
   handleYup(cardData) {
+    // set state unseen dogs at counter, counter++
     this.props.actions.updateDogsSeen(this.props.uid, cardData._id);
     this.props.actions.updateLikedDogs(this.props.uid, cardData._id);
   }
@@ -114,6 +146,7 @@ class ViewDogsScreen extends React.Component {
   }
 
   render() {
+    {console.log('what is state: ', this.state)};
     return (
       <View style={styles.container}>
         <SwipeCards
@@ -138,13 +171,17 @@ class ViewDogsScreen extends React.Component {
                   <Text style={{fontSize:20, fontWeight:'300', color:'#444'}}>{cardData.name} </Text>
                 </View>
                 <View style={{flexDirection:'row'}}>
-                  <View style={{padding:13, borderLeftWidth:1,borderColor:'#e3e3e3', alignItems:'center', justifyContent:'space-between'}}><Icon name='place' size={20} color="#777" /><Text style={{fontSize:16, fontWeight:'200', color:'#555'}}>{cardData.location} miles</Text></View>
+                  <View style={{padding:13, borderLeftWidth:1,borderColor:'#e3e3e3', alignItems:'center', justifyContent:'space-between'}}><Icon name='place' size={20} color="#777" /><Text style={{fontSize:16, fontWeight:'200', color:'#555'}}>{
+                    this.handleLocation(cardData)
+                    } miles</Text></View>
                 </View>
               </View>
             </View>
           )}
           handleYup={(cardData) => (this.handleYup(cardData))}
           handleNope={(cardData) => (this.handleNope(cardData))}
+          /* {...this.handleState(cardData)} */
+
           renderNoMoreCards={() => this.noMore()}
         />
         <View style={{flexDirection:'row', alignItems:'center', justifyContent:'center'}}>
@@ -223,6 +260,7 @@ const viewDogsState = (store) => {
   return {
     viewDogs: store.ViewDogs,
     uid: store.Owners.user._id,
+    currentCoords: store.Owners.user.coords,
   }
 }
 
