@@ -45,6 +45,7 @@ class ViewDogsScreen extends React.Component {
     this.state = {
       error: null,
       distance: 0,
+      flag: false
     }
 
     this.handleLocation = this.handleLocation.bind(this);
@@ -70,15 +71,15 @@ class ViewDogsScreen extends React.Component {
 
   compareLocation(userOfInterestLocation) {
     let value = '';
-    axios.get(`https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=${this.props.currentCoords[0]},${this.props.currentCoords[1]}&destinations=${userOfInterestLocation[0]},${userOfInterestLocation[1]}&key=AIzaSyB1S52rdgtYi-52GK2b149DGxAZb_rKGdY`)
+    axios.get(`https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=${this.props.currentCoords[0]},${this.props.currentCoords[1]}&destinations=${userOfInterestLocation[0]},${userOfInterestLocation[1]}&key=YOURAPIKEYHERE`)
       .then(({data}) => {
         console.log('this is data', data.rows[0].elements[0].distance.text);
         value = data.rows[0].elements[0].distance.text;
+        this.setState({distance: value, flag: true});
       })
       .catch(err => {
         console.log(err);
       })
-      return value;
   }
   
   // swipe cards
@@ -171,8 +172,8 @@ class ViewDogsScreen extends React.Component {
                 </View>
                 <View style={{flexDirection:'row'}}>
                   <View style={{padding:13, borderLeftWidth:1,borderColor:'#e3e3e3', alignItems:'center', justifyContent:'space-between'}}><Icon name='place' size={20} color="#777" /><Text style={{fontSize:16, fontWeight:'200', color:'#555'}}>{
-                    this.handleLocation(cardData)
-                    } miles</Text></View>
+                    this.state.flag ? this.state.distance : this.handleLocation(cardData)
+                    }</Text></View>
                 </View>
               </View>
             </View>

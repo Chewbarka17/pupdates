@@ -49,7 +49,7 @@ class viewOwnerProfile extends Component {
           error: null,
         })
         console.log('this is the position', this.state);
-        axios.get(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${position.coords.latitude},${position.coords.longitude}&key=AIzaSyB1S52rdgtYi-52GK2b149DGxAZb_rKGdY`)
+        axios.get(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${position.coords.latitude},${position.coords.longitude}&key=YOURAPIKEYHERE`)
           .then(({data}) => {
             console.log('api request', data);
             this.props.ownerActions.updateOwners(
