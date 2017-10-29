@@ -38,46 +38,14 @@ class viewOwnerProfile extends Component {
     this.ownerProfile = null;
     this.handlePressToEditUser = this.handlePressToEditUser.bind(this);
     this.handlePressToAddDog = this.handlePressToAddDog.bind(this);
+    this.handleGeolocation = this.handleGeolocation.bind(this);
+    this.getLocation = this.getLocation.bind(this);
+    this.getDogs = this.getDogs.bind(this);
   }
   
   componentDidMount() {
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        this.setState({
-          latitude: position.coords.latitude,
-          longitude: position.coords.longitude,
-          error: null,
-        })
-        console.log('this is the position', this.state);
-        axios.get(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${position.coords.latitude},${position.coords.longitude}&key=YOURAPIKEYHERE`)
-          .then(({data}) => {
-            console.log('api request', data);
-            this.props.ownerActions.updateOwners(
-              this.props.user.name, 
-              this.props.user.age, 
-              data.results[0],
-              this.props.user.bio,
-              this.props.user._id,
-              [position.coords.latitude, position.coords.longitude],
-            )
-          })
-          .catch((err) => {
-            console.log(err);
-          })
-      },
-      (error) => this.setState({ error: error.message }),
-      { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 },
-    );
-    axios.get('http://localhost:8000/api/users/dogs/' + this.props.userId)
-    .then(({data}) => {
-      console.log('this is data from get request ', data);
-      this.setState({
-        dogs: data,
-      });
-    })
-    .catch((err) => {
-      console.log(err);
-    })
+    this.handleGeolocation();
+    this.getDogs();
   }
   
   handlePressToEditUser() {
@@ -87,10 +55,55 @@ class viewOwnerProfile extends Component {
   handlePressToAddDog() {
     this.props.navigation.navigate('AddDogProfile');
   }
+
+  handleGeolocation() {
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        this.setState({
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude,
+          error: null,
+        })
+        console.log('this is the position', this.state);
+        this.getLocation(position);
+      },
+      (error) => this.setState({ error: error.message }),
+      { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 },
+    );
+  }
+
+  getLocation(position) {
+    axios.get(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${position.coords.latitude},${position.coords.longitude}&key=YOURAPIKEYHERE`)
+      .then(({data}) => {
+        console.log('api request', data);
+        this.props.ownerActions.updateOwners(
+          this.props.user.name, 
+          this.props.user.age, 
+          data.results[0],
+          this.props.user.bio,
+          this.props.user._id,
+          [position.coords.latitude, position.coords.longitude],
+        )
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+  }
+
+  getDogs() {
+    axios.get('http://localhost:8000/api/users/dogs/' + this.props.userId)
+      .then(({data}) => {
+        console.log('this is data from get request ', data);
+        this.setState({
+          dogs: data,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+  }
   
   render () {
-    console.log('PROPS ARE HERE:', this.props);
-    console.log('this is the state', this.state);
     const { navigate } = this.props.navigation;
     const { user } = this.props;
     return (
