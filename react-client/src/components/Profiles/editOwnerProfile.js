@@ -64,12 +64,14 @@ class EditOwnerProfile extends Component {
         if (data) {
           pictureCheck = data.Location;
         }
-        this.props.actions.updateOwners(nameCheck, ageCheck, this.props.location, bioCheck, this.props.userId, this.props.coords, pictureCheck);
-        this.props.navigation.navigate('ViewOwnerProfile')
+        this.props.actions.updateOwners(nameCheck, ageCheck, this.props.location, bioCheck, this.props.userId, this.props.coords, pictureCheck, (data) => {
+          this.props.navigation.navigate('ViewOwnerProfile');
+        });
       });
     } else {
-      this.props.actions.updateOwners(nameCheck, ageCheck, this.props.location, bioCheck, this.props.userId, this.props.coords, pictureCheck);
-      this.props.navigation.navigate('ViewOwnerProfile');
+      this.props.actions.updateOwners(nameCheck, ageCheck, this.props.location, bioCheck, this.props.userId, this.props.coords, pictureCheck, (data) => {
+        this.props.navigation.navigate('ViewOwnerProfile');
+      });
     }
   }
 

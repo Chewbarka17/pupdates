@@ -10,10 +10,9 @@ const uploadProfilePicture = (awsSauce, id, image, callback) => {
     sessionToken: awsSauce.sessionToken
   });
 
-  photoKey = 'public/' + id + image.filename;
+  photoKey = 'public/' + id + '/' + image.filename;
   RNFetchBlob.fs.readFile(image.path, 'base64').then(data => {
     let buf = Buffer.from(data, 'base64');
-    console.log('buffer', buf);
     const params = {
       Bucket: awsmobile.aws_user_files_s3_bucket,
       Key: photoKey,

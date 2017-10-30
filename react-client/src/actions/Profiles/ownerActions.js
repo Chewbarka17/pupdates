@@ -8,7 +8,7 @@ export const getOwnerFromDB = (fb, navigate, callback) => (dispatch) => {
       if (data.length === 0) {
         callback('User doesn\'t exist in collection');
       } else {
-        console.log('get owner from db', data);
+        // console.log('get owner from db', data);
         dispatch({ type: 'GET_OWNER_FROM_MONGO_FULFILLED', payload: data[0] });
         AsyncStorage.setItem('mongoOwner', JSON.stringify(data), (error) => {
           if (error) {
@@ -93,7 +93,7 @@ export const saveAwsSecretSauce = (accessKeyId, secretAccessKey, sessionToken) =
 //     });
 // };
 
-export const updateOwners = (name, age, location, bio, userid, coords, picture) => (dispatch) => {
+export const updateOwners = (name, age, location, bio, userid, coords, picture, callback) => (dispatch) => {
   // console.log('update owners location', location);
   location.formatted_address ? location = location.formatted_address : location;
   axios.patch('http://localhost:8000/api/users', {
@@ -107,13 +107,13 @@ export const updateOwners = (name, age, location, bio, userid, coords, picture) 
     rating: 4, // to be changed
   })
     .then((response) => {
-      // console.log('response data', response.data);
       dispatch({ type: 'UPDATE_OWNER_FULFILLED', payload: response.data });
       AsyncStorage.setItem('mongoOwner', JSON.stringify(response.data), (error) => {
         if (error) {
           console.log('Failure! Could not save user to async storage during update', error);
         }
       });
+      callback(response.data);
     })
     .catch((err) => {
       dispatch({ type: 'UPDATE_OWNER_REJECTED', payload: err });

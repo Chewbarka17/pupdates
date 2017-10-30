@@ -45,7 +45,6 @@ class AddDogProfile extends Component {
       cropping: true
     }).then(image => {
       this.setState({image: image});
-      console.log('dog image', image);
     }).catch(err => {
       console.log('Image not selected', err);``
     });
@@ -63,15 +62,15 @@ class AddDogProfile extends Component {
       // console.log('post dog data', data);
       const { name, age, breed, _id } = data;
       if (this.state.image) {
-        uploadProfilePicture(this.props.awsSauce, _id, this.state.image, (err, data) => {
+        uploadProfilePicture(this.props.awsSauce, _id, this.state.image, (err, result) => {
           if (err) {
             console.log('upload profile picture', err);
           }
           // console.log('s3 dog data', data);
-          if (data) {
-            pictureCheck = data.Location;
+          if (result) {
+            pictureCheck = result.Location;
           }
-          this.props.actions.updateDogs(name, age, breed, _id, pictureCheck);
+          this.props.actions.updateDogs(name, age, breed, _id, pictureCheck, data);
           this.props.navigation.navigate('ViewOwnerProfile');
           
         });
