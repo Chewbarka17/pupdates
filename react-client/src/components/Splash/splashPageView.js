@@ -13,7 +13,7 @@ import {
   Image
 } from 'react-native';
 
-import ViewDogsScreen from '../ViewDogs/doglist';
+//import ViewDogsScreen from '../ViewDogs/doglist';
 import DrawerMenuScreen from '../Navbar/drawerNav';
 import LikesScreen from '../Likes/likedDogsView';
 import FilterScreen from '../FilterDog/filterDog';
@@ -29,6 +29,9 @@ import EditDogProfileScreen from '../Profiles/editDogProfile';
 import EditOwnerProfileScreen from '../Profiles/editOwnerProfile'
 import Maps from '../Profiles/maps';
 
+import TabBar from '../Navbar/tabBar';
+// <TabBar />
+
 class SplashPage extends React.Component {
   static navigationOptions = {
     title: 'Splash Page Home',
@@ -42,7 +45,7 @@ class SplashPage extends React.Component {
     const { navigate } = this.props.navigation;
     return (
       <View>
-      <Image
+        <Image
           style={{width: 390, height: 160}}
           source={require('./whiteBlueLogo.png')}
         />
@@ -62,14 +65,16 @@ class SplashPage extends React.Component {
 // resizeMode="contain"
 
 const NavigationApp = StackNavigator({
+  TabBar: { screen: TabBar },
   Menu: {
     screen: SplashPage,
     navigationOptions: {
       header: null,
     }
   },
+  TabBar: { screen: TabBar },
   DrawerMenu: { screen: DrawerMenuScreen },
-  Dogs: { screen: ViewDogsScreen },
+  // Dogs: { screen: ViewDogsScreen },
   Likes: { screen : LikesScreen },
   Filter: { screen : FilterScreen },
   Logout: { screen: LogoutScreen },

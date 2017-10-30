@@ -14,6 +14,8 @@ import configureStore from './Store/Store';
 import SplashPage from './src/components/Splash/splashPageView';
 import Loading from './src/components/loading';
 
+import TabBar from './src/components/Navbar/tabBar';
+
 const { persistor, store } =  configureStore();
 
 export default class App extends Component {

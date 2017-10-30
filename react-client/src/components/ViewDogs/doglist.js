@@ -187,10 +187,15 @@ class ViewDogsScreen extends React.Component {
     navigate('DogProfile', this.refs['swiper'].props.cards[0]);
   }
 
+//<TabBar />
+
   render() {
     {console.log('what is state: ', this.state)};
     return (
+      
+      
       <View style={styles.container}>
+        
         <SwipeCards
           ref = {'swiper'}
           cards={this.props.viewDogs.unseenDogs}
@@ -259,6 +264,7 @@ class ViewDogsScreen extends React.Component {
           </MaterialIcons>
         </View>
       </View>
+
     )
   }
 }
