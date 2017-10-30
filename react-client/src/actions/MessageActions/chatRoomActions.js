@@ -1,22 +1,9 @@
 import axios from 'axios';
 
-export const sendMessage = message => (dispatch) => {
-  axios.patch(`/messages${message.roomid}`, {
-    user: message.user,
-    text: message.text,
-    roomid: message.roomid,
-  })
-    .then((response) => {
-      // something here needs fixing.  What is message?  what is response?
-      console.log('MESSAGE CHANGE DISPATCH: ', response, message);
-      dispatch({ type: 'MESSAGE_CHANGE', payload: message });
-    });
-};
-
 export const getRooms = userid => (dispatch) => {
   axios.get(`http://localhost:8000/api/rooms/${userid}`)
     .then(({ data }) => {
-      // console.log(data);
+      console.log(data);
       dispatch({ type: 'SAVE_ROOMS', payload: data });
     })
     .catch((err) => {

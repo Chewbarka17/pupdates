@@ -34,6 +34,6 @@ router.get('/messages/:roomid', messages.getMessages);
 router.patch('/messages/:roomid', messages.addMessage);
 router.post('/rooms', messages.createRoom);
 router.get('/rooms/:userid', messages.getRooms);
-
+router.patch('/rooms/:roomid', messages.updateChatRooms);
 
 module.exports = router;

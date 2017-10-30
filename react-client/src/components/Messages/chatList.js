@@ -1,11 +1,9 @@
 import React from 'react';
-import { Platform, StyleSheet, Text, View, TextInput, FlatList, TouchableHighlight } from 'react-native';
-import { List, ListItem, SearchBar } from "react-native-elements";
+import { View, FlatList, TouchableHighlight } from 'react-native';
+import { ListItem } from "react-native-elements";
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import axios from 'axios';
-
-// import io from 'socket.io-client';
 
 import ChatRoom from './chatRoom.js';
 import * as messageActions from '../../actions/MessageActions/chatRoomActions';
@@ -33,19 +31,15 @@ class ChatList extends React.Component {
 
   componentDidMount(){
     this.props.actions.getRooms(this.props.uid);
-
-    // get rooms associated with user
-    // set rooms = to data for FlatList
-    // onPress function to go into room
   }
 
   render() {
 
     return (
       <View>
-        <FlatList 
+        <FlatList
           data={this.props.rooms}
-          renderItem={({item}) =>  
+          renderItem={({item}) =>
           <TouchableHighlight
           underlayColor='rgba(192,192,192,0.6)'
         >
@@ -54,7 +48,7 @@ class ChatList extends React.Component {
           onPress={() =>
             this.props.navigation.navigate('ChatRoom', item)
           }
-            title={`${item._id}`}
+            title={`${item.partner}`}
             id={item._id}
           />
           </View>

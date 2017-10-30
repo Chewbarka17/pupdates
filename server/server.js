@@ -27,7 +27,7 @@ io.on('connection', (socket) => {
   console.log('socket connection');
   socket.on('message', (message) => {
     // put message in database?
-    console.log('socket message', message);
+    console.log('socket message');
     socket.emit(message.roomid, message);
   });
 });
