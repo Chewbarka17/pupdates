@@ -64,10 +64,6 @@ class viewOwnerProfile extends Component {
           longitude: position.coords.longitude,
           error: null,
         })
-<<<<<<< HEAD
-        this.getLocation(position);
-=======
->>>>>>> [ignore] api key change
         axios.get(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${position.coords.latitude},${position.coords.longitude}&key=AIzaSyABBYsfb17rEn8uzLRyf0o_77R2A8AjI6g`)
           .then(({data}) => {
             console.log('api request', data);
