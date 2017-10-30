@@ -37,6 +37,7 @@ const dogReducer = (state = initialState, action) => {
       });
     }
     case 'UPDATE_DOG_FULFILLED': {
+      console.log('state dogs', state.dogs);
       return Object.assign({}, state, {
         updated: true,
         user: state.dogs.filter((dog) => {

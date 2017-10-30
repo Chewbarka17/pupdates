@@ -1,6 +1,7 @@
 import axios from 'axios';
 
-export const postDogs = (name, age, breed, gender, bio, owner) => (dispatch) => {
+export const postDogs = (name, age, breed, gender, bio, owner, picture, callback) => (dispatch) => {
+// export const postDogs = (name, age, breed, owner, picture, callback) => (dispatch) => {
   axios.post('http://localhost:8000/api/dogs', {
     name,
     age,
@@ -8,29 +9,28 @@ export const postDogs = (name, age, breed, gender, bio, owner) => (dispatch) => 
     gender,
     bio,
     owner,
+    picture,
   })
     .then((response) => {
       dispatch({ type: 'POST_DOG_FULFILLED', payload: response.data });
+      // callback(response.data);
     })
     .catch((err) => {
       dispatch({ type: 'POST_DOG_REJECTED', payload: err });
     });
 };
 
-export const updateDogs = (name, age, breed, dogid) => (dispatch) => {
+export const updateDogs = (name, age, breed, dogid, picture) => (dispatch) => {
+  console.log('update dog picture', picture);
   axios.patch(`http://localhost:8000/api/dogs/${dogid}`, {
     name,
     age,
     breed,
+    picture,
   })
     .then((response) => {
       console.log('this is response.data', JSON.parse(response.config.data));
-      dispatch({
-        type: 'UPDATE_DOG_FULFILLED',
-        payload: {
-          name, age, breed, dogid,
-        },
-      });
+      dispatch({ type: 'UPDATE_DOG_FULFILLED', payload: { name, age, breed, picture, dogid } });
     })
     .catch((err) => {
       dispatch({ type: 'UPDATE_DOG_REJECTED', payload: err });

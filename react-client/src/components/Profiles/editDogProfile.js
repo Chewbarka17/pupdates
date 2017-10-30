@@ -10,7 +10,7 @@ import {
 import { FormLabel, FormInput, Button } from 'react-native-elements';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-
+import ImagePicker from 'react-native-image-crop-picker';
 import * as dogActions from '../../actions/Profiles/dogProfileActions';
 
 class EditDogProfile extends Component {
@@ -24,10 +24,12 @@ class EditDogProfile extends Component {
       name: '',
       age: '',
       breed: '',
+      image: null,
+      pictue: [],
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
-
+    this.selectProfilePhoto = this.selectProfilePhoto.bind(this);    
   };
 
   handleSubmit() {
@@ -37,6 +39,18 @@ class EditDogProfile extends Component {
     let breedCheck = breed || this.props.breed;
     console.log(nameCheck, ageCheck, breedCheck, this.props.id);
     this.props.actions.updateDogs(nameCheck, ageCheck, breedCheck, this.props.id);
+  }
+
+  selectProfilePhoto() {
+    ImagePicker.openPicker({
+      width: 256,
+      height: 256,
+      cropping: true
+    }).then(image => {
+      this.setState({image: image});
+    }).catch(err => {
+      console.log('Image not selected', err);``
+    });
   }
 
   render() {
@@ -77,6 +91,24 @@ class EditDogProfile extends Component {
           id="zipcode"
           onChangeText={breed => this.setState({ breed })}
         />
+        {/* {pictureSelected !== null ? (
+          <Image
+            style={{width: 200, height: 200}}
+            source={{uri: pictureSelected.path}}
+          />
+        ) : (
+          // <Image
+          // style={{width: 200, height: 200}}
+          // source={{uri: this.props.picture}}
+          // />
+          <View></View>
+        )} */}
+        <Button
+          title='Choose profile picture'
+          onPress={this.selectProfilePhoto}
+          color="#ffffff"
+          backgroundColor='#397af8'
+        />
         <Button
           title="Save"
           onPress={this.handleSubmit}
@@ -92,6 +124,7 @@ class EditDogProfile extends Component {
       age: store.Dogs.dogs[0].age,
       breed: store.Dogs.dogs[0].breed,
       id: store.Dogs.dogs[0]._id,
+      picture: store.Dogs.picture,
       userId: store.Owners.user.fb_id
     }
   }

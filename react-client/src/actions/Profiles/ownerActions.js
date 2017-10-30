@@ -8,6 +8,7 @@ export const getOwnerFromDB = (fb, navigate, callback) => (dispatch) => {
       if (data.length === 0) {
         callback('User doesn\'t exist in collection');
       } else {
+        console.log('get owner from db', data);
         dispatch({ type: 'GET_OWNER_FROM_MONGO_FULFILLED', payload: data[0] });
         AsyncStorage.setItem('mongoOwner', JSON.stringify(data), (error) => {
           if (error) {
@@ -66,9 +67,9 @@ export const addOwnerToDB = (fb, navigate) => (dispatch) => {
 
 export const saveAwsSecretSauce = (accessKeyId, secretAccessKey, sessionToken) => (dispatch) => {
   const aws = {
-    accessKeyId,
-    secretAcessKey,
-    sessionToken,
+    accessKeyId: accessKeyId,
+    secretAccessKey: secretAccessKey,
+    sessionToken: sessionToken,
   };
   dispatch({ type: 'AWS_SECRET_SAUCE_FULFILLED', payload: aws });
 };
@@ -93,7 +94,7 @@ export const saveAwsSecretSauce = (accessKeyId, secretAccessKey, sessionToken) =
 // };
 
 export const updateOwners = (name, age, location, bio, userid, coords, picture) => (dispatch) => {
-  console.log('update owners location', location);
+  // console.log('update owners location', location);
   location.formatted_address ? location = location.formatted_address : location;
   axios.patch('http://localhost:8000/api/users', {
     userid,
@@ -106,7 +107,7 @@ export const updateOwners = (name, age, location, bio, userid, coords, picture) 
     rating: 4, // to be changed
   })
     .then((response) => {
-      console.log('response data', response.data);
+      // console.log('response data', response.data);
       dispatch({ type: 'UPDATE_OWNER_FULFILLED', payload: response.data });
       AsyncStorage.setItem('mongoOwner', JSON.stringify(response.data), (error) => {
         if (error) {

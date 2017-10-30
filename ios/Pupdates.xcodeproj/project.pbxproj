@@ -783,10 +783,7 @@
 			isa = PBXGroup;
 			children = (
 				CA1CDC4388C041F2863933A0 /* libimageCropPicker.a */,
-<<<<<<< HEAD
-=======
 				F2BCEA30782540E18BA82C5F /* libRNFetchBlob.a */,
->>>>>>> [Add] User has ability to change their profile picture.
 				D363DC491FA24E1200A93E22 /* libAirMaps.a */,
 			);
 			name = "Recovered References";
@@ -934,11 +931,7 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-<<<<<<< HEAD
-					ProductGroup = 950D230D1FA90A4800D1B726 /* Products */;
-=======
 					ProductGroup = 9560DEE11FA7E32500670A89 /* Products */;
->>>>>>> [Add] User has ability to change their profile picture.
 					ProjectRef = D363DC441FA24E1200A93E22 /* AirMaps.xcodeproj */;
 				},
 				{
@@ -998,13 +991,10 @@
 					ProjectRef = 146833FF1AC3E56700842450 /* React.xcodeproj */;
 				},
 				{
-<<<<<<< HEAD
-=======
 					ProductGroup = 957FBC5D1FA3E078005F1811 /* Products */;
 					ProjectRef = B6459970A34D43ECA61BF71A /* RNFetchBlob.xcodeproj */;
 				},
 				{
->>>>>>> [Add] User has ability to change their profile picture.
 					ProductGroup = 95652BFF1F99229700D9C9A1 /* Products */;
 					ProjectRef = 9D82EBA66BE04158AFA1177E /* RNVectorIcons.xcodeproj */;
 				},

@@ -12,10 +12,6 @@ import { FormLabel, FormInput, Button } from 'react-native-elements';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import ImagePicker from 'react-native-image-crop-picker';
-import AWS from 'aws-sdk/dist/aws-sdk-react-native';
-import RNFetchBlob from 'react-native-fetch-blob';
-import { Buffer } from 'buffer';
-import awsmobile from '../../../../config/aws-exports';
 import uploadProfilePicture from '../../components/Profiles/util/uploadProfilePictureUtil';
 import * as ownerActions from '../../actions/Profiles/ownerActions';
 
@@ -57,27 +53,24 @@ class EditOwnerProfile extends Component {
     let bioCheck = bio || this.props.bio;
     let pictureCheck = picture || this.props.picture;
 
-    this.props.actions.updateOwners(nameCheck, ageCheck, this.props.location, bioCheck, this.props.userId, this.props.coords);
     // image is the image obj
     // picture contains a url of the picture in MongoDB
     // should really be called pictureURL
-    // if (this.state.image) {
-    //   uploadProfilePicture(this.props.awsSauce, this.props.userId, this.state.image, (err, data) => {
-    //     if (err) {
-    //       console.log('upload profile picture', err);
-    //     }
-    //     // console.log('s3 data callback', data);
-    //     // console.log('s3 url', data.Location);
-    //     if (data) {
-    //       pictureCheck = data.Location;
-    //     }
-    //     this.props.actions.updateOwners(nameCheck, ageCheck, locationCheck, bioCheck, this.props.userId, pictureCheck);
-    //     this.props.navigation.navigate('ViewOwnerProfile');
-    //   });
-    // } else {
-    // // console.log('s3 data in component state', this.state.image);
-    //   this.props.actions.updateOwners(nameCheck, ageCheck, locationCheck, bioCheck, this.props.userId, pictureCheck);
-    // }
+    if (this.state.image) {
+      uploadProfilePicture(this.props.awsSauce, this.props.userId, this.state.image, (err, data) => {
+        if (err) {
+          console.log('upload profile picture', err);
+        }
+        if (data) {
+          pictureCheck = data.Location;
+        }
+        this.props.actions.updateOwners(nameCheck, ageCheck, this.props.location, bioCheck, this.props.userId, this.props.coords, pictureCheck);
+        this.props.navigation.navigate('ViewOwnerProfile')
+      });
+    } else {
+      this.props.actions.updateOwners(nameCheck, ageCheck, this.props.location, bioCheck, this.props.userId, this.props.coords, pictureCheck);
+      this.props.navigation.navigate('ViewOwnerProfile');
+    }
   }
 
   render() {
@@ -131,12 +124,11 @@ class EditOwnerProfile extends Component {
           style={{width: 200, height: 200}}
           source={{uri: this.props.picture}}
           />
-          // <View></View>
         )}
         <Button
           title='Choose profile picture'
           onPress={this.selectProfilePhoto}
-          color="#841584"
+          color="#ffffff"
           backgroundColor='#397af8'
         />
         <Button
@@ -161,11 +153,12 @@ class EditOwnerProfile extends Component {
       awsSauce: store.Owners.awsSauce
     }
   }
+}
 
-  const ownerDispatch = (dispatch) => {
-    return {
-      actions: bindActionCreators(ownerActions, dispatch),
-    }
-  };
+const ownerDispatch = (dispatch) => {
+  return {
+    actions: bindActionCreators(ownerActions, dispatch),
+  }
+};
 
-  export default connect(ownerState, ownerDispatch)(EditOwnerProfile);
+export default connect(ownerState, ownerDispatch)(EditOwnerProfile);
