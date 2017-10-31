@@ -3,7 +3,7 @@ const router = require('express').Router();
 // require controllers
 const dogs = require('../controllers/dogController');
 const users = require('../controllers/userController');
-const messages = require('../controllers/messageController');
+const messages = require('../controllers/chatController');
 
 // dogs
 router.get('/dogs', dogs.getAllDogs);

@@ -146,7 +146,6 @@ module.exports = {
                 }
 
                 for (let i = 0; i < rooms.length; i++) {
-                  console.log(uids[i].name)
                   rooms[i].partner = uids[i].name;
                 }
 

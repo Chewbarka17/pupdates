@@ -6,7 +6,7 @@ import { GiftedChat, Bubble } from 'react-native-gifted-chat';
 import io from 'socket.io-client';
 import axios from 'axios';
 
-import * as messageActions from '../../actions/MessageActions/chatRoomActions';
+import * as chatRoomActions from '../../actions/ChatRooms/chatRoomActions';
 
 class ChatRoom extends React.Component {
   // static navigationOptions = {

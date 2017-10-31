@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import axios from 'axios';
 
 import ChatRoom from './chatRoom.js';
-import * as messageActions from '../../actions/MessageActions/chatRoomActions';
+import * as chatRoomActions from '../../actions/ChatRooms/chatRoomActions';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 
@@ -77,10 +77,10 @@ const state = (store) => {
   }
 }
 
-const messageDispatch = (dispatch) => {
+const chatDispatch = (dispatch) => {
   return {
-    actions: bindActionCreators(messageActions, dispatch),
+    actions: bindActionCreators(chatRoomActions, dispatch),
   }
 };
 
-export default connect(state, messageDispatch)(ChatList);
+export default connect(state, chatDispatch)(ChatList);

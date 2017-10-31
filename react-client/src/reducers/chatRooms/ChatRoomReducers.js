@@ -3,7 +3,7 @@ const initialState = {
   error: null,
 };
 
-const chatReducer = (state = initialState, action) => {
+const chatRoomReducer = (state = initialState, action) => {
   switch (action.type) {
     case 'POST_ROOM_FULFILLED': {
       return Object.assign({}, state, {
@@ -33,4 +33,4 @@ const chatReducer = (state = initialState, action) => {
   }
 };
 
-export default chatReducer;
+export default chatRoomReducer;
