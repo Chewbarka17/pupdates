@@ -5,7 +5,7 @@ const initialState = {
   fetched: false,
   updated: false,
   dogs: [],
-  // dogInfo: [],
+  dogInfo: [],
 };
 
 const dogReducer = (state = initialState, action) => {
@@ -13,7 +13,7 @@ const dogReducer = (state = initialState, action) => {
     case 'FETCH_DOG_FULFILLED': {
       return Object.assign({}, state, {
         fetched: true,
-        dogs: state.dogs.concat(action.payload),
+        dogs: action.payload,
       });
     }
     case 'FETCH_DOG_REJECTED': {

@@ -33,7 +33,7 @@ class viewOwnerProfile extends Component {
   
   componentDidMount() {
     this.handleGeolocation();
-    // this.getDogs();
+    this.getDogs();
   }
 
   // componentWillReceiveProps() {
