@@ -170,7 +170,6 @@ class viewOwnerProfile extends Component {
             >
             <ListItem
               onPress={() =>
-                //this.props.navigation.navigate('ViewDogProfile', item)
                 this.props.navigate('ViewDogProfile', item)
               }
               title={item.name}
