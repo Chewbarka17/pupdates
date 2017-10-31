@@ -137,27 +137,38 @@ module.exports = {
         })
           .then((results) => {
             const rooms = JSON.parse(JSON.stringify(results));
-            // console.log('test rooms', rooms)
             const uids = [];
+            // const names = [];
 
             results.forEach((owner) => {
               const id = owner.uids.filter(uid => uid !== req.params.userid);
               uids.push(id[0]);
-            });
+            });           
             Owners.find({ _id: uids })
               .then((partners) => {
-                for (let i = 0; i < results.length; i++) {
-                  // console.log(partners[i].name)
-                  rooms[i].partner = partners[i].name;
+                let refObj = {};
+                for (let j = 0; j < partners.length; j++) {
+                  refObj[partners[j]._id] = partners[j];
+                }
+
+                for (let k = 0; k < uids.length; k++) {
+                  uids[k] = refObj[uids[k]];
+                }
+
+                // console.log('rooms', rooms[0])
+                // console.log('sorted', partners[0])
+                for (let i = 0; i < rooms.length; i++) {
+                  console.log(uids[i].name)
+                  rooms[i].partner = uids[i].name;
                 }
                 // console.log('rooms', rooms[1])
                 // console.log('_doc', rooms[1]._doc);
                 console.log('uids', uids)
-                console.log('results', results[0])
+                // console.log('results', rooms[0])
                 rooms.sort((a, b) => {
-                  return b.messages[0].createdAt - a.messages[0].createdAt;
+                  return new Date(b.messages[0].createdAt) - new Date(a.messages[0].createdAt);
                 });
-                console.log('rooms', rooms[0])
+                // console.log('rooms', rooms[0])
                 res.status(200).send(rooms);
               });
           })
