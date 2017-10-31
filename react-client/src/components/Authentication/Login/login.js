@@ -29,6 +29,21 @@ class LoginScreen extends Component {
     this._getPublicProfile = this._getPublicProfile.bind(this);
   }
 
+  componentDidMount() {
+    AccessToken.getCurrentAccessToken()
+    .then(data => {
+      let accessToken = data.accessToken;
+      if (accessToken !== null) {
+        // console.log('current access token', accessToken);
+        this._getAwsSecretSauce(accessToken);
+        this._getPublicProfile(accessToken);
+      }
+    })
+    .catch(error => {
+      console.log('fb auth', error);
+    });
+  }
+
   _fbAuth() {
     AccessToken.getCurrentAccessToken()
     .then(data => {

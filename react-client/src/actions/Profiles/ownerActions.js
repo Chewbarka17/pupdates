@@ -14,7 +14,15 @@ export const getOwnerFromDB = (fb, navigate, callback) => (dispatch) => {
             alert('Failure! Could not save user to async storage', error);
           }
         });
-        navigate('DrawerMenu');
+        navigate('TabBar');
+        // console.log("get owner navigate: ", navigate);
+        // const navigateToTabBar = NavigationActions.reset({
+        //   index: 0,
+        //   actions: [
+        //     NavigationActions.navigate({routeName: 'TabBar'})
+        //   ]
+        // });
+        // navigate.dispatch(navigateToTabBar);
       }
     })
     .catch((err) => {
@@ -40,7 +48,15 @@ export const addOwnerToDB = (fb, navigate) => (dispatch) => {
           alert('Failure! Could not save user to async storage', error);
         }
       });
-      navigate('DrawerMenu');
+      navigate('TabBar');
+      // console.log("add owner navigate: ", navigate);
+      // const navigateToTabBar = NavigationActions.reset({
+      //   index: 0,
+      //   actions: [
+      //     NavigationActions.navigate({routeName: 'TabBar'})
+      //   ]
+      // });
+      // navigate.dispatch(navigateToTabBar);
     })
     .catch((err) => {
       dispatch({ type: 'POST_OWNER_FROM_MONGO_REJECTED', payload: err });

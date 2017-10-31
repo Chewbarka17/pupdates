@@ -14,9 +14,7 @@ import configureStore from './Store/Store';
 import SplashPage from './src/components/Splash/splashPageView';
 import Loading from './src/components/loading';
 
-// import TabBar from './src/components/Navbar/tabBar';
-//import RootApp from './src/components/Navbar/newStackNav';
-import MainScreenNavigator from './src/components/Navbar/newTabBar';
+import MainScreenNavigator from './src/components/Navbar/stackNav';
 
 
 const { persistor, store } =  configureStore();
@@ -30,9 +28,6 @@ export default class App extends Component {
         persistor={persistor}
         loading={<Loading />}
         >
-          {/* <SplashPage /> */}
-          {/* <TabBar /> */}
-          {/* <RootApp /> */}
           <MainScreenNavigator />
         </PersistGate>
       </Provider>

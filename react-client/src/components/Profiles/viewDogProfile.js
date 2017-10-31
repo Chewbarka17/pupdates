@@ -18,8 +18,12 @@ class viewDogProfile extends Component {
   }
 
   handlePress() {
-    const { navigate } = this.props.navigation
-    navigate('EditDogProfile', this.props.navigation.state.params);
+     const { navigate } = this.props.navigation
+     console.log("this.props: ", this.props);
+     //console.log("this.props: ", this.props);
+     // console.log("navigate: ", navigate);
+    // navigate('EditDogProfile', this.props.navigation.state.params);
+    // this.props.navigate('EditDogProfile');
   }
 
   render () {
