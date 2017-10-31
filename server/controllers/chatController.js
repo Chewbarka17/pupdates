@@ -1,12 +1,12 @@
 const Owners = require('../../db/Owners/ownerSchema');
-const Rooms = require('../../db/Messages/messageSchema');
+const Rooms = require('../../db/ChatRooms/ChatRoomSchema');
 const mongoose = require('mongoose');
 
 module.exports = {
 
   // You need a room id to get the messages associated with that room.
-  getMessages: (req, res) => {
-    Rooms.find({ _id: req.params.roomid }, (err) => {
+  getChatRoomByRoomId: (req, res) => {
+    Rooms.find({ _id: req.params.roomId }, (err) => {
       if (err) {
         res.status(500).send(err);
       }
@@ -17,8 +17,8 @@ module.exports = {
   },
 
   // a message is an object with a user and a text. No altering or deleting messages yet.
-  addMessage: (req, res) => {
-    Rooms.findOneAndUpdate({ _id: req.params.roomid }, {
+  addMessageToRoomByRoomId: (req, res) => {
+    Rooms.findOneAndUpdate({ _id: req.params.roomId }, {
       $push: {
         messages: {
           $each: [{
@@ -37,7 +37,7 @@ module.exports = {
     });
   },
 
-  updateChatRooms: (req, res) => {
+  orderChatRoomsByMostRecent: (req, res) => {
     req.body.uids.forEach((uid) => {
       Owners.findOneAndUpdate({ _id: uid },
         { $pull: { chatRooms: req.params.roomid } },
@@ -64,18 +64,18 @@ module.exports = {
     res.status(201).send('yay');
   },
 
-  createRoom: (req, res) => {
+  findOrCreateChatRoom: (req, res) => {
     Owners.find({ _id: req.body.uids }, (err) => {
       if (err) {
         res.status(500).send(err);
       }
     })
       .then((data) => {
-        const roomid = data[0].chatRooms.filter((id) => {
+        const roomId = data[0].chatRooms.filter((id) => {
           return data[1].chatRooms.indexOf(id) !== -1;
         });
-        if (roomid.length > 0) {
-          Rooms.findOne({ _id: roomid }, (err) => {
+        if (roomId.length > 0) {
+          Rooms.findOne({ _id: roomId }, (err) => {
             if (err) {
               res.status(500).send(err);              
             }
@@ -114,8 +114,8 @@ module.exports = {
       });
   },
 
-  getRooms: (req, res) => {
-    Owners.find({ _id: req.params.userid }, (err) => {
+  getChatRoomsByOwnerId: (req, res) => {
+    Owners.find({ _id: req.params.ownerId }, (err) => {
       if (err) {
         res.status(500).send(err);
       }
@@ -136,24 +136,24 @@ module.exports = {
             });
             Owners.find({ _id: uids })
               .then((partners) => {
-                // const refObj = {};
-                // for (let j = 0; j < partners.length; j++) {
-                //   refObj[partners[j]._id] = partners[j];
-                // }
+                const refObj = {};
+                for (let j = 0; j < partners.length; j++) {
+                  refObj[partners[j]._id] = partners[j];
+                }
 
-                // for (let k = 0; k < uids.length; k++) {
-                //   uids[k] = refObj[uids[k]];
-                // }
+                for (let k = 0; k < uids.length; k++) {
+                  uids[k] = refObj[uids[k]];
+                }
 
-                // for (let i = 0; i < rooms.length; i++) {
-                //   rooms[i].partner = uids[i].name;
-                // }
+                for (let i = 0; i < rooms.length; i++) {
+                  rooms[i].partner = uids[i].name;
+                }
 
-                // rooms.sort((a, b) => {
-                //   return new Date(b.messages[0].createdAt) - new Date(a.messages[0].createdAt);
-                // });
+                rooms.sort((a, b) => {
+                  return new Date(b.messages[0].createdAt) - new Date(a.messages[0].createdAt);
+                });
 
-                res.status(200).send([rooms]);
+                res.status(200).send(rooms);
               });
           })
           .catch((err) => {

@@ -45,7 +45,7 @@ class LikedDogsView extends React.Component {
     axios.get(`http://localhost:8000/api/likeddogs/${this.props.uid}`)
       .then(({ data }) => {
         this.setState({ likedDogs: data }, () => {
-          console.log("this.state.likedDogs after get request: ", this.state.likedDogs);
+          // console.log("this.state.likedDogs after get request: ", this.state.likedDogs);
         });
       })
       .catch((err) => {
@@ -65,7 +65,7 @@ class LikedDogsView extends React.Component {
 
   render() {
     // const { navigate } = this.props.navigation;
-    console.log("this.props ", this.props);
+    // console.log("this.props ", this.props);
     return (
       <View>
         <Image

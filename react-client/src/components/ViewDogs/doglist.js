@@ -59,7 +59,7 @@ class ViewDogsScreen extends React.Component {
           longitude: position.coords.longitude,
           error: null,
         })
-        console.log('this is the position', this.state);
+        // console.log('this is the position', this.state);
       },
       (error) => this.setState({ error: error.message }),
       { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 },
@@ -89,7 +89,7 @@ class ViewDogsScreen extends React.Component {
     let value = '';
     axios.get(`https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=${this.state.latitude},${this.state.longitude}&destinations=${userOfInterestLocation[0]},${userOfInterestLocation[1]}&key=AIzaSyB1S52rdgtYi-52GK2b149DGxAZb_rKGdY`)
       .then(({data}) => {
-        console.log('this is data', data.rows[0].elements[0].distance.text);
+        // console.log('this is data', data.rows[0].elements[0].distance.text);
         value = data.rows[0].elements[0].distance.text;
         console.log('this is the value ', value);
         this.setState({distance: value, flag: true, dogIndex: this.state.dogIndex+1});
@@ -101,7 +101,7 @@ class ViewDogsScreen extends React.Component {
   
   // swipe cards
   handleYup(cardData) {
-    console.log('this is yup ', cardData);
+    // console.log('this is yup ', cardData);
     this.props.actions.updateDogsSeen(this.props.uid, cardData._id);
     this.props.actions.updateLikedDogs(this.props.uid, cardData._id);
     this.state.dogIndex === this.props.viewDogs.unseenDogs.length ? null : this.handleLocation(cardData)
@@ -109,7 +109,7 @@ class ViewDogsScreen extends React.Component {
   }
 
   handleNope(cardData) {
-    console.log('this is uid ', this.state.dogIndex)
+    // console.log('this is nope ', cardData)
     this.props.actions.updateDogsSeen(this.props.uid, cardData._id);
     this.state.dogIndex === this.props.viewDogs.unseenDogs.length ? null : this.handleLocation(cardData)
     this.setState({flag: false});

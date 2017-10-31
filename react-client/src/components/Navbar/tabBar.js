@@ -26,10 +26,10 @@ class TabBar extends React.Component {
     title: 'Home',
   };
   render() {
-    console.log("tabBar's this.props: ", this.props);
-    console.log("tabBar's this.props.navigation: ", this.props.navigation); // has the 4 functions including navigate
+    // console.log("tabBar's this.props: ", this.props);
+    // console.log("tabBar's this.props.navigation: ", this.props.navigation); // has the 4 functions including navigate
     const { navigate } = this.props.navigation;
-    console.log("tabBar's navigate: ", navigate); // a function that should be passed by <ViewDogs navigate={navigate}>
+    // console.log("tabBar's navigate: ", navigate); // a function that should be passed by <ViewDogs navigate={navigate}>
     return (
       <ScrollableTabView
         locked={true} // this needs to be true because of swiping dog cards
