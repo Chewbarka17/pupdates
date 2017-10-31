@@ -13,18 +13,6 @@ import * as dogActions from '../../actions/Profiles/dogProfileActions';
 import * as ownerActions from '../../actions/Profiles/ownerActions';
 
 class viewOwnerProfile extends Component {
-  // static navigationOptions = {
-  //   drawerLabel: 'Profile',
-  //   drawerIcon: ({tintColor}) => {
-  //     return (
-  //       <MaterialIcons
-  //         name="face"
-  //         size={24}
-  //         style={{color: tintColor}}
-  //       />
-  //     );
-  //   }
-  // }
   constructor(props) {
     super(props);
 
@@ -66,21 +54,6 @@ class viewOwnerProfile extends Component {
           longitude: position.coords.longitude,
           error: null,
         })
-        // axios.get(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${position.coords.latitude},${position.coords.longitude}&key=AIzaSyABBYsfb17rEn8uzLRyf0o_77R2A8AjI6g`)
-        //   .then(({data}) => {
-        //     console.log('api request', data);
-        //     this.props.ownerActions.updateOwners(
-        //       this.props.user.name, 
-        //       this.props.user.age, 
-        //       data.results[0],
-        //       this.props.user.bio,
-        //       this.props.user._id,
-        //       [position.coords.latitude, position.coords.longitude],
-        //     )
-        //   })
-        //   .catch((err) => {
-        //     console.log(err);
-        //   })
         this.getLocation(position);
       },
       (error) => this.setState({ error: error.message }),
