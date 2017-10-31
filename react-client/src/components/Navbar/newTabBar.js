@@ -9,6 +9,7 @@ import likedDogProfile from '../Likes/likedDogProfile'
 import ChatRoom from '../Messages/chatRoom';
 import EditOwnerProfile from '../Profiles/editOwnerProfile';
 import AddDogProfile from '../Profiles/addDogProfile';
+import ViewDogProfile from '../Profiles/viewDogProfile';
 
 // const MainScreenNavigator = TabNavigator({
 //   ViewDogs: { screen: ViewDogsScreen },
@@ -27,6 +28,7 @@ const SimpleApp = StackNavigator({
   ChatRoom: { screen: ChatRoom },
   EditOwnerProfile: {screen: EditOwnerProfile},
   AddDogProfile: {screen: AddDogProfile},
+  ViewDogProfile: {screen: ViewDogProfile},
 })
 
 export default SimpleApp;
