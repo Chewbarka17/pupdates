@@ -3,7 +3,7 @@ import { AsyncStorage } from 'react-native';
 import { StackNavigator, NavigationActions } from 'react-navigation';
 
 export const getOwnerFromDB = (fb, navigate, callback) => (dispatch) => {
-  axios.get(`http://localhost:8000/api/users/${fb.id}`)
+  axios.get(`http://localhost:8000/api/fbuser/${fb.id}`)
     .then(({ data }) => {
       if (data.length === 0) {
         callback('User doesn\'t exist in collection');

@@ -19,7 +19,7 @@ router.get('/newdogs/:userid', dogs.getUnseenDogsByOwner);
 // users
 router.get('/users', users.getAllUsers);
 router.get('/users/:userid', users.getUser);
-router.get('/userid/:userid', users.getUserByUserid);
+router.get('/fbuser/:fbid', users.getUserByFBid);
 router.post('/users', users.addUser);
 router.delete('/users/:userid', users.removeUser);
 router.patch('/users', users.updateUser);

@@ -22,20 +22,23 @@ import { bindActionCreators } from 'redux';
 
 import * as likeActions from '../../actions/Likes/likeActions';
 
+import DogProfile from '../Likes/likedDogProfile';
+import NewTabBar from '../Navbar/newTabBar';
+
 class LikedDogsView extends React.Component {
-  static navigationOptions = {
-    drawerLabel: 'Likes',
-    drawerIcon: ({tintColor}) => {
-      return (
-        <MaterialIcons
-          name="favorite-border"
-          size={24}
-          style={{color: tintColor}}
-        >
-        </MaterialIcons>
-      );
-    }
-  }
+  // static navigationOptions = {
+  //   drawerLabel: 'Likes',
+  //   drawerIcon: ({tintColor}) => {
+  //     return (
+  //       <MaterialIcons
+  //         name="favorite-border"
+  //         size={24}
+  //         style={{color: tintColor}}
+  //       >
+  //       </MaterialIcons>
+  //     );
+  //   }
+  // }
   constructor(props) {
     super(props);
 
@@ -72,7 +75,8 @@ class LikedDogsView extends React.Component {
   };
 
   render() {
-    const { navigate } = this.props.navigation;
+    // const { navigate } = this.props.navigation;
+    console.log("this.props ", this.props);
     return (
       <View>
         <Image
@@ -99,7 +103,7 @@ class LikedDogsView extends React.Component {
               <View>
                 <ListItem
                   onPress={() =>
-                    navigate('DogProfile', item)
+                    this.props.navigate('LikedDogProfile', item)
                   }
                   roundAvatar
                   title={`${item.name}`}
@@ -115,12 +119,12 @@ class LikedDogsView extends React.Component {
           />
         </List>
         <View>
-          <MaterialIcons
+          {/* <MaterialIcons
             name="menu"
             size={24}
             onPress={() => this.props.navigation.navigate('DrawerOpen')}
           >
-          </MaterialIcons>
+          </MaterialIcons> */}
         </View>
       </View>
     );

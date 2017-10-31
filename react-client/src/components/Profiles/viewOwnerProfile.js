@@ -13,18 +13,18 @@ import * as dogActions from '../../actions/Profiles/dogProfileActions';
 import * as ownerActions from '../../actions/Profiles/ownerActions';
 
 class viewOwnerProfile extends Component {
-  static navigationOptions = {
-    drawerLabel: 'Profile',
-    drawerIcon: ({tintColor}) => {
-      return (
-        <MaterialIcons
-          name="face"
-          size={24}
-          style={{color: tintColor}}
-        />
-      );
-    }
-  }
+  // static navigationOptions = {
+  //   drawerLabel: 'Profile',
+  //   drawerIcon: ({tintColor}) => {
+  //     return (
+  //       <MaterialIcons
+  //         name="face"
+  //         size={24}
+  //         style={{color: tintColor}}
+  //       />
+  //     );
+  //   }
+  // }
   constructor(props) {
     super(props);
 
@@ -49,11 +49,13 @@ class viewOwnerProfile extends Component {
   }
   
   handlePressToEditUser() {
-    this.props.navigation.navigate('EditOwnerProfile');
+    //this.props.navigation.navigate('EditOwnerProfile');
+    this.props.navigate('EditOwnerProfile');
   }
   
   handlePressToAddDog() {
-    this.props.navigation.navigate('AddDogProfile');
+    //this.props.navigation.navigate('AddDogProfile');
+    this.props.navigate('AddDogProfile');
   }
 
   handleGeolocation() {
@@ -64,8 +66,21 @@ class viewOwnerProfile extends Component {
           longitude: position.coords.longitude,
           error: null,
         })
-        console.log('this is the position', this.state);
-        this.getLocation(position);
+        axios.get(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${position.coords.latitude},${position.coords.longitude}&key=AIzaSyABBYsfb17rEn8uzLRyf0o_77R2A8AjI6g`)
+          .then(({data}) => {
+            console.log('api request', data);
+            this.props.ownerActions.updateOwners(
+              this.props.user.name, 
+              this.props.user.age, 
+              data.results[0],
+              this.props.user.bio,
+              this.props.user._id,
+              [position.coords.latitude, position.coords.longitude],
+            )
+          })
+          .catch((err) => {
+            console.log(err);
+          })
       },
       (error) => this.setState({ error: error.message }),
       { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 },
@@ -104,7 +119,7 @@ class viewOwnerProfile extends Component {
   }
   
   render () {
-    const { navigate } = this.props.navigation;
+    //const { navigate } = this.props.navigation;
     const { user } = this.props;
     return (
       <View>
@@ -153,7 +168,8 @@ class viewOwnerProfile extends Component {
             >
             <ListItem
               onPress={() =>
-                this.props.navigation.navigate('ViewDogProfile', item)
+                //this.props.navigation.navigate('ViewDogProfile', item)
+                this.props.navigate('ViewDogProfile', item)
               }
               title={item.name}
               subtitle={`Age: ${item.age} Breed: ${item.breed}`}
@@ -163,11 +179,12 @@ class viewOwnerProfile extends Component {
           }
         />
           <View>
-            <MaterialIcons
+            {/* <MaterialIcons
               name="menu"
               size={24}
-              onPress={() => this.props.navigation.navigate('DrawerOpen')}
-            />
+              //onPress={() => this.props.navigation.navigate('DrawerOpen')}
+              onPress={() => this.props.navigate('DrawerOpen')}
+            /> */}
           </View>
       </View>
     )

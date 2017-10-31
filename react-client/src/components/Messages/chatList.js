@@ -13,17 +13,17 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 class ChatList extends React.Component {
   static navigationOptions = {
     title: 'Chats',
-    drawerLabel: 'Chat',
-    drawerIcon: ({tintColor}) => {
-      return (
-        <MaterialIcons
-          name="chat"
-          size={24}
-          style={{color: tintColor}}
-        >
-        </MaterialIcons>
-      );
-    }
+    // drawerLabel: 'Chat',
+    // drawerIcon: ({tintColor}) => {
+    //   return (
+    //     <MaterialIcons
+    //       name="chat"
+    //       size={24}
+    //       style={{color: tintColor}}
+    //     >
+    //     </MaterialIcons>
+    //   );
+    // }
   }
   constructor(props) {
     super(props);
@@ -46,7 +46,8 @@ class ChatList extends React.Component {
         <View>
           <ListItem
           onPress={() =>
-            this.props.navigation.navigate('ChatRoom', item)
+            // this.props.navigation.navigate('ChatRoom', item)
+            this.props.navigate('ChatRoom', item)
           }
             title={`${item.partner}`}
             id={item._id}
@@ -56,12 +57,12 @@ class ChatList extends React.Component {
           }
         />
         <View>
-          <MaterialIcons
+          {/* <MaterialIcons
               name="menu"
               size={24}
               onPress={() => this.props.navigation.navigate('DrawerOpen')}
           >
-          </MaterialIcons>
+          </MaterialIcons> */}
         </View>
       </View>
     )

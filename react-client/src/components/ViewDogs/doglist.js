@@ -24,20 +24,22 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 import * as viewDogActions from '../../actions/ViewDogs/viewDogsActions';
 
+//mport NewStackNav from '../Navbar/newStackNav';
+
 class ViewDogsScreen extends React.Component {
-  static navigationOptions = {
-    drawerLabel: 'Dogs',
-    drawerIcon: ({tintColor}) => {
-      return (
-        <MaterialIcons
-          name="pets"
-          size={24}
-          style={{color: tintColor}}
-        >
-        </MaterialIcons>
-      );
-    }
-  }
+  // static navigationOptions = {
+  //   drawerLabel: 'Dogs',
+  //   drawerIcon: ({tintColor}) => {
+  //     return (
+  //       <MaterialIcons
+  //         name="pets"
+  //         size={24}
+  //         style={{color: tintColor}}
+  //       >
+  //       </MaterialIcons>
+  //     );
+  //   }
+  // }
 
   constructor(props) {
     super(props);
@@ -182,25 +184,36 @@ class ViewDogsScreen extends React.Component {
     )
   }
 
-  navigateToProfile() {
-    const { navigate } = this.props.navigation;
-    navigate('DogProfile', this.refs['swiper'].props.cards[0]);
+  navigateToProfile(cardData) {
+    console.log("need to show dog's profile");
+    console.log("this.props:", this.props);
+    console.log("this.props.navigation:", this.props.navigation); // undefined
+    console.log("this.props.navigate:", this.props.navigate); // navigate function
+    console.log("cardData:", cardData)
+    // const { navigate } = this.props.navigation;
+    //navigate('LikedDogProfile', this.refs['swiper'].props.cards[0]);
+    this.props.navigate('LikedDogProfile', cardData);
   }
 
+//<TabBar />
+
   render() {
-    {console.log('what is state: ', this.state)};
+    // {console.log('what is state: ', this.state)};
     return (
+      
+      
       <View style={styles.container}>
+        
         <SwipeCards
           ref = {'swiper'}
           cards={this.props.viewDogs.unseenDogs}
           containerStyle = {{  backgroundColor: '#f7f7f7', alignItems:'center', margin:20}}
           renderCard={(cardData) => (
-            <View 
+            <View
               style={styles.card}
             >
             <TouchableOpacity
-              onPress = {() => this.navigateToProfile()}
+              onPress = {() => this.navigateToProfile(cardData)}
             >
               <Image
                 source ={{uri: cardData.pictures[0]}}
@@ -233,7 +246,7 @@ class ViewDogsScreen extends React.Component {
           >
             <Icon 
               name='close'
-              size={45}
+              size={40}
               color="#888"
               style={{}}
             />
@@ -251,14 +264,15 @@ class ViewDogsScreen extends React.Component {
           </TouchableOpacity>
         </View>
         <View>
-          <MaterialIcons
+          {/* <MaterialIcons
             name="menu"
             size={24}
             onPress={() => this.props.navigation.navigate('DrawerOpen')}
           >
-          </MaterialIcons>
+          </MaterialIcons> */}
         </View>
       </View>
+
     )
   }
 }
