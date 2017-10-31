@@ -1,5 +1,4 @@
 import React from 'react';
-import { Platform, StyleSheet, Text, View, TextInput, FlatList } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { GiftedChat, Bubble } from 'react-native-gifted-chat';
@@ -11,28 +10,22 @@ import * as messageActions from '../../actions/MessageActions/chatRoomActions';
 
 class ChatRoom extends React.Component {
   // static navigationOptions = {
-  //   title: '' || this.state.partner
-  // };   
+  //   title:'somebody\'s name'
+  // };
   constructor(props) {
     super(props);
     this.state = {
       messages: [],
-      // partner: ''
     }
     this.renderBubble = this.renderBubble.bind(this);
     this.onSend = this.onSend.bind(this);
-    // this.renderFooter = this.renderFooter.bind(this);
   };
   
   componentDidMount() {
+    console.log(this.props.navigation.state.params.uids)
     axios.get(`http://localhost:8000/api/messages/${this.props.navigation.state.params._id}`)
     .then((data) => {
       console.log(data)
-      // if (data[1] === this.props.name) {
-        // let partner = data[2]
-      // } else {
-        // let partner = data[1]
-      // }
       this.setState({
         messages: data.data[0].messages,
         // partner: partner
@@ -40,14 +33,19 @@ class ChatRoom extends React.Component {
     })
 
     this.socket = io('http://localhost:3000/');
-    this.socket.on(`${this.props.navigation.state.params._id}`, (message) => {
+    this.socket.on(this.props.navigation.state.params._id, (message) => {
+      console.log('received')
       this.setState({
         messages: [message, ...this.state.messages]
       })
     })
   }
   
-  onSend(e, messages = []) {
+  onSend(e) {
+    // console.log(this.props.navigation.state.params.uids)
+    axios.patch(`http://localhost:8000/api/rooms/${this.props.navigation.state.params._id}`, {
+      uids: this.props.navigation.state.params.uids,
+    });
     axios.patch(`http://localhost:8000/api/messages/${this.props.navigation.state.params._id}`, {
       text: e[0].text,
       createdAt: e[0].createdAt,
@@ -56,14 +54,11 @@ class ChatRoom extends React.Component {
         uid: this.props.uid
       },
     })
-    .then((data) => {
-      // console.log(data)
-    })
     .catch((err) => {
       console.log('Error w/patch', err)
     })
     
-    this.socket.emit('message', {
+    const message = {
       user: {
         name: this.props.name,
         uid: this.props.uid
@@ -72,6 +67,10 @@ class ChatRoom extends React.Component {
       createdAt: e[0].createdAt,
       roomid: this.props.navigation.state.params._id,
       _id: Math.round(Math.random() * 1000000),
+    }
+    this.socket.emit('message', message)
+    this.setState({
+      messages: [message, ...this.state.messages]
     })
   }
 
@@ -114,19 +113,6 @@ class ChatRoom extends React.Component {
     );
   }
 
-  // renderFooter(props) {
-  //   if (this.state.typingText) {
-  //     return (
-  //       <View style={styles.footerContainer}>
-  //         <Text style={styles.footerText}>
-  //           {this.state.typingText}
-  //         </Text>
-  //       </View>
-  //     );
-  //   }
-  //   return null;
-  // }
-
   render() {
     return (
       <GiftedChat
@@ -135,25 +121,8 @@ class ChatRoom extends React.Component {
         renderBubble={this.renderBubble}
       />
     )
-  } 
-  
-  // renderFooter={this.renderFooter}
-  // {/* onSend={(messages) => this.onSend(messages)} */}
-
+  }
 }
-
-// const styles = StyleSheet.create({
-//   footerContainer: {
-//     marginTop: 5,
-//     marginLeft: 10,
-//     marginRight: 10,
-//     marginBottom: 10,
-//   },
-//   footerText: {
-//     fontSize: 14,
-//     color: '#aaa',
-//   },
-// });
 
 const userState = (store) => {
   return {

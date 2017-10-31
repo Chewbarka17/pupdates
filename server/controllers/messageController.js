@@ -1,4 +1,3 @@
-// const db = require('../../db/index');
 const Owners = require('../../db/Owners/ownerSchema');
 const Rooms = require('../../db/Messages/messageSchema');
 const mongoose = require('mongoose');
@@ -40,10 +39,35 @@ module.exports = {
     });
   },
 
-  // array1.filter((n) => array2.includes(n))
+  updateChatRooms: (req, res) => {
+    req.body.uids.forEach((uid) => {
+      Owners.findOneAndUpdate({ _id: uid },
+        { $pull: { chatRooms: req.params.roomid } },
+        (err, data) => {
+          if (err) {
+            console.log('error1', err)
+          }
+          Owners.findOneAndUpdate({ _id: uid },
+            {
+              $push: {
+                chatRooms: {
+                  $each: [req.params.roomid],
+                  $position: 0,
+                },
+              },
+            },
+            (error) => {
+              if (error) {
+                console.log('error2', error);
+              }
+            });
+        });
+    });
+    res.status(201).send('yay');
+  },
+
   // I'm putting the names and user ids of the two people involved in the conversation in an array. Will update logic when front end is up.
   createRoom: (req, res) => {
-    console.log('creating room', req.body)
 
     Owners.find({ _id: req.body.uids }, (err) => {
       if (err) {
@@ -51,11 +75,9 @@ module.exports = {
       }
     })
       .then((data) => {
-        console.log(data[0].chatRooms, data[1].chatRooms)
-        let roomid = data[0].chatRooms.filter((id) => {
+        const roomid = data[0].chatRooms.filter((id) => {
           return data[1].chatRooms.indexOf(id) !== -1;
         });
-        console.log(roomid)
         if (roomid.length > 0) {
           Rooms.findOne({ _id: roomid }, (err) => {
             if (err) {
@@ -63,7 +85,6 @@ module.exports = {
             }
           })
             .then((room) => {
-              console.log(room)
               res.send(room);
             })
             .catch((err) => {
@@ -72,7 +93,6 @@ module.exports = {
         } else {
           const room = new Rooms({
             _id: new mongoose.Types.ObjectId(),
-            // users: req.body.users,
             uids: req.body.uids,
             messages: [],
           });
@@ -116,14 +136,50 @@ module.exports = {
           }
         })
           .then((results) => {
-            res.status(200).send(results);
+            const rooms = JSON.parse(JSON.stringify(results));
+            const uids = [];
+            // const names = [];
+
+            results.forEach((owner) => {
+              const id = owner.uids.filter(uid => uid !== req.params.userid);
+              uids.push(id[0]);
+            });           
+            Owners.find({ _id: uids })
+              .then((partners) => {
+                let refObj = {};
+                for (let j = 0; j < partners.length; j++) {
+                  refObj[partners[j]._id] = partners[j];
+                }
+
+                for (let k = 0; k < uids.length; k++) {
+                  uids[k] = refObj[uids[k]];
+                }
+
+                // console.log('rooms', rooms[0])
+                // console.log('sorted', partners[0])
+                for (let i = 0; i < rooms.length; i++) {
+                  console.log(uids[i].name)
+                  rooms[i].partner = uids[i].name;
+                }
+                // console.log('rooms', rooms[1])
+                // console.log('_doc', rooms[1]._doc);
+                console.log('uids', uids)
+                // console.log('results', rooms[0])
+                rooms.sort((a, b) => {
+                  return new Date(b.messages[0].createdAt) - new Date(a.messages[0].createdAt);
+                });
+                // console.log('rooms', rooms[0])
+                res.status(200).send(rooms);
+              });
           })
           .catch((err) => {
             console.log('Error getting message rooms', err);
+            res.status(500).send(err);
           });
       })
       .catch((err) => {
         console.log('Error getting user', err);
+        res.status(500).send(err);
       });
   },
 

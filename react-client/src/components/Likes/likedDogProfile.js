@@ -34,7 +34,7 @@ class likedDogProfile extends React.Component {
       .then(({ data }) => {
         // console.log(data)
         this.setState({
-          name: data[0].name, 
+          name: data[0].name,
           picture: data[0].picture,
           ownerId: data[0]._id
         })
@@ -49,7 +49,6 @@ class likedDogProfile extends React.Component {
   };
 
   createRoom() {
-    console.log(this.props.uid, this.state.ownerId)
     axios.post('http://localhost:8000/api/rooms', {
       uids: [this.props.uid, this.state.ownerId],
     })
@@ -123,7 +122,7 @@ var styles = StyleSheet.create({
 
 const chatState = (store) => {
   return {
-    uid: store.Owners.user._id,    
+    uid: store.Owners.user._id,
   }
 }
 
