@@ -25,6 +25,8 @@ class AddDogProfile extends Component {
       age: '',
       breed: '',
       owner: '',
+      gender: '',
+      bio: '',
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -32,8 +34,8 @@ class AddDogProfile extends Component {
   };
 
   handleSubmit() {
-    const { name, age, breed, actions } = this.state;
-    this.props.actions.postDogs(name, age, breed, this.props.userId);
+    const { name, age, breed, gender, bio, actions } = this.state;
+    this.props.actions.postDogs(name, age, breed, gender, bio, this.props.userId);
     this.props.navigation.navigate('ViewOwnerProfile');
   }
 
@@ -74,6 +76,28 @@ class AddDogProfile extends Component {
           returnKeyType="next"
           id="breed"
           onChangeText={breed => this.setState({ breed })}
+        />
+        <FormLabel>Gender</FormLabel>
+        <FormInput
+          editable
+          autoCapitalize="none"
+          autoCorrect={false}
+          underlineColorAndroid="transparent"
+          placeholder={'enter'}
+          returnKeyType="next"
+          id="gender"
+          onChangeText={gender => this.setState({ gender })}
+        />
+        <FormLabel>Bio</FormLabel>
+        <FormInput
+          editable
+          autoCapitalize="none"
+          autoCorrect={false}
+          underlineColorAndroid="transparent"
+          placeholder={'enter'}
+          returnKeyType="next"
+          id="bio"
+          onChangeText={bio => this.setState({ bio })}
         />
         <Button
           title="Save"
