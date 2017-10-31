@@ -27,17 +27,31 @@ class viewDogProfile extends Component {
   }
 
   render () {
-    const { navigation } = this.props
+    
+    const { 
+      name, 
+      age, 
+      breed, 
+      gender, 
+      bio,
+    } = this.props.navigation.state.params
+
     return (
       <View>
         <Text>
-          Name: { navigation.state.params.name }
+          Name: { name }
         </Text>
         <Text>
-          Age: { navigation.state.params.age }
+          Age: { age }
         </Text>
         <Text>
-          Breed: { navigation.state.params.breed }
+          Breed: { breed }
+        </Text>
+        <Text>
+          Gender: { gender }
+        </Text>
+        <Text>
+          Bio: { bio }
         </Text>
         <Button 
         title='Edit'

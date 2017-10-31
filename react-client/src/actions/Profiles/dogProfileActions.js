@@ -25,9 +25,12 @@ export const updateDogs = (name, age, breed, dogid) => (dispatch) => {
   })
     .then((response) => {
       console.log('this is response.data', JSON.parse(response.config.data));
-      dispatch({ type: 'UPDATE_DOG_FULFILLED', payload: {
- name, age, breed, dogid 
-} });
+      dispatch({
+        type: 'UPDATE_DOG_FULFILLED',
+        payload: {
+          name, age, breed, dogid,
+        },
+      });
     })
     .catch((err) => {
       dispatch({ type: 'UPDATE_DOG_REJECTED', payload: err });
