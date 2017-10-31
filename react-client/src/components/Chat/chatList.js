@@ -18,12 +18,17 @@ class ChatList extends React.Component {
     super(props);
   };
 
-  componentDidMount(){
+  componentDidMount() {
     this.props.actions.getRooms(this.props.uid);
   }
 
-  componentDidFocus() {
-    console.log('focusing')
+  onNavigationStateChange(prevState, currentState) {
+    const currentScreen = getCurrentRouteName(currentState);
+    const prevScreen = getCurrentRouteName(prevState);
+    if (prevScreen !== currentScreen) {
+      console.log('focusing')
+    }
+    console.log('help')
   }
 
   render() {
