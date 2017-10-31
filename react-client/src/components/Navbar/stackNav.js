@@ -14,6 +14,7 @@ import EditOwnerProfile from '../Profiles/editOwnerProfile';
 import AddDogProfile from '../Profiles/addDogProfile';
 import ViewDogProfile from '../Profiles/viewDogProfile';
 import EditDogProfile from '../Profiles/editDogProfile';
+import LogoutScreen from '../Authentication/Logout/logout';
 
 const SimpleApp = StackNavigator({
   Home: { 
@@ -33,6 +34,7 @@ const SimpleApp = StackNavigator({
   AddDogProfile: {screen: AddDogProfile},
   ViewDogProfile: {screen: ViewDogProfile},
   EditDogProfile: {screen: EditDogProfile},
+  LogoutScreen: {screen: LogoutScreen},
 });
 
 export default SimpleApp;

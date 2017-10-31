@@ -135,6 +135,7 @@ class ViewDogsScreen extends React.Component {
   }
 
   // press buttons
+  // yup() and nope() cannot grab cardData !!!
   yup(cardData) {
     if (this.refs['swiper'].props.cards[0]) {
       this.state.dogIndex === this.props.viewDogs.unseenDogs.length ? null : this.handleLocation(cardData)

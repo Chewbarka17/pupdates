@@ -31,7 +31,7 @@ class TabBar extends React.Component {
       <ScrollableTabView
         locked={true} // this needs to be true because of swiping dog cards
         style={{marginTop: 24, }}
-        initialPage={1}
+        initialPage={0}
         renderTabBar={() => <CustomTabBar />}
       >
 

@@ -188,6 +188,16 @@ class viewOwnerProfile extends Component {
               onPress={() => this.props.navigate('DrawerOpen')}
             /> */}
           </View>
+          <View>
+            <Button
+            
+            title='Logout'
+            onPress={() =>
+                //this.props.navigation.navigate('LogoutScreen', item)
+                this.props.navigate('LogoutScreen')
+              }
+            />
+            </View>
       </View>
     )
   }
