@@ -1,10 +1,6 @@
 // TODO:
 // X <3 buttons buggy
-// disable horizontal scroll for swiping
-
 // styling
-// add "woofsies no more dogs" text to the gif
-
 
 import React, { Component } from 'react';
 import {
@@ -25,22 +21,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 import * as viewDogActions from '../../actions/ViewDogs/viewDogsActions';
 
-//mport NewStackNav from '../Navbar/newStackNav';
-
 class ViewDogsScreen extends React.Component {
-  // static navigationOptions = {
-  //   drawerLabel: 'Dogs',
-  //   drawerIcon: ({tintColor}) => {
-  //     return (
-  //       <MaterialIcons
-  //         name="pets"
-  //         size={24}
-  //         style={{color: tintColor}}
-  //       >
-  //       </MaterialIcons>
-  //     );
-  //   }
-  // }
 
   constructor(props) {
     super(props);
@@ -54,15 +35,15 @@ class ViewDogsScreen extends React.Component {
       dogIndex: 0
     }
 
-    this.handleLocation = this.handleLocation.bind(this);
-    this.compareLocation = this.compareLocation.bind(this);
-    this.getGeolocation = this.getGeolocation.bind(this);
+    // this.handleLocation = this.handleLocation.bind(this);
+    // this.compareLocation = this.compareLocation.bind(this);
+    // this.getGeolocation = this.getGeolocation.bind(this);
   }
 
   componentDidMount() {
     this.props.actions.getAllUnseenDogs(this.props.uid);
-    this.getGeolocation();
-    this.handleLocation()
+    // this.getGeolocation();
+    // this.handleLocation()
     
   }
 
@@ -135,14 +116,14 @@ class ViewDogsScreen extends React.Component {
   }
 
   // press buttons
-  // yup() and nope() cannot grab cardData !!!
-  yup(cardData) {
+  yup() {
     if (this.refs['swiper'].props.cards[0]) {
-      this.state.dogIndex === this.props.viewDogs.unseenDogs.length ? null : this.handleLocation(cardData)
-      this.props.actions.getAllUnseenDogs(this.props.uid);
-      this.props.actions.updateDogsSeen(this.props.uid, this.refs['swiper'].props.cards[0]._id)
-      this.props.actions.updateLikedDogs(this.props.uid, this.refs['swiper'].props.cards[0]._id)
-      this.setState({flag: false});
+      // this.state.dogIndex === this.props.viewDogs.unseenDogs.length ? null : this.handleLocation(cardData)
+      // this.props.actions.getAllUnseenDogs(this.props.uid);
+      // this.props.actions.updateDogsSeen(this.props.uid, this.refs['swiper'].props.cards[0]._id)
+      // this.props.actions.updateLikedDogs(this.props.uid, this.refs['swiper'].props.cards[0]._id)
+      // this.setState({flag: false});
+      this.handleYup(this.refs['swiper'].props.cards[0]);
       this.refs['swiper']._goToNextCard();
     } else {
       Alert.alert(
@@ -156,12 +137,13 @@ class ViewDogsScreen extends React.Component {
     }
   }
 
-  nope(cardData) {
+  nope() {
     if (this.refs['swiper'].props.cards[0]) {
-      this.props.actions.getAllUnseenDogs(this.props.uid);
-      this.props.actions.updateDogsSeen(this.props.uid, this.refs['swiper'].props.cards[0]._id)
-      this.setState({flag: false});
-      this.state.dogIndex === this.props.viewDogs.unseenDogs.length ? null : this.handleLocation(cardData)
+      // this.props.actions.getAllUnseenDogs(this.props.uid);
+      // this.props.actions.updateDogsSeen(this.props.uid, this.refs['swiper'].props.cards[0]._id)
+      // this.setState({flag: false});
+      // this.state.dogIndex === this.props.viewDogs.unseenDogs.length ? null : this.handleLocation(cardData)
+      this.handleNope(this.refs['swiper'].props.cards[0]);
       this.refs['swiper']._goToNextCard();
     } else {
       Alert.alert(
@@ -264,14 +246,6 @@ class ViewDogsScreen extends React.Component {
               style={{marginTop:5}}
             />
           </TouchableOpacity>
-        </View>
-        <View>
-          {/* <MaterialIcons
-            name="menu"
-            size={24}
-            onPress={() => this.props.navigation.navigate('DrawerOpen')}
-          >
-          </MaterialIcons> */}
         </View>
       </View>
 

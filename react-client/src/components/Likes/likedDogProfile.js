@@ -1,4 +1,5 @@
 // TODO:
+// show more owner info
 // styling
 
 import React, { Component } from 'react';
@@ -68,9 +69,6 @@ class likedDogProfile extends React.Component {
   render() {
     return (
       <View>
-        {/* <Text>
-          Blah
-          </Text> */}
         <Avatar
           xlarge
           rounded
