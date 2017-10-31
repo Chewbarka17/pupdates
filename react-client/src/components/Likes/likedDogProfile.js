@@ -1,6 +1,4 @@
 // TODO:
-// show dog's owner avatar & name, click to view owner's profile
-// add message button that creates a new chat room or takes to exisiting chat room
 // styling
 
 import React, { Component } from 'react';

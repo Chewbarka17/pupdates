@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { AsyncStorage } from 'react-native';
-import { StackNavigator, NavigationActions } from 'react-navigation';
+//import { StackNavigator, NavigationActions } from 'react-navigation';
 
 export const getOwnerFromDB = (fb, navigate, callback) => (dispatch) => {
   axios.get(`http://localhost:8000/api/fbuser/${fb.id}`)
@@ -14,7 +14,11 @@ export const getOwnerFromDB = (fb, navigate, callback) => (dispatch) => {
             alert('Failure! Could not save user to async storage', error);
           }
         });
-        navigate('DrawerMenu');
+         navigate('TabBar');
+        // const navigateToTabBar = NavigationActions.navigate({
+        //   routeName: 'TabBar'
+        // });
+        // this.props.navigation.dispatch(navigateToTabBar);
       }
     })
     .catch((err) => {
@@ -40,7 +44,7 @@ export const addOwnerToDB = (fb, navigate) => (dispatch) => {
           alert('Failure! Could not save user to async storage', error);
         }
       });
-      navigate('DrawerMenu');
+      navigate('TabBar');
     })
     .catch((err) => {
       dispatch({ type: 'POST_OWNER_FROM_MONGO_REJECTED', payload: err });

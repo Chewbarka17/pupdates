@@ -66,21 +66,22 @@ class viewOwnerProfile extends Component {
           longitude: position.coords.longitude,
           error: null,
         })
-        axios.get(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${position.coords.latitude},${position.coords.longitude}&key=AIzaSyABBYsfb17rEn8uzLRyf0o_77R2A8AjI6g`)
-          .then(({data}) => {
-            console.log('api request', data);
-            this.props.ownerActions.updateOwners(
-              this.props.user.name, 
-              this.props.user.age, 
-              data.results[0],
-              this.props.user.bio,
-              this.props.user._id,
-              [position.coords.latitude, position.coords.longitude],
-            )
-          })
-          .catch((err) => {
-            console.log(err);
-          })
+        // axios.get(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${position.coords.latitude},${position.coords.longitude}&key=AIzaSyABBYsfb17rEn8uzLRyf0o_77R2A8AjI6g`)
+        //   .then(({data}) => {
+        //     console.log('api request', data);
+        //     this.props.ownerActions.updateOwners(
+        //       this.props.user.name, 
+        //       this.props.user.age, 
+        //       data.results[0],
+        //       this.props.user.bio,
+        //       this.props.user._id,
+        //       [position.coords.latitude, position.coords.longitude],
+        //     )
+        //   })
+        //   .catch((err) => {
+        //     console.log(err);
+        //   })
+        this.getLocation(position);
       },
       (error) => this.setState({ error: error.message }),
       { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 },
@@ -120,6 +121,7 @@ class viewOwnerProfile extends Component {
   
   render () {
     //const { navigate } = this.props.navigation;
+    console.log("owner props", this.props);
     const { user } = this.props;
     return (
       <View>

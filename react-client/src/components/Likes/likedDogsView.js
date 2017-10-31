@@ -1,4 +1,7 @@
 // TODO:
+// right after liking a dog, doesn't show up on Likes tab, need to refresh to see
+
+// styling
 // get rid of grey bar
 // add padding to footer to show items at the bottom (scroll?)
 
@@ -23,7 +26,6 @@ import { bindActionCreators } from 'redux';
 import * as likeActions from '../../actions/Likes/likeActions';
 
 import DogProfile from '../Likes/likedDogProfile';
-import NewTabBar from '../Navbar/newTabBar';
 
 class LikedDogsView extends React.Component {
   // static navigationOptions = {

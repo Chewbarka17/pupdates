@@ -1,9 +1,10 @@
 // TODO:
-// calculate # of miles away
 // X <3 buttons buggy
-// viewing dog's profile buggy
-// add "woofsies no more dogs" text to the gif
+// disable horizontal scroll for swiping
+
 // styling
+// add "woofsies no more dogs" text to the gif
+
 
 import React, { Component } from 'react';
 import {
@@ -134,7 +135,7 @@ class ViewDogsScreen extends React.Component {
   }
 
   // press buttons
-  yup() {
+  yup(cardData) {
     if (this.refs['swiper'].props.cards[0]) {
       this.state.dogIndex === this.props.viewDogs.unseenDogs.length ? null : this.handleLocation(cardData)
       this.props.actions.getAllUnseenDogs(this.props.uid);
@@ -154,7 +155,7 @@ class ViewDogsScreen extends React.Component {
     }
   }
 
-  nope() {
+  nope(cardData) {
     if (this.refs['swiper'].props.cards[0]) {
       this.props.actions.getAllUnseenDogs(this.props.uid);
       this.props.actions.updateDogsSeen(this.props.uid, this.refs['swiper'].props.cards[0]._id)
