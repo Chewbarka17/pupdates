@@ -1,3 +1,6 @@
+//TODO:
+//styling
+
 import React from 'react';
 import {
   StyleSheet,
@@ -35,29 +38,29 @@ class TabBar extends React.Component {
         renderTabBar={() => <CustomTabBar />}
       >
 
-      <ScrollView tabLabel="md-person" style={styles.tabView}>
-        <View>
-          <ViewOwnerProfile navigate={navigate} />
-        </View>
-      </ScrollView>
+        <ScrollView tabLabel="md-person" style={styles.tabView}>
+          <View>
+            <ViewOwnerProfile navigate={navigate} />
+          </View>
+        </ScrollView>
 
-      <ScrollView tabLabel="md-paw" style={styles.tabView}>
-        <View>
-          <ViewDogs navigate={navigate} />
-        </View>
-      </ScrollView>
+        <ScrollView tabLabel="md-paw" style={styles.tabView} scrollEnabled={ false }>
+          <View>
+            <ViewDogs navigate={navigate} />
+          </View>
+        </ScrollView>
 
-      <ScrollView tabLabel="ios-heart" style={styles.tabView}>
-        <View>
-          <LikedDogs navigate={navigate}/>
-        </View>
-      </ScrollView>
+        <ScrollView tabLabel="ios-heart" style={styles.tabView}>
+          <View>
+            <LikedDogs navigate={navigate}/>
+          </View>
+        </ScrollView>
 
-      <ScrollView tabLabel="ios-chatbubbles" style={styles.tabView}>
-        <View>
-          <ChatList navigate={navigate}/>
-        </View>
-      </ScrollView>
+        <ScrollView tabLabel="ios-chatbubbles" style={styles.tabView}>
+          <View>
+            <ChatList navigate={navigate}/>
+          </View>
+        </ScrollView>
 
     </ScrollableTabView>
     )
