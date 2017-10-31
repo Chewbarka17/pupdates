@@ -1,44 +1,3 @@
-// //import React from 'react';
-// import React, { Component } from 'react';
-// import {
-//   Text,
-//   View,
-// } from 'react-native';
-
-// import ScrollableTabView, { ScrollableTabBar, } from 'react-native-scrollable-tab-view';
-// import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-
-// import OwnerProfile from '../Profiles/editOwnerProfile';
-// import ViewDogs from '../ViewDogs/doglist';
-// import LikedDogs from '../Likes/likedDogsView';
-// import ChatList from '../Messages/chatList';
-
-// class TabBar extends React.Component {
-//   constructor(props) {
-//     super(props);
-//   }
-
-//   render() {
-//     return (
-//       <ScrollableTabView
-//         style={{marginTop: 20, }}
-//         initialPage={0} // sets the initial page to ViewDogs
-//         tabBarActiveTextColor='navy'
-//         tabBarInactiveTextColor='grey'
-//         renderTabBar={() => <ScrollableTabBar />}
-//       >
-//         <ViewDogs tabLabel='Dogs' />
-//         <OwnerProfile tabLabel='Profile' />
-//         <LikedDogs tabLabel='Likes' />
-//         <ChatList tabLabel='Chat' />
-//       </ScrollableTabView>
-//     )
-//   } 
-// }
-
-// export default TabBar;
-
-
 import React from 'react';
 import {
   StyleSheet,
@@ -55,36 +14,54 @@ import ChatList from '../Messages/chatList';
 import LikedDogs from '../Likes/likedDogsView';
 import EditOwnerProfile from '../Profiles/editOwnerProfile';
 
-export default () => {
-  return <ScrollableTabView
-    locked={true} // this needs to be true because of swiping dog cards
-    style={{marginTop: 24, }}
-    initialPage={0}
-    renderTabBar={() => <CustomTabBar />}
-  >
-    <ScrollView tabLabel="md-person" style={styles.tabView}>
-      <View style={styles.card}>
-        <Text>Edit owner profile</Text>
-        {/* <EditOwnerProfile /> */}
-      </View>
-    </ScrollView>
-    <ScrollView tabLabel="md-paw" style={styles.tabView}>
-      <View>
-        <ViewDogs />
-      </View>
-    </ScrollView>
-    <ScrollView tabLabel="ios-heart" style={styles.tabView}>
-      <View style={styles.card}>
-        <Text>Liked dogs</Text>
-        {/* <LikedDogs /> */}
-      </View>
-    </ScrollView>
-    <ScrollView tabLabel="ios-chatbubbles" style={styles.tabView}>
-      <View>
-        <ChatList />
-      </View>
-    </ScrollView>
-  </ScrollableTabView>;
+class TabBar extends React.Component {
+
+  constructor(props) {
+    super(props);
+  }
+  static navigationOptions = {
+    title: 'Home',
+  };
+  render() {
+    console.log("tabBar's this.props: ", this.props);
+    console.log("tabBar's this.props.navigation: ", this.props.navigation); // has the 4 functions including navigate
+    const { navigate } = this.props.navigation;
+    console.log("tabBar's navigate: ", navigate); // a function that should be passed by <ViewDogs navigate={navigate}>
+    return (
+      <ScrollableTabView
+        locked={true} // this needs to be true because of swiping dog cards
+        style={{marginTop: 24, }}
+        initialPage={1}
+        renderTabBar={() => <CustomTabBar />}
+      >
+
+      <ScrollView tabLabel="md-person" style={styles.tabView}>
+        <View>
+          <EditOwnerProfile navigate={navigate} />
+        </View>
+      </ScrollView>
+
+      <ScrollView tabLabel="md-paw" style={styles.tabView}>
+        <View>
+          <ViewDogs navigate={navigate} />
+        </View>
+      </ScrollView>
+
+      <ScrollView tabLabel="ios-heart" style={styles.tabView}>
+        <View>
+          <LikedDogs navigate={navigate}/>
+        </View>
+      </ScrollView>
+
+      <ScrollView tabLabel="ios-chatbubbles" style={styles.tabView}>
+        <View>
+          <ChatList navigate={navigate}/>
+        </View>
+      </ScrollView>
+
+    </ScrollableTabView>
+    )
+  }
 }
 
 const styles = StyleSheet.create({
@@ -106,3 +83,5 @@ const styles = StyleSheet.create({
     shadowRadius: 3,
   },
 });
+
+export default TabBar;

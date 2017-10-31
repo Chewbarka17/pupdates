@@ -11,6 +11,8 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as chatActions from '../../actions/MessageActions/chatRoomActions';
 
+// import NewStackNav from '../Navbar/newStackNav';
+
 
 class likedDogProfile extends React.Component {
   constructor(props) {
@@ -25,12 +27,15 @@ class likedDogProfile extends React.Component {
   }
 
   componentDidMount() {
-    // console.log(this.props.navigation.state.params.owner)
+    console.log("this.props: ", this.props)
+    console.log("this.props.navigation ", this.props.navigation)
+    console.log("this.props.navigation.state ", this.props.navigation.state)
+    console.log("this.props.navigation.state.params ", this.props.navigation.state.params) // params is undefined
     this.getOwnersInfo();
   };
 
   getOwnersInfo() {
-    axios.get('http://localhost:8000/api/userid/' + this.props.navigation.state.params.owner)
+    axios.get('http://localhost:8000/api/users/' + this.props.navigation.state.params.owner) // this is the dog's owner
       .then(({ data }) => {
         // console.log(data)
         this.setState({
@@ -65,6 +70,9 @@ class likedDogProfile extends React.Component {
   render() {
     return (
       <View>
+        {/* <Text>
+          Blah
+          </Text> */}
         <Avatar
           xlarge
           rounded

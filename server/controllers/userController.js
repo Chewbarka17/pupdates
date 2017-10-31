@@ -30,10 +30,10 @@ module.exports = {
     });
   },
 
-  getUserByUserid: (req, res) => {
-    Owners.find({ _id: req.params.userid }, (err, owner) => {
+  getUserByFBid: (req, res) => {
+    Owners.find({ fb_id: req.params.fbid }, (err, owner) => {
       if (err) {
-        console.log('error getting this user ', err);
+        console.log('error getting this user fb', err);
         res.status(500).send(err);
       }
       res.status(200).send(owner);
@@ -94,6 +94,7 @@ module.exports = {
   },
 
   updateSeenDogs: (req, res) => {
+    console.log("usd", req.params.userid, req.body)
     Owners.findOneAndUpdate({ _id: req.params.userid }, { $push: { dogsSeen: req.body.dogid } },
       { new: true }, (err, data) => {
         if (err) {
@@ -105,6 +106,7 @@ module.exports = {
   },
 
   updateLikedDogs: (req, res) => {
+    console.log("uld", req.params.userid, req.body)
     Owners.findOneAndUpdate({ _id: req.params.userid }, { $push: { dogsLiked: req.body.dogid } },
       { new: true } , (err, data) => {
         if(err) {

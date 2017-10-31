@@ -41,7 +41,7 @@ class EditOwnerProfile extends Component {
 
   render() {
     console.log('what are props: ', this.props);
-    const { navigate } = this.props.navigation;
+    //const { navigate } = this.props.navigation;
     return (
       <View>
         <FormLabel>Name</FormLabel>
