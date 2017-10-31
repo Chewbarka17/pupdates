@@ -24,7 +24,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 import * as viewDogActions from '../../actions/ViewDogs/viewDogsActions';
 
-import NewStackNav from '../Navbar/newStackNav';
+//mport NewStackNav from '../Navbar/newStackNav';
 
 class ViewDogsScreen extends React.Component {
   // static navigationOptions = {

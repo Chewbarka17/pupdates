@@ -13,18 +13,18 @@ import * as dogActions from '../../actions/Profiles/dogProfileActions';
 import * as ownerActions from '../../actions/Profiles/ownerActions';
 
 class viewOwnerProfile extends Component {
-  static navigationOptions = {
-    drawerLabel: 'Profile',
-    drawerIcon: ({tintColor}) => {
-      return (
-        <MaterialIcons
-          name="face"
-          size={24}
-          style={{color: tintColor}}
-        />
-      );
-    }
-  }
+  // static navigationOptions = {
+  //   drawerLabel: 'Profile',
+  //   drawerIcon: ({tintColor}) => {
+  //     return (
+  //       <MaterialIcons
+  //         name="face"
+  //         size={24}
+  //         style={{color: tintColor}}
+  //       />
+  //     );
+  //   }
+  // }
   constructor(props) {
     super(props);
 
@@ -49,11 +49,13 @@ class viewOwnerProfile extends Component {
   }
   
   handlePressToEditUser() {
-    this.props.navigation.navigate('EditOwnerProfile');
+    //this.props.navigation.navigate('EditOwnerProfile');
+    this.props.navigate('EditOwnerProfile');
   }
   
   handlePressToAddDog() {
-    this.props.navigation.navigate('AddDogProfile');
+    //this.props.navigation.navigate('AddDogProfile');
+    this.props.navigate('AddDogProfile');
   }
 
   handleGeolocation() {
@@ -117,7 +119,7 @@ class viewOwnerProfile extends Component {
   }
   
   render () {
-    const { navigate } = this.props.navigation;
+    //const { navigate } = this.props.navigation;
     const { user } = this.props;
     return (
       <View>
@@ -166,7 +168,8 @@ class viewOwnerProfile extends Component {
             >
             <ListItem
               onPress={() =>
-                this.props.navigation.navigate('ViewDogProfile', item)
+                //this.props.navigation.navigate('ViewDogProfile', item)
+                this.props.navigate('ViewDogProfile', item)
               }
               title={item.name}
               subtitle={`Age: ${item.age} Breed: ${item.breed}`}
@@ -176,11 +179,12 @@ class viewOwnerProfile extends Component {
           }
         />
           <View>
-            <MaterialIcons
+            {/* <MaterialIcons
               name="menu"
               size={24}
-              onPress={() => this.props.navigation.navigate('DrawerOpen')}
-            />
+              //onPress={() => this.props.navigation.navigate('DrawerOpen')}
+              onPress={() => this.props.navigate('DrawerOpen')}
+            /> */}
           </View>
       </View>
     )

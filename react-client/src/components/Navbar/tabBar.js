@@ -12,7 +12,7 @@ import ScrollableTabView from 'react-native-scrollable-tab-view';
 import ViewDogs from '../ViewDogs/doglist';
 import ChatList from '../Messages/chatList';
 import LikedDogs from '../Likes/likedDogsView';
-import EditOwnerProfile from '../Profiles/editOwnerProfile';
+import ViewOwnerProfile from '../Profiles/viewOwnerProfile';
 
 class TabBar extends React.Component {
 
@@ -37,7 +37,7 @@ class TabBar extends React.Component {
 
       <ScrollView tabLabel="md-person" style={styles.tabView}>
         <View>
-          <EditOwnerProfile navigate={navigate} />
+          <ViewOwnerProfile navigate={navigate} />
         </View>
       </ScrollView>
 

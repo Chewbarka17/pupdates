@@ -7,6 +7,8 @@ import React, { Component } from 'react';
 import TabBar from '../Navbar/tabBar';
 import likedDogProfile from '../Likes/likedDogProfile'
 import ChatRoom from '../Messages/chatRoom';
+import EditOwnerProfile from '../Profiles/editOwnerProfile';
+import AddDogProfile from '../Profiles/addDogProfile';
 
 // const MainScreenNavigator = TabNavigator({
 //   ViewDogs: { screen: ViewDogsScreen },
@@ -23,6 +25,8 @@ const SimpleApp = StackNavigator({
   },
   LikedDogProfile: { screen: likedDogProfile },
   ChatRoom: { screen: ChatRoom },
+  EditOwnerProfile: {screen: EditOwnerProfile},
+  AddDogProfile: {screen: AddDogProfile},
 })
 
 export default SimpleApp;
