@@ -44,8 +44,8 @@ class ViewDogsScreen extends React.Component {
 
   componentDidMount() {
     this.props.actions.getAllUnseenDogs(this.props.uid);
-    // this.getGeolocation();
-    // this.handleLocation()
+    this.getGeolocation();
+    this.handleLocation()
     
   }
 
@@ -65,20 +65,14 @@ class ViewDogsScreen extends React.Component {
   }
 
   handleLocation() {
-    console.log('this.state.dogIndex ', this.state.dogIndex)    
-    const nextDog = this.props.viewDogs.unseenDogs[this.state.dogIndex]
-    // let nextDogIndex = this.props.viewDogs.unseenDogs.indexOf(dogInfo)
-    // if (nextDogIndex === 0) {
-    //   nextDogIndex = -1;
-    // } 
-    // const nextDog = this.props.viewDogs.unseenDogs[nextDogIndex+1]
-    // console.log('after: this is the index', nextDogIndex);
-    console.log('dog Array is ', JSON.stringify(this.props.viewDogs.unseenDogs))
-    console.log('next dog is ', nextDog)
-    //const nextDog = this.props.unseenDogs.indexOf(dogInfo)
-    //console.log('nextDog index is ', nextDog)
+    console.log('this is the dog ', this.refs['swiper'].props.cards[this.state.dogIndex]);
+    // console.log('this.state.dogIndex ', this.state.dogIndex)    
+    // const nextDog = this.props.viewDogs.unseenDogs[this.state.dogIndex]
+    const dog = this.refs['swiper'].props.cards[this.state.dogIndex];
+    // console.log('dog Array is ', JSON.stringify(this.props.viewDogs.unseenDogs))
+    // console.log('next dog is ', nextDog)
 
-    axios.get(`http://localhost:8000/api/users/${nextDog.owner}`)
+    axios.get(`http://localhost:8000/api/users/${dog.owner}`)
       .then(({data}) => {
         console.log('in handle location, ', data);
         this.compareLocation(data[0].coords);
@@ -89,7 +83,7 @@ class ViewDogsScreen extends React.Component {
   }
 
   compareLocation(userOfInterestLocation) {
-    console.log('this is the dogs location', userOfInterestLocation);
+    // console.log('this is the dogs location', userOfInterestLocation);
     let value = '';
     axios.get(`https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=${this.state.latitude},${this.state.longitude}&destinations=${userOfInterestLocation[0]},${userOfInterestLocation[1]}&key=AIzaSyB1S52rdgtYi-52GK2b149DGxAZb_rKGdY`)
       .then(({data}) => {
@@ -97,6 +91,7 @@ class ViewDogsScreen extends React.Component {
         value = data.rows[0].elements[0].distance.text;
         console.log('this is the value ', value);
         this.setState({distance: value, flag: true, dogIndex: this.state.dogIndex+1});
+        // this.setState({distance: value});
       })
       .catch(err => {
         console.log(err);
@@ -121,15 +116,14 @@ class ViewDogsScreen extends React.Component {
 
   // press buttons
   yup() {
-    if (this.refs['swiper'].props.cards[dogIndex]) {
+    if (this.refs['swiper'].props.cards[this.state.dogIndex]) {
       // this.state.dogIndex === this.props.viewDogs.unseenDogs.length ? null : this.handleLocation(cardData)
       // this.props.actions.getAllUnseenDogs(this.props.uid);
       // this.props.actions.updateDogsSeen(this.props.uid, this.refs['swiper'].props.cards[0]._id)
       // this.props.actions.updateLikedDogs(this.props.uid, this.refs['swiper'].props.cards[0]._id)
       // this.setState({flag: false});
-      this.handleYup(this.refs['swiper'].props.cards[dogIndex]);
+      this.handleYup(this.refs['swiper'].props.cards[this.state.dogIndex]);
       this.refs['swiper']._goToNextCard();
-      // this.handleYup();
     } else {
       Alert.alert(
         'Woofsies',
@@ -150,7 +144,6 @@ class ViewDogsScreen extends React.Component {
       // this.state.dogIndex === this.props.viewDogs.unseenDogs.length ? null : this.handleLocation(cardData)
       this.handleNope(this.refs['swiper'].props.cards[dogIndex]);
       this.refs['swiper']._goToNextCard();
-      // this.handleNope;
     } else {
       Alert.alert(
         'Woofsies',
