@@ -47,7 +47,7 @@ class ChatList extends React.Component {
           <ListItem
           onPress={() =>
             // this.props.navigation.navigate('ChatRoom', item)
-            this.props.navigate('ChatRoom', item)
+            this.props.navigate('ChatRoom', {title: 'test'})
           }
             title={`${item.partner}`}
             id={item._id}

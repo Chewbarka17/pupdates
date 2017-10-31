@@ -136,24 +136,24 @@ module.exports = {
             });
             Owners.find({ _id: uids })
               .then((partners) => {
-                const refObj = {};
-                for (let j = 0; j < partners.length; j++) {
-                  refObj[partners[j]._id] = partners[j];
-                }
+                // const refObj = {};
+                // for (let j = 0; j < partners.length; j++) {
+                //   refObj[partners[j]._id] = partners[j];
+                // }
 
-                for (let k = 0; k < uids.length; k++) {
-                  uids[k] = refObj[uids[k]];
-                }
+                // for (let k = 0; k < uids.length; k++) {
+                //   uids[k] = refObj[uids[k]];
+                // }
 
-                for (let i = 0; i < rooms.length; i++) {
-                  rooms[i].partner = uids[i].name;
-                }
+                // for (let i = 0; i < rooms.length; i++) {
+                //   rooms[i].partner = uids[i].name;
+                // }
 
-                rooms.sort((a, b) => {
-                  return new Date(b.messages[0].createdAt) - new Date(a.messages[0].createdAt);
-                });
+                // rooms.sort((a, b) => {
+                //   return new Date(b.messages[0].createdAt) - new Date(a.messages[0].createdAt);
+                // });
 
-                res.status(200).send(rooms);
+                res.status(200).send([rooms]);
               });
           })
           .catch((err) => {

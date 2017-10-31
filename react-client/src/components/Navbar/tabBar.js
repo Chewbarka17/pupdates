@@ -13,7 +13,7 @@ import CustomTabBar from './customNavbar';
 import ScrollableTabView from 'react-native-scrollable-tab-view';
 
 import ViewDogs from '../ViewDogs/doglist';
-import ChatList from '../Messages/chatList';
+import ChatList from '../Chat/chatList';
 import LikedDogs from '../Likes/likedDogsView';
 import ViewOwnerProfile from '../Profiles/viewOwnerProfile';
 

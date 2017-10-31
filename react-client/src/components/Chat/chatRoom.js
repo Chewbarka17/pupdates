@@ -9,9 +9,9 @@ import axios from 'axios';
 import * as chatRoomActions from '../../actions/ChatRooms/chatRoomActions';
 
 class ChatRoom extends React.Component {
-  // static navigationOptions = {
-  //   title:'somebody\'s name'
-  // };
+  static navigationOptions = {
+    title: ''
+  };
   constructor(props) {
     super(props);
     this.state = {
@@ -22,6 +22,8 @@ class ChatRoom extends React.Component {
   };
   
   componentDidMount() {
+    console.log(this.navigation)
+    // this.props.navigation.setParams({title: this.props.navigation.state.params.partner})
     console.log(this.props.navigation.state.params.uids)
     axios.get(`http://localhost:8000/api/messages/${this.props.navigation.state.params._id}`)
     .then((data) => {
@@ -114,8 +116,6 @@ class ChatRoom extends React.Component {
   }
 
   render() {
-    console.log(this.props)
-    console.log(this.state)
     return (
       <GiftedChat
         messages={this.state.messages}
