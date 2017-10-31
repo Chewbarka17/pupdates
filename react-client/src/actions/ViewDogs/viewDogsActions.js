@@ -12,10 +12,10 @@ export const getAllUnseenDogs = (userid) => (dispatch) => {
 
 export const updateDogsSeen = (userid, dogid) => (dispatch) => {
   axios.patch('http://localhost:8000/api/users/seendogs/' + userid, {
-    dogid: dogid
+    dogid,
   })
   .then((data) => {
-    dispatch({type: 'UPDATE_SEEN_DOGS_FULFILLED', payload: data[0].dogsSeen});
+    dispatch({ type: 'UPDATE_SEEN_DOGS_FULFILLED', payload: data[0].dogsSeen });
   })
   .catch(err => {
     dispatch({type: 'UPDATE_SEEN_DOGS_REJECTED', payload: err});

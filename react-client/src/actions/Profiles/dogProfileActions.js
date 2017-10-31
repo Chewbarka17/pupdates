@@ -1,10 +1,12 @@
 import axios from 'axios';
 
-export const postDogs = (name, age, breed, owner) => (dispatch) => {
+export const postDogs = (name, age, breed, gender, bio, owner) => (dispatch) => {
   axios.post('http://localhost:8000/api/dogs', {
     name,
     age,
     breed,
+    gender,
+    bio,
     owner,
   })
     .then((response) => {
@@ -23,7 +25,12 @@ export const updateDogs = (name, age, breed, dogid) => (dispatch) => {
   })
     .then((response) => {
       console.log('this is response.data', JSON.parse(response.config.data));
-      dispatch({ type: 'UPDATE_DOG_FULFILLED', payload: { name, age, breed, dogid } });
+      dispatch({
+        type: 'UPDATE_DOG_FULFILLED',
+        payload: {
+          name, age, breed, dogid,
+        },
+      });
     })
     .catch((err) => {
       dispatch({ type: 'UPDATE_DOG_REJECTED', payload: err });
@@ -37,8 +44,8 @@ export const deleteDogs = (dogid, uid) => (dispatch) => {
     url: `http://localhost:8000/api/dogs/${dogid}`,
     data: {
       owner: uid,
-      dogid: dogid
-    }
+      dogid,
+    },
   })
     .then(() => {
       dispatch({ type: 'DELETE_DOG_FULFILLED', payload: dogid });
