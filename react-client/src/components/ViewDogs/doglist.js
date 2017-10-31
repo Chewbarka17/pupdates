@@ -45,24 +45,57 @@ class ViewDogsScreen extends React.Component {
     this.state = {
       error: null,
       distance: 0,
-      flag: false
+      flag: false,
+      latitude: '',
+      longitude: '',
+      dogIndex: 0
     }
 
     this.handleLocation = this.handleLocation.bind(this);
     this.compareLocation = this.compareLocation.bind(this);
+    this.getGeolocation = this.getGeolocation.bind(this);
   }
 
   componentDidMount() {
     this.props.actions.getAllUnseenDogs(this.props.uid);
-    // set state based on first dog
-    //counter = 0
+    this.getGeolocation();
+    this.handleLocation()
+    
   }
 
-  handleLocation(dogInfo) {
-    console.log('dog info here: ', `http://localhost:8000/api/users/${dogInfo.owner}`);
-    axios.get(`http://localhost:8000/api/users/${dogInfo.owner}`)
+  getGeolocation() {
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        this.setState({
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude,
+          error: null,
+        })
+        console.log('this is the position', this.state);
+      },
+      (error) => this.setState({ error: error.message }),
+      { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 },
+    );
+  }
+
+  handleLocation() {
+    console.log('this.state.dogIndex ', this.state.dogIndex)    
+    const nextDog = this.props.viewDogs.unseenDogs[this.state.dogIndex]
+    // let nextDogIndex = this.props.viewDogs.unseenDogs.indexOf(dogInfo)
+    // if (nextDogIndex === 0) {
+    //   nextDogIndex = -1;
+    // } 
+    // const nextDog = this.props.viewDogs.unseenDogs[nextDogIndex+1]
+    // console.log('after: this is the index', nextDogIndex);
+    console.log('dog Array is ', JSON.stringify(this.props.viewDogs.unseenDogs))
+    console.log('next dog is ', nextDog)
+    //const nextDog = this.props.unseenDogs.indexOf(dogInfo)
+    //console.log('nextDog index is ', nextDog)
+
+    axios.get(`http://localhost:8000/api/users/${nextDog.owner}`)
       .then(({data}) => {
-        return this.compareLocation(data[0].coords);
+        console.log('in handle location, ', data);
+        this.compareLocation(data[0].coords);
       })
       .catch(err => {
         console.log(err);
@@ -71,11 +104,11 @@ class ViewDogsScreen extends React.Component {
 
   compareLocation(userOfInterestLocation) {
     let value = '';
-    axios.get(`https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=${this.props.currentCoords[0]},${this.props.currentCoords[1]}&destinations=${userOfInterestLocation[0]},${userOfInterestLocation[1]}&key=YOURAPIKEYHERE`)
+    axios.get(`https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=${this.state.latitude},${this.state.longitude}&destinations=${userOfInterestLocation[0]},${userOfInterestLocation[1]}&key=AIzaSyB1S52rdgtYi-52GK2b149DGxAZb_rKGdY`)
       .then(({data}) => {
         console.log('this is data', data.rows[0].elements[0].distance.text);
         value = data.rows[0].elements[0].distance.text;
-        this.setState({distance: value, flag: true});
+        this.setState({distance: value, flag: true, dogIndex: this.state.dogIndex+1});
       })
       .catch(err => {
         console.log(err);
@@ -84,21 +117,28 @@ class ViewDogsScreen extends React.Component {
   
   // swipe cards
   handleYup(cardData) {
-    // set state unseen dogs at counter, counter++
+    console.log('this is yup ', cardData);
     this.props.actions.updateDogsSeen(this.props.uid, cardData._id);
     this.props.actions.updateLikedDogs(this.props.uid, cardData._id);
+    this.state.dogIndex === this.props.viewDogs.unseenDogs.length ? null : this.handleLocation(cardData)
+    this.setState({flag: false});
   }
 
   handleNope(cardData) {
+    console.log('this is nope ', cardData)
     this.props.actions.updateDogsSeen(this.props.uid, cardData._id);
+    this.state.dogIndex === this.props.viewDogs.unseenDogs.length ? null : this.handleLocation(cardData)
+    this.setState({flag: false});
   }
 
   // press buttons
   yup() {
     if (this.refs['swiper'].props.cards[0]) {
+      this.state.dogIndex === this.props.viewDogs.unseenDogs.length ? null : this.handleLocation(cardData)
       this.props.actions.getAllUnseenDogs(this.props.uid);
       this.props.actions.updateDogsSeen(this.props.uid, this.refs['swiper'].props.cards[0]._id)
       this.props.actions.updateLikedDogs(this.props.uid, this.refs['swiper'].props.cards[0]._id)
+      this.setState({flag: false});
       this.refs['swiper']._goToNextCard();
     } else {
       Alert.alert(
@@ -116,6 +156,8 @@ class ViewDogsScreen extends React.Component {
     if (this.refs['swiper'].props.cards[0]) {
       this.props.actions.getAllUnseenDogs(this.props.uid);
       this.props.actions.updateDogsSeen(this.props.uid, this.refs['swiper'].props.cards[0]._id)
+      this.setState({flag: false});
+      this.state.dogIndex === this.props.viewDogs.unseenDogs.length ? null : this.handleLocation(cardData)
       this.refs['swiper']._goToNextCard();
     } else {
       Alert.alert(
@@ -172,7 +214,8 @@ class ViewDogsScreen extends React.Component {
                 </View>
                 <View style={{flexDirection:'row'}}>
                   <View style={{padding:13, borderLeftWidth:1,borderColor:'#e3e3e3', alignItems:'center', justifyContent:'space-between'}}><Icon name='place' size={20} color="#777" /><Text style={{fontSize:16, fontWeight:'200', color:'#555'}}>{
-                    this.state.flag ? this.state.distance : this.handleLocation(cardData)
+                    // this.state.flag ? this.state.distance : this.handleLocation(cardData)
+                    this.state.distance
                     }</Text></View>
                 </View>
               </View>
@@ -180,7 +223,6 @@ class ViewDogsScreen extends React.Component {
           )}
           handleYup={(cardData) => (this.handleYup(cardData))}
           handleNope={(cardData) => (this.handleNope(cardData))}
-          /* {...this.handleState(cardData)} */
 
           renderNoMoreCards={() => this.noMore()}
         />
@@ -260,7 +302,6 @@ const viewDogsState = (store) => {
   return {
     viewDogs: store.ViewDogs,
     uid: store.Owners.user._id,
-    currentCoords: store.Owners.user.coords,
   }
 }
 
