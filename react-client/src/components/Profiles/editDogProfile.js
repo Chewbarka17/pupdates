@@ -35,12 +35,17 @@ class EditDogProfile extends Component {
     this.selectProfilePhoto = this.selectProfilePhoto.bind(this);    
   };
 
+  componentDidMount() {
+    console.log('edit dog profile info', this.props.navigation.state);
+  }
+
   handleSubmit() {
     const { name, age, breed, picture } = this.state;
-    let nameCheck = name || this.props.name;
-    let ageCheck = age || this.props.age;
-    let breedCheck = breed || this.props.breed;
-    let pictureCheck = picture || this.props.picture;
+    const { params } = this.props.navigation.state;
+    let nameCheck = name || params.name;
+    let ageCheck = age || params.age;
+    let breedCheck = breed || params.breed;
+    let pictureCheck = picture || params.picture[0];
     console.log(nameCheck, ageCheck, breedCheck, this.props.id);
     // this.props.actions.updateDogs(nameCheck, ageCheck, breedCheck, this.props.id);
     this.props.actions.getADog(this.props.id, (data) => {
@@ -56,19 +61,16 @@ class EditDogProfile extends Component {
             pictureCheck = result.Location;
           }
           this.props.actions.updateDogs(nameCheck, ageCheck, breedCheck, this.props.id, pictureCheck, data[0], (data) => {
-            console.log('updated dog data', data);
-            this.props.navigation.navigate('ViewOwnerProfile');
+            this.props.navigation.navigate('TabBar');
           });
           
         });
       } else {
         this.props.actions.updateDogs(name, age, breed, this.props.id, pictureCheck, data[0], (data) => {
-          console.log('updated dog data', data);
-          this.props.navigation.navigate('ViewOwnerProfile');
+          this.props.navigation.navigate('TabBar');
         });
       }
     });
-    
   }
 
   selectProfilePhoto() {
@@ -85,6 +87,7 @@ class EditDogProfile extends Component {
 
   render() {
     const { navigate } = this.props.navigation;
+    const { params } = this.props.navigation.state;
     const pictureSelected = this.state.image;
     console.log('PROPS: ', this.props);
     return (
@@ -95,7 +98,7 @@ class EditDogProfile extends Component {
           autoCapitalize="none"
           autoCorrect={false}
           underlineColorAndroid="transparent"
-          placeholder={this.props.name || 'enter'}
+          placeholder={params.name || 'enter'}
           returnKeyType="next"
           id="name"
           onChangeText={name => this.setState({ name })}
@@ -106,7 +109,7 @@ class EditDogProfile extends Component {
           autoCapitalize="none"
           autoCorrect={false}
           underlineColorAndroid="transparent"
-          placeholder={this.props.age ? this.props.age.toString() : 'enter'}
+          placeholder={params.age ? params.age.toString() : 'enter'}
           returnKeyType="next"
           id="age"
           onChangeText={age => this.setState({ age })}
@@ -117,7 +120,7 @@ class EditDogProfile extends Component {
           autoCapitalize="none"
           autoCorrect={false}
           underlineColorAndroid="transparent"
-          placeholder={this.props.breed || 'enter'}
+          placeholder={params.breed || 'enter'}
           returnKeyType="next"
           id="zipcode"
           onChangeText={breed => this.setState({ breed })}
@@ -128,11 +131,11 @@ class EditDogProfile extends Component {
             source={{uri: pictureSelected.path}}
           />
         ) : (
-          <Image
-          style={{width: 200, height: 200}}
-          source={{uri: this.props.picture}}
-          />
-          // <View></View>
+          // <Image
+          // style={{width: 200, height: 200}}
+          // source={{uri: params.picture[0]}}
+          // />
+          <View></View>
         )}
         <Button
           title='Choose profile picture'

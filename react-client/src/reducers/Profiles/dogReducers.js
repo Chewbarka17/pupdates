@@ -13,7 +13,7 @@ const dogReducer = (state = initialState, action) => {
     case 'FETCH_DOG_FULFILLED': {
       return Object.assign({}, state, {
         fetched: true,
-        dogs: action.payload,
+        dogs: state.dogs.concat(action.payload),
       });
     }
     case 'FETCH_DOG_REJECTED': {
@@ -38,21 +38,26 @@ const dogReducer = (state = initialState, action) => {
         error: action.payload,
       });
     }
+    case 'UPDATE_DOG_FULFILLED': {
+      // console.log('state dogs', state.dogs);
+      // console.log('payload', action.payload);
+      return Object.assign({}, state, {
+        updated: true,
+        dogs: state.dogs.map((dog) => {
+          // console.log('what is action.payload', dog);
+          // dog._id === action.payload.dogid ? dog = action.payload : dog = dog;
+          if (dog._id === action.payload._id) {
+            dog = action.payload;
+          }
+        }),
+        // dogs: action.payload.concat(state.dogs.filter((dog) => {
+        //   return dog._id !== action.payload._id;
+        // }),
+      });
+    }
     case 'UPDATE_DOG_REJECTED': {
       return Object.assign({}, state, {
         error: action.payload,
-      });
-    }
-    case 'UPDATE_DOG_FULFILLED': {
-      console.log('state dogs', state.dogs);
-      console.log('payload', action.payload)
-      return Object.assign({}, state, {
-        updated: true,
-        dogs: state.dogs.filter((dog) => {
-          // console.log('what is action.payload', dog);
-          dog._id === action.payload.dogid ? dog = action.payload : dog = dog;
-
-        }),
       });
     }
     case 'DELETE_DOG_FULFILLED': {

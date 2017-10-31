@@ -17,12 +17,16 @@ class viewDogProfile extends Component {
     this.handlePress = this.handlePress.bind(this);
   }
 
+  componentDidMount() {
+    console.log('view dog profile info', this.props.navigation.state.params);
+  }
+
   handlePress() {
-     const { navigate } = this.props.navigation
-     console.log("this.props: ", this.props);
-     //console.log("this.props: ", this.props);
-     // console.log("navigate: ", navigate);
-    // navigate('EditDogProfile', this.props.navigation.state.params);
+    const { navigate } = this.props.navigation
+    console.log("this.props: ", this.props);
+    //console.log("this.props: ", this.props);
+    // console.log("navigate: ", navigate);
+    navigate('EditDogProfile', this.props.navigation.state.params);
     // this.props.navigate('EditDogProfile');
   }
 
