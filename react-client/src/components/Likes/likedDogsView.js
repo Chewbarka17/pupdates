@@ -1,6 +1,5 @@
 // TODO:
 // right after liking a dog, doesn't show up on Likes tab, need to refresh to see
-
 // styling
 // get rid of grey bar
 // add padding to footer to show items at the bottom (scroll?)
@@ -28,19 +27,7 @@ import * as likeActions from '../../actions/Likes/likeActions';
 import DogProfile from '../Likes/likedDogProfile';
 
 class LikedDogsView extends React.Component {
-  // static navigationOptions = {
-  //   drawerLabel: 'Likes',
-  //   drawerIcon: ({tintColor}) => {
-  //     return (
-  //       <MaterialIcons
-  //         name="favorite-border"
-  //         size={24}
-  //         style={{color: tintColor}}
-  //       >
-  //       </MaterialIcons>
-  //     );
-  //   }
-  // }
+
   constructor(props) {
     super(props);
 
@@ -120,14 +107,6 @@ class LikedDogsView extends React.Component {
             keyExtractor={item => item.breed}
           />
         </List>
-        <View>
-          {/* <MaterialIcons
-            name="menu"
-            size={24}
-            onPress={() => this.props.navigation.navigate('DrawerOpen')}
-          >
-          </MaterialIcons> */}
-        </View>
       </View>
     );
   }

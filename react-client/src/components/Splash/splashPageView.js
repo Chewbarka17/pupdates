@@ -1,5 +1,4 @@
 // TODO:
-// remove button
 // styling
 
 import React, { Component } from 'react';

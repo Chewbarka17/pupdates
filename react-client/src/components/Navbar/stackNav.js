@@ -1,7 +1,3 @@
-// TODO:
-// add splash page
-// login button
-
 import { TabNavigator, StackNavigator } from "react-navigation";
 import React, { Component } from 'react';
 
