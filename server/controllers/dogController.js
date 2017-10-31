@@ -17,6 +17,7 @@ module.exports = {
   },
 
   getDog: (req, res) => {
+    console.log('get a dog', req.params.dogid);
     Dogs.find({ _id: req.params.dogid }, (err, dog) => {
       if (err) {
         console.log('error getting this dog ', err);

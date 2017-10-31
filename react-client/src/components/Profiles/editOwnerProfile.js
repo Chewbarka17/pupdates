@@ -142,20 +142,20 @@ class EditOwnerProfile extends Component {
   }
 }
 
-  const ownerState = (store) => {
-    return {
-      name: store.Owners.user.name,
-      age: store.Owners.user.age,
-      location: store.Owners.user.location,
-      bio: store.Owners.user.bio,
-      userId: store.Owners.user._id,
-      coords: store.Owners.user.coords,
-      picture: store.Owners.user.picture,
-      user: store.Owners.user,
-      awsSauce: store.Owners.awsSauce
-    }
+const ownerState = (store) => {
+  return {
+    name: store.Owners.user.name,
+    age: store.Owners.user.age,
+    location: store.Owners.user.location,
+    bio: store.Owners.user.bio,
+    userId: store.Owners.user._id,
+    coords: store.Owners.user.coords,
+    picture: store.Owners.user.picture,
+    user: store.Owners.user,
+    awsSauce: store.Owners.awsSauce
   }
 }
+
 
 const ownerDispatch = (dispatch) => {
   return {

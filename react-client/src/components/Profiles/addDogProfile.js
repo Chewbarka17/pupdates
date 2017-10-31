@@ -59,7 +59,7 @@ class AddDogProfile extends Component {
       // if (err) {
       //   console.log('error on post dogs callback', err);
       // }
-      // console.log('post dog data', data);
+      console.log('post dog data', data);
       const { name, age, breed, _id } = data;
       if (this.state.image) {
         uploadProfilePicture(this.props.awsSauce, _id, this.state.image, (err, result) => {
@@ -70,13 +70,15 @@ class AddDogProfile extends Component {
           if (result) {
             pictureCheck = result.Location;
           }
-          this.props.actions.updateDogs(name, age, breed, _id, pictureCheck, data);
-          this.props.navigation.navigate('ViewOwnerProfile');
+          this.props.actions.updateDogs(name, age, breed, _id, pictureCheck, data, (data) => {
+            this.props.navigation.navigate('ViewOwnerProfile');
+          });
           
         });
       } else {
-        this.props.actions.updateDogs(name, age, breed, _id, pictureCheck);
-        this.props.navigation.navigate('ViewOwnerProfile');
+        this.props.actions.updateDogs(name, age, breed, _id, pictureCheck, data, (data) => {
+          this.props.navigation.navigate('ViewOwnerProfile');
+        });
       }
     });
   }

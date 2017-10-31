@@ -3,7 +3,7 @@ import { StackNavigator } from 'react-navigation';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { View, Text } from 'react-native';
-import { Button } from 'react-native-elements';
+import { Button, Avatar } from 'react-native-elements';
 
 import * as dogActions from '../../actions/Profiles/dogProfileActions';
 
@@ -38,6 +38,13 @@ class viewDogProfile extends Component {
 
     return (
       <View>
+        <Avatar
+          xlarge
+          rounded
+          source={{uri: navigation.state.params.pictures[0]}}
+          onPress={() => console.log("Works!")}
+          activeOpacity={0.7}
+        />
         <Text>
           Name: { name }
         </Text>
