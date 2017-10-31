@@ -33,19 +33,20 @@ class ChatRoom extends React.Component {
     })
 
     this.socket = io('http://localhost:3000/');
-    this.socket.on(`${this.props.navigation.state.params._id}`, (message) => {
+    this.socket.on(this.props.navigation.state.params._id, (message) => {
+      console.log('received')
       this.setState({
         messages: [message, ...this.state.messages]
       })
     })
   }
   
-  onSend(e, messages = []) {
+  onSend(e) {
     // console.log(this.props.navigation.state.params.uids)
     axios.patch(`http://localhost:8000/api/rooms/${this.props.navigation.state.params._id}`, {
       uids: this.props.navigation.state.params.uids,
     });
-      axios.patch(`http://localhost:8000/api/messages/${this.props.navigation.state.params._id}`, {
+    axios.patch(`http://localhost:8000/api/messages/${this.props.navigation.state.params._id}`, {
       text: e[0].text,
       createdAt: e[0].createdAt,
       user: {
@@ -57,7 +58,7 @@ class ChatRoom extends React.Component {
       console.log('Error w/patch', err)
     })
     
-    this.socket.emit('message', {
+    const message = {
       user: {
         name: this.props.name,
         uid: this.props.uid
@@ -66,6 +67,10 @@ class ChatRoom extends React.Component {
       createdAt: e[0].createdAt,
       roomid: this.props.navigation.state.params._id,
       _id: Math.round(Math.random() * 1000000),
+    }
+    this.socket.emit('message', message)
+    this.setState({
+      messages: [message, ...this.state.messages]
     })
   }
 

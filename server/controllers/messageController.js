@@ -136,20 +136,28 @@ module.exports = {
           }
         })
           .then((results) => {
-            const rooms = results;
+            const rooms = JSON.parse(JSON.stringify(results));
+            // console.log('test rooms', rooms)
             const uids = [];
 
             results.forEach((owner) => {
               const id = owner.uids.filter(uid => uid !== req.params.userid);
               uids.push(id[0]);
             });
-            Owners.find({ _id: { $in: uids } })
+            Owners.find({ _id: uids })
               .then((partners) => {
                 for (let i = 0; i < results.length; i++) {
-                  rooms[i]._doc.partner = partners[i].name;
+                  // console.log(partners[i].name)
+                  rooms[i].partner = partners[i].name;
                 }
                 // console.log('rooms', rooms[1])
                 // console.log('_doc', rooms[1]._doc);
+                console.log('uids', uids)
+                console.log('results', results[0])
+                rooms.sort((a, b) => {
+                  return b.messages[0].createdAt - a.messages[0].createdAt;
+                });
+                console.log('rooms', rooms[0])
                 res.status(200).send(rooms);
               });
           })
