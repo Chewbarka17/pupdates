@@ -60,15 +60,9 @@ class ViewDogsScreen extends React.Component {
 
   componentDidMount() {
     this.props.actions.getAllUnseenDogs(this.props.uid);
-<<<<<<< HEAD
     this.getGeolocation();
     this.handleLocation()
     
-=======
-    // set state based on first dog
-    //counter = 0
-    console.log("this.props.viewDogs.unseenDogs", this.props.viewDogs.unseenDogs);
->>>>>>> [refactor] navigation to facebook-looking tab bar
   }
 
   getGeolocation() {
