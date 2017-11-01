@@ -45,12 +45,13 @@ class ViewDogsScreen extends React.Component {
 
   componentDidMount() {
     this.props.actions.getAllUnseenDogs(this.props.uid);
-    this.getGeolocation();
-    this.handleLocation()
+    this.getGeolocation((err, data) => {
+      this.handleLocation();
+    });
     
   }
 
-  getGeolocation() {
+  getGeolocation(callback) {
     navigator.geolocation.getCurrentPosition(
       (position) => {
         this.setState({
@@ -63,6 +64,7 @@ class ViewDogsScreen extends React.Component {
       (error) => this.setState({ error: error.message }),
       { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 },
     );
+    callback(null, 'finished')
   }
 
   handleLocation() {
