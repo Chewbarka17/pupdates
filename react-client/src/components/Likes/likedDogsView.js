@@ -27,7 +27,8 @@ class LikedDogsView extends React.Component {
 
     this.state = {
       likedDogs: [],
-      item: null
+      item: null,
+      refreshing: false,
     };
   }
 
@@ -57,6 +58,10 @@ class LikedDogsView extends React.Component {
       .catch((err) => {
         console.log('failed to get remove liked dog: ', err);
       });
+  };
+
+  handleRefresh = () => {
+    
   };
 
   render() {
@@ -99,6 +104,8 @@ class LikedDogsView extends React.Component {
               </Swipeout>
             )}
             keyExtractor={item => item.breed}
+            refreshing={this.state.refreshing}
+            onRefresh={this.handleRefresh}
           />
         </List>
       </View>
