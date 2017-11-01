@@ -30,10 +30,10 @@ router.patch('/users/likeddogs/:userid', users.updateLikedDogs);
 router.patch('/likeddogs/:userid', users.removeLikedDog);
 
 // messages
-router.get('/messages/:roomid', chat.getChatRoomByRoomId);
-router.patch('/messages/:roomid', chat.addMessageToRoomByRoomId);
+router.get('/messages/:roomId', chat.getChatRoomByRoomId);
+router.patch('/messages/:roomId', chat.addMessageToRoomByRoomId);
 router.post('/rooms', chat.findOrCreateChatRoom);
-router.get('/rooms/:userid', chat.getChatRoomsByOwnerId);
-router.patch('/rooms/:roomid', chat.orderChatRoomsByMostRecent);
+router.get('/rooms/:ownerId', chat.getChatRoomsByOwnerId);
+router.patch('/rooms/:roomId', chat.orderChatRoomsByMostRecent);
 
 module.exports = router;

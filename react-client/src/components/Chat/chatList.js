@@ -11,31 +11,35 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 
 class ChatList extends React.Component {
-  static navigationOptions = {
-    title: 'Chats',
-  }
+  // static navigationOptions = {
+  //   title: 'Chats',
+  // }
   constructor(props) {
     super(props);
+    this.state = {
+      clicked: true,
+    }
   };
 
   componentDidMount() {
     this.props.actions.getRooms(this.props.uid);
+    console.log(this.focus)
+  }
+  
+  c() {
+    this.props.actions.getRooms(this.props.uid);
+    
   }
 
-  onNavigationStateChange(prevState, currentState) {
-    const currentScreen = getCurrentRouteName(currentState);
-    const prevScreen = getCurrentRouteName(prevState);
-    if (prevScreen !== currentScreen) {
-      console.log('focusing')
-    }
-    console.log('help')
-  }
-
+  _keyExtractor(item, index) {
+    return item._id
+  };
+  
   render() {
-
     return (
       <View>
         <FlatList
+          keyExtractor={this._keyExtractor}
           data={this.props.rooms}
           renderItem={({item}) =>
           <TouchableHighlight
@@ -43,6 +47,7 @@ class ChatList extends React.Component {
         >
         <View>
           <ListItem
+          key={item._id}
           onPress={() =>
             // this.props.navigation.navigate('ChatRoom', item)
             this.props.navigate('ChatRoom', item)

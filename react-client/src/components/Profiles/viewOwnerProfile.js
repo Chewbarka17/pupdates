@@ -92,6 +92,10 @@ class viewOwnerProfile extends Component {
       })
   }
   
+  _keyExtractor(item, index) {
+    return item._id
+  };
+
   render () {
     //const { navigate } = this.props.navigation;
     // console.log("owner props", this.props);
@@ -130,6 +134,7 @@ class viewOwnerProfile extends Component {
         />
         <FlatList
           data={this.state.dogs === this.props.dogs ? this.state.dogs : this.props.dogs}
+          keyExtractor={this._keyExtractor}
           renderItem={({ item }) => 
             <Swipeout right={[{
               text: 'Delete',
