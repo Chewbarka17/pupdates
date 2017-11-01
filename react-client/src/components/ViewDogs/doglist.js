@@ -32,7 +32,7 @@ class ViewDogsScreen extends React.Component {
       flag: false,
       latitude: '',
       longitude: '',
-      dogIndex: 0
+      // dogIndex: 0
     }
 
     this.handleLocation = this.handleLocation.bind(this);
@@ -68,8 +68,9 @@ class ViewDogsScreen extends React.Component {
   }
 
   handleLocation() {
-    console.log('this is the dog ', this.refs['swiper'].props.cards[this.state.dogIndex]);
-    const dog = this.refs['swiper'].props.cards[this.state.dogIndex];
+    console.log('this is the dog ', this.props.viewDogs.unseenDogs);
+    const dog = this.props.viewDogs.unseenDogs[0];
+    console.log('this is the dog in HL', dog);
     if (dog) {
       axios.get(`http://localhost:8000/api/users/${dog.owner}`)
         .then(({data}) => {
@@ -89,10 +90,12 @@ class ViewDogsScreen extends React.Component {
     let value = '';
     axios.get(`https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=${this.state.latitude},${this.state.longitude}&destinations=${userOfInterestLocation[0]},${userOfInterestLocation[1]}&key=AIzaSyB1S52rdgtYi-52GK2b149DGxAZb_rKGdY`)
       .then(({data}) => {
-        // console.log('this is data', data.rows[0].elements[0].distance.text);
+        console.log('this is data', data);
         value = data.rows[0].elements[0].distance.text;
         console.log('this is the value ', value);
-        this.setState({distance: value, flag: true, dogIndex: this.state.dogIndex+1});
+        // this.setState({distance: value, flag: true, dogIndex: this.state.dogIndex+1});
+        this.setState({distance: value});
+        
       })
       .catch(err => {
         console.log(err);
@@ -102,17 +105,24 @@ class ViewDogsScreen extends React.Component {
   // swipe cards
   handleYup(cardData) {
     // console.log('this is yup ', cardData);
-    this.props.actions.updateDogsSeen(this.props.uid, cardData._id);
+    // this.props.actions.updateDogsSeen(this.props.uid, cardData._id);
     this.props.actions.updateLikedDogs(this.props.uid, cardData._id);
-    this.state.dogIndex === this.props.viewDogs.unseenDogs.length ? null : this.handleLocation(cardData)
-    this.setState({flag: false});
+    // this.state.dogIndex === this.props.viewDogs.unseenDogs.length ? null : this.handleLocation(cardData)
+    // this.setState({flag: false});
   }
 
   handleNope(cardData) {
     // console.log('this is nope ', cardData)
+    // console.log('this is uid: ', this.props.uid);
+    // console.log('this is cardData._id: ', cardData._id);
+    // this.state.dogIndex === this.props.viewDogs.unseenDogs.length ? null : this.handleLocation(cardData)
+    // this.setState({flag: false});
+    
+    //remove current dog from unseen dogs
     this.props.actions.updateDogsSeen(this.props.uid, cardData._id);
-    this.state.dogIndex === this.props.viewDogs.unseenDogs.length ? null : this.handleLocation(cardData)
-    this.setState({flag: false});
+    //update seen dogs in the database
+    //render next dog
+
   }
 
   // press buttons
