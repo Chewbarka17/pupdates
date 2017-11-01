@@ -39,20 +39,11 @@ const dogReducer = (state = initialState, action) => {
       });
     }
     case 'UPDATE_DOG_FULFILLED': {
-      // console.log('state dogs', state.dogs);
-      // console.log('payload', action.payload);
       return Object.assign({}, state, {
         updated: true,
-        dogs: state.dogs.map((dog) => {
-          // console.log('what is action.payload', dog);
-          // dog._id === action.payload.dogid ? dog = action.payload : dog = dog;
-          if (dog._id === action.payload._id) {
-            dog = action.payload;
-          }
-        }),
-        // dogs: action.payload.concat(state.dogs.filter((dog) => {
-        //   return dog._id !== action.payload._id;
-        // }),
+        dogs: state.dogs.filter((dog) => {
+          return dog._id !== action.payload._id;
+        }).concat(action.payload),
       });
     }
     case 'UPDATE_DOG_REJECTED': {

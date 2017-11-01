@@ -17,16 +17,12 @@ class viewDogProfile extends Component {
     this.handlePress = this.handlePress.bind(this);
   }
 
-  componentDidMount() {
-    console.log('view dog profile info', this.props.navigation.state.params);
-  }
-
   handlePress() {
     const { navigate } = this.props.navigation
-    console.log("this.props: ", this.props);
+    navigate('EditDogProfile', this.props.navigation.state.params);
+    // console.log("this.props: ", this.props);
     //console.log("this.props: ", this.props);
     // console.log("navigate: ", navigate);
-    navigate('EditDogProfile', this.props.navigation.state.params);
     // this.props.navigate('EditDogProfile');
   }
 
@@ -38,14 +34,15 @@ class viewDogProfile extends Component {
       breed, 
       gender, 
       bio,
-    } = this.props.navigation.state.params
+      pictures,
+    } = this.props.navigation.state.params;
 
     return (
       <View>
         <Avatar
           xlarge
           rounded
-          source={{uri: navigation.state.params.pictures[0]}}
+          source={{uri: pictures[0]}}
           onPress={() => console.log("Works!")}
           activeOpacity={0.7}
         />

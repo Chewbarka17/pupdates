@@ -27,8 +27,10 @@ class EditDogProfile extends Component {
       name: '',
       age: '',
       breed: '',
+      gender: '',
+      bio: '',
       image: null,
-      pictue: [],
+      picture: '',
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -40,13 +42,15 @@ class EditDogProfile extends Component {
   }
 
   handleSubmit() {
-    const { name, age, breed, picture } = this.state;
+    const { name, age, breed, gender, bio, picture } = this.state;
     const { params } = this.props.navigation.state;
     let nameCheck = name || params.name;
     let ageCheck = age || params.age;
     let breedCheck = breed || params.breed;
-    let pictureCheck = picture || params.picture[0];
-    console.log(nameCheck, ageCheck, breedCheck, this.props.id);
+    let genderCheck = gender || params.gender;
+    let bioCheck = bio || params.bio;
+    let pictureCheck = picture || params.pictures[0];
+    // console.log(nameCheck, ageCheck, breedCheck, this.props.id);
     // this.props.actions.updateDogs(nameCheck, ageCheck, breedCheck, this.props.id);
     this.props.actions.getADog(this.props.id, (data) => {
       // const { name, age, breed, _id } = data;
@@ -60,13 +64,13 @@ class EditDogProfile extends Component {
           if (result) {
             pictureCheck = result.Location;
           }
-          this.props.actions.updateDogs(nameCheck, ageCheck, breedCheck, this.props.id, pictureCheck, data[0], (data) => {
+          this.props.actions.updateDogs(nameCheck, ageCheck, breedCheck, genderCheck, bioCheck, this.props.id, pictureCheck, data[0], (data) => {
             this.props.navigation.navigate('TabBar');
           });
           
         });
       } else {
-        this.props.actions.updateDogs(name, age, breed, this.props.id, pictureCheck, data[0], (data) => {
+        this.props.actions.updateDogs(nameCheck, ageCheck, breedCheck, genderCheck, bioCheck, this.props.id, pictureCheck, data[0], (data) => {
           this.props.navigation.navigate('TabBar');
         });
       }
@@ -125,9 +129,31 @@ class EditDogProfile extends Component {
           id="zipcode"
           onChangeText={breed => this.setState({ breed })}
         />
+        <FormLabel>Gender</FormLabel>
+        <FormInput
+          editable
+          autoCapitalize="none"
+          autoCorrect={false}
+          underlineColorAndroid="transparent"
+          placeholder={params.gender || 'enter'}
+          returnKeyType="next"
+          id="gender"
+          onChangeText={gender => this.setState({ gender })}
+        />
+        <FormLabel>Bio</FormLabel>
+        <FormInput
+          editable
+          autoCapitalize="none"
+          autoCorrect={false}
+          underlineColorAndroid="transparent"
+          placeholder={params.bio || 'enter'}
+          returnKeyType="next"
+          id="bio"
+          onChangeText={bio => this.setState({ bio })}
+        />
         {pictureSelected !== null ? (
           <Image
-            style={{width: 200, height: 200}}
+            style={{width: 100, height: 100}}
             source={{uri: pictureSelected.path}}
           />
         ) : (

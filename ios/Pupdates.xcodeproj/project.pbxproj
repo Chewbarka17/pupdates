@@ -249,13 +249,6 @@
 			remoteGlobalIDString = 58B5119B1A9E6C1200147676;
 			remoteInfo = RCTText;
 		};
-		950D23101FA90A4B00D1B726 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D363DC441FA24E1200A93E22 /* AirMaps.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 11FA5C511C4A1296003AC2EE;
-			remoteInfo = AirMaps;
-		};
 		95334B5E1F993CB30080E966 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = EF3779D01B6F4DD595999A32 /* RNVectorIcons.xcodeproj */;
@@ -698,14 +691,6 @@
 				00E356EE1AD99517003FC87E /* PupdatesTests.xctest */,
 				2D02E47B1E0B4A5D006451C7 /* Pupdates-tvOS.app */,
 				2D02E4901E0B4A5D006451C7 /* Pupdates-tvOSTests.xctest */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		950D230D1FA90A4800D1B726 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				950D23111FA90A4B00D1B726 /* libAirMaps.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1184,13 +1169,6 @@
 			fileType = archive.ar;
 			path = libRCTText.a;
 			remoteRef = 832341B41AAA6A8300B99B32 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		950D23111FA90A4B00D1B726 /* libAirMaps.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libAirMaps.a;
-			remoteRef = 950D23101FA90A4B00D1B726 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		95334B5F1F993CB30080E966 /* libRNVectorIcons.a */ = {

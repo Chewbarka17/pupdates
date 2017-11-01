@@ -3,6 +3,7 @@ import axios from 'axios';
 export const getADog = (dogid, callback) => (dispatch) => {
   axios.get(`http://localhost:8000/api/dogs/${dogid}`)
   .then((response) => {
+    console.log('response data', response.data);
     dispatch({ type: 'FETCH_DOG_FULFILLED', payload: response.data });
     callback(response.data);
   })
@@ -11,7 +12,7 @@ export const getADog = (dogid, callback) => (dispatch) => {
   });
 };
   
-export const postDogs = (name, age, breed, gender, bio, owner, picture, callback) => (dispatch) => {
+export const postDogs = (name, age, breed, gender, bio, owner, pictures, callback) => (dispatch) => {
   axios.post('http://localhost:8000/api/dogs', {
     name,
     age,
@@ -19,7 +20,7 @@ export const postDogs = (name, age, breed, gender, bio, owner, picture, callback
     gender,
     bio,
     owner,
-    picture,
+    pictures,
   })
     .then((response) => {
       dispatch({ type: 'POST_DOG_FULFILLED', payload: response.data });
@@ -30,22 +31,26 @@ export const postDogs = (name, age, breed, gender, bio, owner, picture, callback
     });
 };
 
-export const updateDogs = (name, age, breed, dogid, picture, data, callback) => (dispatch) => {
+export const updateDogs = (name, age, breed, gender, bio, dogid, pictures, data, callback) => (dispatch) => {
   axios.patch(`http://localhost:8000/api/dogs/${dogid}`, {
     name,
     age,
     breed,
-    picture,
+    gender,
+    bio,
+    pictures,
   })
     .then((response) => {
       // console.log('this is response.data', JSON.parse(response.config.data));
       let dog = JSON.parse(response.config.data);
-      // console.log('dog picture', dog.picture);
+      // console.log('dog', dog);
       data.name = dog.name;
       data.age = dog.age;
       data.breed = dog.breed;
-      data.pictures[0] = dog.picture;
-      console.log('updated dogs', data);
+      data.gender = dog.gender;
+      data.bio = dog.bio;
+      data.pictures[0] = dog.pictures;
+      // console.log('updated dogs', data);
       dispatch({ type: 'UPDATE_DOG_FULFILLED', payload: data });
       callback(data);
     })

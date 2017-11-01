@@ -158,7 +158,7 @@ class viewOwnerProfile extends Component {
               }
               title={item.name}
               subtitle={`Age: ${item.age} Breed: ${item.breed}`}
-              avatar={{ uri: item.pictures[0] }}
+              avatar={{ uri: `${item.pictures[0]}` }}
               id={item.id}
             />
             </Swipeout>

@@ -17,7 +17,6 @@ module.exports = {
   },
 
   getDog: (req, res) => {
-    console.log('get a dog', req.params.dogid);
     Dogs.find({ _id: req.params.dogid }, (err, dog) => {
       if (err) {
         console.log('error getting this dog ', err);
@@ -94,7 +93,9 @@ module.exports = {
         name: req.body.name,
         age: req.body.age,
         breed: req.body.breed,
-        pictures: req.body.picture,
+        gender: req.body.gender,
+        bio: req.body.bio,
+        pictures: req.body.pictures,
       },
     }, { new: true }, (err, data) => {
       console.log('callback', data);

@@ -53,13 +53,13 @@ class AddDogProfile extends Component {
   handleSubmit() {
     // this.props.actions.postDogs(name, age, breed, gender, bio, this.props.userId);
     // this.props.navigation.navigate('ViewOwnerProfile');
-    let pictureCheck;
+    let pictureCheck = '';
     const { name, age, breed, gender, bio, actions } = this.state;
-    this.props.actions.postDogs(name, age, breed, gender, bio, this.props.userId, (data) => {
+    this.props.actions.postDogs(name, age, breed, gender, bio, this.props.userId, pictureCheck, (data) => {
       // if (err) {
       //   console.log('error on post dogs callback', err);
       // }
-      console.log('post dog data', data);
+      // console.log('post dog data', data);
       // this.props.navigation.navigate('TabBar');
       const { name, age, breed, _id } = data;
       if (this.state.image) {
@@ -71,7 +71,7 @@ class AddDogProfile extends Component {
           if (result) {
             pictureCheck = result.Location;
           }
-          this.props.actions.updateDogs(name, age, breed, _id, pictureCheck, data, (data) => {
+          this.props.actions.updateDogs(name, age, breed, gender, bio, _id, pictureCheck, data, (data) => {
             this.props.navigation.navigate('TabBar');
           });
           
@@ -121,7 +121,6 @@ class AddDogProfile extends Component {
           id="breed"
           onChangeText={breed => this.setState({ breed })}
         />
-<<<<<<< HEAD
         <FormLabel>Gender</FormLabel>
         <FormInput
           editable
@@ -143,10 +142,10 @@ class AddDogProfile extends Component {
           returnKeyType="next"
           id="bio"
           onChangeText={bio => this.setState({ bio })}
-=======
+        />
         {pictureSelected !== null ? (
           <Image
-            style={{width: 200, height: 200}}
+            style={{width: 100, height: 100}}
             source={{uri: pictureSelected.path}}
           />
         ) : (
@@ -161,7 +160,6 @@ class AddDogProfile extends Component {
           onPress={this.selectProfilePhoto}
           color="#ffffff"
           backgroundColor='#397af8'
->>>>>>> [Update] rename fb router for fb id.
         />
         <Button
           title="Save"
