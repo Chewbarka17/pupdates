@@ -107,7 +107,7 @@ class ViewDogsScreen extends React.Component {
   }
 
   handleNope(cardData) {
-    console.log('this is uid ', this.props.uid)
+    console.log('this is uid ', this.state.dogIndex)
     this.props.actions.updateDogsSeen(this.props.uid, cardData._id);
     this.state.dogIndex === this.props.viewDogs.unseenDogs.length ? null : this.handleLocation(cardData)
     this.setState({flag: false});
@@ -229,7 +229,6 @@ class ViewDogsScreen extends React.Component {
           </TouchableOpacity>
         </View>
       </View>
-
     )
   }
 }
