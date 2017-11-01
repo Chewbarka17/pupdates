@@ -19,9 +19,9 @@ class SplashPage extends React.Component {
   }
 
   render() {
-    console.log("splashpage this.props: ", this.props); // {empty}
-    console.log("splashpage this.props.navigation: ", this.props.navigation); // undefined 
-    console.log("splashpage this.state: ", this.state); // null
+    // console.log("splashpage this.props: ", this.props); // {empty}
+    // console.log("splashpage this.props.navigation: ", this.props.navigation); // undefined 
+    // console.log("splashpage this.state: ", this.state); // null
     const { navigate } = this.props.navigation;
     return (
       <View>

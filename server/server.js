@@ -22,13 +22,11 @@ app.use(express.static(path.resolve(__dirname, '../src')));
 app.use('/api', routes);
 
 // Messages
-// console.log('io.on', io);
 io.on('connection', (socket) => {
   console.log('socket connection');
   socket.on('message', (message) => {
-    // put message in database?
-    console.log('socket message', message.roomid);
-    socket.broadcast.emit(message.roomid, message);
+    console.log('socket message');
+    socket.broadcast.emit(message.roomId, message);
   });
 });
 

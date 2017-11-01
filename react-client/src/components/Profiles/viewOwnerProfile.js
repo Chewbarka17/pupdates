@@ -64,7 +64,7 @@ class viewOwnerProfile extends Component {
   getLocation(position) {
     axios.get(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${position.coords.latitude},${position.coords.longitude}&key=YOURAPIKEYHERE`)
       .then(({data}) => {
-        console.log('api request', data);
+        // console.log('api request', data);
         this.props.ownerActions.updateOwners(
           this.props.user.name, 
           this.props.user.age, 
@@ -82,7 +82,7 @@ class viewOwnerProfile extends Component {
   getDogs() {
     axios.get('http://localhost:8000/api/users/dogs/' + this.props.userId)
       .then(({data}) => {
-        console.log('this is data from get request ', data);
+        // console.log('this is data from get request ', data);
         this.setState({
           dogs: data,
         });
@@ -92,9 +92,13 @@ class viewOwnerProfile extends Component {
       })
   }
   
+  _keyExtractor(item, index) {
+    return item._id
+  };
+
   render () {
     //const { navigate } = this.props.navigation;
-    console.log("owner props", this.props);
+    // console.log("owner props", this.props);
     const { user } = this.props;
     return (
       <View>
@@ -130,6 +134,7 @@ class viewOwnerProfile extends Component {
         />
         <FlatList
           data={this.state.dogs === this.props.dogs ? this.state.dogs : this.props.dogs}
+          keyExtractor={this._keyExtractor}
           renderItem={({ item }) => 
             <Swipeout right={[{
               text: 'Delete',

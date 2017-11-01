@@ -8,7 +8,7 @@ import { View, Text, Image, StyleSheet } from 'react-native';
 import { Avatar, Button } from 'react-native-elements';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import * as chatActions from '../../actions/MessageActions/chatRoomActions';
+import * as chatActions from '../../actions/ChatRooms/chatRoomActions';
 
 // import NewStackNav from '../Navbar/newStackNav';
 

@@ -5,7 +5,7 @@ import SplashPageView from '../Splash/splashPageView';
 import Login from '../Authentication/Login/login';
 import TabBar from '../Navbar/tabBar';
 import likedDogProfile from '../Likes/likedDogProfile'
-import ChatRoom from '../Messages/chatRoom';
+import ChatRoom from '../Chat/chatRoom';
 import EditOwnerProfile from '../Profiles/editOwnerProfile';
 import AddDogProfile from '../Profiles/addDogProfile';
 import ViewDogProfile from '../Profiles/viewDogProfile';

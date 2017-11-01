@@ -3,7 +3,7 @@ const router = require('express').Router();
 // require controllers
 const dogs = require('../controllers/dogController');
 const users = require('../controllers/userController');
-const messages = require('../controllers/messageController');
+const chat = require('../controllers/chatController');
 
 // dogs
 router.get('/dogs', dogs.getAllDogs);
@@ -30,10 +30,10 @@ router.patch('/users/likeddogs/:userid', users.updateLikedDogs);
 router.patch('/likeddogs/:userid', users.removeLikedDog);
 
 // messages
-router.get('/messages/:roomid', messages.getMessages);
-router.patch('/messages/:roomid', messages.addMessage);
-router.post('/rooms', messages.createRoom);
-router.get('/rooms/:userid', messages.getRooms);
-router.patch('/rooms/:roomid', messages.updateChatRooms);
+router.get('/messages/:roomId', chat.getChatRoomByRoomId);
+router.patch('/messages/:roomId', chat.addMessageToRoomByRoomId);
+router.post('/rooms', chat.findOrCreateChatRoom);
+router.get('/rooms/:ownerId', chat.getChatRoomsByOwnerId);
+router.patch('/rooms/:roomId', chat.orderChatRoomsByMostRecent);
 
 module.exports = router;

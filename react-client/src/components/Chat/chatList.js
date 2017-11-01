@@ -6,38 +6,39 @@ import { connect } from 'react-redux';
 import axios from 'axios';
 
 import ChatRoom from './chatRoom.js';
-import * as messageActions from '../../actions/MessageActions/chatRoomActions';
+import * as chatRoomActions from '../../actions/ChatRooms/chatRoomActions';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 
 class ChatList extends React.Component {
-  static navigationOptions = {
-    title: 'Chats',
-    // drawerLabel: 'Chat',
-    // drawerIcon: ({tintColor}) => {
-    //   return (
-    //     <MaterialIcons
-    //       name="chat"
-    //       size={24}
-    //       style={{color: tintColor}}
-    //     >
-    //     </MaterialIcons>
-    //   );
-    // }
-  }
+  // static navigationOptions = {
+  //   title: 'Chats',
+  // }
   constructor(props) {
     super(props);
+    // this.state = {
+    //   clicked: true,
+    // }
   };
 
-  componentDidMount(){
-    this.props.actions.getRooms(this.props.uid);
+  componentDidMount() {
+    this.props.actions.getRooms(this.props.ownerId);
   }
+  
+  // c() {
+  //   this.props.actions.getRooms(this.props.ownerId);
+    
+  // }
 
+  _keyExtractor(item, index) {
+    return item._id
+  };
+  
   render() {
-
     return (
       <View>
         <FlatList
+          keyExtractor={this._keyExtractor}
           data={this.props.rooms}
           renderItem={({item}) =>
           <TouchableHighlight
@@ -45,6 +46,7 @@ class ChatList extends React.Component {
         >
         <View>
           <ListItem
+          key={item._id}
           onPress={() =>
             // this.props.navigation.navigate('ChatRoom', item)
             this.props.navigate('ChatRoom', item)
@@ -56,14 +58,6 @@ class ChatList extends React.Component {
           </TouchableHighlight>
           }
         />
-        <View>
-          {/* <MaterialIcons
-              name="menu"
-              size={24}
-              onPress={() => this.props.navigation.navigate('DrawerOpen')}
-          >
-          </MaterialIcons> */}
-        </View>
       </View>
     )
   };
@@ -73,14 +67,14 @@ class ChatList extends React.Component {
 const state = (store) => {
   return {
     rooms: store.Rooms.rooms,
-    uid: store.Owners.user._id,    
+    ownerId: store.Owners.user._id,    
   }
 }
 
-const messageDispatch = (dispatch) => {
+const chatDispatch = (dispatch) => {
   return {
-    actions: bindActionCreators(messageActions, dispatch),
+    actions: bindActionCreators(chatRoomActions, dispatch),
   }
 };
 
-export default connect(state, messageDispatch)(ChatList);
+export default connect(state, chatDispatch)(ChatList);
