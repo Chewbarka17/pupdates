@@ -1,29 +1,26 @@
 import axios from 'axios';
 import { AsyncStorage } from 'react-native';
-import { StackNavigator, NavigationActions } from 'react-navigation';
+import { NavigationActions } from 'react-navigation';
 
-export const getOwnerFromDB = (fb, navigate, callback) => (dispatch) => {
+export const getOwnerFromDB = (fb, navigation, callback) => (dispatch) => {
   axios.get(`http://localhost:8000/api/fbuser/${fb.id}`)
     .then(({ data }) => {
       if (data.length === 0) {
         callback('User doesn\'t exist in collection');
       } else {
-        // console.log('get owner from db', data);
         dispatch({ type: 'GET_OWNER_FROM_MONGO_FULFILLED', payload: data[0] });
         AsyncStorage.setItem('mongoOwner', JSON.stringify(data), (error) => {
           if (error) {
             alert('Failure! Could not save user to async storage', error);
           }
         });
-        navigate('TabBar');
-        // console.log("get owner navigate: ", navigate);
-        // const navigateToTabBar = NavigationActions.reset({
-        //   index: 0,
-        //   actions: [
-        //     NavigationActions.navigate({routeName: 'TabBar'})
-        //   ]
-        // });
-        // navigate.dispatch(navigateToTabBar);
+        const navigateToTabBar = NavigationActions.reset({
+          index: 0,
+          actions: [
+            NavigationActions.navigate({routeName: 'TabBar'})
+          ]
+        });
+        navigation.dispatch(navigateToTabBar);
       }
     })
     .catch((err) => {
@@ -31,7 +28,7 @@ export const getOwnerFromDB = (fb, navigate, callback) => (dispatch) => {
     });
 };
 
-export const addOwnerToDB = (fb, navigate) => (dispatch) => {
+export const addOwnerToDB = (fb, navigation) => (dispatch) => {
   const user = {
     fb_id: fb.id,
     name: fb.name,
@@ -49,15 +46,13 @@ export const addOwnerToDB = (fb, navigate) => (dispatch) => {
           alert('Failure! Could not save user to async storage', error);
         }
       });
-      navigate('TabBar');
-      // console.log("add owner navigate: ", navigate);
-      // const navigateToTabBar = NavigationActions.reset({
-      //   index: 0,
-      //   actions: [
-      //     NavigationActions.navigate({routeName: 'TabBar'})
-      //   ]
-      // });
-      // navigate.dispatch(navigateToTabBar);
+      const navigateToTabBar = NavigationActions.reset({
+        index: 0,
+        actions: [
+          NavigationActions.navigate({routeName: 'TabBar'})
+        ]
+      });
+      navigation.dispatch(navigateToTabBar);
     })
     .catch((err) => {
       dispatch({ type: 'POST_OWNER_FROM_MONGO_REJECTED', payload: err });

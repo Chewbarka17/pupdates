@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StackNavigator } from 'react-navigation';
+import { NavigationActions } from 'react-navigation';
 import {
   Platform,
   StyleSheet,
@@ -32,6 +32,7 @@ class EditOwnerProfile extends Component {
 
     this.handleSubmit = this.handleSubmit.bind(this);
     this.selectProfilePhoto = this.selectProfilePhoto.bind(this);
+    this.navigateToTabBar = this.navigateToTabBar.bind(this);
   };
 
   selectProfilePhoto() {
@@ -65,14 +66,24 @@ class EditOwnerProfile extends Component {
           pictureCheck = data.Location;
         }
         this.props.actions.updateOwners(nameCheck, ageCheck, this.props.location, bioCheck, this.props.userId, this.props.coords, pictureCheck, (data) => {
-          this.props.navigation.navigate('TabBar');
+          this.navigateToTabBar();
         });
       });
     } else {
       this.props.actions.updateOwners(nameCheck, ageCheck, this.props.location, bioCheck, this.props.userId, this.props.coords, pictureCheck, (data) => {
-        this.props.navigation.navigate('TabBar');
+        this.navigateToTabBar();
       });
     }
+  }
+
+  navigateToTabBar() {
+    const navigateToTabBar = NavigationActions.reset({
+      index: 0,
+      actions: [
+        NavigationActions.navigate({routeName: 'TabBar'})
+      ]
+    });
+    this.props.navigation.dispatch(navigateToTabBar);
   }
 
   render() {

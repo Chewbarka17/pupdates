@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StackNavigator } from 'react-navigation';
+import { NavigationActions } from 'react-navigation';
 import {
   Platform,
   StyleSheet,
@@ -36,6 +36,7 @@ class AddDogProfile extends Component {
 
     this.handleSubmit = this.handleSubmit.bind(this);
     this.selectProfilePhoto = this.selectProfilePhoto.bind(this);
+    this.navigateToTabBar = this.navigateToTabBar.bind(this);
   };
 
   selectProfilePhoto() {
@@ -51,35 +52,37 @@ class AddDogProfile extends Component {
   }
 
   handleSubmit() {
-    // this.props.actions.postDogs(name, age, breed, gender, bio, this.props.userId);
-    // this.props.navigation.navigate('ViewOwnerProfile');
     let pictureCheck = '';
     const { name, age, breed, gender, bio, actions } = this.state;
     this.props.actions.postDogs(name, age, breed, gender, bio, this.props.userId, pictureCheck, (data) => {
-      // if (err) {
-      //   console.log('error on post dogs callback', err);
-      // }
-      // console.log('post dog data', data);
-      // this.props.navigation.navigate('TabBar');
       const { name, age, breed, _id } = data;
       if (this.state.image) {
         uploadProfilePicture(this.props.awsSauce, _id, this.state.image, (err, result) => {
           if (err) {
             console.log('upload profile picture', err);
           }
-          // console.log('s3 dog data', data);
           if (result) {
             pictureCheck = result.Location;
           }
           this.props.actions.updateDogs(name, age, breed, gender, bio, _id, pictureCheck, data, (data) => {
-            this.props.navigation.navigate('TabBar');
+            this.navigateToTabBar();
           });
           
         });
       } else {
-        this.props.navigation.navigate('TabBar');
+        this.navigateToTabBar();
       }
     });
+  }
+
+  navigateToTabBar() {
+    const navigateToTabBar = NavigationActions.reset({
+      index: 0,
+      actions: [
+        NavigationActions.navigate({routeName: 'TabBar'})
+      ]
+    });
+    this.props.navigation.dispatch(navigateToTabBar);
   }
 
   render() {

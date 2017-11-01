@@ -91,25 +91,6 @@ class LoginScreen extends Component {
       sessionToken = AWS.config.credentials.sessionToken;
       this.props.actions.saveAwsSecretSauce(accessKeyId, secretAccessKey, sessionToken);
     });
-    
-    // const s3 = new AWS.S3({
-    //   accessKeyId: accessKeyId,
-    //   secretAccessKey: secretAcessKey,
-    //   sessionToken: sessionToken
-    // });
-    // console.log('then here');
-    // const params = {
-    //   Bucket: awsmobile.aws_user_files_s3_bucket,
-    //   Key: "public/bordercolliesmile.jpg"
-    // }
-
-    // s3.getSignedUrl('getObject', params, (error, data) => {
-    //   if (error) {
-    //     console.log(error, error.stack);
-    //   } else {
-    //     console.log('what is in s3', data);
-    //   }
-    // })
   }
 
   _getPublicProfile = (accessToken) => {
@@ -135,10 +116,10 @@ class LoginScreen extends Component {
   }
 
   _checkUserInDB = (fb) => {
-    this.props.actions.getOwnerFromDB(fb, this.props.navigate, (error) => {
+    this.props.actions.getOwnerFromDB(fb, this.props.navigation, (error) => {
       console.log('check user', error);
       if (error) {
-        this.props.actions.addOwnerToDB(fb, this.props.navigate);
+        this.props.actions.addOwnerToDB(fb, this.props.navigation);
       }
     });
   }

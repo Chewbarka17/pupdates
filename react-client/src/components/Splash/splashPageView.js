@@ -22,7 +22,7 @@ class SplashPage extends React.Component {
     // console.log("splashpage this.props: ", this.props); // {empty}
     // console.log("splashpage this.props.navigation: ", this.props.navigation); // undefined 
     // console.log("splashpage this.state: ", this.state); // null
-    const { navigate } = this.props.navigation;
+    const { navigation } = this.props;
     return (
       <View>
         <Image
@@ -33,7 +33,7 @@ class SplashPage extends React.Component {
           style={{width: 380, height: 240}}
           source={require('./laptopCorgi.gif')}
         />
-        <LoginScreen navigate={navigate}/>
+        <LoginScreen navigation={navigation}/>
       </View>
     );
   }

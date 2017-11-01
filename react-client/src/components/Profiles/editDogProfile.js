@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StackNavigator } from 'react-navigation';
+import { NavigationActions } from 'react-navigation';
 import {
   Platform,
   StyleSheet,
@@ -34,11 +34,24 @@ class EditDogProfile extends Component {
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.selectProfilePhoto = this.selectProfilePhoto.bind(this);    
+    this.selectProfilePhoto = this.selectProfilePhoto.bind(this);
+    this.navigateToTabBar = this.navigateToTabBar.bind(this);  
   };
 
   componentDidMount() {
-    console.log('edit dog profile info', this.props.navigation.state);
+    console.log('dog params', this.props.navigation.state.params);
+  }
+  
+  selectProfilePhoto() {
+    ImagePicker.openPicker({
+      width: 256,
+      height: 256,
+      cropping: true
+    }).then(image => {
+      this.setState({image: image});
+    }).catch(err => {
+      console.log('Image not selected', err);``
+    });
   }
 
   handleSubmit() {
@@ -50,43 +63,39 @@ class EditDogProfile extends Component {
     let genderCheck = gender || params.gender;
     let bioCheck = bio || params.bio;
     let pictureCheck = picture || params.pictures[0];
-    // console.log(nameCheck, ageCheck, breedCheck, this.props.id);
-    // this.props.actions.updateDogs(nameCheck, ageCheck, breedCheck, this.props.id);
-    this.props.actions.getADog(this.props.id, (data) => {
-      // const { name, age, breed, _id } = data;
+    let dogid = params._id;
+
+    this.props.actions.getADog(dogid, (data) => {
       console.log('edit dog data', data[0]);
       if (this.state.image) {
-        uploadProfilePicture(this.props.awsSauce, this.props.id, this.state.image, (err, result) => {
+        uploadProfilePicture(this.props.awsSauce, dogid, this.state.image, (err, result) => {
           if (err) {
             console.log('upload profile picture', err);
           }
-          // console.log('s3 dog data', data);
           if (result) {
             pictureCheck = result.Location;
           }
-          this.props.actions.updateDogs(nameCheck, ageCheck, breedCheck, genderCheck, bioCheck, this.props.id, pictureCheck, data[0], (data) => {
-            this.props.navigation.navigate('TabBar');
+          this.props.actions.updateDogs(nameCheck, ageCheck, breedCheck, genderCheck, bioCheck, dogid, pictureCheck, data[0], (data) => {
+            this.navigateToTabBar();
           });
-          
         });
       } else {
-        this.props.actions.updateDogs(nameCheck, ageCheck, breedCheck, genderCheck, bioCheck, this.props.id, pictureCheck, data[0], (data) => {
-          this.props.navigation.navigate('TabBar');
+        this.props.actions.updateDogs(nameCheck, ageCheck, breedCheck, genderCheck, bioCheck, dogid, pictureCheck, data[0], (data) => {
+          this.navigateToTabBar();
         });
       }
     });
   }
 
-  selectProfilePhoto() {
-    ImagePicker.openPicker({
-      width: 256,
-      height: 256,
-      cropping: true
-    }).then(image => {
-      this.setState({image: image});
-    }).catch(err => {
-      console.log('Image not selected', err);``
+
+  navigateToTabBar() {
+    const navigateToTabBar = NavigationActions.reset({
+      index: 0,
+      actions: [
+        NavigationActions.navigate({routeName: 'TabBar'})
+      ]
     });
+    this.props.navigation.dispatch(navigateToTabBar);
   }
 
   render() {
@@ -180,12 +189,12 @@ class EditDogProfile extends Component {
 
   const dogState = (store) => {
     return {
-      name: store.Dogs.dogs[0].name,
-      age: store.Dogs.dogs[0].age,
-      breed: store.Dogs.dogs[0].breed,
-      id: store.Dogs.dogs[0]._id,
-      picture: store.Dogs.dogs[0].pictures[0],
-      userId: store.Owners.user.fb_id,
+      // name: store.Dogs.dogs[0].name,
+      // age: store.Dogs.dogs[0].age,
+      // breed: store.Dogs.dogs[0].breed,
+      // id: store.Dogs.dogs[0]._id,
+      // picture: store.Dogs.dogs[0].pictures[0],
+      // userId: store.Owners.user.fb_id,
       awsSauce: store.Owners.awsSauce,
     }
   }
