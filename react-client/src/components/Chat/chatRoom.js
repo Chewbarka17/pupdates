@@ -9,9 +9,9 @@ import axios from 'axios';
 import * as chatRoomActions from '../../actions/ChatRooms/chatRoomActions';
 
 class ChatRoom extends React.Component {
-  navigationOptions = {
-    title: ''
-  };
+  // navigationOptions = {
+  //   title: ''
+  // };
   constructor(props) {
     super(props);
     this.state = {
@@ -22,9 +22,9 @@ class ChatRoom extends React.Component {
   };
   
   componentDidMount() {
-    console.log(this.navigation)
+    // console.log(this.navigation)
     this.props.navigation.setParams({title: this.props.navigation.state.params.partner})
-    console.log(this.props.navigation.state.params.uids)
+    // console.log(this.props.navigation.state.params.uids)
     axios.get(`http://localhost:8000/api/messages/${this.props.navigation.state.params._id}`)
     .then((data) => {
       console.log(data)
@@ -44,16 +44,15 @@ class ChatRoom extends React.Component {
   }
   
   onSend(e) {
-    // console.log(this.props.navigation.state.params.uids)
     axios.patch(`http://localhost:8000/api/rooms/${this.props.navigation.state.params._id}`, {
-      uids: this.props.navigation.state.params.uids,
+      ownerIds: this.props.navigation.state.params.ownerIds,
     });
     axios.patch(`http://localhost:8000/api/messages/${this.props.navigation.state.params._id}`, {
       text: e[0].text,
       createdAt: e[0].createdAt,
       user: {
         name: this.props.name,
-        uid: this.props.uid
+        ownerId: this.props.ownerId
       },
     })
     .catch((err) => {
@@ -63,11 +62,11 @@ class ChatRoom extends React.Component {
     const message = {
       user: {
         name: this.props.name,
-        uid: this.props.uid
+        ownerId: this.props.ownerId
       },
       text: e[0].text,
       createdAt: e[0].createdAt,
-      roomid: this.props.navigation.state.params._id,
+      roomId: this.props.navigation.state.params._id,
       _id: Math.round(Math.random() * 1000000),
     }
     this.socket.emit('message', message)
@@ -77,7 +76,7 @@ class ChatRoom extends React.Component {
   }
 
   renderBubble(props) {
-    props.position = (props.currentMessage.user.uid === this.props.uid ? 'right' : 'left')
+    props.position = (props.currentMessage.user.ownerId === this.props.ownerId ? 'right' : 'left')
     return (
       <Bubble
         {...props}
@@ -129,7 +128,7 @@ class ChatRoom extends React.Component {
 const userState = (store) => {
   return {
     name: store.Owners.user.name,
-    uid: store.Owners.user._id
+    ownerId: store.Owners.user._id
   }
 }
 

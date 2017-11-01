@@ -16,20 +16,19 @@ class ChatList extends React.Component {
   // }
   constructor(props) {
     super(props);
-    this.state = {
-      clicked: true,
-    }
+    // this.state = {
+    //   clicked: true,
+    // }
   };
 
   componentDidMount() {
-    this.props.actions.getRooms(this.props.uid);
-    console.log(this.focus)
+    this.props.actions.getRooms(this.props.ownerId);
   }
   
-  c() {
-    this.props.actions.getRooms(this.props.uid);
+  // c() {
+  //   this.props.actions.getRooms(this.props.ownerId);
     
-  }
+  // }
 
   _keyExtractor(item, index) {
     return item._id
@@ -68,7 +67,7 @@ class ChatList extends React.Component {
 const state = (store) => {
   return {
     rooms: store.Rooms.rooms,
-    uid: store.Owners.user._id,    
+    ownerId: store.Owners.user._id,    
   }
 }
 

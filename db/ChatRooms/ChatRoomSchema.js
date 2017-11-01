@@ -2,9 +2,9 @@ const db = require('../index.js');
 
 const roomSchema = new db.Schema({
   _id: db.Schema.Types.ObjectId,
-  uids: [String],
+  ownerIds: [String],
   messages: [{
-    user: { name: String, uid: String },
+    user: { name: String, ownerId: String },
     text: String,
     createdAt: String,
   }],

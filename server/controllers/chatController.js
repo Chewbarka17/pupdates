@@ -38,18 +38,18 @@ module.exports = {
   },
 
   orderChatRoomsByMostRecent: (req, res) => {
-    req.body.uids.forEach((uid) => {
-      Owners.findOneAndUpdate({ _id: uid },
-        { $pull: { chatRooms: req.params.roomid } },
+    req.body.ownerIds.forEach((ownerId) => {
+      Owners.findOneAndUpdate({ _id: ownerId },
+        { $pull: { chatRooms: req.params.roomId } },
         (err) => {
           if (err) {
             res.status(500).send(err);
           }
-          Owners.findOneAndUpdate({ _id: uid },
+          Owners.findOneAndUpdate({ _id: ownerId },
             {
               $push: {
                 chatRooms: {
-                  $each: [req.params.roomid],
+                  $each: [req.params.roomId],
                   $position: 0,
                 },
               },
@@ -65,7 +65,7 @@ module.exports = {
   },
 
   findOrCreateChatRoom: (req, res) => {
-    Owners.find({ _id: req.body.uids }, (err) => {
+    Owners.find({ _id: req.body.ownerIds }, (err) => {
       if (err) {
         res.status(500).send(err);
       }
@@ -89,7 +89,7 @@ module.exports = {
         } else {
           const room = new Rooms({
             _id: new mongoose.Types.ObjectId(),
-            uids: req.body.uids,
+            ownerIds: req.body.ownerIds,
             messages: [],
           });
           room.save((err) => {
@@ -98,8 +98,8 @@ module.exports = {
             }
           })
             .then((result) => {
-              result.uids.forEach((uid) => {
-                Owners.findOneAndUpdate({ _id: uid }, { $push: { chatRooms: result._id } }, (err) => {
+              result.ownerIds.forEach((ownerId) => {
+                Owners.findOneAndUpdate({ _id: ownerId }, { $push: { chatRooms: result._id } }, (err) => {
                   if (err) {
                     res.status(500).send('error', err);
                   }
@@ -128,31 +128,30 @@ module.exports = {
         })
           .then((results) => {
             const rooms = JSON.parse(JSON.stringify(results));
-            const uids = [];
+            const partnerOwnerIds = [];
 
             results.forEach((owner) => {
-              const id = owner.uids.filter(uid => uid !== req.params.userid);
-              uids.push(id[0]);
+              const id = owner.ownerIds.filter(partnerOwnerId => partnerOwnerId !== req.params.ownerId);
+              partnerOwnerIds.push(id[0]);
             });
-            Owners.find({ _id: uids })
+            Owners.find({ _id: partnerOwnerIds })
               .then((partners) => {
                 const refObj = {};
                 for (let j = 0; j < partners.length; j++) {
                   refObj[partners[j]._id] = partners[j];
                 }
 
-                for (let k = 0; k < uids.length; k++) {
-                  uids[k] = refObj[uids[k]];
+                for (let k = 0; k < partnerOwnerIds.length; k++) {
+                  partnerOwnerIds[k] = refObj[partnerOwnerIds[k]];
                 }
 
                 for (let i = 0; i < rooms.length; i++) {
-                  rooms[i].partner = uids[i].name;
+                  rooms[i].partner = partnerOwnerIds[i].name;
                 }
 
                 rooms.sort((a, b) => {
                   return new Date(b.messages[0].createdAt) - new Date(a.messages[0].createdAt);
                 });
-
                 res.status(200).send(rooms);
               });
           })

@@ -1,7 +1,8 @@
 import axios from 'axios';
 
-export const getRooms = userid => (dispatch) => {
-  axios.get(`http://localhost:8000/api/rooms/${userid}`)
+export const getRooms = ownerId => (dispatch) => {
+  console.log(ownerId)
+  axios.get(`http://localhost:8000/api/rooms/${ownerId}`)
     .then(({ data }) => {
       dispatch({ type: 'GET_ROOMS_FULFILLED', payload: data });
     })
@@ -10,9 +11,9 @@ export const getRooms = userid => (dispatch) => {
     });
 };
 
-export const createRoom = (uid1, uid2) => (dispatch) => {
+export const createRoom = (ownerIdOne, ownerIdTwo) => (dispatch) => {
   axios.post('/api/rooms', {
-    uids: [uid1, uid2],
+    uids: [ownerIdOne, ownerIdTwo],
   })
     .then((response) => {
       dispatch({ type: 'POST_ROOM_FULFILLED', payload: response.data });

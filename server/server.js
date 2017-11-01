@@ -25,8 +25,8 @@ app.use('/api', routes);
 io.on('connection', (socket) => {
   console.log('socket connection');
   socket.on('message', (message) => {
-    console.log('socket message', message.roomid);
-    socket.broadcast.emit(message.roomid, message);
+    console.log('socket message');
+    socket.broadcast.emit(message.roomId, message);
   });
 });
 
