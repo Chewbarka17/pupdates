@@ -29,7 +29,7 @@ router.patch('/users/seendogs/:userid', users.updateSeenDogs);
 router.patch('/users/likeddogs/:userid', users.updateLikedDogs);
 router.patch('/likeddogs/:userid', users.removeLikedDog);
 
-// messages
+// Chat routes
 router.get('/messages/:roomId', chat.getChatRoomByRoomId);
 router.patch('/messages/:roomId', chat.addMessageToRoomByRoomId);
 router.post('/rooms', chat.findOrCreateChatRoom);

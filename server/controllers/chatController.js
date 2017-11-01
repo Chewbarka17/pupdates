@@ -4,7 +4,6 @@ const mongoose = require('mongoose');
 
 module.exports = {
 
-  // You need a room id to get the messages associated with that room.
   getChatRoomByRoomId: (req, res) => {
     Rooms.find({ _id: req.params.roomId }, (err) => {
       if (err) {
@@ -16,7 +15,7 @@ module.exports = {
       });
   },
 
-  // a message is an object with a user and a text. No altering or deleting messages yet.
+  // Puts each message at the front of the messages array in the room
   addMessageToRoomByRoomId: (req, res) => {
     Rooms.findOneAndUpdate({ _id: req.params.roomId }, {
       $push: {
@@ -37,6 +36,7 @@ module.exports = {
     });
   },
 
+  // Updates each owner's chat rooms array by most recent messages
   orderChatRoomsByMostRecent: (req, res) => {
     req.body.ownerIds.forEach((ownerId) => {
       Owners.findOneAndUpdate({ _id: ownerId },
@@ -64,6 +64,7 @@ module.exports = {
     res.status(201).send('yay');
   },
 
+  // Creates a chat room if it can't find a common chat room between owners
   findOrCreateChatRoom: (req, res) => {
     Owners.find({ _id: req.body.ownerIds }, (err) => {
       if (err) {
@@ -81,7 +82,7 @@ module.exports = {
             }
           })
             .then((room) => {
-              res.send(room);
+              res.status(200).send(room);
             })
             .catch((err) => {
               res.status(500).send(err);
@@ -114,6 +115,7 @@ module.exports = {
       });
   },
 
+  // Finds all chat rooms and orders them by most recently used
   getChatRoomsByOwnerId: (req, res) => {
     Owners.find({ _id: req.params.ownerId }, (err) => {
       if (err) {
@@ -126,6 +128,7 @@ module.exports = {
             res.status(500).send(err);
           }
         })
+          // Gets the name of the other owner in each conversation and put its with the correct room
           .then((results) => {
             const rooms = JSON.parse(JSON.stringify(results));
             const partnerOwnerIds = [];

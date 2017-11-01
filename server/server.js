@@ -3,6 +3,8 @@ const parser = require('body-parser');
 const path = require('path');
 require('dotenv').config();
 const cors = require('cors');
+
+// Initialize sockets
 const io = require('socket.io')('3000');
 
 // File imports
@@ -21,7 +23,7 @@ app.use(parser.urlencoded({ extended: true }));
 app.use(express.static(path.resolve(__dirname, '../src')));
 app.use('/api', routes);
 
-// Messages
+// Sockets for messaging
 io.on('connection', (socket) => {
   console.log('socket connection');
   socket.on('message', (message) => {

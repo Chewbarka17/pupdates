@@ -58,7 +58,7 @@ class TabBar extends React.Component {
 
         <ScrollView tabLabel="ios-chatbubbles" style={styles.tabView}>
           <View>
-            <ChatList navigate={navigate} pressed={true}/>
+            <ChatList navigate={navigate} />
           </View>
         </ScrollView>
 

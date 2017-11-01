@@ -17,6 +17,7 @@ class CustomTabBar extends React.Component {
 
   componentDidMount() {
     this._listener = this.props.scrollValue.addListener(this.setAnimationValue.bind(this));
+    console.log(this)
   }
 
   setAnimationValue({ value, }) {

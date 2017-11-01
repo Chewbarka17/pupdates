@@ -1,7 +1,6 @@
 import axios from 'axios';
 
 export const getRooms = ownerId => (dispatch) => {
-  console.log(ownerId)
   axios.get(`http://localhost:8000/api/rooms/${ownerId}`)
     .then(({ data }) => {
       dispatch({ type: 'GET_ROOMS_FULFILLED', payload: data });

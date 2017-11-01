@@ -23,11 +23,13 @@ class ChatList extends React.Component {
 
   componentDidMount() {
     this.props.actions.getRooms(this.props.ownerId);
+    console.log('yo', this)
   }
   
   // c() {
-  //   this.props.actions.getRooms(this.props.ownerId);
-    
+  //   if (this.props.trigger) {
+  //     this.props.actions.getRooms(this.props.ownerId);
+  //   }
   // }
 
   _keyExtractor(item, index) {
@@ -48,7 +50,6 @@ class ChatList extends React.Component {
           <ListItem
           key={item._id}
           onPress={() =>
-            // this.props.navigation.navigate('ChatRoom', item)
             this.props.navigate('ChatRoom', item)
           }
             title={`${item.partner}`}
@@ -67,7 +68,7 @@ class ChatList extends React.Component {
 const state = (store) => {
   return {
     rooms: store.Rooms.rooms,
-    ownerId: store.Owners.user._id,    
+    ownerId: store.Owners.user._id,  
   }
 }
 
