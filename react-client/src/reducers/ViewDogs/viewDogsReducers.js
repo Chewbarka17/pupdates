@@ -1,12 +1,8 @@
-import action from '../../actions/ViewDogs/viewDogsActions';
+// import action from '../../actions/ViewDogs/viewDogsActions';
 
 const initialState = {
   unseenDogs: [],
-  // likedDogs: [],
-  // seenDogs: [],
-  // fetched: false,
-  // seenUpdated: false,
-  // likedUpdated: false,
+  distance: 0,
   error: null,
 };
 
@@ -14,8 +10,8 @@ const viewDogReducer = (state = initialState, action) => {
   switch (action.type) {
     case 'FETCH_ALL_UNSEEN_DOGS_FULFILLED': {
       return Object.assign({}, state, {
-        // fetched: true,
-        unseenDogs: action.payload,
+        distance: action.payload[1],
+        unseenDogs: action.payload[0],
       });
     }
 
@@ -25,9 +21,20 @@ const viewDogReducer = (state = initialState, action) => {
       });
     }
 
+    case 'UPDATE_DISTANCE_TO_DOG': {
+      return Object.assign({}, state, {
+        distance: action.payload,
+      });
+    }
+
+    case 'FIND_DISTANCE_FAILED': {
+      return Object.assign({}, state, {
+        error: action.payload,
+      });
+    }
+
     case 'UPDATE_SEEN_DOGS_FULFILLED': {
       return Object.assign({}, state, {
-        // seenUpdated: true,
         unseenDogs: state.unseenDogs.filter(dog => dog._id !== action.payload),
       });
     }
