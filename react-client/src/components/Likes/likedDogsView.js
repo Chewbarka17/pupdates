@@ -22,7 +22,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import * as likeActions from '../../actions/Likes/likeActions';
+// import * as likeActions from '../../actions/Likes/likeActions';
 
 import DogProfile from '../Likes/likedDogProfile';
 
@@ -119,10 +119,10 @@ const likedState = (store) => {
   }
 }
 
-const likedDispatch = (dispatch) => {
-  return {
-    actions: bindActionCreators(likeActions, dispatch),
-  }
-};
+// const likedDispatch = (dispatch) => {
+//   return {
+//     actions: bindActionCreators(likeActions, dispatch),
+//   }
+// };
 
-export default connect(likedState, likedDispatch)(LikedDogsView);
+export default connect(likedState, null)(LikedDogsView);

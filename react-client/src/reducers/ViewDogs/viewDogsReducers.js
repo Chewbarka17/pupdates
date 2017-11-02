@@ -1,57 +1,65 @@
-import action from '../../actions/ViewDogs/viewDogsActions';
+// import action from '../../actions/ViewDogs/viewDogsActions';
 
 const initialState = {
   unseenDogs: [],
-  likedDogs: [],
-  seenDogs: [],
-  fetched: false,
-  seenUpdated: false,
-  likedUpdated: false,
-  error: null
-}
+  distance: 0,
+  error: null,
+};
 
-const viewDogReducer = (state=initialState, action) => {
-  switch(action.type) {
+const viewDogReducer = (state = initialState, action) => {
+  switch (action.type) {
     case 'FETCH_ALL_UNSEEN_DOGS_FULFILLED': {
       return Object.assign({}, state, {
-        fetched: true,
-        unseenDogs: action.payload
-      }); 
+        distance: action.payload[1],
+        unseenDogs: action.payload[0],
+      });
     }
 
     case 'FETCH_ALL_UNSEEN_DOGS_REJECTED': {
       return Object.assign({}, state, {
-        error: action.payload
+        error: action.payload,
+      });
+    }
+
+    case 'UPDATE_DISTANCE_TO_DOG': {
+      return Object.assign({}, state, {
+        distance: action.payload,
+      });
+    }
+
+    case 'FIND_DISTANCE_FAILED': {
+      return Object.assign({}, state, {
+        error: action.payload,
       });
     }
 
     case 'UPDATE_SEEN_DOGS_FULFILLED': {
       return Object.assign({}, state, {
-        seenUpdated: true,
-        seenDogs: action.payload
+        unseenDogs: state.unseenDogs.filter(dog => dog._id !== action.payload),
       });
     }
 
     case 'UPDATE_SEEN_DOGS_REJECTED': {
       return Object.assign({}, state, {
-        error: action.payload
+        error: action.payload,
       });
     }
 
     case 'UPDATE_LIKED_DOGS_FULFILLED': {
       return Object.assign({}, state, {
-        likedUpdated: true,
-        likedDogs: action.payload
+        // likedUpdated: true,
+        unseenDogs: state.unseenDogs.filter(dog => dog._id !== action.payload),
       });
     }
 
     case 'UPDATE_LIKED_DOGS_REJECTED': {
       return Object.assign({}, state, {
-        error: action.payload
+        error: action.payload,
       });
     }
+    default:
+      return state;
   }
-  return state;
-}
+};
 
-export default viewDogReducer; 
+export default viewDogReducer;

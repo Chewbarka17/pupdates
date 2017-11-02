@@ -21,7 +21,7 @@ module.exports = {
   },
 
   getUser: (req, res) => {
-    Owners.find({ fb_id: req.params.userid }, (err, owner) => {
+    Owners.find({ _id: req.params.userid }, (err, owner) => {
       if (err) {
         console.log('error getting this user ', err);
         res.status(500).send(err);
@@ -96,18 +96,18 @@ module.exports = {
   updateSeenDogs: (req, res) => {
     console.log("usd", req.params.userid, req.body)
     Owners.findOneAndUpdate({ _id: req.params.userid }, { $push: { dogsSeen: req.body.dogid } },
-      { new: true }, (err, data) => {
+      (err) => {
         if (err) {
           console.log('push to dogsSeen error', err);
           res.status(500).send('error', err);
         }
-        res.status(201).send(data);
+        res.status(201).send('successfuly updated user');
       });
   },
 
   updateLikedDogs: (req, res) => {
     console.log("uld", req.params.userid, req.body)
-    Owners.findOneAndUpdate({ _id: req.params.userid }, { $push: { dogsLiked: req.body.dogid } },
+    Owners.findOneAndUpdate({ _id: req.params.userid }, { $push: { dogsLiked: req.body.dogid, dogsSeen: req.body.dogid } },
       { new: true } , (err, data) => {
         if(err) {
           console.log('push to dogsLiked error', err);

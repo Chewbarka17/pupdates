@@ -62,9 +62,9 @@ class viewOwnerProfile extends Component {
   }
 
   getLocation(position) {
-    axios.get(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${position.coords.latitude},${position.coords.longitude}&key=YOURAPIKEYHERE`)
+    axios.get(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${position.coords.latitude},${position.coords.longitude}&key=AIzaSyB1S52rdgtYi-52GK2b149DGxAZb_rKGdY`)
       .then(({data}) => {
-        // console.log('api request', data);
+        console.log('api request', data);
         this.props.ownerActions.updateOwners(
           this.props.user.name, 
           this.props.user.age, 
@@ -157,14 +157,6 @@ class viewOwnerProfile extends Component {
             </Swipeout>
           }
         />
-          <View>
-            {/* <MaterialIcons
-              name="menu"
-              size={24}
-              //onPress={() => this.props.navigation.navigate('DrawerOpen')}
-              onPress={() => this.props.navigate('DrawerOpen')}
-            /> */}
-          </View>
           <View>
             <Button
             
