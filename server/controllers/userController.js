@@ -101,7 +101,7 @@ module.exports = {
           console.log('push to dogsSeen error', err);
           res.status(500).send('error', err);
         }
-        res.status(201).send();
+        res.status(201).send('successfuly updated user');
       });
   },
 

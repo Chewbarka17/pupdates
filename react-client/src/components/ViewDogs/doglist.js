@@ -22,113 +22,37 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import * as viewDogActions from '../../actions/ViewDogs/viewDogsActions';
 
 class ViewDogsScreen extends React.Component {
-
   constructor(props) {
     super(props);
 
-    this.state = {
-      error: null,
-      distance: 0,
-      flag: false,
-      latitude: '',
-      longitude: '',
-      // dogIndex: 0
-    }
-
-    this.handleLocation = this.handleLocation.bind(this);
-    this.compareLocation = this.compareLocation.bind(this);
-    this.getGeolocation = this.getGeolocation.bind(this);
     this.handleYup = this.handleYup.bind(this);
     this.handleNope = this.handleNope.bind(this);
     this.noMore = this.noMore.bind(this);
   }
 
   componentDidMount() {
-    this.props.actions.getAllUnseenDogs(this.props.uid);
-    this.getGeolocation((err, data) => {
-      this.handleLocation();
-    });
-    
-  }
-
-  getGeolocation(callback) {
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        this.setState({
-          latitude: position.coords.latitude,
-          longitude: position.coords.longitude,
-          error: null,
-        })
-        // console.log('this is the position', this.state);
-      },
-      (error) => this.setState({ error: error.message }),
-      { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 },
-    );
-    callback(null, 'finished')
-  }
-
-  handleLocation() {
-    console.log('this is the dog ', this.props.viewDogs.unseenDogs);
-    const dog = this.props.viewDogs.unseenDogs[0];
-    console.log('this is the dog in HL', dog);
-    if (dog) {
-      axios.get(`http://localhost:8000/api/users/${dog.owner}`)
-        .then(({data}) => {
-          console.log('in handle location, ', data);
-          this.compareLocation(data[0].coords);
-        })
-        .catch(err => {
-          console.log(err);
-        })
-    } else {
-      this.noMore();
-    }
-  }
-
-  compareLocation(userOfInterestLocation) {
-    // console.log('this is the dogs location', userOfInterestLocation);
-    let value = '';
-    axios.get(`https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=${this.state.latitude},${this.state.longitude}&destinations=${userOfInterestLocation[0]},${userOfInterestLocation[1]}&key=AIzaSyB1S52rdgtYi-52GK2b149DGxAZb_rKGdY`)
-      .then(({data}) => {
-        console.log('this is data', data);
-        value = data.rows[0].elements[0].distance.text;
-        console.log('this is the value ', value);
-        // this.setState({distance: value, flag: true, dogIndex: this.state.dogIndex+1});
-        this.setState({distance: value});
-        
-      })
-      .catch(err => {
-        console.log(err);
-      })
+    this.props.actions.getAllUnseenDogs(this.props.uid, this.props.coords);
   }
   
   // swipe cards
   handleYup(cardData) {
-    // console.log('this is yup ', cardData);
-    // this.props.actions.updateDogsSeen(this.props.uid, cardData._id);
-    this.props.actions.updateLikedDogs(this.props.uid, cardData._id);
-    // this.state.dogIndex === this.props.viewDogs.unseenDogs.length ? null : this.handleLocation(cardData)
-    // this.setState({flag: false});
+    this.props.actions.updateLikedDogs(this.props.uid, cardData._id)
+    if (this.props.unseenDogs[1]) {
+      this.props.actions.findDistance(this.props.coords, this.props.unseenDogs[1]);
+    }
   }
 
   handleNope(cardData) {
-    // console.log('this is nope ', cardData)
-    // console.log('this is uid: ', this.props.uid);
-    // console.log('this is cardData._id: ', cardData._id);
-    // this.state.dogIndex === this.props.viewDogs.unseenDogs.length ? null : this.handleLocation(cardData)
-    // this.setState({flag: false});
-    
-    //remove current dog from unseen dogs
-    this.props.actions.updateDogsSeen(this.props.uid, cardData._id);
-    //update seen dogs in the database
-    //render next dog
-
+    this.props.actions.updateDogsSeen(this.props.uid, cardData._id, this.props.coords);
+    if (this.props.unseenDogs[1]) {
+      this.props.actions.findDistance(this.props.coords, this.props.unseenDogs[1]);
+    }
   }
 
   // press buttons
   yup() {
-    if (this.refs['swiper'].props.cards[this.state.dogIndex]) {
-      this.handleYup(this.refs['swiper'].props.cards[this.state.dogIndex]);
+    if (this.props.unseenDogs.length > 0) {
+      this.handleYup(this.props.unseenDogs[0]);
       this.refs['swiper']._goToNextCard();
     } else {
       Alert.alert(
@@ -143,8 +67,8 @@ class ViewDogsScreen extends React.Component {
   }
 
   nope() {
-    if (this.refs['swiper'].props.cards[this.state.dogIndex]) {
-      this.handleNope(this.refs['swiper'].props.cards[this.state.dogIndex]);
+    if (this.props.unseenDogs.length > 0) {
+      this.handleNope(this.props.unseenDogs[0]);
       this.refs['swiper']._goToNextCard();
     } else {
       Alert.alert(
@@ -174,14 +98,11 @@ class ViewDogsScreen extends React.Component {
   }
 
   render() {
-    console.log(this.props.viewDogs.unseenDogs);
     return (
-
       <View style={styles.container}>
-        
         <SwipeCards
           ref = {'swiper'}
-          cards={this.props.viewDogs.unseenDogs}
+          cards={this.props.unseenDogs}
           containerStyle = {{  backgroundColor: '#f7f7f7', alignItems:'center', margin:20}}
           renderCard={(cardData) => (
             <View
@@ -205,7 +126,7 @@ class ViewDogsScreen extends React.Component {
                     <Icon name='place' size={20} color="#777" />
                     <Text style={{fontSize:16, fontWeight:'200', color:'#555'}}>{
                     // this.state.flag ? this.state.distance : this.handleLocation(cardData)
-                    this.state.distance
+                    this.props.distance
                     }</Text></View>
                 </View>
               </View>
@@ -276,14 +197,15 @@ const styles = StyleSheet.create({
     borderColor:'#e3e3e3',
     width: 350,
     height: 420,
-  }
- 
+  } 
 });
 
 const viewDogsState = (store) => {
   return {
-    viewDogs: store.ViewDogs,
+    unseenDogs: store.ViewDogs.unseenDogs,
     uid: store.Owners.user._id,
+    coords: store.Owners.user.coords,
+    distance: store.ViewDogs.distance,
   }
 }
 
