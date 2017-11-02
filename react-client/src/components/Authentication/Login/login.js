@@ -19,7 +19,6 @@ import AWS from 'aws-sdk/dist/aws-sdk-react-native';
 import awsmobile from '../../../../../config/aws-exports';
 import { SocialIcon, FormLabel, FormInput } from 'react-native-elements';
 import axios from 'axios';
-// import * as authActions from '../../../actions/Authentication/authActions';
 import * as ownerActions from '../../../actions/Profiles/ownerActions';
 
 class LoginScreen extends Component {
@@ -34,7 +33,6 @@ class LoginScreen extends Component {
     .then(data => {
       let accessToken = data.accessToken;
       if (accessToken !== null) {
-        // console.log('current access token', accessToken);
         this._getAwsSecretSauce(accessToken);
         this._getPublicProfile(accessToken);
       }
@@ -49,7 +47,6 @@ class LoginScreen extends Component {
     .then(data => {
       let accessToken = data.accessToken;
       if (accessToken !== null) {
-        // console.log('current access token', accessToken);
         this._getAwsSecretSauce(accessToken);
         this._getPublicProfile(accessToken);
       }
@@ -142,11 +139,5 @@ const ownerDispatch = (dispatch) => {
     actions: bindActionCreators(ownerActions, dispatch),
   }
 };
-
-// const authDispatch = (dispatch) => {
-//   return {
-//     actions: bindActionCreators(authActions, dispatch),
-//   }
-// };
 
 export default connect(null, ownerDispatch)(LoginScreen);

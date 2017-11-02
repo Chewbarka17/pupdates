@@ -9,7 +9,6 @@ import ChatRoom from './chatRoom.js';
 import * as chatRoomActions from '../../actions/ChatRooms/chatRoomActions';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
-
 class ChatList extends React.Component {
   constructor(props) {
     super(props);
@@ -19,7 +18,6 @@ class ChatList extends React.Component {
   };
 
   componentWillReceiveProps(nextProps) {
-    console.log('maybe this worked', nextProps);
     if (nextProps.idk !== this.props.idk) {
       this.fetchRooms();
     }
@@ -31,12 +29,6 @@ class ChatList extends React.Component {
   
   fetchRooms() {
     this.props.actions.getRooms(this.props.ownerId);
-    // axios.get(`http://localhost:8000/api/rooms/${this.props.ownerId}`)
-    // .then(({ data }) => {
-    //   this.setState({
-    //     rooms: data
-    //   });
-    // })
   }
 
   _keyExtractor(item, index) {
@@ -70,7 +62,6 @@ class ChatList extends React.Component {
     )
   };
 }
-
 // add rooms to state
 const state = (store) => {
   return {

@@ -75,11 +75,9 @@ class SignupScreen extends Component {
   _checkUserInDB = (fb) => {
     // if user not in db add to db
       // navigate to view dogs
-    console.log('facebook', fb);
 
     axios.get('http://localhost:8000/api/users/' + fb.id)
     .then(({data}) => {
-      console.log('User retrieved from data base', data);
       if (data.length === 0) {
         this._addUserToDB(fb);
       } else {
@@ -104,10 +102,8 @@ class SignupScreen extends Component {
       name: fb.name,
       picture: fb.picture.data.url
     }
-    console.log('add user to db', user);
     axios.post('http://localhost:8000/api/users', user)
     .then(({data}) => {
-      console.log(data);
       AsyncStorage.setItem('mongoOwner', JSON.stringify(data), (error) => {
         if (error) {
           alert('Failure! Could not save user to async storage', error);

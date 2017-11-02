@@ -35,18 +35,12 @@ class viewOwnerProfile extends Component {
     this.handleGeolocation();
     this.getDogs();
   }
-
-  // componentWillReceiveProps() {
-  //   console.log('owner profile maybe this worked');
-  // }
-  
+ 
   handlePressToEditUser() {
-    //this.props.navigation.navigate('EditOwnerProfile');
     this.props.navigate('EditOwnerProfile');
   }
   
   handlePressToAddDog() {
-    //this.props.navigation.navigate('AddDogProfile');
     this.props.navigate('AddDogProfile');
   }
 
@@ -87,7 +81,6 @@ class viewOwnerProfile extends Component {
   getDogs() {
     axios.get('http://localhost:8000/api/users/dogs/' + this.props.userId)
       .then(({data}) => {
-        // console.log('this is data from get request ', data);
         this.setState({
           dogs: data,
         });
@@ -102,8 +95,6 @@ class viewOwnerProfile extends Component {
   };
 
   render () {
-    //const { navigate } = this.props.navigation;
-    // console.log("owner props", this.props);
     const { user, profilePic } = this.props;
     return (
       <View>
@@ -169,7 +160,6 @@ class viewOwnerProfile extends Component {
             
             title='Logout'
             onPress={() =>
-                //this.props.navigation.navigate('LogoutScreen', item)
                 this.props.navigate('LogoutScreen')
               }
             />

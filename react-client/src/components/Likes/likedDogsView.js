@@ -1,9 +1,3 @@
-// TODO:
-// right after liking a dog, doesn't show up on Likes tab, need to refresh to see
-// styling
-// get rid of grey bar
-// add padding to footer to show items at the bottom (scroll?)
-
 import {  
   View,
   Text,
@@ -42,16 +36,13 @@ class LikedDogsView extends React.Component {
   }
 
   componentWillReceiveProps() {
-    console.log('Liked Dogs maybe this worked');
     this.makeRemoteRequest();    
   }
 
   makeRemoteRequest = () => {
     axios.get(`http://localhost:8000/api/likeddogs/${this.props.uid}`)
       .then(({ data }) => {
-        this.setState({ likedDogs: data }, () => {
-          // console.log("this.state.likedDogs after get request: ", this.state.likedDogs);
-        });
+        this.setState({ likedDogs: data });
       })
       .catch((err) => {
         console.log('failed to get liked dogs: ', err)
@@ -69,8 +60,6 @@ class LikedDogsView extends React.Component {
   };
 
   render() {
-    // const { navigate } = this.props.navigation;
-    // console.log("this.props ", this.props);
     return (
       <View>
         <Image

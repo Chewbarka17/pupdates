@@ -1,6 +1,3 @@
-// TODO:
-// styling
-
 import React, { Component } from 'react';
 import {
   Platform,
@@ -19,9 +16,6 @@ class SplashPage extends React.Component {
   }
 
   render() {
-    // console.log("splashpage this.props: ", this.props); // {empty}
-    // console.log("splashpage this.props.navigation: ", this.props.navigation); // undefined 
-    // console.log("splashpage this.state: ", this.state); // null
     const { navigation } = this.props;
     return (
       <View>
@@ -38,10 +32,5 @@ class SplashPage extends React.Component {
     );
   }
 }
-
-// style={{width: 200, height: 140}}
-
-// style={{flex:1, height: undefined, width: undefined}}
-// resizeMode="contain"
 
 export default SplashPage;

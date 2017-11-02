@@ -56,7 +56,6 @@ export const addOwnerToDB = (fb, navigation) => (dispatch) => {
     })
     .catch((err) => {
       dispatch({ type: 'POST_OWNER_FROM_MONGO_REJECTED', payload: err });
-      console.log(err);
     });
 };
 
@@ -68,25 +67,6 @@ export const saveAwsSecretSauce = (accessKeyId, secretAccessKey, sessionToken) =
   };
   dispatch({ type: 'AWS_SECRET_SAUCE_FULFILLED', payload: aws });
 };
-
-// export const postOwners = (name, age, location, bio) => (dispatch) => {
-//   console.log('axios post', typeof age, age);
-//   axios.post('http://localhost:8000/api/users', {
-//     name,
-//     age,
-//     location,
-//     bio,
-//     picture: 'http://www.readersdigest.ca/wp-content/uploads/2011/01/4-ways-cheer-up-depressed-cat.jpg',
-//     rating: 4,
-//   })
-//     .then((response) => {
-//       console.log('owner action', typeof response.data.age);
-//       dispatch({ type: 'POST_OWNER_FULFILLED', payload: response.data });
-//     })
-//     .catch((err) => {
-//       dispatch({ type: 'POST_OWNER_REJECTED', payload: err });
-//     });
-// };
 
 export const updateOwners = (name, age, location, bio, userid, coords, picture, callback) => (dispatch) => {
   // console.log('update owners location', location);
