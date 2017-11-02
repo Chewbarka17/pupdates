@@ -63,7 +63,6 @@ class likedDogProfile extends React.Component {
           rounded
           source={{uri: this.props.navigation.state.params.pictures[0]}}
         />
-        <View>
         <Text>
           Name: {this.props.navigation.state.params.name}
         </Text>
@@ -82,14 +81,14 @@ class likedDogProfile extends React.Component {
         <Text>
           Bio: {this.props.navigation.state.params.bio}
         </Text>
+        <Text>
+          Owner: {this.state.name}
+        </Text>
         <Avatar
           large
           rounded
           source={{uri: this.state.picture}}
         />
-        <Text>
-          Owner: {this.state.name}
-        </Text> 
         <Button
           raised
           small
@@ -100,16 +99,25 @@ class likedDogProfile extends React.Component {
           onPress={this.createRoom}
         />
       </View>
-    </View>
+        
     )
   }
 }
 
 var styles = StyleSheet.create({
-  image: {
+  dogImage: {
     height: 150,
     borderRadius: 75,
     width: 150,
+  },
+  dogInfo: {
+
+  },
+  ownerImage: {
+
+  },
+  ownerInfo: {
+    
   }
 });
 

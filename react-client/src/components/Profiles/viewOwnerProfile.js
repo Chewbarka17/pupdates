@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { StackNavigator } from 'react-navigation';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { View, Text, FlatList, AsyncStorage } from 'react-native';
+import { View, Text, FlatList, AsyncStorage, StyleSheet } from 'react-native';
 import { Button, List, ListItem, Avatar } from 'react-native-elements';
 import Swipeout from 'react-native-swipeout';
 import axios from 'axios';
@@ -155,9 +155,19 @@ class viewOwnerProfile extends Component {
             </Swipeout>
           }
         />
+<<<<<<< HEAD
+=======
+          {/* <View>
+            <MaterialIcons
+              name="menu"
+              size={24}
+              //onPress={() => this.props.navigation.navigate('DrawerOpen')}
+              onPress={() => this.props.navigate('DrawerOpen')}
+            />
+          </View> */}
+>>>>>>> [add] styling
           <View>
             <Button
-            
             title='Logout'
             onPress={() =>
                 this.props.navigate('LogoutScreen')
@@ -168,6 +178,25 @@ class viewOwnerProfile extends Component {
     )
   }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: 'white',
+  },
+  ownerPic: {
+
+  },
+  ownerInfo: {
+
+  },
+  buttonSmall: {
+
+  },
+  logoutButton: {
+
+  }
+});
 
 const viewOwnerState = (store) => {
   return {

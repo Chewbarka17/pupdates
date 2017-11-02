@@ -29,6 +29,7 @@ class TabBar extends React.Component {
     }
     this.changeState = this.changeState.bind(this);
   }
+<<<<<<< HEAD
 
   // function to set state
   changeState(flag) {
@@ -39,6 +40,11 @@ class TabBar extends React.Component {
     });
   }
 
+=======
+  // static navigationOptions = {
+  //   title: 'Home',
+  // };
+>>>>>>> [add] styling
   render() {
 
     const { navigate } = this.props.navigation;
@@ -46,7 +52,7 @@ class TabBar extends React.Component {
     return (
       <ScrollableTabView
         locked={true} // this needs to be true because of swiping dog cards
-        style={{marginTop: 24, }}
+        style={{marginTop: 24, backgroundColor: 'white'}}
         initialPage={0}
         renderTabBar={() => <CustomTabBar hack={this.changeState}/>}
       >
@@ -84,11 +90,11 @@ const styles = StyleSheet.create({
   tabView: {
     flex: 1,
     padding: 10,
-    backgroundColor: 'rgba(0,0,0,0.01)',
+    backgroundColor: 'white',
   },
   card: {
     borderWidth: 1,
-    backgroundColor: '#fff',
+    backgroundColor: 'white',
     borderColor: 'rgba(0,0,0,0.1)',
     margin: 5,
     height: 150,

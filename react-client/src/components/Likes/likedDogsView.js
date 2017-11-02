@@ -4,8 +4,10 @@ import {
   Image,
   Button,
   FlatList,
+  Animated,
+  TouchableOpacity,
   ActivityIndicator, 
-  TouchableHighlight 
+  TouchableHighlight,
 } from 'react-native';
 import axios from 'axios';
 import React, { Component } from 'react';
@@ -20,6 +22,10 @@ import { bindActionCreators } from 'redux';
 
 import DogProfile from '../Likes/likedDogProfile';
 
+// animate
+import * as Animatable from 'react-native-animatable';
+
+
 class LikedDogsView extends React.Component {
 
   constructor(props) {
@@ -29,11 +35,25 @@ class LikedDogsView extends React.Component {
       likedDogs: [],
       item: null,
       refreshing: false,
+
+      // animate
+      bounceValue: new Animated.Value(0),
     };
   }
 
+
   componentDidMount = () => {
     this.makeRemoteRequest();
+
+    // animation
+    // this.state.bounceValue.setValue(1.5);     // Start large
+    // Animated.spring(                          // Base: spring, decay, timing
+    //   this.state.bounceValue,                 // Animate `bounceValue`
+    //   {
+    //     toValue: 0.8,                         // Animate to smaller size
+    //     friction: 1,                          // Bouncier spring
+    //   }
+    // ).start();
   }
 
   componentWillReceiveProps() {
@@ -60,17 +80,24 @@ class LikedDogsView extends React.Component {
       });
   };
 
-  handleRefresh = () => {
-    
-  };
-
   render() {
     return (
-      <View>
+
+      <View>      
         <Image
-          style={{width: 380, height: 140}}
+          style={{width: 380, height: 140, marginLeft: -10}}
           source={require('../ViewDogs/heartsCorgi.gif')}
         />
+
+        {/* <Animated.Image                         // Base: Image, Text, View
+          source={{uri: 'http://www.dogbreedslist.info/uploads/allimg/dog-pictures/Papillon-dog-1.jpg'}}
+          style={{
+            flex: 1,
+            transform: [                        // `transform` is an ordered array
+              {scale: this.state.bounceValue},  // Map `bounceValue` to `scale`
+            ]
+          }}
+        /> */}
 
         <List containerStyle={{ borderTopWidth: 0, borderBottomWidth: 0 }}>
           <FlatList
@@ -90,9 +117,7 @@ class LikedDogsView extends React.Component {
               >
               <View>
                 <ListItem
-                  onPress={() =>
-                    this.props.navigate('LikedDogProfile', item)
-                  }
+                  onPress={() => this.props.navigate('LikedDogProfile', item)}
                   roundAvatar
                   title={`${item.name}`}
                   subtitle={item.breed}

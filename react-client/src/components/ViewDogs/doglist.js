@@ -5,6 +5,7 @@ import {
   View,
   Image,
   Alert,
+  Animated,
   TouchableOpacity,
 } from 'react-native';
 import axios from 'axios';
@@ -17,6 +18,10 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 import * as viewDogActions from '../../actions/ViewDogs/viewDogsActions';
 
+// for flip card. might not need this library if Animated works
+import FlipCard from 'react-native-flip-card'
+import LikedDogProfile from '../Likes/likedDogProfile';
+
 class ViewDogsScreen extends React.Component {
   constructor(props) {
     super(props);
@@ -28,6 +33,38 @@ class ViewDogsScreen extends React.Component {
 
   componentDidMount() {
     this.props.actions.getAllUnseenDogs(this.props.uid, this.props.coords);
+
+    // for card flip
+    this.animatedValue = new Animated.Value(0);
+    this.value = 0;
+    this.animatedValue.addListener(({ value }) => {
+      this.value = value;
+    })
+    this.frontInterpolate = this.animatedValue.interpolate({
+      inputRange: [0, 180],
+      outputRange: ['0deg', '180deg'],
+    })
+    this.backInterpolate = this.animatedValue.interpolate({
+      inputRange: [0, 180],
+      outputRange: ['180deg', '360deg']
+    })
+  }
+
+  // flip card function
+  flipCard() {
+    if (this.value >= 90) {
+      Animated.spring(this.animatedValue, {
+        toValue: 0,
+        friction: 8,
+        tension: 10
+      }).start();
+    } else {
+      Animated.spring(this.animatedValue, {
+        toValue: 180,
+        friction: 8,
+        tension: 10
+      }).start();
+    }
   }
   
   // swipe cards
@@ -90,49 +127,96 @@ class ViewDogsScreen extends React.Component {
   }
 
   navigateToProfile(cardData) {
+    console.log("in navigateToProfile func");
     this.props.navigate('LikedDogProfile', cardData);
   }
 
   render() {
-    return (
+    console.log(this.props.viewDogs.unseenDogs);
+    
+    const frontAnimatedStyle = {
+      transform: [
+        { rotateY: this.frontInterpolate }
+      ]
+    }
+    const backAnimatedStyle = {
+      transform: [
+        { rotateY: this.backInterpolate }
+      ]
+    }
+   
+   return (
       <View style={styles.container}>
+
+
+        {/* dog card */}
         <SwipeCards
           ref = {'swiper'}
-          cards={this.props.unseenDogs}
-          containerStyle = {{  backgroundColor: '#f7f7f7', alignItems:'center', margin:20}}
+          cards={this.props.viewDogs.unseenDogs}
+          containerStyle = {{  backgroundColor: 'white', alignItems:'center', margin:20}}
           renderCard={(cardData) => (
-            <View
-              style={styles.card}
-            >
-              <TouchableOpacity
-                onPress = {() => this.navigateToProfile(cardData)}
-              >
-                <Image
-                  source ={{uri: cardData.pictures[0]}}
-                  resizeMode="contain"
-                  style ={{width:350, height:350}}
+            <View>
+              <Animated.View style={[styles.card, frontAnimatedStyle]}>
+                <TouchableOpacity
+                  onPress = {() => this.navigateToProfile(cardData)}
+                >
+                  <Image
+                    source ={{uri: cardData.pictures[0]}}
+                    style ={{width:350, height:420, borderRadius:10}}
+                  />
+                </TouchableOpacity>
+                <View style={{width:350, height:70, flexDirection:'row', alignItems:'center', justifyContent:'space-between'}}>
+                  <View style={{flexDirection:'row', margin:15, marginTop:20,}} >
+                    <Text style={{fontSize:24, fontWeight:'400', color:'#444'}}>{cardData.name} </Text>
+                  </View>
+                  <View style={{flexDirection:'row'}}>
+                    <View style={{padding:13, borderLeftWidth:1,borderColor:'#e3e3e3', alignItems:'center', justifyContent:'space-between'}}>
+                      <Icon name='place' size={20} color="#777" />
+                      <Text style={{fontSize:16, fontWeight:'300', color:'#a0a0a0'}}>
+                        {
+                          // this.state.flag ? this.state.distance : this.handleLocation(cardData)
+                          this.props.distance
+                        }
+                      </Text>
+                    </View>
+                  </View>
+                </View>
+              </Animated.View>
+
+              <Animated.View style={[styles.card, styles.flipCardBack, backAnimatedStyle]}>
+                <Avatar
+                  xlarge
+                  rounded
+                  source={{uri: cardData.pictures[0]}}
                 />
-              </TouchableOpacity>
-              <View style={{width:350, height:70, flexDirection:'row', alignItems:'center', justifyContent:'space-between'}}>
-                <View style={{flexDirection:'row', margin:15, marginTop:25,}} >
-                  <Text style={{fontSize:20, fontWeight:'300', color:'#444'}}>{cardData.name} </Text>
-                </View>
-                <View style={{flexDirection:'row'}}>
-                  <View style={{padding:13, borderLeftWidth:1,borderColor:'#e3e3e3', alignItems:'center', justifyContent:'space-between'}}>
-                    <Icon name='place' size={20} color="#777" />
-                    <Text style={{fontSize:16, fontWeight:'200', color:'#555'}}>{
-                    // this.state.flag ? this.state.distance : this.handleLocation(cardData)
-                    this.props.distance
-                    }</Text></View>
-                </View>
-              </View>
+                <Text>
+                  Name: {cardData.name}
+                </Text>
+                <Text>
+                  Breed: {cardData.breed}
+                </Text>
+                <Text>
+                  Gender: {cardData.gender}
+                </Text>
+                <Text>
+                  Age: {cardData.age}
+                </Text>
+                <Text>
+                  Location: {cardData.location}
+                </Text>
+                <Text>
+                  Bio: {cardData.bio}
+                </Text>
+              </Animated.View>
+
             </View>
           )}
           handleYup={(cardData) => (this.handleYup(cardData))}
           handleNope={(cardData) => (this.handleNope(cardData))}
-
           renderNoMoreCards={() => this.noMore()}
         />
+
+        {/* three buttons */}
         <View style={{flexDirection:'row', alignItems:'center', justifyContent:'center'}}>
           <TouchableOpacity
             style = {styles.buttons}
@@ -141,10 +225,23 @@ class ViewDogsScreen extends React.Component {
             <Icon 
               name='close'
               size={40}
-              color="#888"
+              color="#5a7bf4"
               style={{}}
             />
           </TouchableOpacity>
+
+          <TouchableOpacity 
+            style={styles.buttonSmall}
+            onPress={() => this.flipCard()}
+          >
+            <Icon 
+              name='info-outline'
+              size={25}
+              color="#88c994"
+              style={{}}
+            />
+          </TouchableOpacity>
+
           <TouchableOpacity
             style = {styles.buttons}
             onPress = {() => this.yup()}
@@ -152,11 +249,12 @@ class ViewDogsScreen extends React.Component {
             <Icon
               name='favorite-border'
               size={36}
-              color="#888"
+              color="#ed90a1"
               style={{marginTop:5}}
             />
           </TouchableOpacity>
         </View>
+
       </View>
     )
   }
@@ -165,7 +263,7 @@ class ViewDogsScreen extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f7f7f7',
+    backgroundColor: 'white',
   },
   buttons:{
     width:80, 
@@ -174,16 +272,18 @@ const styles = StyleSheet.create({
     borderColor:'#e7e7e7', 
     justifyContent:'center', 
     alignItems:'center',
-    borderRadius:40
+    borderRadius:40,
+    marginTop: 8,
+    margin: 20,
   },
-  buttonSmall:{
-    width:50, 
-    height:50, 
+  buttonSmall: {
+    width:55, 
+    height:55, 
     borderWidth:10, 
     borderColor:'#e7e7e7', 
     justifyContent:'center', 
     alignItems:'center',
-    borderRadius:25
+    borderRadius:40
   },
    card: {
     flex: 1,
@@ -192,8 +292,18 @@ const styles = StyleSheet.create({
     borderWidth:2,
     borderColor:'#e3e3e3',
     width: 350,
-    height: 420,
-  } 
+    height: 490,
+    backgroundColor: 'white',
+    marginTop: 0,
+    borderRadius: 10,
+    backfaceVisibility: 'hidden',
+  },
+  flipCardBack: {
+    backgroundColor:'#eaeaea',
+    position:'absolute',
+    top:0,
+  }
+ 
 });
 
 const viewDogsState = (store) => {

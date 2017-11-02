@@ -20,12 +20,18 @@ const SimpleApp = StackNavigator({
       header: null,
     },
   },
-  TabBar: {screen: TabBar,
+  TabBar: {
+    screen: TabBar,
     navigationOptions: {
       header: null,
     }
   },
-  LikedDogProfile: { screen: likedDogProfile },
+  LikedDogProfile: { 
+    screen: likedDogProfile,
+    // navigationOptions: {
+    //   header: null,
+    // }
+  },
   ChatRoom: { screen: ChatRoom },
   EditOwnerProfile: {screen: EditOwnerProfile},
   AddDogProfile: {screen: AddDogProfile},
