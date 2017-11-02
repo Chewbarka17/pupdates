@@ -9,19 +9,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import SplashPageView from '../../Splash/splashPageView';
 
 class LogoutScreen extends React.Component {
-  // static navigationOptions = {
-  //   drawerLabel: 'Logout',
-  //   drawerIcon: ({tintColor}) => {
-  //     return (
-  //       <MaterialIcons
-  //         name="exit-to-app"
-  //         size={24}
-  //         style={{color: tintColor}}
-  //       >
-  //       </MaterialIcons>
-  //     );
-  //   }
-  // }
+
   constructor(props) {
     super(props);
 
@@ -29,7 +17,6 @@ class LogoutScreen extends React.Component {
   }
   
   componentDidMount() {
-    // logic to logout
     AccessToken.getCurrentAccessToken()
     .then(data => {
       let accessToken = data.accessToken;

@@ -1,6 +1,3 @@
-//TODO:
-//styling
-
 import React from 'react';
 import {
   StyleSheet,

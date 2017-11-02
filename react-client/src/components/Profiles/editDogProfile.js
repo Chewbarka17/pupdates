@@ -37,10 +37,6 @@ class EditDogProfile extends Component {
     this.selectProfilePhoto = this.selectProfilePhoto.bind(this);
     this.navigateToTabBar = this.navigateToTabBar.bind(this);  
   };
-
-  componentDidMount() {
-    console.log('dog params', this.props.navigation.state.params);
-  }
   
   selectProfilePhoto() {
     ImagePicker.openPicker({
@@ -66,7 +62,6 @@ class EditDogProfile extends Component {
     let dogid = params._id;
 
     this.props.actions.getADog(dogid, (data) => {
-      console.log('edit dog data', data[0]);
       if (this.state.image) {
         uploadProfilePicture(this.props.awsSauce, dogid, this.state.image, (err, result) => {
           if (err) {
@@ -102,7 +97,6 @@ class EditDogProfile extends Component {
     const { navigate } = this.props.navigation;
     const { params } = this.props.navigation.state;
     const pictureSelected = this.state.image;
-    console.log('PROPS: ', this.props);
     return (
       <View>
         <FormLabel>Name</FormLabel>
@@ -166,10 +160,7 @@ class EditDogProfile extends Component {
             source={{uri: pictureSelected.path}}
           />
         ) : (
-          // <Image
-          // style={{width: 200, height: 200}}
-          // source={{uri: params.picture[0]}}
-          // />
+
           <View></View>
         )}
         <Button
@@ -189,12 +180,6 @@ class EditDogProfile extends Component {
 
   const dogState = (store) => {
     return {
-      // name: store.Dogs.dogs[0].name,
-      // age: store.Dogs.dogs[0].age,
-      // breed: store.Dogs.dogs[0].breed,
-      // id: store.Dogs.dogs[0]._id,
-      // picture: store.Dogs.dogs[0].pictures[0],
-      // userId: store.Owners.user.fb_id,
       awsSauce: store.Owners.awsSauce,
     }
   }

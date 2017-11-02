@@ -104,7 +104,6 @@ module.exports = {
   },
 
   updateSeenDogs: (req, res) => {
-    console.log("usd", req.params.userid, req.body)
     Owners.findOneAndUpdate({ _id: req.params.userid }, { $push: { dogsSeen: req.body.dogid } },
       (err) => {
         if (err) {
@@ -116,11 +115,9 @@ module.exports = {
   },
 
   updateLikedDogs: (req, res) => {
-    console.log("uld", req.params.userid, req.body)
     Owners.findOneAndUpdate({ _id: req.params.userid }, { $push: { dogsLiked: req.body.dogid, dogsSeen: req.body.dogid } },
       { new: true } , (err, data) => {
         if(err) {
-          console.log('push to dogsLiked error', err);
           res.status(500).send('error', err);
         }
         res.status(201).send(data);
@@ -131,7 +128,6 @@ module.exports = {
     Owners.findOneAndUpdate({ _id: req.params.userid }, { $pull: { dogsLiked: req.body.dogid } },
       { new: true }, (err, data) => {
         if (err) {
-          console.log('remove dogs from dogsLiked error', err);
           res.status(500).send('error', err);
         }
         res.status(201).send(data);

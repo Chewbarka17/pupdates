@@ -26,26 +26,17 @@ class likedDogProfile extends React.Component {
   }
 
   componentDidMount() {
-    console.log("this.props: ", this.props)
-    console.log("this.props.navigation ", this.props.navigation)
-    console.log("this.props.navigation.state ", this.props.navigation.state)
-    console.log("this.props.navigation.state.params ", this.props.navigation.state.params) // params is undefined
     this.getOwnersInfo();
   };
 
   getOwnersInfo() {
     axios.get('http://localhost:8000/api/users/' + this.props.navigation.state.params.owner) // this is the dog's owner
       .then(({ data }) => {
-        // console.log(data)
         this.setState({
           name: data[0].name,
           picture: data[0].picture,
           ownerId: data[0]._id
         })
-          // console.log("this.state.owner: ", this.state.owner); // [{owner}]
-          // console.log("this.state.owner[0]: ", this.state.owner[0]); // {owner}
-          // console.log("this.state.owner[0].name: ", this.state.owner[0].name); // Ironman
-          
       })
       .catch((err) => {
         console.log('failed to get owner info: ', err)
@@ -57,8 +48,6 @@ class likedDogProfile extends React.Component {
       ownerIds: [this.props.uid, this.state.ownerId],
     })
     .then((data) => {
-      // this.props.chatActions.createRoom(this.props.uid, this.state.ownerId)
-      console.log(data.data)
       this.props.navigation.navigate('ChatRoom', data.data)
     })
     .catch((err) => {

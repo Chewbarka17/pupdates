@@ -27,7 +27,6 @@ const dogReducer = (state = initialState, action) => {
       });
     }
     case 'POST_DOG_FULFILLED': {
-      console.log('post payload', action.payload)
       return Object.assign({}, state, {
         posted: true,
         dogs: state.dogs.concat(action.payload),

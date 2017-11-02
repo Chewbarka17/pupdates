@@ -9,9 +9,6 @@ import axios from 'axios';
 import * as chatRoomActions from '../../actions/ChatRooms/chatRoomActions';
 
 class ChatRoom extends React.Component {
-  // navigationOptions = {
-  //   title: ''
-  // };
   constructor(props) {
     super(props);
     this.state = {
@@ -25,7 +22,6 @@ class ChatRoom extends React.Component {
     this.props.navigation.setParams({title: this.props.navigation.state.params.partner})
     axios.get(`http://localhost:8000/api/messages/${this.props.navigation.state.params._id}`)
     .then((data) => {
-      console.log(data)
       this.setState({
         messages: data.data[0].messages,
       })
@@ -40,7 +36,6 @@ class ChatRoom extends React.Component {
   }
 
   componentWillUnmount() {
-    console.log('unomunting')
     this.socket.emit('disconnect')
     this.socket.disconnect()
   }

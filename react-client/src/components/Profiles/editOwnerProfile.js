@@ -87,7 +87,6 @@ class EditOwnerProfile extends Component {
   }
 
   render() {
-    // console.log('what are props: ', this.props);
     const { navigate } = this.props.navigation;
     const pictureSelected = this.state.image;
     return (
@@ -124,9 +123,6 @@ class EditOwnerProfile extends Component {
           id="bio"
           onChangeText={bio => this.setState({ bio })}
         />
-        <Text>
-          Your coordinates have been saved as: Latitude: {this.props.latitude}, Longitude: {this.props.longitude}
-        </Text>
         {pictureSelected !== null ? (
           <Image
             style={{width: 200, height: 200}}

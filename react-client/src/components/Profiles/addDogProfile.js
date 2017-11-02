@@ -86,7 +86,6 @@ class AddDogProfile extends Component {
   }
 
   render() {
-    // console.log('what is props: ', this.props);
     const pictureSelected = this.state.image;
     const { navigate } = this.props.navigation;
     return (

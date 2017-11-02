@@ -2,16 +2,15 @@ import axios from 'axios';
 
 export const getADog = (dogid, callback) => (dispatch) => {
   axios.get(`http://localhost:8000/api/dogs/${dogid}`)
-  .then((response) => {
-    console.log('response data', response.data);
-    dispatch({ type: 'FETCH_DOG_FULFILLED', payload: response.data });
-    callback(response.data);
-  })
-  .catch((err) => {
-    dispatch({ type: 'FETCH_DOG_REJECTED', payload: err });
-  });
+    .then((response) => {
+      dispatch({ type: 'FETCH_DOG_FULFILLED', payload: response.data });
+      callback(response.data);
+    })
+    .catch((err) => {
+      dispatch({ type: 'FETCH_DOG_REJECTED', payload: err });
+    });
 };
-  
+
 export const postDogs = (name, age, breed, gender, bio, owner, pictures, callback) => (dispatch) => {
   axios.post('http://localhost:8000/api/dogs', {
     name,
@@ -41,16 +40,13 @@ export const updateDogs = (name, age, breed, gender, bio, dogid, pictures, data,
     pictures,
   })
     .then((response) => {
-      // console.log('this is response.data', JSON.parse(response.config.data));
-      let dog = JSON.parse(response.config.data);
-      // console.log('dog', dog);
+      const dog = JSON.parse(response.config.data);
       data.name = dog.name;
       data.age = dog.age;
       data.breed = dog.breed;
       data.gender = dog.gender;
       data.bio = dog.bio;
       data.pictures[0] = dog.pictures;
-      // console.log('updated dogs', data);
       dispatch({ type: 'UPDATE_DOG_FULFILLED', payload: data });
       callback(data);
     })
@@ -60,7 +56,6 @@ export const updateDogs = (name, age, breed, gender, bio, dogid, pictures, data,
 };
 
 export const deleteDogs = (dogid, uid) => (dispatch) => {
-  console.log(`http://localhost:8000/api/user/${uid}/dogs/${dogid}`);
   axios({
     method: 'delete',
     url: `http://localhost:8000/api/dogs/${dogid}`,
