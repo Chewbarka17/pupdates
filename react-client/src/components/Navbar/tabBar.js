@@ -18,47 +18,63 @@ import LikedDogs from '../Likes/likedDogsView';
 import ViewOwnerProfile from '../Profiles/viewOwnerProfile';
 
 class TabBar extends React.Component {
-
-  constructor(props) {
-    super(props);
-  }
   static navigationOptions = {
     title: 'Home',
   };
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      flag0: true,
+      flag1: true,
+      flag2: true,
+      flag3: true,
+    }
+    this.changeState = this.changeState.bind(this);
+  }
+
+  // function to set state
+  changeState(flag) {
+    this.setState(() => {
+      const newState = {}
+      newState[flag] = !this.state[flag]
+      return newState;
+    });
+  }
+
   render() {
-    // console.log("tabBar's this.props: ", this.props);
-    // console.log("tabBar's this.props.navigation: ", this.props.navigation); // has the 4 functions including navigate
+
     const { navigate } = this.props.navigation;
-    // console.log("tabBar's navigate: ", navigate); // a function that should be passed by <ViewDogs navigate={navigate}>
+
     return (
       <ScrollableTabView
         locked={true} // this needs to be true because of swiping dog cards
         style={{marginTop: 24, }}
         initialPage={0}
-        renderTabBar={() => <CustomTabBar />}
+        renderTabBar={() => <CustomTabBar hack={this.changeState}/>}
       >
 
         <ScrollView tabLabel="md-person" style={styles.tabView}>
           <View>
-            <ViewOwnerProfile navigate={navigate} />
+            <ViewOwnerProfile navigate={navigate} idk={this.state.flag0}/>
           </View>
         </ScrollView>
 
         <ScrollView tabLabel="md-paw" style={styles.tabView} scrollEnabled={ false }>
           <View>
-            <ViewDogs navigate={navigate} />
+            <ViewDogs navigate={navigate} idk={this.state.flag1}/>
           </View>
         </ScrollView>
 
         <ScrollView tabLabel="ios-heart" style={styles.tabView}>
           <View>
-            <LikedDogs navigate={navigate}/>
+            <LikedDogs navigate={navigate} idk={this.state.flag2}/>
           </View>
         </ScrollView>
 
         <ScrollView tabLabel="ios-chatbubbles" style={styles.tabView}>
           <View>
-            <ChatList navigate={navigate} pressed={true}/>
+            <ChatList navigate={navigate} idk={this.state.flag3}/>
           </View>
         </ScrollView>
 

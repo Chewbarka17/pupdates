@@ -22,25 +22,27 @@ class ChatRoom extends React.Component {
   };
   
   componentDidMount() {
-    // console.log(this.navigation)
     this.props.navigation.setParams({title: this.props.navigation.state.params.partner})
-    // console.log(this.props.navigation.state.params.uids)
     axios.get(`http://localhost:8000/api/messages/${this.props.navigation.state.params._id}`)
     .then((data) => {
       console.log(data)
       this.setState({
         messages: data.data[0].messages,
-        // partner: partner
       })
     })
 
     this.socket = io('http://localhost:3000/');
     this.socket.on(this.props.navigation.state.params._id, (message) => {
-      console.log('received')
       this.setState({
         messages: [message, ...this.state.messages]
       })
     })
+  }
+
+  componentWillUnmount() {
+    console.log('unomunting')
+    this.socket.emit('disconnect')
+    this.socket.disconnect()
   }
   
   onSend(e) {
@@ -56,7 +58,7 @@ class ChatRoom extends React.Component {
       },
     })
     .catch((err) => {
-      console.log('Error w/patch', err)
+      console.log('Error posting message to db', err)
     })
     
     const message = {

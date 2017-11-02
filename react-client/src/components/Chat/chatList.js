@@ -11,24 +11,33 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 
 class ChatList extends React.Component {
-  // static navigationOptions = {
-  //   title: 'Chats',
-  // }
   constructor(props) {
     super(props);
-    // this.state = {
-    //   clicked: true,
-    // }
+    this.state = {
+      rooms: []
+    }
   };
 
-  componentDidMount() {
-    this.props.actions.getRooms(this.props.ownerId);
+  componentWillReceiveProps(nextProps) {
+    console.log('maybe this worked', nextProps);
+    if (nextProps.idk !== this.props.idk) {
+      this.fetchRooms();
+    }
   }
   
-  // c() {
-  //   this.props.actions.getRooms(this.props.ownerId);
-    
-  // }
+  componentDidMount() {
+    this.fetchRooms();
+  }
+  
+  fetchRooms() {
+    this.props.actions.getRooms(this.props.ownerId);
+    // axios.get(`http://localhost:8000/api/rooms/${this.props.ownerId}`)
+    // .then(({ data }) => {
+    //   this.setState({
+    //     rooms: data
+    //   });
+    // })
+  }
 
   _keyExtractor(item, index) {
     return item._id
@@ -48,7 +57,6 @@ class ChatList extends React.Component {
           <ListItem
           key={item._id}
           onPress={() =>
-            // this.props.navigation.navigate('ChatRoom', item)
             this.props.navigate('ChatRoom', item)
           }
             title={`${item.partner}`}
@@ -67,7 +75,7 @@ class ChatList extends React.Component {
 const state = (store) => {
   return {
     rooms: store.Rooms.rooms,
-    ownerId: store.Owners.user._id,    
+    ownerId: store.Owners.user._id,  
   }
 }
 
