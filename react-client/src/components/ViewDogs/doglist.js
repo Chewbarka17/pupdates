@@ -98,10 +98,6 @@ class ViewDogsScreen extends React.Component {
   }
   
   render() {
-<<<<<<< HEAD
-=======
-    // console.log('unseenDogs', this.props.viewDogs.unseenDogs);
->>>>>>> [Update] Stack navigation gets reset on certain screen transitions.
     return (
       <View style={styles.container}>
         <SwipeCards
