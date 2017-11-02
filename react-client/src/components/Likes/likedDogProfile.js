@@ -54,7 +54,7 @@ class likedDogProfile extends React.Component {
 
   createRoom() {
     axios.post('http://localhost:8000/api/rooms', {
-      uids: [this.props.uid, this.state.ownerId],
+      ownerIds: [this.props.uid, this.state.ownerId],
     })
     .then((data) => {
       // this.props.chatActions.createRoom(this.props.uid, this.state.ownerId)
