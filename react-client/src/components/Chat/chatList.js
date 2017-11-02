@@ -11,26 +11,33 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 
 class ChatList extends React.Component {
-  // static navigationOptions = {
-  //   title: 'Chats',
-  // }
   constructor(props) {
     super(props);
-    // this.state = {
-    //   clicked: true,
-    // }
+    this.state = {
+      rooms: []
+    }
   };
 
-  componentDidMount() {
-    this.props.actions.getRooms(this.props.ownerId);
-    console.log('yo', this)
+  componentWillReceiveProps(nextProps) {
+    console.log('maybe this worked', nextProps);
+    if (nextProps.idk !== this.props.idk) {
+      this.fetchRooms();
+    }
   }
   
-  // c() {
-  //   if (this.props.trigger) {
-  //     this.props.actions.getRooms(this.props.ownerId);
-  //   }
-  // }
+  componentDidMount() {
+    this.fetchRooms();
+  }
+  
+  fetchRooms() {
+    this.props.actions.getRooms(this.props.ownerId);
+    // axios.get(`http://localhost:8000/api/rooms/${this.props.ownerId}`)
+    // .then(({ data }) => {
+    //   this.setState({
+    //     rooms: data
+    //   });
+    // })
+  }
 
   _keyExtractor(item, index) {
     return item._id

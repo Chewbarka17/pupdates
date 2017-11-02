@@ -41,6 +41,11 @@ class LikedDogsView extends React.Component {
     this.makeRemoteRequest();
   }
 
+  componentWillReceiveProps() {
+    console.log('Liked Dogs maybe this worked');
+    this.makeRemoteRequest();    
+  }
+
   makeRemoteRequest = () => {
     axios.get(`http://localhost:8000/api/likeddogs/${this.props.uid}`)
       .then(({ data }) => {

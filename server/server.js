@@ -30,6 +30,9 @@ io.on('connection', (socket) => {
     console.log('socket message');
     socket.broadcast.emit(message.roomId, message);
   });
+  socket.on('disconnect', () => {
+    console.log('we have disconnected')
+  });
 });
 
 module.exports = app;

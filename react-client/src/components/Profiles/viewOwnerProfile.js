@@ -35,6 +35,10 @@ class viewOwnerProfile extends Component {
     this.handleGeolocation();
     this.getDogs();
   }
+
+  // componentWillReceiveProps() {
+  //   console.log('owner profile maybe this worked');
+  // }
   
   handlePressToEditUser() {
     //this.props.navigation.navigate('EditOwnerProfile');
