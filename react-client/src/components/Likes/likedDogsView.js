@@ -45,15 +45,6 @@ class LikedDogsView extends React.Component {
   componentDidMount() {
     this.makeRemoteRequest();
 
-    // animation
-    // this.state.bounceValue.setValue(1.5);     // Start large
-    // Animated.spring(                          // Base: spring, decay, timing
-    //   this.state.bounceValue,                 // Animate `bounceValue`
-    //   {
-    //     toValue: 0.8,                         // Animate to smaller size
-    //     friction: 1,                          // Bouncier spring
-    //   }
-    // ).start();
   }
 
   componentWillReceiveProps() {
@@ -88,16 +79,6 @@ class LikedDogsView extends React.Component {
           style={{width: 380, height: 140, marginLeft: -10}}
           source={require('../../../images/likesHappyCorgi.gif')}
         />
-
-        {/* <Animated.Image                         // Base: Image, Text, View
-          source={{uri: 'http://www.dogbreedslist.info/uploads/allimg/dog-pictures/Papillon-dog-1.jpg'}}
-          style={{
-            flex: 1,
-            transform: [                        // `transform` is an ordered array
-              {scale: this.state.bounceValue},  // Map `bounceValue` to `scale`
-            ]
-          }}
-        /> */}
 
         <List containerStyle={{ borderTopWidth: 0, borderBottomWidth: 0 }}>
           <FlatList
@@ -140,15 +121,8 @@ class LikedDogsView extends React.Component {
 
 const likedState = (store) => {
   return {
-    // likedDogs: store.LikedDogs.likedDogs,
     uid: store.Owners.user._id,
   }
 }
-
-// const likedDispatch = (dispatch) => {
-//   return {
-//     actions: bindActionCreators(likeActions, dispatch),
-//   }
-// };
 
 export default connect(likedState, null)(LikedDogsView);
