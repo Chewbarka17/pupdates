@@ -18,8 +18,6 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 import * as viewDogActions from '../../actions/ViewDogs/viewDogsActions';
 
-// for flip card. might not need this library if Animated works
-import FlipCard from 'react-native-flip-card'
 import LikedDogProfile from '../Likes/likedDogProfile';
 
 class ViewDogsScreen extends React.Component {
@@ -33,8 +31,10 @@ class ViewDogsScreen extends React.Component {
 
   componentDidMount() {
     this.props.actions.getAllUnseenDogs(this.props.uid, this.props.coords);
+  }
 
-    // for card flip
+  // for card flip =======
+  componentWillMount() {
     this.animatedValue = new Animated.Value(0);
     this.value = 0;
     this.animatedValue.addListener(({ value }) => {
@@ -50,7 +50,7 @@ class ViewDogsScreen extends React.Component {
     })
   }
 
-  // flip card function
+  // card flip function ============
   flipCard() {
     if (this.value >= 90) {
       Animated.spring(this.animatedValue, {
@@ -120,15 +120,10 @@ class ViewDogsScreen extends React.Component {
       <View>
         <Image
           style={{width: 550, height: 300}}
-          source={require('./cryingCorgi.gif')}
+          source={require('../../../images/noMoreCryingCorgi.gif')}
         />
       </View>
     )
-  }
-
-  navigateToProfile(cardData) {
-    console.log("in navigateToProfile func");
-    this.props.navigate('LikedDogProfile', cardData);
   }
 
   render() {
@@ -157,22 +152,18 @@ class ViewDogsScreen extends React.Component {
           renderCard={(cardData) => (
             <View>
               <Animated.View style={[styles.card, frontAnimatedStyle]}>
-                <TouchableOpacity
-                  onPress = {() => this.navigateToProfile(cardData)}
-                >
-                  <Image
-                    source ={{uri: cardData.pictures[0]}}
-                    style ={{width:350, height:420, borderRadius:10}}
-                  />
-                </TouchableOpacity>
+                <Image
+                  source ={{uri: cardData.pictures[0]}}
+                  style ={{width:348, height:420, borderRadius:10}}
+                />
                 <View style={{width:350, height:70, flexDirection:'row', alignItems:'center', justifyContent:'space-between'}}>
                   <View style={{flexDirection:'row', margin:15, marginTop:20,}} >
-                    <Text style={{fontSize:24, fontWeight:'400', color:'#444'}}>{cardData.name} </Text>
+                    <Text style={{fontFamily:'Avenir', fontSize:24, fontWeight:'bold', color:'#444'}}>{cardData.name} </Text>
                   </View>
                   <View style={{flexDirection:'row'}}>
                     <View style={{padding:13, borderLeftWidth:1,borderColor:'#e3e3e3', alignItems:'center', justifyContent:'space-between'}}>
                       <Icon name='place' size={20} color="#777" />
-                      <Text style={{fontSize:16, fontWeight:'300', color:'#a0a0a0'}}>
+                      <Text style={{fontFamily:'Avenir', fontSize:16, fontWeight:'300', color:'#a0a0a0'}}>
                         {
                           // this.state.flag ? this.state.distance : this.handleLocation(cardData)
                           this.props.distance
@@ -184,28 +175,21 @@ class ViewDogsScreen extends React.Component {
               </Animated.View>
 
               <Animated.View style={[styles.card, styles.flipCardBack, backAnimatedStyle]}>
-                <Avatar
-                  xlarge
-                  rounded
+                <Image
+                  style={styles.dogProfilePic}
                   source={{uri: cardData.pictures[0]}}
                 />
-                <Text>
-                  Name: {cardData.name}
+                <Text style={styles.titleText}>
+                  {cardData.name}
                 </Text>
-                <Text>
-                  Breed: {cardData.breed}
+                <Text style={styles.baseText}>
+                  {cardData.breed}
                 </Text>
-                <Text>
-                  Gender: {cardData.gender}
+                <Text style={styles.baseText}>
+                  {cardData.gender}, {cardData.age} years old
                 </Text>
-                <Text>
-                  Age: {cardData.age}
-                </Text>
-                <Text>
-                  Location: {cardData.location}
-                </Text>
-                <Text>
-                  Bio: {cardData.bio}
+                <Text style={styles.baseText}>
+                  {cardData.bio}
                 </Text>
               </Animated.View>
 
@@ -249,7 +233,7 @@ class ViewDogsScreen extends React.Component {
             <Icon
               name='favorite-border'
               size={36}
-              color="#ed90a1"
+              color="#f44e64"
               style={{marginTop:5}}
             />
           </TouchableOpacity>
@@ -299,10 +283,25 @@ const styles = StyleSheet.create({
     backfaceVisibility: 'hidden',
   },
   flipCardBack: {
-    backgroundColor:'#eaeaea',
+    backgroundColor:'#ededed',
     position:'absolute',
     top:0,
-  }
+  },
+  baseText: {
+    fontFamily: 'Avenir',
+    fontSize: 17,
+    color: '#898989',
+  },
+  titleText: {
+    marginTop: 10,
+    fontSize: 25,
+    fontWeight: 'bold',
+    color: '#3f3f3f',
+  },
+  dogProfilePic: {
+    width: 348,
+    height: 350
+  },
  
 });
 

@@ -125,7 +125,7 @@ class LoginScreen extends Component {
     return (
       <View>
         <SocialIcon onPress={this._fbAuth}
-          title='Sign In With Facebook'
+          title='SIGN IN WITH FACEBOOK'
           button
           type='facebook'
         />

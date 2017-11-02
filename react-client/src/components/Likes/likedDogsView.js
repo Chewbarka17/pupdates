@@ -86,7 +86,7 @@ class LikedDogsView extends React.Component {
       <View>      
         <Image
           style={{width: 380, height: 140, marginLeft: -10}}
-          source={require('../ViewDogs/heartsCorgi.gif')}
+          source={require('../../../images/likesHappyCorgi.gif')}
         />
 
         {/* <Animated.Image                         // Base: Image, Text, View
