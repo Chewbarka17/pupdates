@@ -42,7 +42,7 @@ class LikedDogsView extends React.Component {
   }
 
 
-  componentDidMount = () => {
+  componentDidMount() {
     this.makeRemoteRequest();
 
     // animation
@@ -70,7 +70,7 @@ class LikedDogsView extends React.Component {
       });
   };
 
-  deleteLikedDog = (item) => {
+  deleteLikedDog(item) {
     axios.patch(`http://localhost:8000/api/likeddogs/${this.props.uid}`, {dogid: item._id})
       .then(() => {
         this.makeRemoteRequest();

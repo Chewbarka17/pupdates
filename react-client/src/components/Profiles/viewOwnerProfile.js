@@ -155,8 +155,6 @@ class viewOwnerProfile extends Component {
             </Swipeout>
           }
         />
-<<<<<<< HEAD
-=======
           {/* <View>
             <MaterialIcons
               name="menu"
@@ -165,7 +163,6 @@ class viewOwnerProfile extends Component {
               onPress={() => this.props.navigate('DrawerOpen')}
             />
           </View> */}
->>>>>>> [add] styling
           <View>
             <Button
             title='Logout'

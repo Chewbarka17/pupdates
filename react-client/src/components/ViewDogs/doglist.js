@@ -132,7 +132,7 @@ class ViewDogsScreen extends React.Component {
   }
 
   render() {
-    console.log(this.props.viewDogs.unseenDogs);
+    // console.log(this.props.viewDogs.unseenDogs);
     
     const frontAnimatedStyle = {
       transform: [
@@ -152,7 +152,7 @@ class ViewDogsScreen extends React.Component {
         {/* dog card */}
         <SwipeCards
           ref = {'swiper'}
-          cards={this.props.viewDogs.unseenDogs}
+          cards={this.props.unseenDogs}
           containerStyle = {{  backgroundColor: 'white', alignItems:'center', margin:20}}
           renderCard={(cardData) => (
             <View>

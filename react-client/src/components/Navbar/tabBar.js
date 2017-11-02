@@ -29,7 +29,6 @@ class TabBar extends React.Component {
     }
     this.changeState = this.changeState.bind(this);
   }
-<<<<<<< HEAD
 
   // function to set state
   changeState(flag) {
@@ -40,11 +39,6 @@ class TabBar extends React.Component {
     });
   }
 
-=======
-  // static navigationOptions = {
-  //   title: 'Home',
-  // };
->>>>>>> [add] styling
   render() {
 
     const { navigate } = this.props.navigation;
