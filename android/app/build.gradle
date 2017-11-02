@@ -137,8 +137,14 @@ android {
 }
 
 dependencies {
+<<<<<<< HEAD
     compile project(':react-native-fbsdk')
     compile project(':react-native-maps')
+=======
+    compile project(':react-native-fetch-blob')
+    compile project(':react-native-fbsdk')
+>>>>>>> [Add] User has ability to change their profile picture.
+    compile project(':react-native-image-crop-picker')
     compile project(':react-native-vector-icons')
     compile fileTree(dir: "libs", include: ["*.jar"])
     compile "com.android.support:appcompat-v7:23.0.1"

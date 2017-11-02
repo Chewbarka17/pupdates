@@ -3,6 +3,7 @@ import action from '../../actions/Profiles/dogProfileActions';
 const initialState = {
   posted: false,
   fetched: false,
+  updated: false,
   dogs: [],
   dogInfo: [],
 };
@@ -12,7 +13,12 @@ const dogReducer = (state = initialState, action) => {
     case 'FETCH_DOG_FULFILLED': {
       return Object.assign({}, state, {
         fetched: true,
-        dog: action.payload,
+        dogs: state.dogs.concat(action.payload),
+      });
+    }
+    case 'FETCH_DOG_REJECTED': {
+      return Object.assign({}, state, {
+        error: action.payload,
       });
     }
     case 'FETCH_OWNER_REJECTED': {
@@ -21,6 +27,7 @@ const dogReducer = (state = initialState, action) => {
       });
     }
     case 'POST_DOG_FULFILLED': {
+      console.log('post payload', action.payload)
       return Object.assign({}, state, {
         posted: true,
         dogs: state.dogs.concat(action.payload),
@@ -31,18 +38,17 @@ const dogReducer = (state = initialState, action) => {
         error: action.payload,
       });
     }
-    case 'UPDATE_DOG_REJECTED': {
-      return Object.assign({}, state, {
-        error: action.payload,
-      });
-    }
     case 'UPDATE_DOG_FULFILLED': {
       return Object.assign({}, state, {
         updated: true,
-        user: state.dogs.filter((dog) => {
-          console.log('what is action.payload', dog);
-          dog._id === action.payload.dogid ? action.payload : dog;
-        }),
+        dogs: state.dogs.filter((dog) => {
+          return dog._id !== action.payload._id;
+        }).concat(action.payload),
+      });
+    }
+    case 'UPDATE_DOG_REJECTED': {
+      return Object.assign({}, state, {
+        error: action.payload,
       });
     }
     case 'DELETE_DOG_FULFILLED': {
@@ -53,7 +59,7 @@ const dogReducer = (state = initialState, action) => {
     }
     case 'DELETE_DOG_REJECTED': {
       return Object.assign({}, state, {
-        deleting: false,
+        deleted: false,
         error: action.payload,
       });
     }

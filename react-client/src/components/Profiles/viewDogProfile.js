@@ -3,7 +3,7 @@ import { StackNavigator } from 'react-navigation';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { View, Text } from 'react-native';
-import { Button } from 'react-native-elements';
+import { Button, Avatar } from 'react-native-elements';
 
 import * as dogActions from '../../actions/Profiles/dogProfileActions';
 
@@ -18,11 +18,11 @@ class viewDogProfile extends Component {
   }
 
   handlePress() {
-     const { navigate } = this.props.navigation
-     console.log("this.props: ", this.props);
-     //console.log("this.props: ", this.props);
-     // console.log("navigate: ", navigate);
-    // navigate('EditDogProfile', this.props.navigation.state.params);
+    const { navigate } = this.props.navigation
+    navigate('EditDogProfile', this.props.navigation.state.params);
+    // console.log("this.props: ", this.props);
+    //console.log("this.props: ", this.props);
+    // console.log("navigate: ", navigate);
     // this.props.navigate('EditDogProfile');
   }
 
@@ -34,10 +34,18 @@ class viewDogProfile extends Component {
       breed, 
       gender, 
       bio,
-    } = this.props.navigation.state.params
+      pictures,
+    } = this.props.navigation.state.params;
 
     return (
       <View>
+        <Avatar
+          xlarge
+          rounded
+          source={{uri: pictures[0]}}
+          onPress={() => console.log("Works!")}
+          activeOpacity={0.7}
+        />
         <Text>
           Name: { name }
         </Text>

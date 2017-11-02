@@ -87,5 +87,7 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Pupdates will use your photos as your profile picture</string>
 </dict>
 </plist>

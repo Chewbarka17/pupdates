@@ -27,7 +27,7 @@ module.exports = {
   },
 
   getDogsByOwner: (req, res) => {
-    console.log('get dogs by owner', req.body);
+    // console.log('get dogs by owner', req.body);
     Owners.find({ _id: req.params.userid }, (err) => {
       if (err) {
         console.log('error getting dogs ', err);
@@ -54,7 +54,7 @@ module.exports = {
   },
 
   addDog: (req, res) => {
-    console.log('adding a dog', req.body);
+    // console.log('adding a dog', req.body);
     const dog = new Dogs({
       _id: new mongoose.Types.ObjectId(),
       name: req.body.name,
@@ -93,6 +93,9 @@ module.exports = {
         name: req.body.name,
         age: req.body.age,
         breed: req.body.breed,
+        gender: req.body.gender,
+        bio: req.body.bio,
+        pictures: req.body.pictures,
       },
     }, { new: true }, (err, data) => {
       console.log('callback', data);

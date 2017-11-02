@@ -1,8 +1,8 @@
 import axios from 'axios';
 import { AsyncStorage } from 'react-native';
-import { StackNavigator, NavigationActions } from 'react-navigation';
+import { NavigationActions } from 'react-navigation';
 
-export const getOwnerFromDB = (fb, navigate, callback) => (dispatch) => {
+export const getOwnerFromDB = (fb, navigation, callback) => (dispatch) => {
   axios.get(`http://localhost:8000/api/fbuser/${fb.id}`)
     .then(({ data }) => {
       if (data.length === 0) {
@@ -14,15 +14,13 @@ export const getOwnerFromDB = (fb, navigate, callback) => (dispatch) => {
             alert('Failure! Could not save user to async storage', error);
           }
         });
-        navigate('TabBar');
-        // console.log("get owner navigate: ", navigate);
-        // const navigateToTabBar = NavigationActions.reset({
-        //   index: 0,
-        //   actions: [
-        //     NavigationActions.navigate({routeName: 'TabBar'})
-        //   ]
-        // });
-        // navigate.dispatch(navigateToTabBar);
+        const navigateToTabBar = NavigationActions.reset({
+          index: 0,
+          actions: [
+            NavigationActions.navigate({routeName: 'TabBar'})
+          ]
+        });
+        navigation.dispatch(navigateToTabBar);
       }
     })
     .catch((err) => {
@@ -30,7 +28,7 @@ export const getOwnerFromDB = (fb, navigate, callback) => (dispatch) => {
     });
 };
 
-export const addOwnerToDB = (fb, navigate) => (dispatch) => {
+export const addOwnerToDB = (fb, navigation) => (dispatch) => {
   const user = {
     fb_id: fb.id,
     name: fb.name,
@@ -48,15 +46,13 @@ export const addOwnerToDB = (fb, navigate) => (dispatch) => {
           alert('Failure! Could not save user to async storage', error);
         }
       });
-      navigate('TabBar');
-      // console.log("add owner navigate: ", navigate);
-      // const navigateToTabBar = NavigationActions.reset({
-      //   index: 0,
-      //   actions: [
-      //     NavigationActions.navigate({routeName: 'TabBar'})
-      //   ]
-      // });
-      // navigate.dispatch(navigateToTabBar);
+      const navigateToTabBar = NavigationActions.reset({
+        index: 0,
+        actions: [
+          NavigationActions.navigate({routeName: 'TabBar'})
+        ]
+      });
+      navigation.dispatch(navigateToTabBar);
     })
     .catch((err) => {
       dispatch({ type: 'POST_OWNER_FROM_MONGO_REJECTED', payload: err });
@@ -64,11 +60,11 @@ export const addOwnerToDB = (fb, navigate) => (dispatch) => {
     });
 };
 
-export const saveAwsSecretSauce = (accessKeyId, secretAcessKey, sessionToken) => (dispatch) => {
+export const saveAwsSecretSauce = (accessKeyId, secretAccessKey, sessionToken) => (dispatch) => {
   const aws = {
-    accessKeyId,
-    secretAcessKey,
-    sessionToken,
+    accessKeyId: accessKeyId,
+    secretAccessKey: secretAccessKey,
+    sessionToken: sessionToken,
   };
   dispatch({ type: 'AWS_SECRET_SAUCE_FULFILLED', payload: aws });
 };
@@ -92,8 +88,8 @@ export const saveAwsSecretSauce = (accessKeyId, secretAcessKey, sessionToken) =>
 //     });
 // };
 
-export const updateOwners = (name, age, location, bio, userid, coords) => (dispatch) => {
-  console.log('update owners location', location);
+export const updateOwners = (name, age, location, bio, userid, coords, picture, callback) => (dispatch) => {
+  // console.log('update owners location', location);
   location.formatted_address ? location = location.formatted_address : location;
   axios.patch('http://localhost:8000/api/users', {
     userid,
@@ -102,7 +98,7 @@ export const updateOwners = (name, age, location, bio, userid, coords) => (dispa
     location,
     bio,
     coords,
-    picture: 'http://www.readersdigest.ca/wp-content/uploads/2011/01/4-ways-cheer-up-depressed-cat.jpg', // to be changed
+    picture,
     rating: 4, // to be changed
   })
     .then((response) => {
@@ -112,6 +108,7 @@ export const updateOwners = (name, age, location, bio, userid, coords) => (dispa
           console.log('Failure! Could not save user to async storage during update', error);
         }
       });
+      callback(response.data);
     })
     .catch((err) => {
       dispatch({ type: 'UPDATE_OWNER_REJECTED', payload: err });

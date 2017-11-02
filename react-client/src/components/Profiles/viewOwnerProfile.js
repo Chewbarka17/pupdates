@@ -66,7 +66,7 @@ class viewOwnerProfile extends Component {
   }
 
   getLocation(position) {
-    axios.get(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${position.coords.latitude},${position.coords.longitude}&key=AIzaSyB1S52rdgtYi-52GK2b149DGxAZb_rKGdY`)
+    axios.get(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${position.coords.latitude},${position.coords.longitude}&key=AIzaSyABBYsfb17rEn8uzLRyf0o_77R2A8AjI6g`)
       .then(({data}) => {
         console.log('api request', data);
         this.props.ownerActions.updateOwners(
@@ -76,11 +76,12 @@ class viewOwnerProfile extends Component {
           this.props.user.bio,
           this.props.user._id,
           [position.coords.latitude, position.coords.longitude],
+          this.props.user.picture,
         )
       })
       .catch((err) => {
         console.log(err);
-      })
+      });
   }
 
   getDogs() {
@@ -93,7 +94,7 @@ class viewOwnerProfile extends Component {
       })
       .catch((err) => {
         console.log(err);
-      })
+      });
   }
   
   _keyExtractor(item, index) {
@@ -103,13 +104,13 @@ class viewOwnerProfile extends Component {
   render () {
     //const { navigate } = this.props.navigation;
     // console.log("owner props", this.props);
-    const { user } = this.props;
+    const { user, profilePic } = this.props;
     return (
       <View>
         <Avatar
           large
           rounded
-          source={{uri: user.picture}}
+          source={{uri: profilePic}}
           activeOpacity={0.7}
         />
         <Text>
@@ -151,11 +152,13 @@ class viewOwnerProfile extends Component {
               backgroundColor='transparent'
             >
             <ListItem
+              roundAvatar
               onPress={() =>
                 this.props.navigate('ViewDogProfile', item)
               }
               title={item.name}
               subtitle={`Age: ${item.age} Breed: ${item.breed}`}
+              avatar={{ uri: `${item.pictures[0]}` }}
               id={item.id}
             />
             </Swipeout>
@@ -181,7 +184,8 @@ const viewOwnerState = (store) => {
     dogs: store.Dogs.dogs,
     user: store.Owners.user,
     userId: store.Owners.user._id,
-    location: store.Owners.userLocation
+    location: store.Owners.userLocation,
+    profilePic: store.Owners.user.picture,
   }
 }
 

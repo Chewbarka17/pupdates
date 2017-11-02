@@ -1,6 +1,18 @@
 import axios from 'axios';
 
-export const postDogs = (name, age, breed, gender, bio, owner) => (dispatch) => {
+export const getADog = (dogid, callback) => (dispatch) => {
+  axios.get(`http://localhost:8000/api/dogs/${dogid}`)
+  .then((response) => {
+    console.log('response data', response.data);
+    dispatch({ type: 'FETCH_DOG_FULFILLED', payload: response.data });
+    callback(response.data);
+  })
+  .catch((err) => {
+    dispatch({ type: 'FETCH_DOG_REJECTED', payload: err });
+  });
+};
+  
+export const postDogs = (name, age, breed, gender, bio, owner, pictures, callback) => (dispatch) => {
   axios.post('http://localhost:8000/api/dogs', {
     name,
     age,
@@ -8,29 +20,39 @@ export const postDogs = (name, age, breed, gender, bio, owner) => (dispatch) => 
     gender,
     bio,
     owner,
+    pictures,
   })
     .then((response) => {
       dispatch({ type: 'POST_DOG_FULFILLED', payload: response.data });
+      callback(response.data);
     })
     .catch((err) => {
       dispatch({ type: 'POST_DOG_REJECTED', payload: err });
     });
 };
 
-export const updateDogs = (name, age, breed, dogid) => (dispatch) => {
+export const updateDogs = (name, age, breed, gender, bio, dogid, pictures, data, callback) => (dispatch) => {
   axios.patch(`http://localhost:8000/api/dogs/${dogid}`, {
     name,
     age,
     breed,
+    gender,
+    bio,
+    pictures,
   })
     .then((response) => {
-      console.log('this is response.data', JSON.parse(response.config.data));
-      dispatch({
-        type: 'UPDATE_DOG_FULFILLED',
-        payload: {
-          name, age, breed, dogid,
-        },
-      });
+      // console.log('this is response.data', JSON.parse(response.config.data));
+      let dog = JSON.parse(response.config.data);
+      // console.log('dog', dog);
+      data.name = dog.name;
+      data.age = dog.age;
+      data.breed = dog.breed;
+      data.gender = dog.gender;
+      data.bio = dog.bio;
+      data.pictures[0] = dog.pictures;
+      // console.log('updated dogs', data);
+      dispatch({ type: 'UPDATE_DOG_FULFILLED', payload: data });
+      callback(data);
     })
     .catch((err) => {
       dispatch({ type: 'UPDATE_DOG_REJECTED', payload: err });

@@ -41,14 +41,14 @@ class ViewDogsScreen extends React.Component {
       this.props.actions.findDistance(this.props.coords, this.props.unseenDogs[1]);
     }
   }
-
+  
   handleNope(cardData) {
     this.props.actions.updateDogsSeen(this.props.uid, cardData._id, this.props.coords);
     if (this.props.unseenDogs[1]) {
       this.props.actions.findDistance(this.props.coords, this.props.unseenDogs[1]);
     }
   }
-
+  
   // press buttons
   yup() {
     if (this.props.unseenDogs.length > 0) {
@@ -65,7 +65,7 @@ class ViewDogsScreen extends React.Component {
       )
     }
   }
-
+  
   nope() {
     if (this.props.unseenDogs.length > 0) {
       this.handleNope(this.props.unseenDogs[0]);
@@ -81,7 +81,7 @@ class ViewDogsScreen extends React.Component {
       )
     }
   }
-
+  
   noMore() {
     return (
       <View>
@@ -92,11 +92,11 @@ class ViewDogsScreen extends React.Component {
       </View>
     )
   }
-
+  
   navigateToProfile(cardData) {
     this.props.navigate('LikedDogProfile', cardData);
   }
-
+  
   render() {
     return (
       <View style={styles.container}>
