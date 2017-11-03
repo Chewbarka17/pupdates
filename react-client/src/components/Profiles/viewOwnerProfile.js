@@ -39,6 +39,7 @@ class viewOwnerProfile extends Component {
   }
  
   componentWillReceiveProps() {
+    console.log('test cwrp')
     this.getDogs();    
   }
 

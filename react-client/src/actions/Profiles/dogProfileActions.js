@@ -70,16 +70,8 @@ export const deleteDogs = (dogid, uid) => (dispatch) => {
     .catch((err) => {
       dispatch({ type: 'DELETE_DOG_REJECTED', payload: err });
     });
-
-  // axios.delete(`http://localhost:8000/api/user/${uid}/dogs/${dogid}`, {data: {owner: uid, dogid: dogid}})
-  //   .then(() => {
-  //     dispatch({ type: 'DELETE_DOG_FULFILLED', payload: dogid });
-  //   })
-  //   .catch((err) => {
-  //     dispatch({ type: 'DELETE_DOG_REJECTED', payload: err });
-  //   });
 };
 
-// export const listDogs = dogInfo => (dispatch) => {
-//   dispatch({ type: 'LIST_DOGS', payload: dogInfo });
-// };
+export const showDog = dog => (dispatch) => {
+  dispatch({ type: 'SHOW_DOG', payload: dog });
+};
