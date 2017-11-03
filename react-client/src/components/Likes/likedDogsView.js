@@ -4,8 +4,10 @@ import {
   Image,
   Button,
   FlatList,
+  Animated,
+  TouchableOpacity,
   ActivityIndicator, 
-  TouchableHighlight 
+  TouchableHighlight,
 } from 'react-native';
 import axios from 'axios';
 import React, { Component } from 'react';
@@ -20,6 +22,10 @@ import { bindActionCreators } from 'redux';
 
 import DogProfile from '../Likes/likedDogProfile';
 
+// animate
+import * as Animatable from 'react-native-animatable';
+
+
 class LikedDogsView extends React.Component {
 
   constructor(props) {
@@ -27,12 +33,18 @@ class LikedDogsView extends React.Component {
 
     this.state = {
       likedDogs: [],
-      item: null
+      item: null,
+      refreshing: false,
+
+      // animate
+      bounceValue: new Animated.Value(0),
     };
   }
 
-  componentDidMount = () => {
+
+  componentDidMount() {
     this.makeRemoteRequest();
+
   }
 
   componentWillReceiveProps() {
@@ -49,7 +61,7 @@ class LikedDogsView extends React.Component {
       });
   };
 
-  deleteLikedDog = (item) => {
+  deleteLikedDog(item) {
     axios.patch(`http://localhost:8000/api/likeddogs/${this.props.uid}`, {dogid: item._id})
       .then(() => {
         this.makeRemoteRequest();
@@ -61,10 +73,11 @@ class LikedDogsView extends React.Component {
 
   render() {
     return (
-      <View>
+
+      <View>      
         <Image
-          style={{width: 380, height: 140}}
-          source={require('../ViewDogs/heartsCorgi.gif')}
+          style={{width: 380, height: 140, marginLeft: -10}}
+          source={require('../../../images/likesHappyCorgi.gif')}
         />
 
         <List containerStyle={{ borderTopWidth: 0, borderBottomWidth: 0 }}>
@@ -85,9 +98,7 @@ class LikedDogsView extends React.Component {
               >
               <View>
                 <ListItem
-                  onPress={() =>
-                    this.props.navigate('LikedDogProfile', item)
-                  }
+                  onPress={() => this.props.navigate('LikedDogProfile', item)}
                   roundAvatar
                   title={`${item.name}`}
                   subtitle={item.breed}
@@ -99,6 +110,8 @@ class LikedDogsView extends React.Component {
               </Swipeout>
             )}
             keyExtractor={item => item.breed}
+            refreshing={this.state.refreshing}
+            onRefresh={this.handleRefresh}
           />
         </List>
       </View>
@@ -108,15 +121,8 @@ class LikedDogsView extends React.Component {
 
 const likedState = (store) => {
   return {
-    // likedDogs: store.LikedDogs.likedDogs,
     uid: store.Owners.user._id,
   }
 }
-
-// const likedDispatch = (dispatch) => {
-//   return {
-//     actions: bindActionCreators(likeActions, dispatch),
-//   }
-// };
 
 export default connect(likedState, null)(LikedDogsView);

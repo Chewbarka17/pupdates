@@ -104,7 +104,7 @@ class ChatRoom extends React.Component {
           },
           right: {
             marginRight: 1,
-            backgroundColor: '#2A86EF',
+            backgroundColor: '#f44e64',
           }
         }}
       />

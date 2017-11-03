@@ -8,6 +8,11 @@ import {
 
 import CustomTabBar from './customNavbar';
 import ScrollableTabView from 'react-native-scrollable-tab-view';
+import Login from '../Authentication/Login/login';
+import Splash from '../Splash/splashPageView';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import * as ownerActions from '../../actions/Profiles/ownerActions';
 
 import ViewDogs from '../ViewDogs/doglist';
 import ChatList from '../Chat/chatList';
@@ -15,9 +20,6 @@ import LikedDogs from '../Likes/likedDogsView';
 import ViewOwnerProfile from '../Profiles/viewOwnerProfile';
 
 class TabBar extends React.Component {
-  static navigationOptions = {
-    title: 'Home',
-  };
 
   constructor(props) {
     super(props);
@@ -40,43 +42,50 @@ class TabBar extends React.Component {
   }
 
   render() {
-
     const { navigate } = this.props.navigation;
+    
+    if (this.props.loggedIn) {
+      return (
+        <ScrollableTabView
+          locked={true} // this needs to be true because of swiping dog cards
+          style={{marginTop: 24, backgroundColor: 'white'}}
+          initialPage={0}
+          renderTabBar={() => <CustomTabBar hack={this.changeState}/>}
+        >
 
-    return (
-      <ScrollableTabView
-        locked={true} // this needs to be true because of swiping dog cards
-        style={{marginTop: 24, }}
-        initialPage={0}
-        renderTabBar={() => <CustomTabBar hack={this.changeState}/>}
-      >
+          <ScrollView tabLabel="md-person" style={styles.tabView}>
+            <View>
+              <ViewOwnerProfile navigate={navigate} idk={this.state.flag0}/>
+            </View>
+          </ScrollView>
 
-        <ScrollView tabLabel="md-person" style={styles.tabView}>
-          <View>
-            <ViewOwnerProfile navigate={navigate} idk={this.state.flag0}/>
-          </View>
-        </ScrollView>
+          <ScrollView tabLabel="md-paw" style={styles.tabView} scrollEnabled={ false }>
+            <View>
+              <ViewDogs navigate={navigate} idk={this.state.flag1}/>
+            </View>
+          </ScrollView>
 
-        <ScrollView tabLabel="md-paw" style={styles.tabView} scrollEnabled={ false }>
-          <View>
-            <ViewDogs navigate={navigate} idk={this.state.flag1}/>
-          </View>
-        </ScrollView>
+          <ScrollView tabLabel="ios-heart" style={styles.tabView}>
+            <View>
+              <LikedDogs navigate={navigate} idk={this.state.flag2}/>
+            </View>
+          </ScrollView>
 
-        <ScrollView tabLabel="ios-heart" style={styles.tabView}>
-          <View>
-            <LikedDogs navigate={navigate} idk={this.state.flag2}/>
-          </View>
-        </ScrollView>
+          <ScrollView tabLabel="ios-chatbubbles" style={styles.tabView}>
+            <View>
+              <ChatList navigate={navigate} idk={this.state.flag3}/>
+            </View>
+          </ScrollView>
 
-        <ScrollView tabLabel="ios-chatbubbles" style={styles.tabView}>
-          <View>
-            <ChatList navigate={navigate} idk={this.state.flag3}/>
-          </View>
-        </ScrollView>
-
-    </ScrollableTabView>
-    )
+        </ScrollableTabView> 
+      )
+    } else {
+      return (
+        <View> 
+          <Splash />
+        </View>
+      )
+    }
   }
 }
 
@@ -84,11 +93,11 @@ const styles = StyleSheet.create({
   tabView: {
     flex: 1,
     padding: 10,
-    backgroundColor: 'rgba(0,0,0,0.01)',
+    backgroundColor: 'white',
   },
   card: {
     borderWidth: 1,
-    backgroundColor: '#fff',
+    backgroundColor: 'white',
     borderColor: 'rgba(0,0,0,0.1)',
     margin: 5,
     height: 150,
@@ -100,4 +109,17 @@ const styles = StyleSheet.create({
   },
 });
 
-export default TabBar;
+const loggedInState = (store) => {
+  return {
+    loggedIn: store.Owners.loggedIn,
+  }
+}
+
+const loggedInDispatch = (dispatch) => {
+  return {
+    actions: bindActionCreators(ownerActions, dispatch),
+  }
+};
+
+export default connect(loggedInState, loggedInDispatch)(TabBar);
+

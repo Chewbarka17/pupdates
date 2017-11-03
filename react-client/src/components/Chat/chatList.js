@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, FlatList, TouchableHighlight } from 'react-native';
+import { View, FlatList, TouchableHighlight, Image } from 'react-native';
 import { ListItem } from "react-native-elements";
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -38,6 +38,10 @@ class ChatList extends React.Component {
   render() {
     return (
       <View>
+      <Image
+          style={{width: 380, height: 140, marginLeft: -10}}
+          source={require('../../../images/chatLaptopCorgi.gif')}
+        />
         <FlatList
           keyExtractor={this._keyExtractor}
           data={this.props.rooms}
