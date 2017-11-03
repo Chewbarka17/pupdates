@@ -27,7 +27,7 @@ class LoginScreen extends Component {
     this._fbAuth = this._fbAuth.bind(this);
     this._getPublicProfile = this._getPublicProfile.bind(this);
     this._getAwsSecretSauce = this._getAwsSecretSauce.bind(this);
-    this._checkUserInDB = this._checkUserInDB.bind(this);
+    // this._checkUserInDB = this._checkUserInDB.bind(this);
     
   }
 
@@ -97,9 +97,13 @@ class LoginScreen extends Component {
   _getPublicProfile(accessToken) {
     const responseInfoCallback = (error, data) => {
       if (error) {
+        console.log(error)
         alert('Error fetching data: ' + error.toString());
       } else {
-        this._checkUserInDB(data);
+        console.log(data)
+        this.props.actions.findOrCreateOwner(data);
+        
+        // this._checkUserInDB(data);
       }
     }
 
@@ -116,14 +120,9 @@ class LoginScreen extends Component {
     new GraphRequestManager().addRequest(infoRequest).start();
   }
 
-  _checkUserInDB = (fb) => {
-    this.props.actions.getOwnerFromDB(fb, (error) => {
-      console.log('check user', error);
-      if (error) {
-        this.props.actions.addOwnerToDB(fb);
-      }
-    });
-  }
+  // _checkUserInDB(fb) {
+  //   this.props.actions.getOwnerFromDB(fb);
+  // }
 
   render() {
     return (

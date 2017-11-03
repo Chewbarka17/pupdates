@@ -19,7 +19,6 @@ module.exports = {
   getDog: (req, res) => {
     Dogs.find({ _id: req.params.dogid }, (err, dog) => {
       if (err) {
-        console.log('error getting this dog ', err);
         res.status(500).send(err);
       }
       res.status(200).send(dog);
@@ -27,34 +26,30 @@ module.exports = {
   },
 
   getDogsByOwner: (req, res) => {
-    // console.log('get dogs by owner', req.body);
     Owners.find({ _id: req.params.userid }, (err) => {
       if (err) {
-        console.log('error getting dogs ', err);
         res.status(500).send(err);
       }
     })
       .then((data) => {
-        // console.log(data);
         Dogs.find({ _id: { $in: data[0].dogs } }, (err) => {
           if (err) {
-            console.log('error getting this dog ', err);
+            res.status(500).send(err);
           }
         })
           .then((result) => {
             res.status(200).send(result);
           })
           .catch((err) => {
-            console.log('err1', err);
+            res.status(500).send(err);
           });
       })
       .catch((err) => {
-        console.log('err2', err);
+        res.status(500).send(err);
       });
   },
 
   addDog: (req, res) => {
-    // console.log('adding a dog', req.body);
     const dog = new Dogs({
       _id: new mongoose.Types.ObjectId(),
       name: req.body.name,
@@ -68,21 +63,19 @@ module.exports = {
     });
     dog.save((err) => {
       if (err) {
-        console.log('Failed to save dog ', err);
+        res.status(500).send(err);
       }
     })
       .then((data) => {
         // update owners dogs array by owner id
         Owners.findOneAndUpdate({ _id: req.body.owner }, { $push: { dogs: data._id } }, (err) => {
           if (err) {
-            console.log('add dog update error', err);
             res.status(500).send('error', err);
           }
           res.status(201).send(data);
         });
       })
       .catch((err) => {
-        console.log(err);
         res.status(500).send(err);
       });
   },
@@ -98,9 +91,7 @@ module.exports = {
         pictures: req.body.pictures,
       },
     }, { new: true }, (err, data) => {
-      console.log('callback', data);
       if (err) {
-        console.log('update error', err);
         res.status(500).send('error', err);
       }
       res.status(201).send(data);
@@ -110,7 +101,7 @@ module.exports = {
   removeDog: (req, res) => {
     Owners.findOneAndUpdate({ _id: req.body.owner }, { $pull: { dogs: req.body.dogid } }, (err) => {
       if (err) {
-        console.log('add dog update error', err);
+        res.status(500).send(err);
       }
     });
 
@@ -120,7 +111,6 @@ module.exports = {
       }
     })
       .then((data) => {
-        // console.log(data._id);
         res.status(202).send(data);
       })
       .catch((err) => {
@@ -131,14 +121,12 @@ module.exports = {
   getUnseenDogsByOwner: (req, res) => {
     Owners.find({ _id: req.params.userid }, (err) => {
       if (err) {
-        console.log('error getting user', err);
         res.status(500).send(err);
       }
     })
       .then((data) => {
         Dogs.find({ _id: { $nin: data[0].dogsSeen.concat(data[0].dogs) }}, (err) => {
           if (err) {
-            console.log('error getting dogsSeen', err);
             res.status(500).send(err);
           }
         })
@@ -146,12 +134,10 @@ module.exports = {
             res.status(200).send(result);
           })
           .catch((err) => {
-            console.log('error getting dogsSeen', err);
             res.status(500).send(err);
           });
       })
       .catch((err) => {
-        console.log('error getting user', err);
         res.status(500).send(err);
       })
   },
@@ -159,14 +145,12 @@ module.exports = {
   getLikedDogsByOwner: (req, res) => {
     Owners.find({ _id: req.params.userid }, (err) => {
       if (err) {
-        console.log('error getting user', err);
         res.status(500).send(err);
       }
     })
       .then((data) => {
         Dogs.find({ _id: { $in: data[0].dogsLiked }}, (err) => {
           if (err) {
-            console.log('error getting dogsLiked', err);
             res.status(500).send(err);
           }
         })
@@ -178,13 +162,11 @@ module.exports = {
             res.status(200).send(result);
           })
           .catch((err) => {
-            console.log('error getting dogsLiked', err);
             res.status(500).send(err);
           });
       })
       .catch((err) => {
-        console.log('error getting user', err);
         res.status(500).send(err);
-      })
+      });
   },
 };

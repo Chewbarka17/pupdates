@@ -76,6 +76,16 @@ const dogReducer = (state = initialState, action) => {
         dogInfo: action.payload,
       });
     }
+    case 'FETCH_OWNERS_DOGS_FULFILLED': {
+      return Object.assign({}, state, {
+        dogs: action.payload,
+      });
+    }
+    case 'FETCH_OWNERS_DOGS_FAILED': {
+      return Object.assign({}, state, {
+        error: action.payload,
+      });
+    }
     default:
       return state;
   }

@@ -126,9 +126,7 @@ class ViewDogsScreen extends React.Component {
     )
   }
 
-  render() {
-    // console.log(this.props.viewDogs.unseenDogs);
-    
+  render() {    
     const frontAnimatedStyle = {
       transform: [
         { rotateY: this.frontInterpolate }
@@ -143,12 +141,13 @@ class ViewDogsScreen extends React.Component {
    return (
       <View style={styles.container}>
 
-
         {/* dog card */}
         <SwipeCards
           ref = {'swiper'}
           cards={this.props.unseenDogs}
-          containerStyle = {{  backgroundColor: 'white', alignItems:'center', margin:20}}
+          containerStyle = {{ backgroundColor: 'white', alignItems:'center', margin:20 }}
+          nopeText={"Grrr!"}
+          yupText= {"Woof!"}
           renderCard={(cardData) => (
             <View>
               <Animated.View style={[styles.card, frontAnimatedStyle]}>
@@ -165,7 +164,6 @@ class ViewDogsScreen extends React.Component {
                       <Icon name='place' size={20} color="#777" />
                       <Text style={{fontFamily:'Avenir', fontSize:16, fontWeight:'300', color:'#a0a0a0'}}>
                         {
-                          // this.state.flag ? this.state.distance : this.handleLocation(cardData)
                           this.props.distance
                         }
                       </Text>

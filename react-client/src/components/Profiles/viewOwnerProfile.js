@@ -26,7 +26,6 @@ class viewOwnerProfile extends Component {
       latitude: null,
       longitude: null,
       error: null,
-      dogs: null,
     };
 
     this.ownerProfile = null;
@@ -34,17 +33,12 @@ class viewOwnerProfile extends Component {
     this.handlePressToAddDog = this.handlePressToAddDog.bind(this);
     this.handleGeolocation = this.handleGeolocation.bind(this);
     this.getLocation = this.getLocation.bind(this);
-    this.getDogs = this.getDogs.bind(this);
     this.logout = this.logout.bind(this);
   }
   
   componentDidMount() {
     this.handleGeolocation();
-    this.getDogs();
-  }
- 
-  componentWillReceiveProps() {
-    this.getDogs();    
+    this.props.dogActions.getOwnersDogs(this.props.userId);
   }
 
   handlePressToEditUser() {
@@ -83,18 +77,6 @@ class viewOwnerProfile extends Component {
           [position.coords.latitude, position.coords.longitude],
           this.props.user.picture,
         )
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }
-
-  getDogs() {
-    axios.get('http://localhost:8000/api/users/dogs/' + this.props.userId)
-      .then(({data}) => {
-        this.setState({
-          dogs: data,
-        });
       })
       .catch((err) => {
         console.log(err);
@@ -162,7 +144,7 @@ class viewOwnerProfile extends Component {
         <View style={[styles.boxContainer, styles.boxFive]}>
 
            <FlatList
-           data={this.state.dogs}
+           data={this.props.dogs}
            keyExtractor={this._keyExtractor}
            renderItem={({ item }) => 
              <Swipeout right={[{
@@ -206,7 +188,6 @@ class viewOwnerProfile extends Component {
           </Button>
         </View>
       </View>
-      
     )
   }
 }
