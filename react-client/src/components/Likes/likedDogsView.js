@@ -5,6 +5,7 @@ import {
   Button,
   FlatList,
   Animated,
+  StyleSheet,
   TouchableOpacity,
   ActivityIndicator, 
   TouchableHighlight,
@@ -63,11 +64,15 @@ class LikedDogsView extends React.Component {
 
   render() {
     return (
-      <View>      
+
+      <View style={styles.container}>
+        <View style={[styles.boxContainer, styles.boxOne]}>
         <Image
-          style={{width: 380, height: 140, marginLeft: -10}}
-          source={require('../../../images/likesHappyCorgi.gif')}
+          style={{width: 235, height: 140}}
+          source={require('../../../images/likesHappyCorgiCropped.gif')}
         />
+        </View>
+        <View style={[styles.boxContainer, styles.boxTwo]}>
         <List containerStyle={{ borderTopWidth: 0, borderBottomWidth: 0 }}>
           <FlatList
             data={this.state.likedDogs}
@@ -102,7 +107,9 @@ class LikedDogsView extends React.Component {
             onRefresh={this.handleRefresh}
           />
         </List>
+        </View>
       </View>
+
     );
   }
 }
@@ -112,5 +119,27 @@ const likedState = (store) => {
     uid: store.Owners.user._id,
   }
 }
+
+var styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    flexDirection: 'column',
+  },
+  boxContainer: {
+    flex: 1,
+  },
+  boxOne: {
+    flex: 1,
+    backgroundColor: '#e35947',
+    marginRight: -10,
+    marginLeft: -10,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  boxTwo: {
+    flex: 1,
+    backgroundColor: 'white'
+  },
+});
 
 export default connect(likedState, null)(LikedDogsView);

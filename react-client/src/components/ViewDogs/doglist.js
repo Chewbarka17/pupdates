@@ -119,7 +119,7 @@ class ViewDogsScreen extends React.Component {
     return (
       <View>
         <Image
-          style={{width: 550, height: 300}}
+          style={{width: 550, height: 490}}
           source={require('../../../images/noMoreCryingCorgi.gif')}
         />
       </View>
