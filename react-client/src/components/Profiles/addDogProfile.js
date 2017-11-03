@@ -8,10 +8,11 @@ import {
   TextInput,
   Image,
 } from 'react-native';
-import { FormLabel, FormInput, Button } from 'react-native-elements';
+import { FormLabel, FormInput } from 'react-native-elements';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import ImagePicker from 'react-native-image-crop-picker';
+import Button from 'react-native-button';
 
 import uploadProfilePicture from '../../components/Profiles/util/uploadProfilePictureUtil';
 import * as dogActions from '../../actions/Profiles/dogProfileActions';
@@ -82,7 +83,29 @@ class AddDogProfile extends Component {
     const pictureSelected = this.state.image;
     const { navigate } = this.props.navigation;
     return (
-      <View>
+      <View style={styles.container}>
+        <View style={[styles.boxContainer, styles.boxOne]}>
+          {pictureSelected !== null ? (
+            <Image
+              style={{width: 150, height: 150, borderRadius: 70}}
+              source={{uri: pictureSelected.path}}
+            />
+          ) : (
+            // <Image
+            // style={{width: 200, height: 200}}
+            // source={{uri: this.props.picture}}
+            // />
+            <View></View>
+          )}
+          <View></View>
+          <Button
+            onPress={this.selectProfilePhoto}
+            containerStyle={{height:30, width: 130, overflow:'hidden', borderRadius:20, backgroundColor: '#828be5', justifyContent:'center', alignItems:'center'}}
+            style={{fontSize: 16, color: 'white', justifyContent:'center', alignItems:'center'}}
+          >
+            Select Picture
+          </Button>
+        </View>
         <FormLabel>Name</FormLabel>
         <FormInput
           editable
@@ -138,32 +161,42 @@ class AddDogProfile extends Component {
           id="bio"
           onChangeText={bio => this.setState({ bio })}
         />
-        {pictureSelected !== null ? (
-          <Image
-            style={{width: 100, height: 100}}
-            source={{uri: pictureSelected.path}}
-          />
-        ) : (
-          // <Image
-          // style={{width: 200, height: 200}}
-          // source={{uri: this.props.picture}}
-          // />
-          <View></View>
-        )}
-        <Button
-          title='Choose profile picture'
-          onPress={this.selectProfilePhoto}
-          color="#ffffff"
-          backgroundColor='#397af8'
-        />
-        <Button
-          title="Save"
+        <View style={[styles.boxContainer, styles.boxThree]}>
+          <Button
+          containerStyle={{height:35, width: 250, overflow:'hidden', borderRadius:20, backgroundColor: '#f44e64', justifyContent:'center', alignItems:'center'}}
+          style={{fontSize: 20, color: 'white', justifyContent:'center', alignItems:'center'}}
           onPress={this.handleSubmit}
-          />
+          >
+            Save
+          </Button>
+        </View>
       </View>
     );
   }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    flexDirection: 'column'
+  },
+  boxContainer: {
+    flex: 1,
+  },
+  boxOne: {
+    flex: 2,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  boxTwo: {
+    flex: 4,
+  },
+  boxThree: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  }
+});
 
   const dogState = (store) => {
     return {
