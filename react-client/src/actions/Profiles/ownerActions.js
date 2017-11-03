@@ -2,36 +2,33 @@ import axios from 'axios';
 import { AsyncStorage } from 'react-native';
 import { NavigationActions } from 'react-navigation';
 
-export const getOwnerFromDB = (fb, callback) => (dispatch) => {
+export const findOrCreateOwner = fb => (dispatch) => {
   axios.get(`http://localhost:8000/api/fbuser/${fb.id}`)
     .then(({ data }) => {
       if (data.length === 0) {
         console.log('User doesn\'t exist in collection');
+        const user = {
+          fb_id: fb.id,
+          name: fb.name,
+          picture: fb.picture.data.url,
+          age: null,
+          location: '',
+          bio: '',
+          rating: null,
+        };
+        axios.post('http://localhost:8000/api/users', user)
+          .then((result) => {
+            dispatch({ type: 'POST_OWNER_FROM_MONGO_FULFILLED', payload: result.data });
+          })
+          .catch((err) => {
+            dispatch({ type: 'POST_OWNER_FROM_MONGO_REJECTED', payload: err });
+          });
       } else {
         dispatch({ type: 'GET_OWNER_FROM_MONGO_FULFILLED', payload: data[0] });
       }
     })
     .catch((err) => {
       console.log('User doesn\'t exist in collection', err);
-    });
-};
-
-export const addOwnerToDB = fb => (dispatch) => {
-  const user = {
-    fb_id: fb.id,
-    name: fb.name,
-    picture: fb.picture.data.url,
-    age: null,
-    location: '',
-    bio: '',
-    rating: null,
-  };
-  axios.post('http://localhost:8000/api/users', user)
-    .then(({ data }) => {
-      dispatch({ type: 'POST_OWNER_FROM_MONGO_FULFILLED', payload: data });
-    })
-    .catch((err) => {
-      dispatch({ type: 'POST_OWNER_FROM_MONGO_REJECTED', payload: err });
     });
 };
 

@@ -8,7 +8,6 @@ module.exports = {
   getAllUsers: (req, res) => {
     Owners.find({}, (err, owners) => {
       if (err) {
-        console.log('error getting all users ', err);
         res.status(500).send(err);
       }
       const ownerMap = {};
@@ -23,7 +22,6 @@ module.exports = {
   getUser: (req, res) => {
     Owners.find({ _id: req.params.userid }, (err, owner) => {
       if (err) {
-        console.log('error getting this user ', err);
         res.status(500).send(err);
       }
       res.status(200).send(owner);
@@ -33,22 +31,11 @@ module.exports = {
   getUserByFBid: (req, res) => {
     Owners.find({ fb_id: req.params.fbid }, (err, owner) => {
       if (err) {
-        console.log('error getting this user fb', err);
         res.status(500).send(err);
       }
       res.status(200).send(owner);
     });
   },
-
-  // getUserByUserid: (req, res) => {
-  //   Owners.find({ _id: req.params.userid }, (err, owner) => {
-  //     if (err) {
-  //       console.log('error getting this user ', err);
-  //       res.status(500).send(err);
-  //     }
-  //     res.status(200).send(owner);
-  //   });
-  // },
 
   addUser: (req, res) => {
     const owner = new Owners({
@@ -63,7 +50,7 @@ module.exports = {
     });
     owner.save((err) => {
       if (err) {
-        console.error('Could not save owner', err);
+        res.status(500).send(err);
       }
     })
       .then((data) => {
@@ -87,7 +74,6 @@ module.exports = {
       },
     }, { new: true }, (err, data) => {
       if (err) {
-        console.log('update error', err);
         res.status(500).send(err);
       }
       res.status(201).send(data);
@@ -107,7 +93,6 @@ module.exports = {
     Owners.findOneAndUpdate({ _id: req.params.userid }, { $push: { dogsSeen: req.body.dogid } },
       (err) => {
         if (err) {
-          console.log('push to dogsSeen error', err);
           res.status(500).send('error', err);
         }
         res.status(201).send('successfuly updated user');
