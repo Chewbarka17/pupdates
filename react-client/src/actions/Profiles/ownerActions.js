@@ -1,5 +1,11 @@
 import axios from 'axios';
 
+/**
+ Request to server to get owner using facebook id
+ 
+ @param Facebook public profile and a callback
+ @return Owner obj from Mongo DB.
+ */
 export const findOrCreateOwner = fb => (dispatch) => {
   axios.get(`https://serene-atoll-31576.herokuapp.com/api/fbuser/${fb.id}`)
     .then(({ data }) => {
@@ -30,6 +36,37 @@ export const findOrCreateOwner = fb => (dispatch) => {
     });
 };
 
+/**
+  Request to server to post owner using facebook public profile data
+  as defaults.
+
+  @param Facebook public profile
+  @return Owner obj from Mongo DB.
+*/
+export const addOwnerToDB = fb => (dispatch) => {
+  const user = {
+    fb_id: fb.id,
+    name: fb.name,
+    picture: fb.picture.data.url,
+    age: null,
+    location: '',
+    bio: '',
+    rating: null,
+  };
+  axios.post('http://localhost:8000/api/users', user)
+    .then(({ data }) => {
+      dispatch({ type: 'POST_OWNER_FROM_MONGO_FULFILLED', payload: data });
+    })
+    .catch((err) => {
+      dispatch({ type: 'POST_OWNER_FROM_MONGO_REJECTED', payload: err });
+    });
+};
+
+/**
+  Save AWS credentials into Redux Store
+
+  @param AWS credentials
+*/
 export const saveAwsSecretSauce = (accessKeyId, secretAccessKey, sessionToken) => (dispatch) => {
   const aws = {
     accessKeyId: accessKeyId,

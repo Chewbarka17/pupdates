@@ -3,6 +3,12 @@ import RNFetchBlob from 'react-native-fetch-blob';
 import { Buffer } from 'buffer';
 import awsmobile from '../../../../../config/aws-exports';
 
+/**
+  Save user images to Amazon S3.
+
+  @param AWS credentials, an id, an image to upload, and a callback
+  @return AWS S3 obj
+*/
 const uploadProfilePicture = (awsSauce, id, image, callback) => {
   const s3 = new AWS.S3({
     accessKeyId: awsSauce.accessKeyId,
