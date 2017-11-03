@@ -65,9 +65,9 @@ export const updateOwners = (name, age, location, bio, userid, coords, picture) 
 };
 
 export const logOut = () => (dispatch) => {
-  dispatch({type: 'OWNER_LOGGED_OUT_FULFILLED', payload: false });
-}
+  dispatch({ type: 'OWNER_LOGGED_OUT_FULFILLED', payload: false });
+};
 
-export const logOutFailure = (error) => (dispatch) => {
-  dispatch({type: 'OWNER_LOGGED_OUT_REJECTED', payload: error });
-}
+export const logOutFailure = error => (dispatch) => {
+  dispatch({ type: 'OWNER_LOGGED_OUT_REJECTED', payload: error });
+};

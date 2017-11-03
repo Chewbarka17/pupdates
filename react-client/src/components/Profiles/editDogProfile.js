@@ -90,7 +90,6 @@ class EditDogProfile extends Component {
   }
 
   render() {
-    console.log('edit profile', this.props);
     const { navigate } = this.props.navigation;
     const { params } = this.props.navigation.state;
     const pictureSelected = this.state.image;
@@ -100,12 +99,12 @@ class EditDogProfile extends Component {
       <View style={[styles.boxContainer, styles.boxOne]}>
         {pictureSelected !== null ? (
           <Image
-            style={{width: 150, height: 150, borderRadius: 70}}
+            style={{width: 150, height: 150, borderRadius: 75}}
             source={{uri: pictureSelected.path}}
           />
         ) : (
           <Image
-          style={{width: 150, height: 150, borderRadius: 70}}
+          style={{width: 150, height: 150, borderRadius: 75}}
           source={{uri: params.pictures[0]}}
           />
         )}
