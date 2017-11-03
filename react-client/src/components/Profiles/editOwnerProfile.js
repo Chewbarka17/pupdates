@@ -50,6 +50,7 @@ class EditOwnerProfile extends Component {
   }
 
   handleSubmit() {
+    console.log(this.props)
     const { name, age, bio, picture } = this.state;
     let nameCheck = name || this.props.name;
     let ageCheck = age || this.props.age;
@@ -67,29 +68,22 @@ class EditOwnerProfile extends Component {
         if (data) {
           pictureCheck = data.Location;
         }
-        this.props.actions.updateOwners(nameCheck, ageCheck, this.props.location, bioCheck, this.props.userId, this.props.coords, pictureCheck, (data) => {
-          this.navigateToTabBar();
-        });
-      });
-    } else {
-      this.props.actions.updateOwners(nameCheck, ageCheck, this.props.location, bioCheck, this.props.userId, this.props.coords, pictureCheck, (data) => {
+        this.props.actions.updateOwners(nameCheck, ageCheck, this.props.location, bioCheck, this.props.userId, this.props.coords, pictureCheck);
         this.navigateToTabBar();
       });
+    } else {
+      this.props.actions.updateOwners(nameCheck, ageCheck, this.props.location, bioCheck, this.props.userId, this.props.coords, pictureCheck);
+        this.navigateToTabBar();
     }
   }
 
   navigateToTabBar() {
-    const navigateToTabBar = NavigationActions.reset({
-      index: 0,
-      actions: [
-        NavigationActions.navigate({routeName: 'TabBar'})
-      ]
-    });
-    this.props.navigation.dispatch(navigateToTabBar);
+    const backAction = NavigationActions.back();
+    this.props.navigation.dispatch(backAction);
   }
 
   render() {
-    console.log('rendering edit owner profile')
+    console.log('rendering edit owner profile', this.props)
     const { navigate } = this.props.navigation;
     const pictureSelected = this.state.image;
     return (

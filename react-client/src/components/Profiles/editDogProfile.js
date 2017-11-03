@@ -90,7 +90,7 @@ class EditDogProfile extends Component {
     const navigateToTabBar = NavigationActions.reset({
       index: 0,
       actions: [
-        NavigationActions.navigate({routeName: 'TabBar'})
+        NavigationActions.navigate({routeName: 'Home'})
       ]
     });
     this.props.navigation.dispatch(navigateToTabBar);

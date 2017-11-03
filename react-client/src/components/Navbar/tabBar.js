@@ -55,7 +55,7 @@ class TabBar extends React.Component {
 
           <ScrollView tabLabel="md-person" style={styles.tabView}>
             <View>
-              <ViewOwnerProfile navigate={navigate} hack={this.state.flag0}/>
+              <ViewOwnerProfile navigation={this.props.navigation} hack={this.state.flag0}/>
             </View>
           </ScrollView>
 
