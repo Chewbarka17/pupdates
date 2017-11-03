@@ -100,7 +100,7 @@ class EditDogProfile extends Component {
       <View style={[styles.boxContainer, styles.boxOne]}>
         {pictureSelected !== null ? (
           <Image
-            style={{width: 100, height: 100, borderRadius: 70}}
+            style={{width: 150, height: 150, borderRadius: 70}}
             source={{uri: pictureSelected.path}}
           />
         ) : (
