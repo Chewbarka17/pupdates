@@ -32,8 +32,6 @@ class viewDogProfile extends Component {
   }
 
   render () {
-    console.log(this)
-    
     const { 
       name, 
       age, 

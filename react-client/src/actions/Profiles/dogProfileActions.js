@@ -11,6 +11,16 @@ export const getADog = (dogid, callback) => (dispatch) => {
     });
 };
 
+export const getOwnersDogs = ownerid => (dispatch) => {
+  axios.get(`http://localhost:8000/api/users/dogs/${ownerid}`)
+    .then(({ data }) => {
+      dispatch({ type: 'FETCH_OWNERS_DOGS_FULFILLED', payload: data });
+    })
+    .catch((err) => {
+      dispatch({ type: 'FETCH_OWNERS_DOGS_FAILED', payload: err });
+    });
+};
+
 export const postDogs = (name, age, breed, gender, bio, owner, pictures, callback) => (dispatch) => {
   axios.post('http://localhost:8000/api/dogs', {
     name,
