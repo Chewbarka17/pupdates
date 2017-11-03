@@ -198,15 +198,9 @@ class viewOwnerProfile extends Component {
             Add Dog
           </Button>
           <Button
-<<<<<<< HEAD
-            containerStyle={{height:35, width: 250, overflow:'hidden', borderRadius:20, backgroundColor: '#f2a2ab', justifyContent:'center', alignItems:'center'}}
-            style={{fontSize: 20, color: 'white', justifyContent:'center', alignItems:'center'}}
-            onPress={() => this.logout()}
-=======
             containerStyle={{height:35, width: 250, overflow:'hidden', borderRadius:20, backgroundColor: 'white', justifyContent:'center', alignItems:'center'}}
             style={{fontSize: 18, color: '#92aefc', justifyContent:'center', alignItems:'center'}}
-            onPress={() => this.props.navigate('LogoutScreen')}
->>>>>>> [style] splash page to pink background and view owner profile
+            onPress={() => this.logout()}
           >
             Logout
           </Button>
