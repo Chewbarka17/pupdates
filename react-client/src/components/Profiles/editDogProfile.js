@@ -21,7 +21,7 @@ import Button from 'react-native-button';
 
 class EditDogProfile extends Component {
   static navigationOptions = {
-    title: 'EditDogProfile',
+    title: 'Edit Dog Profile',
   };
   constructor(props) {
     super(props);
@@ -191,10 +191,12 @@ class EditDogProfile extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    flexDirection: 'column'
+    flexDirection: 'column',
+    backgroundColor: 'white',
   },
   boxContainer: {
     flex: 1,
+    
   },
   boxOne: {
     flex: 2,

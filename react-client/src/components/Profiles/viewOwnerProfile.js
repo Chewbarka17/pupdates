@@ -128,21 +128,16 @@ class viewOwnerProfile extends Component {
           </Button>
         </View>
         <View style={[styles.boxContainer, styles.boxFour]}>
-         { user.age ?
-         <Text style={styles.baseText}>
-         </Text> : null
-         }
+        <Text style={[styles.baseText, styles.location]}>
+           {user.location.split(',')[1]}
+         </Text>
          { user.bio ?
          <Text style={styles.baseText}>
            {user.bio}
          </Text> : null
          }
-         <Text style={styles.baseText}>
-           {user.location.split(',')[1]}
-         </Text>
         </View>
         <View style={[styles.boxContainer, styles.boxFive]}>
-
            <FlatList
            data={this.props.dogs}
            keyExtractor={this._keyExtractor}
@@ -251,6 +246,10 @@ const styles = StyleSheet.create({
     fontSize: 22,
     fontWeight: 'bold',
     color: '#3f3f3f',
+  },
+  location: {
+    color: '#898989',
+    fontWeight: 'bold',
   },
 });
 

@@ -67,7 +67,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     paddingBottom: 10,
-    backgroundColor: 'white'
+    backgroundColor: 'white',
+    //===
+    paddingTop:20
+    //===
   },
   tabs: {
     height: 45,
