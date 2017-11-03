@@ -1,7 +1,3 @@
-// TODO:
-// show more owner info
-// styling
-
 import React, { Component } from 'react';
 import axios from 'axios';
 import { View, Text, Image, StyleSheet, } from 'react-native';
@@ -9,12 +5,7 @@ import { Avatar } from 'react-native-elements';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as chatActions from '../../actions/ChatRooms/chatRoomActions';
-
-// for chat button
 import Button from 'react-native-button'
-
-
-
 
 class likedDogProfile extends React.Component {
   constructor(props) {

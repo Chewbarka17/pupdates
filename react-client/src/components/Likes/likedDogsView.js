@@ -20,7 +20,6 @@ import { bindActionCreators } from 'redux';
 
 import DogProfile from '../Likes/likedDogProfile';
 
-
 class LikedDogsView extends React.Component {
 
   constructor(props) {
@@ -30,15 +29,12 @@ class LikedDogsView extends React.Component {
       likedDogs: [],
       item: null,
       refreshing: false,
-
-      // animate
       bounceValue: new Animated.Value(0),
     };
   }
 
   componentDidMount() {
     this.makeRemoteRequest();
-
   }
 
   componentWillReceiveProps() {
@@ -72,7 +68,6 @@ class LikedDogsView extends React.Component {
           style={{width: 380, height: 140, marginLeft: -10}}
           source={require('../../../images/likesHappyCorgi.gif')}
         />
-
         <List containerStyle={{ borderTopWidth: 0, borderBottomWidth: 0 }}>
           <FlatList
             data={this.state.likedDogs}
