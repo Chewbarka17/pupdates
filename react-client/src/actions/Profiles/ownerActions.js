@@ -1,9 +1,7 @@
 import axios from 'axios';
-import { AsyncStorage } from 'react-native';
-import { NavigationActions } from 'react-navigation';
 
 export const findOrCreateOwner = fb => (dispatch) => {
-  axios.get(`http://localhost:8000/api/fbuser/${fb.id}`)
+  axios.get(`https://serene-atoll-31576.herokuapp.com/api/fbuser/${fb.id}`)
     .then(({ data }) => {
       if (data.length === 0) {
         console.log('User doesn\'t exist in collection');
@@ -16,7 +14,7 @@ export const findOrCreateOwner = fb => (dispatch) => {
           bio: '',
           rating: null,
         };
-        axios.post('http://localhost:8000/api/users', user)
+        axios.post('https://serene-atoll-31576.herokuapp.com/api/users', user)
           .then((result) => {
             dispatch({ type: 'POST_OWNER_FROM_MONGO_FULFILLED', payload: result.data });
           })
@@ -43,7 +41,7 @@ export const saveAwsSecretSauce = (accessKeyId, secretAccessKey, sessionToken) =
 
 export const updateOwners = (name, age, location, bio, userid, coords, picture) => (dispatch) => {
   location.formatted_address ? location = location.formatted_address : location;
-  axios.patch('http://localhost:8000/api/users', {
+  axios.patch('https://serene-atoll-31576.herokuapp.com/api/users', {
     userid,
     name,
     age,

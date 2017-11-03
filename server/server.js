@@ -5,7 +5,6 @@ require('dotenv').config();
 const cors = require('cors');
 
 // Initialize sockets
-const io = require('socket.io')('3000');
 
 // File imports
 const routes = require('./routes/index.js');
@@ -13,6 +12,8 @@ const routes = require('./routes/index.js');
 
 // Express Initialization
 const app = express();
+const server = require('http').createServer(app);
+const io = require('socket.io')(server);
 
 // MiddleWares
 app.use(cors());
@@ -35,4 +36,4 @@ io.on('connection', (socket) => {
   });
 });
 
-module.exports = app;
+module.exports = server;

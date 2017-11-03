@@ -2,7 +2,7 @@ import axios from 'axios';
 
 // get liked dogs' IDs of a specific user
 export const getAllLikedDogs = (userid) => {
-  axios.get(`http://localhost:8000/api/likeddogs/${userid}`)
+  axios.get(`https://serene-atoll-31576.herokuapp.com/api/likeddogs/${userid}`)
     .then((data) => {
       dispatch({ type: 'FETCH_LIKED_DOGS_FULFILLED', payload: data });
     })
@@ -13,7 +13,7 @@ export const getAllLikedDogs = (userid) => {
 
 // delete dog from user's likedDogs array
 export const deleteLikedDog = (userid, dogid) => {
-  axios.patch(`http://localhost:8000/api/likeddogs/${userid}`, {
+  axios.patch(`https://serene-atoll-31576.herokuapp.com/api/likeddogs/${userid}`, {
     dogid,
   })
     .then((data) => {

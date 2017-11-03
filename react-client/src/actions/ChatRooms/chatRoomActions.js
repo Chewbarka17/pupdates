@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 export const getRooms = ownerId => (dispatch) => {
-  axios.get(`http://localhost:8000/api/rooms/${ownerId}`)
+  axios.get(`https://serene-atoll-31576.herokuapp.com/api/rooms/${ownerId}`)
     .then(({ data }) => {
       dispatch({ type: 'GET_ROOMS_FULFILLED', payload: data });
     })
@@ -11,7 +11,7 @@ export const getRooms = ownerId => (dispatch) => {
 };
 
 export const createRoom = (ownerIdOne, ownerIdTwo) => (dispatch) => {
-  axios.post('/api/rooms', {
+  axios.post('https://serene-atoll-31576.herokuapp.com/api/rooms', {
     uids: [ownerIdOne, ownerIdTwo],
   })
     .then((response) => {

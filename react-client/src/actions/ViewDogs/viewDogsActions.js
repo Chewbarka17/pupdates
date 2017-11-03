@@ -2,9 +2,9 @@ import axios from 'axios';
 import { API_KEY } from 'react-native-dotenv';
 
 export const getAllUnseenDogs = (userid, coords) => (dispatch) => {
-  axios.get(`http://localhost:8000/api/newdogs/${userid}`)
+  axios.get(`https://serene-atoll-31576.herokuapp.com/api/newdogs/${userid}`)
     .then((result) => {
-      axios.get(`http://localhost:8000/api/users/${result.data[0].owner}`)
+      axios.get(`https://serene-atoll-31576.herokuapp.com/api/users/${result.data[0].owner}`)
         .then(({ data }) => {
           axios.get(`https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=${coords[0]},${coords[1]}&destinations=${data[0].coords[0]},${data[0].coords[1]}&key=${API_KEY}`)
             .then((response) => {
@@ -19,7 +19,7 @@ export const getAllUnseenDogs = (userid, coords) => (dispatch) => {
 };
 
 export const findDistance = (coords, dog) => (dispatch) => {
-  axios.get(`http://localhost:8000/api/users/${dog.owner}`)
+  axios.get(`https://serene-atoll-31576.herokuapp.com/api/users/${dog.owner}`)
     .then(({ data }) => {
       axios.get(`https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=${coords[0]},${coords[1]}&destinations=${data[0].coords[0]},${data[0].coords[1]}&key=${API_KEY}`)
         .then((response) => {
@@ -33,7 +33,7 @@ export const findDistance = (coords, dog) => (dispatch) => {
 };
 
 export const updateDogsSeen = (userid, dogid, coords) => (dispatch) => {
-  axios.patch(`http://localhost:8000/api/users/seendogs/${userid}`, {
+  axios.patch(`https://serene-atoll-31576.herokuapp.com/api/users/seendogs/${userid}`, {
     dogid,
   })
     .then(() => {
@@ -45,7 +45,7 @@ export const updateDogsSeen = (userid, dogid, coords) => (dispatch) => {
 };
 
 export const updateLikedDogs = (userid, dogid) => (dispatch) => {
-  axios.patch(`http://localhost:8000/api/users/likeddogs/${userid}`, {
+  axios.patch(`https://serene-atoll-31576.herokuapp.com/api/users/likeddogs/${userid}`, {
     dogid,
   })
     .then(() => {
