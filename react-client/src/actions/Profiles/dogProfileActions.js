@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 export const getADog = (dogid, callback) => (dispatch) => {
-  axios.get(`http://localhost:8000/api/dogs/${dogid}`)
+  axios.get(`https://serene-atoll-31576.herokuapp.com/api/dogs/${dogid}`)
     .then((response) => {
       dispatch({ type: 'FETCH_DOG_FULFILLED', payload: response.data });
       callback(response.data);
@@ -12,7 +12,7 @@ export const getADog = (dogid, callback) => (dispatch) => {
 };
 
 export const getOwnersDogs = ownerid => (dispatch) => {
-  axios.get(`http://localhost:8000/api/users/dogs/${ownerid}`)
+  axios.get(`https://serene-atoll-31576.herokuapp.com/api/users/dogs/${ownerid}`)
     .then(({ data }) => {
       dispatch({ type: 'FETCH_OWNERS_DOGS_FULFILLED', payload: data });
     })
@@ -22,7 +22,7 @@ export const getOwnersDogs = ownerid => (dispatch) => {
 };
 
 export const postDogs = (name, age, breed, gender, bio, owner, pictures, callback) => (dispatch) => {
-  axios.post('http://localhost:8000/api/dogs', {
+  axios.post('https://serene-atoll-31576.herokuapp.com/api/dogs', {
     name,
     age,
     breed,
@@ -41,7 +41,7 @@ export const postDogs = (name, age, breed, gender, bio, owner, pictures, callbac
 };
 
 export const updateDogs = (name, age, breed, gender, bio, dogid, pictures, data) => (dispatch) => {
-  axios.patch(`http://localhost:8000/api/dogs/${dogid}`, {
+  axios.patch(`https://serene-atoll-31576.herokuapp.com/api/dogs/${dogid}`, {
     name,
     age,
     breed,
@@ -60,7 +60,7 @@ export const updateDogs = (name, age, breed, gender, bio, dogid, pictures, data)
 export const deleteDogs = (dogid, uid) => (dispatch) => {
   axios({
     method: 'delete',
-    url: `http://localhost:8000/api/dogs/${dogid}`,
+    url: `https://serene-atoll-31576.herokuapp.com/api/dogs/${dogid}`,
     data: {
       owner: uid,
       dogid,

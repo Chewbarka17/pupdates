@@ -43,7 +43,7 @@ class LikedDogsView extends React.Component {
   }
 
   makeRemoteRequest() {
-    axios.get(`http://localhost:8000/api/likeddogs/${this.props.uid}`)
+    axios.get(`https://serene-atoll-31576.herokuapp.com/api/likeddogs/${this.props.uid}`)
       .then(({ data }) => {
         this.setState({ likedDogs: data });
       })
@@ -53,13 +53,17 @@ class LikedDogsView extends React.Component {
   };
 
   deleteLikedDog(item) {
-    axios.patch(`http://localhost:8000/api/likeddogs/${this.props.uid}`, {dogid: item._id})
+    axios.patch(`https://serene-atoll-31576.herokuapp.com/api/likeddogs/${this.props.uid}`, {dogid: item._id})
       .then(() => {
         this.makeRemoteRequest();
       })
       .catch((err) => {
         console.log('failed to get remove liked dog: ', err);
       });
+  };
+
+  _keyExtractor(item, index) {
+    return item._id
   };
 
   render() {
@@ -75,6 +79,7 @@ class LikedDogsView extends React.Component {
         <View style={[styles.boxContainer, styles.boxTwo]}>
         <List containerStyle={{ borderTopWidth: 0, borderBottomWidth: 0 }}>
           <FlatList
+            keyExtractor={this._keyExtractor}
             data={this.state.likedDogs}
             renderItem={({ item }) => (
               <Swipeout
@@ -94,7 +99,7 @@ class LikedDogsView extends React.Component {
                   onPress={() => this.props.navigate('LikedDogProfile', item)}
                   roundAvatar
                   title={`${item.name}`}
-                  subtitle={item.breed}
+                  subtitle={`${item.breed}`}
                   avatar={{ uri: item.pictures[0] }}
                   containerStyle={{ borderBottomWidth: 0 }}
                 />

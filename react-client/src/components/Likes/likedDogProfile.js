@@ -25,7 +25,7 @@ class likedDogProfile extends React.Component {
   };
 
   getOwnersInfo() {
-    axios.get(`http://localhost:8000/api/users/${this.props.navigation.state.params.owner}`)
+    axios.get(`https://serene-atoll-31576.herokuapp.com/api/users/${this.props.navigation.state.params.owner}`)
       .then(({ data }) => {
         this.setState({
           name: data[0].name,
@@ -41,7 +41,7 @@ class likedDogProfile extends React.Component {
   };
 
   createRoom() {
-    axios.post('http://localhost:8000/api/rooms', {
+    axios.post('https://serene-atoll-31576.herokuapp.com/api/rooms', {
       ownerIds: [this.props.uid, this.state.ownerId],
     })
     .then(({ data }) => {

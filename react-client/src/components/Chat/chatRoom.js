@@ -20,14 +20,14 @@ class ChatRoom extends React.Component {
   
   componentDidMount() {
     this.props.navigation.setParams({title: this.props.navigation.state.params.partner})
-    axios.get(`http://localhost:8000/api/messages/${this.props.navigation.state.params._id}`)
+    axios.get(`https://serene-atoll-31576.herokuapp.com/api/messages/${this.props.navigation.state.params._id}`)
     .then((data) => {
       this.setState({
         messages: data.data[0].messages,
       })
     })
 
-    this.socket = io('http://localhost:3000/');
+    this.socket = io('https://serene-atoll-31576.herokuapp.com/');
     this.socket.on(this.props.navigation.state.params._id, (message) => {
       this.setState({
         messages: [message, ...this.state.messages]
@@ -41,10 +41,10 @@ class ChatRoom extends React.Component {
   }
   
   onSend(e) {
-    axios.patch(`http://localhost:8000/api/rooms/${this.props.navigation.state.params._id}`, {
+    axios.patch(`https://serene-atoll-31576.herokuapp.com/api/rooms/${this.props.navigation.state.params._id}`, {
       ownerIds: this.props.navigation.state.params.ownerIds,
     });
-    axios.patch(`http://localhost:8000/api/messages/${this.props.navigation.state.params._id}`, {
+    axios.patch(`https://serene-atoll-31576.herokuapp.com/api/messages/${this.props.navigation.state.params._id}`, {
       text: e[0].text,
       createdAt: e[0].createdAt,
       user: {
