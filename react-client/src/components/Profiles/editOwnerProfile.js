@@ -19,7 +19,7 @@ import Button from 'react-native-button';
 
 class EditOwnerProfile extends Component {
   static navigationOptions = {
-    title: 'EditProfile',
+    title: 'Edit Profile',
   };
   constructor(props) {
     super(props);
