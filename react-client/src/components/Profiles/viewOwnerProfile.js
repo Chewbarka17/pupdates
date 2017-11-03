@@ -160,22 +160,13 @@ class viewOwnerProfile extends Component {
             </Swipeout>
           }
         />
-          {/* <View>
-            <MaterialIcons
-              name="menu"
-              size={24}
-              //onPress={() => this.props.navigation.navigate('DrawerOpen')}
-              onPress={() => this.props.navigate('DrawerOpen')}
-            />
-          </View> */}
-          <View>
-            <Button
-            title='Logout'
-            onPress={() =>
-                this.props.navigate('LogoutScreen')
-              }
-            />
-            </View>
+          <Button
+          
+          title='Logout'
+          onPress={() =>
+              this.props.navigate('LogoutScreen')
+            }
+          />
       </View>
     )
   }
