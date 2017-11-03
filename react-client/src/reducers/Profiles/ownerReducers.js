@@ -43,6 +43,16 @@ const ownerReducer = (state = initialState, action) => {
         error: action.payload,
       });
     }
+    case 'OWNER_LOGGED_OUT_FULFILLED': {
+      return Object.assign({}, state, {
+        loggedIn: action.payload,
+      });
+    }
+    case 'OWNER_LOGGED_OUT_REJECTED': {
+      return Object.assign({}, state, {
+        error: action.payload,
+      });
+    }
     case 'AWS_SECRET_SAUCE_FULFILLED': {
       return Object.assign({}, state, {
         awsSauce: action.payload,

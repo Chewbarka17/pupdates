@@ -4,9 +4,12 @@ import {
   View
 } from 'react-native';
 import React, { Component } from 'react';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 import { NavigationActions } from 'react-navigation';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import SplashPageView from '../../Splash/splashPageView';
+import * as ownerActions from '../../../actions/Profiles/ownerActions';
 
 class LogoutScreen extends React.Component {
 
@@ -22,10 +25,12 @@ class LogoutScreen extends React.Component {
       let accessToken = data.accessToken;
       if (accessToken !== null) {
         LoginManager.logOut();
+        this.props.actions.logOut();
         this.navigateToHome();
       }
     })
     .catch(error => {
+      this.props.actions.logOutFailure(error);
       this.navigateToHome();
     });
   }
@@ -47,4 +52,10 @@ class LogoutScreen extends React.Component {
   }
 }
 
-export default LogoutScreen;
+const ownerDispatch = (dispatch) => {
+  return {
+    actions: bindActionCreators(ownerActions, dispatch),
+  }
+};
+
+export default connect(null, ownerDispatch)(LogoutScreen);
