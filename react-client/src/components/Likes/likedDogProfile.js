@@ -14,6 +14,8 @@ class likedDogProfile extends React.Component {
     this.state = {
       name: '',
       ownerId: '',
+      bio: '',
+      location: '',
     };
     this.createRoom = this.createRoom.bind(this);
   }
@@ -30,6 +32,7 @@ class likedDogProfile extends React.Component {
           picture: data[0].picture,
           ownerId: data[0]._id,
           bio: data[0].bio,
+          location: data[0].location.split(',')[1]
         })
       })
       .catch((err) => {
@@ -84,6 +87,9 @@ class likedDogProfile extends React.Component {
           </Text>
           <Text style={styles.baseText}>
             {this.state.bio}
+          </Text>
+          <Text style={styles.baseText}> 
+            {this.state.location}
           </Text>
         </View>
         <View style={[styles.boxContainer, styles.boxThree]}>
