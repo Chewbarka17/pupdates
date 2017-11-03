@@ -64,10 +64,8 @@ class AddDogProfile extends Component {
           if (result) {
             pictureCheck = result.Location;
           }
-          this.props.actions.updateDogs(name, age, breed, gender, bio, _id, pictureCheck, data, (data) => {
-            this.navigateToTabBar();
-          });
-          
+          this.props.actions.updateDogs(name, age, breed, gender, bio, _id, pictureCheck, data);
+          this.navigateToTabBar();         
         });
       } else {
         this.navigateToTabBar();
@@ -76,13 +74,8 @@ class AddDogProfile extends Component {
   }
 
   navigateToTabBar() {
-    const navigateToTabBar = NavigationActions.reset({
-      index: 0,
-      actions: [
-        NavigationActions.navigate({routeName: 'TabBar'})
-      ]
-    });
-    this.props.navigation.dispatch(navigateToTabBar);
+    const backAction = NavigationActions.back();
+    this.props.navigation.dispatch(backAction);
   }
 
   render() {

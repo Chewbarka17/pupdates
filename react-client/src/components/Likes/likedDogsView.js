@@ -18,12 +18,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-// import * as likeActions from '../../actions/Likes/likeActions';
-
 import DogProfile from '../Likes/likedDogProfile';
-
-// animate
-// import * as Animatable from 'react-native-animatable';
 
 
 class LikedDogsView extends React.Component {
@@ -41,7 +36,6 @@ class LikedDogsView extends React.Component {
     };
   }
 
-
   componentDidMount() {
     this.makeRemoteRequest();
 
@@ -51,7 +45,7 @@ class LikedDogsView extends React.Component {
     this.makeRemoteRequest();    
   }
 
-  makeRemoteRequest = () => {
+  makeRemoteRequest() {
     axios.get(`http://localhost:8000/api/likeddogs/${this.props.uid}`)
       .then(({ data }) => {
         this.setState({ likedDogs: data });
@@ -73,7 +67,6 @@ class LikedDogsView extends React.Component {
 
   render() {
     return (
-
       <View>      
         <Image
           style={{width: 380, height: 140, marginLeft: -10}}

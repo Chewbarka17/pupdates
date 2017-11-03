@@ -73,27 +73,20 @@ class EditDogProfile extends Component {
           if (result) {
             pictureCheck = result.Location;
           }
-          this.props.actions.updateDogs(nameCheck, ageCheck, breedCheck, genderCheck, bioCheck, dogid, pictureCheck, data[0], (data) => {
-            this.navigateToTabBar();
-          });
-        });
-      } else {
-        this.props.actions.updateDogs(nameCheck, ageCheck, breedCheck, genderCheck, bioCheck, dogid, pictureCheck, data[0], (data) => {
+          this.props.actions.updateDogs(nameCheck, ageCheck, breedCheck, genderCheck, bioCheck, dogid, pictureCheck, data[0])
           this.navigateToTabBar();
         });
+      } else {
+        this.props.actions.updateDogs(nameCheck, ageCheck, breedCheck, genderCheck, bioCheck, dogid, pictureCheck, data[0])
+        this.navigateToTabBar();
       }
     });
   }
 
 
   navigateToTabBar() {
-    const navigateToTabBar = NavigationActions.reset({
-      index: 0,
-      actions: [
-        NavigationActions.navigate({routeName: 'TabBar'})
-      ]
-    });
-    this.props.navigation.dispatch(navigateToTabBar);
+    const backAction = NavigationActions.back();
+    this.props.navigation.dispatch(backAction);
   }
 
   render() {

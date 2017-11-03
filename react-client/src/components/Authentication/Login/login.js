@@ -9,7 +9,7 @@ const {
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { StackNavigator, NavigationActions } from 'react-navigation';
+import { NavigationActions } from 'react-navigation';
 import {
   Text,
   View,
@@ -26,6 +26,9 @@ class LoginScreen extends Component {
     super(props);
     this._fbAuth = this._fbAuth.bind(this);
     this._getPublicProfile = this._getPublicProfile.bind(this);
+    this._getAwsSecretSauce = this._getAwsSecretSauce.bind(this);
+    this._checkUserInDB = this._checkUserInDB.bind(this);
+    
   }
 
   componentDidMount() {
@@ -71,14 +74,15 @@ class LoginScreen extends Component {
     });
   }
 
-  _getAwsSecretSauce = (accessToken) => {
+  _getAwsSecretSauce(accessToken) {
     AWS.config.region = awsmobile.aws_cognito_region;
     AWS.config.credentials = new AWS.CognitoIdentityCredentials({
       IdentityPoolId: awsmobile.aws_cognito_identity_pool_id,
       Logins: {
         'graph.facebook.com': accessToken
       }
-    });
+    },
+  );
     let accessKeyId;
     let secretAcessKey;
     let sessionToken;
@@ -90,7 +94,7 @@ class LoginScreen extends Component {
     });
   }
 
-  _getPublicProfile = (accessToken) => {
+  _getPublicProfile(accessToken) {
     const responseInfoCallback = (error, data) => {
       if (error) {
         alert('Error fetching data: ' + error.toString());

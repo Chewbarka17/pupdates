@@ -36,12 +36,16 @@ class viewOwnerProfile extends Component {
     this.getDogs();
   }
  
+  componentWillReceiveProps() {
+    this.getDogs();    
+  }
+
   handlePressToEditUser() {
-    this.props.navigate('EditOwnerProfile');
+    this.props.navigation.navigate('EditOwnerProfile');
   }
   
   handlePressToAddDog() {
-    this.props.navigate('AddDogProfile');
+    this.props.navigation.navigate('AddDogProfile');
   }
 
   handleGeolocation() {
@@ -95,14 +99,14 @@ class viewOwnerProfile extends Component {
   };
 
   render () {
-    console.log('rendering owner profile')
+    console.log('rendering owner profile', this.props)
     const { user, profilePic } = this.props;
     return (
       <View>
-      <Image
-          style={{width: 380, height: 140, marginLeft: -10}}
-          source={require('../../../images/profileCoolCorgi.gif')}
-        />
+        <Image
+            style={{width: 380, height: 140, marginLeft: -10}}
+            source={require('../../../images/profileCoolCorgi.gif')}
+          />
         <Avatar
           large
           rounded
@@ -150,7 +154,7 @@ class viewOwnerProfile extends Component {
             <ListItem
               roundAvatar
               onPress={() =>
-                this.props.navigate('ViewDogProfile', item)
+                this.props.navigation.navigate('ViewDogProfile', item)
               }
               title={item.name}
               subtitle={`Age: ${item.age} Breed: ${item.breed}`}
@@ -161,7 +165,6 @@ class viewOwnerProfile extends Component {
           }
         />
           <Button
-          
           title='Logout'
           onPress={() =>
               this.props.navigate('LogoutScreen')
