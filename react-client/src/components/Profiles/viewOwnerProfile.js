@@ -134,7 +134,7 @@ class viewOwnerProfile extends Component {
         onPress={this.handlePressToAddDog}
         />
         <FlatList
-          data={this.state.dogs === this.props.dogs ? this.state.dogs : this.props.dogs}
+          data={this.state.dogs}
           keyExtractor={this._keyExtractor}
           renderItem={({ item }) => 
             <Swipeout right={[{
