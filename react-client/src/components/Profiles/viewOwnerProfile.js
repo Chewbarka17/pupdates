@@ -142,7 +142,6 @@ class viewOwnerProfile extends Component {
          </Text>
         </View>
         <View style={[styles.boxContainer, styles.boxFive]}>
-
            <FlatList
            data={this.props.dogs}
            keyExtractor={this._keyExtractor}

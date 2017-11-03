@@ -178,10 +178,12 @@ class AddDogProfile extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    flexDirection: 'column'
+    flexDirection: 'column',
+    backgroundColor: 'white',
   },
   boxContainer: {
     flex: 1,
+    backgroundColor: 'white',
   },
   boxOne: {
     flex: 2,

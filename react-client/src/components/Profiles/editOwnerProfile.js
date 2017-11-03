@@ -165,6 +165,7 @@ const styles = StyleSheet.create({
   },
   boxContainer: {
     flex: 1,
+    backgroundColor: 'white',
   },
   boxOne: {
     flex: 3,

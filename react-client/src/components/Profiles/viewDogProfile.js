@@ -87,6 +87,7 @@ const styles = StyleSheet.create({
   },
   boxContainer: {
     flex: 1,
+    backgroundColor: 'white',
   },
   boxOne: {
     flex: 3,
@@ -97,6 +98,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    padding:30,
   },
   boxThree: {
     flex: 2,
