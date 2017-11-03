@@ -30,7 +30,7 @@ export const postDogs = (name, age, breed, gender, bio, owner, pictures, callbac
     });
 };
 
-export const updateDogs = (name, age, breed, gender, bio, dogid, pictures, data, callback) => (dispatch) => {
+export const updateDogs = (name, age, breed, gender, bio, dogid, pictures, data) => (dispatch) => {
   axios.patch(`http://localhost:8000/api/dogs/${dogid}`, {
     name,
     age,
@@ -40,15 +40,15 @@ export const updateDogs = (name, age, breed, gender, bio, dogid, pictures, data,
     pictures,
   })
     .then((response) => {
-      const dog = JSON.parse(response.config.data);
-      data.name = dog.name;
-      data.age = dog.age;
-      data.breed = dog.breed;
-      data.gender = dog.gender;
-      data.bio = dog.bio;
-      data.pictures[0] = dog.pictures;
-      dispatch({ type: 'UPDATE_DOG_FULFILLED', payload: data });
-      callback(data);
+      console.log('edited', response)
+      // const dog = JSON.parse(response.config.data);
+      // data.name = dog.name;
+      // data.age = dog.age;
+      // data.breed = dog.breed;
+      // data.gender = dog.gender;
+      // data.bio = dog.bio;
+      // data.pictures[0] = dog.pictures;
+      dispatch({ type: 'UPDATE_DOG_FULFILLED', payload: response.data });
     })
     .catch((err) => {
       dispatch({ type: 'UPDATE_DOG_REJECTED', payload: err });
@@ -70,16 +70,8 @@ export const deleteDogs = (dogid, uid) => (dispatch) => {
     .catch((err) => {
       dispatch({ type: 'DELETE_DOG_REJECTED', payload: err });
     });
-
-  // axios.delete(`http://localhost:8000/api/user/${uid}/dogs/${dogid}`, {data: {owner: uid, dogid: dogid}})
-  //   .then(() => {
-  //     dispatch({ type: 'DELETE_DOG_FULFILLED', payload: dogid });
-  //   })
-  //   .catch((err) => {
-  //     dispatch({ type: 'DELETE_DOG_REJECTED', payload: err });
-  //   });
 };
 
-// export const listDogs = dogInfo => (dispatch) => {
-//   dispatch({ type: 'LIST_DOGS', payload: dogInfo });
-// };
+export const showDog = dog => (dispatch) => {
+  dispatch({ type: 'SHOW_DOG', payload: dog });
+};

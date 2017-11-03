@@ -5,7 +5,15 @@ const initialState = {
   fetched: false,
   updated: false,
   dogs: [],
-  dogInfo: [],
+  dogInfo: {
+    age: '',
+    bio: '',
+    breed: '',
+    gender: '',
+    name: '',
+    owner: '',
+    pictures: [],
+  },
 };
 
 const dogReducer = (state = initialState, action) => {
@@ -40,6 +48,7 @@ const dogReducer = (state = initialState, action) => {
     case 'UPDATE_DOG_FULFILLED': {
       return Object.assign({}, state, {
         updated: true,
+        dogInfo: action.payload,
         dogs: state.dogs.filter((dog) => {
           return dog._id !== action.payload._id;
         }).concat(action.payload),
@@ -60,6 +69,11 @@ const dogReducer = (state = initialState, action) => {
       return Object.assign({}, state, {
         deleted: false,
         error: action.payload,
+      });
+    }
+    case 'SHOW_DOG': {
+      return Object.assign({}, state, {
+        dogInfo: action.payload,
       });
     }
     default:

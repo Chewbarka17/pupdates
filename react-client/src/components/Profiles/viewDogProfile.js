@@ -17,12 +17,17 @@ class viewDogProfile extends Component {
     this.handlePress = this.handlePress.bind(this);
   }
 
+  componentWillMount() {
+    this.props.actions.showDog(this.props.navigation.state.params)
+  }
+
   handlePress() {
     const { navigate } = this.props.navigation
     navigate('EditDogProfile', this.props.navigation.state.params);
   }
 
   render () {
+    console.log(this)
     
     const { 
       name, 
@@ -31,7 +36,7 @@ class viewDogProfile extends Component {
       gender, 
       bio,
       pictures,
-    } = this.props.navigation.state.params;
+    } = this.props.dog;
 
     return (
       <View>
@@ -66,9 +71,9 @@ class viewDogProfile extends Component {
   }
 }
 
-const dogsState = (store) => {
+const dogState = (store) => {
   return {
-    dogs: store.Dogs.dogsInfo
+    dog: store.Dogs.dogInfo
   }
 }
 
@@ -78,4 +83,4 @@ const dogDispatch = (dispatch) => {
   }
 };
 
-export default connect(dogsState, dogDispatch)(viewDogProfile);
+export default connect(dogState, dogDispatch)(viewDogProfile);
