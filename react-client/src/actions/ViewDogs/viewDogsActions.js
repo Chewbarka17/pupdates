@@ -1,11 +1,12 @@
 import axios from 'axios';
+import { API_KEY } from 'react-native-dotenv';
 
 export const getAllUnseenDogs = (userid, coords) => (dispatch) => {
   axios.get(`http://localhost:8000/api/newdogs/${userid}`)
     .then((result) => {
       axios.get(`http://localhost:8000/api/users/${result.data[0].owner}`)
         .then(({ data }) => {
-          axios.get(`https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=${coords[0]},${coords[1]}&destinations=${data[0].coords[0]},${data[0].coords[1]}&key=AIzaSyB1S52rdgtYi-52GK2b149DGxAZb_rKGdY`)
+          axios.get(`https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=${coords[0]},${coords[1]}&destinations=${data[0].coords[0]},${data[0].coords[1]}&key=${API_KEY}`)
             .then((response) => {
               const value = response.data.rows[0].elements[0].distance.text;
               dispatch({ type: 'FETCH_ALL_UNSEEN_DOGS_FULFILLED', payload: [result.data, value] });
@@ -20,7 +21,7 @@ export const getAllUnseenDogs = (userid, coords) => (dispatch) => {
 export const findDistance = (coords, dog) => (dispatch) => {
   axios.get(`http://localhost:8000/api/users/${dog.owner}`)
     .then(({ data }) => {
-      axios.get(`https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=${coords[0]},${coords[1]}&destinations=${data[0].coords[0]},${data[0].coords[1]}&key=AIzaSyB1S52rdgtYi-52GK2b149DGxAZb_rKGdY`)
+      axios.get(`https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=${coords[0]},${coords[1]}&destinations=${data[0].coords[0]},${data[0].coords[1]}&key=${API_KEY}`)
         .then((response) => {
           const value = response.data.rows[0].elements[0].distance.text;
           dispatch({ type: 'UPDATE_DISTANCE_TO_DOG', payload: value });
