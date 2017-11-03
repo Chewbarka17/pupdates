@@ -9,18 +9,6 @@ export const getOwnerFromDB = (fb, callback) => (dispatch) => {
         console.log('User doesn\'t exist in collection');
       } else {
         dispatch({ type: 'GET_OWNER_FROM_MONGO_FULFILLED', payload: data[0] });
-        AsyncStorage.setItem('mongoOwner', JSON.stringify(data), (error) => {
-          if (error) {
-            alert('Failure! Could not save user to async storage', error);
-          }
-        });
-        // const navigateToTabBar = NavigationActions.reset({
-        //   index: 0,
-        //   actions: [
-        //     NavigationActions.navigate({routeName: 'TabBar'})
-        //   ]
-        // });
-        // navigation.dispatch(navigateToTabBar);
       }
     })
     .catch((err) => {
@@ -41,18 +29,6 @@ export const addOwnerToDB = (fb) => (dispatch) => {
   axios.post('http://localhost:8000/api/users', user)
     .then(({ data }) => {
       dispatch({ type: 'POST_OWNER_FROM_MONGO_FULFILLED', payload: data });
-      AsyncStorage.setItem('mongoOwner', JSON.stringify(data), (error) => {
-        if (error) {
-          alert('Failure! Could not save user to async storage', error);
-        }
-      });
-      // const navigateToTabBar = NavigationActions.reset({
-      //   index: 0,
-      //   actions: [
-      //     NavigationActions.navigate({routeName: 'TabBar'})
-      //   ]
-      // });
-      // navigation.dispatch(navigateToTabBar);
     })
     .catch((err) => {
       dispatch({ type: 'POST_OWNER_FROM_MONGO_REJECTED', payload: err });
@@ -94,3 +70,11 @@ export const updateOwners = (name, age, location, bio, userid, coords, picture, 
       dispatch({ type: 'UPDATE_OWNER_REJECTED', payload: err });
     });
 };
+
+export const logOut = () => (dispatch) => {
+  dispatch({type: 'OWNER_LOGGED_OUT_FULFILLED', payload: false });
+}
+
+export const logOutFailure = (error) => (dispatch) => {
+  dispatch({type: 'OWNER_LOGGED_OUT_REJECTED', payload: error });
+}
