@@ -19,7 +19,7 @@ import * as dogActions from '../../actions/Profiles/dogProfileActions';
 
 class AddDogProfile extends Component {
   static navigationOptions = {
-    title: 'AddDogProfile',
+    title: 'Add Your Dog',
   };
   constructor(props) {
     super(props);
