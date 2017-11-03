@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, FlatList, TouchableHighlight, Image } from 'react-native';
+import { View, FlatList, TouchableHighlight, Image, StyleSheet, Text } from 'react-native';
 import { ListItem } from "react-native-elements";
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -37,35 +37,42 @@ class ChatList extends React.Component {
   
   render() {
     return (
-      <View>
-      <Image
-          style={{width: 380, height: 140, marginLeft: -10}}
+
+      <View style={styles.container}>
+        <View style={[styles.boxContainer, styles.boxOne]}>
+        <Image
+          style={{width: 230, height: 140}}
           source={require('../../../images/chatLaptopCorgi.gif')}
         />
-        <FlatList
-          keyExtractor={this._keyExtractor}
-          data={this.props.rooms}
-          renderItem={({item}) =>
-          <TouchableHighlight
-          underlayColor='rgba(192,192,192,0.6)'
-        >
-        <View>
-          <ListItem
-          key={item._id}
-          onPress={() =>
-            this.props.navigate('ChatRoom', item)
-          }
-            title={`${item.partner}`}
-            id={item._id}
+        </View>
+        <View style={[styles.boxContainer, styles.boxTwo]}>
+          <FlatList
+            keyExtractor={this._keyExtractor}
+            data={this.props.rooms}
+            renderItem={({item}) =>
+            <TouchableHighlight
+            underlayColor='rgba(192,192,192,0.6)'
+          >
+          <View>
+            <ListItem
+            key={item._id}
+            onPress={() =>
+              this.props.navigate('ChatRoom', item)
+            }
+              title={`${item.partner}`}
+              id={item._id}
+            />
+            </View>
+            </TouchableHighlight>
+            }
           />
-          </View>
-          </TouchableHighlight>
-          }
-        />
+        </View>
       </View>
+
     )
   };
 }
+
 // add rooms to state
 const state = (store) => {
   return {
@@ -79,5 +86,28 @@ const chatDispatch = (dispatch) => {
     actions: bindActionCreators(chatRoomActions, dispatch),
   }
 };
+
+var styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    flexDirection: 'column',
+  },
+  boxContainer: {
+    flex: 1,
+
+  },
+  boxOne: {
+    flex: 1,
+    backgroundColor: '#4cb0e0',
+    marginRight: -10,
+    marginLeft: -10,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  boxTwo: {
+    flex: 1,
+    backgroundColor: 'white'
+  },
+});
 
 export default connect(state, chatDispatch)(ChatList);

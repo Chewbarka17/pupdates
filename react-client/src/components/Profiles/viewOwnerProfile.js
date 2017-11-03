@@ -12,6 +12,8 @@ import ViewDogProfileScreen from '../Profiles/viewDogProfile';
 import * as dogActions from '../../actions/Profiles/dogProfileActions';
 import * as ownerActions from '../../actions/Profiles/ownerActions';
 
+//import Button from 'react-native-button'
+
 class viewOwnerProfile extends Component {
   constructor(props) {
     super(props);
@@ -103,10 +105,10 @@ class viewOwnerProfile extends Component {
     const { user, profilePic } = this.props;
     return (
       <View>
-        <Image
-            style={{width: 380, height: 140, marginLeft: -10}}
-            source={require('../../../images/profileCoolCorgi.gif')}
-          />
+      <Image
+          style={{width: 380, height: 140, marginLeft: -10}}
+          source={require('../../../images/profileCoolCorgiCropped.gif')}
+        />
         <Avatar
           large
           rounded
