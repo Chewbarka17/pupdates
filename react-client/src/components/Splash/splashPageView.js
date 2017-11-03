@@ -15,24 +15,27 @@ class SplashPage extends React.Component {
     super(props);
   }
 
+//<LoginScreen />
+
   render() {
-    // const { navigate } = this.props.navigation;
     return (
       <View style={styles.container}>
         <View style={[styles.boxContainer, styles.boxOne]}>
           <Image
-            style={{width:430, height:430, marginLeft:25}}
+            style={{width:200, height:200, marginLeft:25}}
             source={require('../../../images/largePinkLogo.png')}
           />
         </View>
         <View style={[styles.boxContainer, styles.boxTwo]}>
           <Image
-            style={{width:430, height:430}}
+            style={{width:200, height:200}}
             source={require('../../../images/splashHeartsCorgi.gif')}
           />
         </View>
         <View style={[styles.boxContainer, styles.boxThree]}>
-          <LoginScreen />
+          <Text>
+            Login Button
+          </Text>
         </View>
       </View>
     )
@@ -51,10 +54,10 @@ var styles = StyleSheet.create({
     backgroundColor: '#e45c7d',
   },
   boxOne: {
-    flex: 4,
+    flex: 1,
   },
   boxTwo: {
-    flex: 4,
+    flex: 1,
   },
   boxThree: {
     flex: 1,

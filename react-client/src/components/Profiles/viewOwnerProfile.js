@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { StackNavigator } from 'react-navigation';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { View, Text, FlatList, AsyncStorage, StyleSheet } from 'react-native';
+import { View, Text, FlatList, AsyncStorage, StyleSheet, Image } from 'react-native';
 import { Button, List, ListItem, Avatar } from 'react-native-elements';
 import Swipeout from 'react-native-swipeout';
 import axios from 'axios';
@@ -99,6 +99,10 @@ class viewOwnerProfile extends Component {
     const { user, profilePic } = this.props;
     return (
       <View>
+      <Image
+          style={{width: 380, height: 140, marginLeft: -10}}
+          source={require('../../../images/profileCoolCorgi.gif')}
+        />
         <Avatar
           large
           rounded

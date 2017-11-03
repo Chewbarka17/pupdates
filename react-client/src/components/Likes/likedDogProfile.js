@@ -68,6 +68,8 @@ class likedDogProfile extends React.Component {
             rounded
             source={{uri: this.props.navigation.state.params.pictures[0]}}
           />
+          <Text>
+          </Text>
           <Text style={styles.titleText}>
             {this.props.navigation.state.params.name}
           </Text>

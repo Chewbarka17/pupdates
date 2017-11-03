@@ -20,9 +20,6 @@ import LikedDogs from '../Likes/likedDogsView';
 import ViewOwnerProfile from '../Profiles/viewOwnerProfile';
 
 class TabBar extends React.Component {
-  static navigationOptions = {
-    title: 'Home',
-  };
 
   constructor(props) {
     super(props);
@@ -47,7 +44,6 @@ class TabBar extends React.Component {
   render() {
     const { navigate } = this.props.navigation;
     
-
     if (this.props.loggedIn) {
       return (
         <ScrollableTabView

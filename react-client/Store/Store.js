@@ -18,7 +18,7 @@ const middleware = applyMiddleware(promise(), thunk, createLogger());
 function configureStore() {
   const store = createStore(reducer, middleware);
   const persistor = persistStore(store);
-  // persistor.purge();
+  persistor.purge();
   return { persistor, store };
 }
 
