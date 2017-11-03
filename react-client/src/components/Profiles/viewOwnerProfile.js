@@ -15,6 +15,8 @@ import * as dogActions from '../../actions/Profiles/dogProfileActions';
 import * as ownerActions from '../../actions/Profiles/ownerActions';
 
 import Button from 'react-native-button'
+import Icon from 'react-native-vector-icons/MaterialIcons';
+
 
 class viewOwnerProfile extends Component {
   constructor(props) {
@@ -114,35 +116,32 @@ class viewOwnerProfile extends Component {
           />
         </View>
         <View style={[styles.boxContainer, styles.boxTwo]}>
-          <Text>
-          </Text>
+
           <Avatar
             xlarge
             rounded
             source={{uri: profilePic}}
             activeOpacity={0.7}
           />
+
         </View>
         <View style={[styles.boxContainer, styles.boxThree]}>
-        <Button
-            containerStyle={{height:50, width: 50, overflow:'hidden', borderRadius:25, backgroundColor: 'white', justifyContent:'center', alignItems:'center'}}
+          <Text style={styles.titleText}>
+           {user.name}, {user.age}
+          </Text>
+          <Button
+            containerStyle={{height:30, width: 65, overflow:'hidden', borderRadius:25, backgroundColor: 'white', justifyContent:'center', alignItems:'center'}}
             style={{fontSize: 15, color: '#a3a3a3', justifyContent:'center', alignItems:'center'}}
             onPress={this.handlePressToEditUser}
           >
-            Edit
-          </Button>
-          <Button
-            containerStyle={{height:50, width: 65, overflow:'hidden', borderRadius:25, backgroundColor: 'white', justifyContent:'center', alignItems:'center'}}
-            style={{fontSize: 15, color: '#a3a3a3', justifyContent:'center', alignItems:'center'}}
-            onPress={this.handlePressToAddDog}
-          >
-            Add Dog
+            <Icon
+              name='mode-edit'
+              size={20}
+              color="#9e9e9e"
+            />
           </Button>
         </View>
         <View style={[styles.boxContainer, styles.boxFour]}>
-          <Text style={styles.titleText}>
-           {user.name}, {user.age}
-           </Text>
          { user.age ?
          <Text style={styles.baseText}>
          </Text> : null
@@ -157,8 +156,7 @@ class viewOwnerProfile extends Component {
          </Text>
         </View>
         <View style={[styles.boxContainer, styles.boxFive]}>
-          <Text>
-          </Text>
+
            <FlatList
            data={this.state.dogs}
            keyExtractor={this._keyExtractor}
@@ -187,11 +185,17 @@ class viewOwnerProfile extends Component {
          />
         </View>
         <View style={[styles.boxContainer, styles.boxSix]}>
-          <Text>
-          </Text>
+
+        <Button
+            containerStyle={{height:30, width: 160, overflow:'hidden', borderRadius:25, backgroundColor: '#f44e64', justifyContent:'center', alignItems:'center'}}
+            style={{fontSize: 19, color: 'white', justifyContent:'center', alignItems:'center'}}
+            onPress={this.handlePressToAddDog}
+          >
+            Add Dog
+          </Button>
           <Button
-            containerStyle={{height:35, width: 250, overflow:'hidden', borderRadius:20, backgroundColor: '#f2a2ab', justifyContent:'center', alignItems:'center'}}
-            style={{fontSize: 20, color: 'white', justifyContent:'center', alignItems:'center'}}
+            containerStyle={{height:35, width: 250, overflow:'hidden', borderRadius:20, backgroundColor: 'white', justifyContent:'center', alignItems:'center'}}
+            style={{fontSize: 18, color: '#92aefc', justifyContent:'center', alignItems:'center'}}
             onPress={() => this.props.navigate('LogoutScreen')}
           >
             Logout
@@ -224,6 +228,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     alignItems: 'center',
     justifyContent: 'center',
+    marginTop:15,
   },
   boxThree: {
     flex: 1,
@@ -231,12 +236,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'row',
+    marginTop: 10,
+    paddingLeft: 65
   },
   boxFour: {
     flex: 1,
     backgroundColor: 'white',
     alignItems: 'center',
     justifyContent: 'center',
+    marginBottom: 10,
   },
   boxFive: {
     flex: 1,
@@ -247,6 +255,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: 'white',
+    marginTop: 10,
   },
   baseText: {
     fontFamily: 'Avenir',
