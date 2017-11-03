@@ -18,17 +18,17 @@ class SplashPage extends React.Component {
   render() {
     return (
       <View>
-          <Image
-            style={{width:380, height:250, backgroundColor:'#e45c7d'}}
-            source={require('../../../images/longPinkLogo.png')}
-          />
-          <Image
-            style={{width:400, height:351}}
-            source={require('../../../images/splashHeartsCorgi.gif')}
-          />
-       <View style={{backgroundColor:'#e45c7d'}}>
+        <Image
+          style={{width:380, height:250, backgroundColor:'#e45c7d'}}
+          source={require('../../../images/longPinkLogo.png')}
+        />
+        <Image
+          style={{width:400, height:351, backgroundColor:'#e45c7d'}}
+          source={require('../../../images/splashHeartsCorgi.gif')}
+        />
+        <View style={{backgroundColor:'#e45c7d'}}>
           <LoginScreen />
-      </View>
+        </View>
       </View>
     )
   }
@@ -47,9 +47,11 @@ var styles = StyleSheet.create({
   },
   boxOne: {
     flex: 1,
+    backgroundColor: '#e45c7d',
   },
   boxTwo: {
     flex: 1,
+    backgroundColor: '#e45c7d',
   },
   boxThree: {
     flex: 1,

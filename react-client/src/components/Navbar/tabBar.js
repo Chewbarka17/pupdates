@@ -20,6 +20,9 @@ import LikedDogs from '../Likes/likedDogsView';
 import ViewOwnerProfile from '../Profiles/viewOwnerProfile';
 
 class TabBar extends React.Component {
+  static navigationOptions = {
+    title: 'Back',
+  };
 
   constructor(props) {
     super(props);
