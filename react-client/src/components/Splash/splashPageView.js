@@ -15,32 +15,51 @@ class SplashPage extends React.Component {
     super(props);
   }
 
-//<LoginScreen />
+//
 
   render() {
     return (
       <View style={styles.container}>
-        <View style={[styles.boxContainer, styles.boxOne]}>
+
           <Image
             style={{width:200, height:200, marginLeft:25}}
             source={require('../../../images/largePinkLogo.png')}
           />
-        </View>
-        <View style={[styles.boxContainer, styles.boxTwo]}>
+
+     
           <Image
             style={{width:200, height:200}}
             source={require('../../../images/splashHeartsCorgi.gif')}
           />
-        </View>
-        <View style={[styles.boxContainer, styles.boxThree]}>
-          <Text>
-            Login Button
-          </Text>
-        </View>
+      
+       
+          <LoginScreen />
+    
       </View>
+
     )
   }
 }
+
+      // <View style={styles.container}>
+      //   <View style={[styles.boxContainer, styles.boxOne]}>
+      //     <Image
+      //       style={{width:200, height:200, marginLeft:25}}
+      //       source={require('../../../images/largePinkLogo.png')}
+      //     />
+      //   </View>
+      //   <View style={[styles.boxContainer, styles.boxTwo]}>
+      //     <Image
+      //       style={{width:200, height:200}}
+      //       source={require('../../../images/splashHeartsCorgi.gif')}
+      //     />
+      //   </View>
+      //   <View style={[styles.boxContainer, styles.boxThree]}>
+      //     <Text>
+      //       Login Button
+      //     </Text>
+      //   </View>
+      // </View>
 
 var styles = StyleSheet.create({
   container: {
