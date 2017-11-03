@@ -73,7 +73,7 @@ class EditOwnerProfile extends Component {
       });
     } else {
       this.props.actions.updateOwners(nameCheck, ageCheck, this.props.location, bioCheck, this.props.userId, this.props.coords, pictureCheck);
-        this.navigateToTabBar();
+      this.navigateToTabBar();
     }
   }
 

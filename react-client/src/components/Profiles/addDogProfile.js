@@ -65,7 +65,7 @@ class AddDogProfile extends Component {
             pictureCheck = result.Location;
           }
           this.props.actions.updateDogs(name, age, breed, gender, bio, _id, pictureCheck, data);
-            this.navigateToTabBar();         
+          this.navigateToTabBar();         
         });
       } else {
         this.navigateToTabBar();
