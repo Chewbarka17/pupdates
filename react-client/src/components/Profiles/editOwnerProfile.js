@@ -8,12 +8,14 @@ import {
   TextInput,
   Image,
 } from 'react-native';
-import { FormLabel, FormInput, Button } from 'react-native-elements';
+import { FormLabel, FormInput } from 'react-native-elements';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import ImagePicker from 'react-native-image-crop-picker';
 import uploadProfilePicture from '../../components/Profiles/util/uploadProfilePictureUtil';
 import * as ownerActions from '../../actions/Profiles/ownerActions';
+
+import Button from 'react-native-button';
 
 class EditOwnerProfile extends Component {
   static navigationOptions = {
@@ -91,64 +93,100 @@ class EditOwnerProfile extends Component {
     const { navigate } = this.props.navigation;
     const pictureSelected = this.state.image;
     return (
-      <View>
-        <FormLabel>Name</FormLabel>
-        <FormInput
-          editable
-          autoCapitalize="none"
-          autoCorrect={false}
-          underlineColorAndroid="transparent"
-          placeholder={this.props.name || 'enter your name'}
-          returnKeyType="next"
-          id="name"
-          onChangeText={name => this.setState({ name })}
-        />
-        <FormLabel>Age</FormLabel>
-        <FormInput
-          editable
-          autoCapitalize="none"
-          autoCorrect={false}
-          underlineColorAndroid="transparent"
-          placeholder={this.props.age ? this.props.age.toString() : 'enter your age'}
-          returnKeyType="next"
-          id="age"
-          onChangeText={age => this.setState({ age })}
-        />
-        <FormLabel>Bio</FormLabel>
-        <FormInput
-          editable
-          autoCorrect={true}
-          underlineColorAndroid="transparent"
-          placeholder={this.props.bio || 'enter a bio'}
-          returnKeyType="next"
-          id="bio"
-          onChangeText={bio => this.setState({ bio })}
-        />
+      <View style={styles.container}>
+        <View style={[styles.boxContainer, styles.boxOne]}>
         {pictureSelected !== null ? (
           <Image
-            style={{width: 200, height: 200}}
+            style={{width: 200, height: 200, borderRadius:100, justifyContent: 'center', alignItems: 'center'}}
             source={{uri: pictureSelected.path}}
           />
         ) : (
           <Image
-          style={{width: 200, height: 200}}
+          style={{width: 200, height: 200, borderRadius:100}}
           source={{uri: this.props.picture}}
           />
         )}
-        <Button
-          title='Choose profile picture'
-          onPress={this.selectProfilePhoto}
-          color="#ffffff"
-          backgroundColor='#397af8'
-        />
-        <Button
-          title="Save"
-          onPress={this.handleSubmit}
-        />
+        <Text>
+        </Text>
+            <Button
+            onPress={this.selectProfilePhoto}
+            containerStyle={{height:35, width: 130, overflow:'hidden', borderRadius:20, backgroundColor: '#828be5', justifyContent:'center', alignItems:'center'}}
+            style={{fontSize: 16, color: 'white', justifyContent:'center', alignItems:'center'}}
+          >
+            Edit Picture
+          </Button>
+        </View>
+        <View style={[styles.boxContainer, styles.boxTwo]}>
+          <FormLabel>Name</FormLabel>
+          <FormInput
+            editable
+            autoCapitalize="none"
+            autoCorrect={false}
+            underlineColorAndroid="transparent"
+            placeholder={this.props.name || 'enter your name'}
+            returnKeyType="next"
+            id="name"
+            onChangeText={name => this.setState({ name })}
+          />
+          <FormLabel>Age</FormLabel>
+          <FormInput
+            editable
+            autoCapitalize="none"
+            autoCorrect={false}
+            underlineColorAndroid="transparent"
+            placeholder={this.props.age ? this.props.age.toString() : 'enter your age'}
+            returnKeyType="next"
+            id="age"
+            onChangeText={age => this.setState({ age })}
+          />
+          <FormLabel>Bio</FormLabel>
+          <FormInput
+            editable
+            autoCorrect={true}
+            underlineColorAndroid="transparent"
+            placeholder={this.props.bio || 'enter a bio'}
+            returnKeyType="next"
+            id="bio"
+            onChangeText={bio => this.setState({ bio })}
+          />
+        </View>
+        <View style={[styles.boxContainer, styles.boxThree]}>
+          <Button
+            containerStyle={{height:35, width: 250, overflow:'hidden', borderRadius:20, backgroundColor: '#f44e64', justifyContent:'center', alignItems:'center'}}
+            style={{fontSize: 20, color: 'white', justifyContent:'center', alignItems:'center'}}
+            onPress={this.handleSubmit}
+          >
+            Save
+          </Button>
+        </View>
       </View>
     );
   }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    flexDirection: 'column'
+  },
+  boxContainer: {
+    flex: 1,
+  },
+  boxOne: {
+    flex: 3,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  boxTwo: {
+    flex: 2,
+  },
+  boxThree: {
+    flex: 1,
+    //flexWrap: 'wrap'
+    justifyContent: 'center',
+    alignItems: 'center',
+  }
+});
 
 const ownerState = (store) => {
   return {
