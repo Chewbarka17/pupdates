@@ -31,6 +31,7 @@ class viewOwnerProfile extends Component {
     this.handleGeolocation = this.handleGeolocation.bind(this);
     this.getLocation = this.getLocation.bind(this);
     this.getDogs = this.getDogs.bind(this);
+    this.logout = this.logout.bind(this);
   }
   
   componentDidMount() {
@@ -95,13 +96,16 @@ class viewOwnerProfile extends Component {
         console.log(err);
       });
   }
+
+  logout() {
+    this.props.ownerActions.logOut()
+  }
   
   _keyExtractor(item, index) {
     return item._id
   };
 
   render () {
-    console.log('rendering owner profile', this.props)
     const { user, profilePic } = this.props;
     return (
       <View style={styles.container}>
@@ -190,7 +194,7 @@ class viewOwnerProfile extends Component {
           <Button
             containerStyle={{height:35, width: 250, overflow:'hidden', borderRadius:20, backgroundColor: '#f2a2ab', justifyContent:'center', alignItems:'center'}}
             style={{fontSize: 20, color: 'white', justifyContent:'center', alignItems:'center'}}
-            onPress={() => this.props.navigate('LogoutScreen')}
+            onPress={() => this.logout()}
           >
             Logout
           </Button>

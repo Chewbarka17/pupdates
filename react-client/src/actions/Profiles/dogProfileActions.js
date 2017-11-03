@@ -40,14 +40,6 @@ export const updateDogs = (name, age, breed, gender, bio, dogid, pictures, data)
     pictures,
   })
     .then((response) => {
-      console.log('edited', response)
-      // const dog = JSON.parse(response.config.data);
-      // data.name = dog.name;
-      // data.age = dog.age;
-      // data.breed = dog.breed;
-      // data.gender = dog.gender;
-      // data.bio = dog.bio;
-      // data.pictures[0] = dog.pictures;
       dispatch({ type: 'UPDATE_DOG_FULFILLED', payload: response.data });
     })
     .catch((err) => {
