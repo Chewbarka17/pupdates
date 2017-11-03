@@ -16,7 +16,7 @@ class SplashPage extends React.Component {
   }
 
   render() {
-    const { navigate } = this.props.navigation;
+    // const { navigate } = this.props.navigation;
     return (
       <View style={styles.container}>
         <View style={[styles.boxContainer, styles.boxOne]}>
@@ -32,7 +32,7 @@ class SplashPage extends React.Component {
           />
         </View>
         <View style={[styles.boxContainer, styles.boxThree]}>
-          <LoginScreen navigate={navigate}/>
+          <LoginScreen />
         </View>
       </View>
     )
@@ -59,6 +59,7 @@ var styles = StyleSheet.create({
   boxThree: {
     flex: 1,
     backgroundColor: 'white',
+    backgroundColor: '#e45c7d',
   },
 });
 

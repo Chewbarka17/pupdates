@@ -95,6 +95,7 @@ class viewOwnerProfile extends Component {
   };
 
   render () {
+    console.log('rendering owner profile')
     const { user, profilePic } = this.props;
     return (
       <View>

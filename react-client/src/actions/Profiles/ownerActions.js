@@ -2,11 +2,11 @@ import axios from 'axios';
 import { AsyncStorage } from 'react-native';
 import { NavigationActions } from 'react-navigation';
 
-export const getOwnerFromDB = (fb, navigation, callback) => (dispatch) => {
+export const getOwnerFromDB = (fb, callback) => (dispatch) => {
   axios.get(`http://localhost:8000/api/fbuser/${fb.id}`)
     .then(({ data }) => {
       if (data.length === 0) {
-        callback('User doesn\'t exist in collection');
+        console.log('User doesn\'t exist in collection');
       } else {
         dispatch({ type: 'GET_OWNER_FROM_MONGO_FULFILLED', payload: data[0] });
         AsyncStorage.setItem('mongoOwner', JSON.stringify(data), (error) => {
@@ -14,21 +14,21 @@ export const getOwnerFromDB = (fb, navigation, callback) => (dispatch) => {
             alert('Failure! Could not save user to async storage', error);
           }
         });
-        const navigateToTabBar = NavigationActions.reset({
-          index: 0,
-          actions: [
-            NavigationActions.navigate({routeName: 'TabBar'})
-          ]
-        });
-        navigation.dispatch(navigateToTabBar);
+        // const navigateToTabBar = NavigationActions.reset({
+        //   index: 0,
+        //   actions: [
+        //     NavigationActions.navigate({routeName: 'TabBar'})
+        //   ]
+        // });
+        // navigation.dispatch(navigateToTabBar);
       }
     })
     .catch((err) => {
-      callback('User doesn\'t exist in collection');
+      console.log('User doesn\'t exist in collection');
     });
 };
 
-export const addOwnerToDB = (fb, navigation) => (dispatch) => {
+export const addOwnerToDB = (fb) => (dispatch) => {
   const user = {
     fb_id: fb.id,
     name: fb.name,
@@ -46,13 +46,13 @@ export const addOwnerToDB = (fb, navigation) => (dispatch) => {
           alert('Failure! Could not save user to async storage', error);
         }
       });
-      const navigateToTabBar = NavigationActions.reset({
-        index: 0,
-        actions: [
-          NavigationActions.navigate({routeName: 'TabBar'})
-        ]
-      });
-      navigation.dispatch(navigateToTabBar);
+      // const navigateToTabBar = NavigationActions.reset({
+      //   index: 0,
+      //   actions: [
+      //     NavigationActions.navigate({routeName: 'TabBar'})
+      //   ]
+      // });
+      // navigation.dispatch(navigateToTabBar);
     })
     .catch((err) => {
       dispatch({ type: 'POST_OWNER_FROM_MONGO_REJECTED', payload: err });
@@ -88,7 +88,7 @@ export const updateOwners = (name, age, location, bio, userid, coords, picture, 
           console.log('Failure! Could not save user to async storage during update', error);
         }
       });
-      callback(response.data);
+      console.log('update owners', response.data);
     })
     .catch((err) => {
       dispatch({ type: 'UPDATE_OWNER_REJECTED', payload: err });

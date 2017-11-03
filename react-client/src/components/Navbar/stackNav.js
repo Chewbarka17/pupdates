@@ -15,17 +15,17 @@ import ViewOwnerProfile from '../Profiles/viewOwnerProfile';
 
 const SimpleApp = StackNavigator({
   Home: { 
-    screen: SplashPageView,
+    screen: TabBar,
     navigationOptions: {
       header: null,
     },
   },
-  TabBar: {
-    screen: TabBar,
-    navigationOptions: {
-      header: null,
-    }
-  },
+  // TabBar: {
+  //   screen: TabBar,
+  //   navigationOptions: {
+  //     header: null,
+  //   }
+  // },
   LikedDogProfile: { 
     screen: likedDogProfile,
     // navigationOptions: {

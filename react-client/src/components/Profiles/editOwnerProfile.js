@@ -87,6 +87,7 @@ class EditOwnerProfile extends Component {
   }
 
   render() {
+    console.log('rendering edit owner profile')
     const { navigate } = this.props.navigation;
     const pictureSelected = this.state.image;
     return (

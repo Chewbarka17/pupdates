@@ -29,17 +29,17 @@ class LoginScreen extends Component {
   }
 
   componentDidMount() {
-    AccessToken.getCurrentAccessToken()
-    .then(data => {
-      let accessToken = data.accessToken;
-      if (accessToken !== null) {
-        this._getAwsSecretSauce(accessToken);
-        this._getPublicProfile(accessToken);
-      }
-    })
-    .catch(error => {
-      console.log('fb auth', error);
-    });
+    // AccessToken.getCurrentAccessToken()
+    // .then(data => {
+    //   let accessToken = data.accessToken;
+    //   if (accessToken !== null) {
+    //     this._getAwsSecretSauce(accessToken);
+    //     this._getPublicProfile(accessToken);
+    //   }
+    // })
+    // .catch(error => {
+    //   console.log('fb auth', error);
+    // });
   }
 
   _fbAuth() {
@@ -113,10 +113,10 @@ class LoginScreen extends Component {
   }
 
   _checkUserInDB = (fb) => {
-    this.props.actions.getOwnerFromDB(fb, this.props.navigation, (error) => {
+    this.props.actions.getOwnerFromDB(fb, (error) => {
       console.log('check user', error);
       if (error) {
-        this.props.actions.addOwnerToDB(fb, this.props.navigation);
+        this.props.actions.addOwnerToDB(fb);
       }
     });
   }
