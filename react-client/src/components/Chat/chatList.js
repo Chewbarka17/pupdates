@@ -18,7 +18,7 @@ class ChatList extends React.Component {
   };
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.idk !== this.props.idk) {
+    if (nextProps.hack !== this.props.hack) {
       this.fetchRooms();
     }
   }
