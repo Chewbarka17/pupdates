@@ -32,7 +32,7 @@ class likedDogProfile extends React.Component {
   };
 
   getOwnersInfo() {
-    axios.get('http://localhost:8000/api/users/' + this.props.navigation.state.params.owner) // this is the dog's owner
+    axios.get(`http://localhost:8000/api/users/${this.props.navigation.state.params.owner}`)
       .then(({ data }) => {
         this.setState({
           name: data[0].name,
@@ -51,8 +51,8 @@ class likedDogProfile extends React.Component {
     axios.post('http://localhost:8000/api/rooms', {
       ownerIds: [this.props.uid, this.state.ownerId],
     })
-    .then((data) => {
-      this.props.navigation.navigate('ChatRoom', data.data)
+    .then(({ data }) => {
+      this.props.navigation.navigate('ChatRoom', data)
     })
     .catch((err) => {
       console.log('error creating room', err)

@@ -32,6 +32,14 @@ class TabBar extends React.Component {
     this.changeState = this.changeState.bind(this);
   }
 
+  componentWillMount() {
+    alert('mounting')
+  }
+
+  componentDidMount() {
+    alert('tab bar mounted')
+  }
+
   // function to set state
   changeState(flag) {
     this.setState(() => {

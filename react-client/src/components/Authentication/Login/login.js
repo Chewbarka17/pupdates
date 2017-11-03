@@ -9,7 +9,7 @@ const {
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { StackNavigator, NavigationActions } from 'react-navigation';
+import { NavigationActions } from 'react-navigation';
 import {
   Text,
   View,
@@ -19,6 +19,10 @@ import AWS from 'aws-sdk/dist/aws-sdk-react-native';
 import awsmobile from '../../../../../config/aws-exports';
 import { SocialIcon, FormLabel, FormInput } from 'react-native-elements';
 import axios from 'axios';
+<<<<<<< HEAD
+=======
+import test from '../../Navbar/tabBar';
+>>>>>>> [remove] unused files.
 import * as ownerActions from '../../../actions/Profiles/ownerActions';
 
 class LoginScreen extends Component {
@@ -26,6 +30,9 @@ class LoginScreen extends Component {
     super(props);
     this._fbAuth = this._fbAuth.bind(this);
     this._getPublicProfile = this._getPublicProfile.bind(this);
+    this._getAwsSecretSauce = this._getAwsSecretSauce.bind(this);
+    this._checkUserInDB = this._checkUserInDB.bind(this);
+    
   }
 
   componentDidMount() {
@@ -71,14 +78,15 @@ class LoginScreen extends Component {
     });
   }
 
-  _getAwsSecretSauce = (accessToken) => {
+  _getAwsSecretSauce(accessToken) {
     AWS.config.region = awsmobile.aws_cognito_region;
     AWS.config.credentials = new AWS.CognitoIdentityCredentials({
       IdentityPoolId: awsmobile.aws_cognito_identity_pool_id,
       Logins: {
         'graph.facebook.com': accessToken
       }
-    });
+    },
+  );
     let accessKeyId;
     let secretAcessKey;
     let sessionToken;
@@ -88,9 +96,31 @@ class LoginScreen extends Component {
       sessionToken = AWS.config.credentials.sessionToken;
       this.props.actions.saveAwsSecretSauce(accessKeyId, secretAccessKey, sessionToken);
     });
+<<<<<<< HEAD
+=======
+
+    // const s3 = new AWS.S3({
+    //   accessKeyId: accessKeyId,
+    //   secretAccessKey: secretAcessKey,
+    //   sessionToken: sessionToken
+    // });
+    // console.log('then here');
+    // const params = {
+    //   Bucket: awsmobile.aws_user_files_s3_bucket,
+    //   Key: "public/bordercolliesmile.jpg"
+    // }
+
+    // s3.getSignedUrl('getObject', params, (error, data) => {
+    //   if (error) {
+    //     console.log(error, error.stack);
+    //   } else {
+    //     console.log('what is in s3', data);
+    //   }
+    // })
+>>>>>>> [remove] unused files.
   }
 
-  _getPublicProfile = (accessToken) => {
+  _getPublicProfile(accessToken) {
     const responseInfoCallback = (error, data) => {
       if (error) {
         alert('Error fetching data: ' + error.toString());
@@ -112,13 +142,20 @@ class LoginScreen extends Component {
     new GraphRequestManager().addRequest(infoRequest).start();
   }
 
+<<<<<<< HEAD
   _checkUserInDB = (fb) => {
     this.props.actions.getOwnerFromDB(fb, (error) => {
+=======
+  _checkUserInDB(fb) {
+    this.props.actions.getOwnerFromDB(fb, this.props.navigate, (error) => {
+>>>>>>> [remove] unused files.
       console.log('check user', error);
       if (error) {
         this.props.actions.addOwnerToDB(fb);
       }
     });
+    // this.props.navigation.navigate('TabBar')
+    alert('checked user')
   }
 
   render() {
