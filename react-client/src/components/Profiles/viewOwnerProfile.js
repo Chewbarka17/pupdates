@@ -4,11 +4,13 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { View, Text, FlatList, AsyncStorage, StyleSheet, Image, ScrollView } from 'react-native';
 import { List, ListItem, Avatar } from 'react-native-elements';
+import { GOOGLE_API } from 'react-native-dotenv';
+
 import Swipeout from 'react-native-swipeout';
 import axios from 'axios';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-
 import ViewDogProfileScreen from '../Profiles/viewDogProfile';
+
 import * as dogActions from '../../actions/Profiles/dogProfileActions';
 import * as ownerActions from '../../actions/Profiles/ownerActions';
 
@@ -66,7 +68,7 @@ class viewOwnerProfile extends Component {
   }
 
   getLocation(position) {
-    axios.get(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${position.coords.latitude},${position.coords.longitude}&key=AIzaSyABBYsfb17rEn8uzLRyf0o_77R2A8AjI6g`)
+    axios.get(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${position.coords.latitude},${position.coords.longitude}&key=${GOOGLE_API}`)
       .then(({data}) => {
         console.log('api request', data);
         this.props.ownerActions.updateOwners(
@@ -151,7 +153,7 @@ class viewOwnerProfile extends Component {
          </Text> : null
          }
          <Text style={styles.baseText}>
-           {user.location}
+           {user.location.split(',')[1]}
          </Text>
         </View>
         <View style={[styles.boxContainer, styles.boxFive]}>
