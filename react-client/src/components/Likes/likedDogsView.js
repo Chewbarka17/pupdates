@@ -23,7 +23,7 @@ import { bindActionCreators } from 'redux';
 import DogProfile from '../Likes/likedDogProfile';
 
 // animate
-import * as Animatable from 'react-native-animatable';
+// import * as Animatable from 'react-native-animatable';
 
 
 class LikedDogsView extends React.Component {
