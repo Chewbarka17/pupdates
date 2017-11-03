@@ -47,7 +47,6 @@ class likedDogProfile extends React.Component {
   };
 
   createRoom() {
-    console.log('uids', this.props.uid, this.state.ownerId)
     axios.post('http://localhost:8000/api/rooms', {
       ownerIds: [this.props.uid, this.state.ownerId],
     })
@@ -143,95 +142,6 @@ var styles = StyleSheet.create({
     color: '#3f3f3f',
   },
 });
-
-{/* <View style={styles.container}>
-        <View>
-          <Avatar
-            xlarge
-            rounded
-            source={{uri: this.props.navigation.state.params.pictures[0]}}
-          />
-          <View>
-            <Text>
-              Name: {this.props.navigation.state.params.name}
-            </Text>
-            <Text>
-              Breed: {this.props.navigation.state.params.breed}
-            </Text>
-            <Text>
-              Gender: {this.props.navigation.state.params.gender}
-            </Text>
-            <Text>
-              Age: {this.props.navigation.state.params.age}
-            </Text>
-            <Text>
-              Location: {this.props.navigation.state.params.location}
-            </Text>
-            <Text>
-              Bio: {this.props.navigation.state.params.bio}
-            </Text>
-          </View>
-        </View>
-        <View>
-          <Text>
-            Owner: {this.state.name}
-          </Text>
-          <Avatar
-            large
-            rounded
-            source={{uri: this.state.picture}}
-          />
-          </View>
-        <View>
-          <View>
-            <Button
-              containerStyle={{height:45, width: 150, overflow:'hidden', borderRadius:20, backgroundColor: '#ed3862', justifyContent:'center', alignItems:'center'}}
-              style={{fontSize: 20, color: 'white', justifyContent:'center', alignItems:'center'}}
-              onPress={this.createRoom}
-            >
-              Chat
-            </Button>
-          </View>
-        </View>
-      </View> */}
-
-// var styles = StyleSheet.create({
-//   container: {
-//     marginTop: 20,
-//     justifyContent:'center', 
-//     alignItems:'center',
-//     backgroundColor:'white',
-//   },
-//   dogContainer: {
-//     backgroundColor:'white',
-//   },
-//   dogImage: {
-//     height: 150,
-//     borderRadius: 75,
-//     width: 150,
-//   },
-//   dogInfo: {
-
-//   },
-//   ownerContainer: {
-//     backgroundColor:'#eaeaea',
-//     // width: 400,
-//     // height: 200,
-//   },
-//   ownerImage: {
-
-//   },
-//   ownerInfo: {
-    
-//   },
-//   buttonContainer: {
-//     backgroundColor:'#eaeaea',
-//   },
-//   chatButton: {
-//     borderRadius:20,
-//     backgroundColor: '#ed3862',
-//   }
-// });
 
 const chatState = (store) => {
   return {
