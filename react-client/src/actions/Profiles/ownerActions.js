@@ -53,7 +53,7 @@ export const addOwnerToDB = fb => (dispatch) => {
     bio: '',
     rating: null,
   };
-  axios.post('http://localhost:8000/api/users', user)
+  axios.post('https://serene-atoll-31576.herokuapp.com/api/users', user)
     .then(({ data }) => {
       dispatch({ type: 'POST_OWNER_FROM_MONGO_FULFILLED', payload: data });
     })
