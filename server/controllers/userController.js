@@ -1,13 +1,13 @@
 // require user database
-const db = require('../../db');
+// const db = require('../../db');
+const Owners = require('../../db/Owners/ownerSchema');
 const mongoose = require('mongoose');
 
 module.exports = {
 
   getAllUsers: (req, res) => {
-    db.Owners.find({}, (err, owners) => {
+    Owners.find({}, (err, owners) => {
       if (err) {
-        console.log('error getting all users ', err);
         res.status(500).send(err);
       }
       const ownerMap = {};
@@ -20,9 +20,17 @@ module.exports = {
   },
 
   getUser: (req, res) => {
-    db.Owners.find({ _id: req.params.userid }, (err, owner) => {
+    Owners.find({ _id: req.params.userid }, (err, owner) => {
       if (err) {
-        console.log('error getting this user ', err);
+        res.status(500).send(err);
+      }
+      res.status(200).send(owner);
+    });
+  },
+
+  getUserByFBid: (req, res) => {
+    Owners.find({ fb_id: req.params.fbid }, (err, owner) => {
+      if (err) {
         res.status(500).send(err);
       }
       res.status(200).send(owner);
@@ -30,8 +38,9 @@ module.exports = {
   },
 
   addUser: (req, res) => {
-    const owner = new db.Owners({
+    const owner = new Owners({
       _id: new mongoose.Types.ObjectId(),
+      fb_id: req.body.fb_id,
       name: req.body.name,
       age: req.body.age,
       location: req.body.location,
@@ -41,7 +50,7 @@ module.exports = {
     });
     owner.save((err) => {
       if (err) {
-        console.error('Could not save owner', err);
+        res.status(500).send(err);
       }
     })
       .then((data) => {
@@ -53,32 +62,61 @@ module.exports = {
   },
 
   updateUser: (req, res) => {
-    db.Owners.findOneAndUpdate({ _id: req.body.id }, {
-      // console.log("trying to update user");
+    Owners.findOneAndUpdate({ _id: req.body.userid }, {
       $set: {
         name: req.body.name,
         age: req.body.age,
         location: req.body.location,
+        coords: req.body.coords,
         picture: req.body.picture,
         bio: req.body.bio,
         rating: req.body.rating,
       },
     }, { new: true }, (err, data) => {
       if (err) {
-        console.log('update error', err);
-        res.status(500).send('error', err);
+        res.status(500).send(err);
       }
       res.status(201).send(data);
     });
   },
 
   removeUser: (req, res) => {
-    db.Owners.remove({ _id: req.params.userid }, (err, data) => {
+    Owners.remove({ _id: req.params.userid }, (err) => {
       if (err) {
         res.status(500).send('error removing user', err);
       }
       res.status(202).send('User successfully deleted');
     });
+  },
+
+  updateSeenDogs: (req, res) => {
+    Owners.findOneAndUpdate({ _id: req.params.userid }, { $push: { dogsSeen: req.body.dogid } },
+      (err) => {
+        if (err) {
+          res.status(500).send('error', err);
+        }
+        res.status(201).send('successfuly updated user');
+      });
+  },
+
+  updateLikedDogs: (req, res) => {
+    Owners.findOneAndUpdate({ _id: req.params.userid }, { $push: { dogsLiked: req.body.dogid, dogsSeen: req.body.dogid } },
+      { new: true } , (err, data) => {
+        if(err) {
+          res.status(500).send('error', err);
+        }
+        res.status(201).send(data);
+      });
+  },
+
+  removeLikedDog: (req, res) => {
+    Owners.findOneAndUpdate({ _id: req.params.userid }, { $pull: { dogsLiked: req.body.dogid } },
+      { new: true }, (err, data) => {
+        if (err) {
+          res.status(500).send('error', err);
+        }
+        res.status(201).send(data);
+      });
   },
 
 };
