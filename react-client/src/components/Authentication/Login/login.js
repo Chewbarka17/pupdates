@@ -31,7 +31,6 @@ class LoginScreen extends Component {
     this._fbAuth = this._fbAuth.bind(this);
     this._getPublicProfile = this._getPublicProfile.bind(this);
     this._getAwsSecretSauce = this._getAwsSecretSauce.bind(this);
-    this._checkUserInDB = this._checkUserInDB.bind(this);
   }
 
   componentDidMount() {
@@ -120,10 +119,8 @@ class LoginScreen extends Component {
   _getPublicProfile(accessToken) {
     const responseInfoCallback = (error, data) => {
       if (error) {
-        console.log(error)
         alert('Error fetching data: ' + error.toString());
       } else {
-        console.log(data)
         this.props.actions.findOrCreateOwner(data);
       }
     }
