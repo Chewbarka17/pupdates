@@ -37,32 +37,6 @@ export const findOrCreateOwner = fb => (dispatch) => {
 };
 
 /**
-  Request to server to post owner using facebook public profile data
-  as defaults.
-
-  @param Facebook public profile
-  @return Owner obj from Mongo DB.
-*/
-export const addOwnerToDB = fb => (dispatch) => {
-  const user = {
-    fb_id: fb.id,
-    name: fb.name,
-    picture: fb.picture.data.url,
-    age: null,
-    location: '',
-    bio: '',
-    rating: null,
-  };
-  axios.post('https://serene-atoll-31576.herokuapp.com/api/users', user)
-    .then(({ data }) => {
-      dispatch({ type: 'POST_OWNER_FROM_MONGO_FULFILLED', payload: data });
-    })
-    .catch((err) => {
-      dispatch({ type: 'POST_OWNER_FROM_MONGO_REJECTED', payload: err });
-    });
-};
-
-/**
   Save AWS credentials into Redux Store
 
   @param AWS credentials

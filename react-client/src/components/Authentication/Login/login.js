@@ -47,7 +47,7 @@ class LoginScreen extends Component {
     //   console.log('fb auth', error);
     // });
   }
-  
+
   /**
     Request to Facebook for an authenticatin token.
 
@@ -125,8 +125,6 @@ class LoginScreen extends Component {
       } else {
         console.log(data)
         this.props.actions.findOrCreateOwner(data);
-        
-        // this._checkUserInDB(data);
       }
     }
 
@@ -141,21 +139,6 @@ class LoginScreen extends Component {
 
     const infoRequest = new GraphRequest('/me', fb_params, responseInfoCallback);
     new GraphRequestManager().addRequest(infoRequest).start();
-  }
-
-  /**
-    Retrieve User from DB if the FB ID exists. Otherwise add FB 
-    public profile to DB.
-
-    @param Facebook public profile
-  */
-  _checkUserInDB = (fb) => {
-    this.props.actions.getOwnerFromDB(fb, (error) => {
-      console.log('check user', error);
-      if (error) {
-        this.props.actions.addOwnerToDB(fb);
-      }
-    });
   }
 
   render() {
