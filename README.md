@@ -3,8 +3,7 @@ Doggy pun goes here.
 
 [Demo](https://drive.google.com/open?id=1D0vGmAoIK6L6EWOwn8VacPglBXtQcrsf)
 
-![alt text](https://i.imgur.com/zFFosRF.png)![alt text](https://i.imgur.com/ztlOuCV.png)
-![alt text](https://i.imgur.com/I7rJsD4.png)![alt text](https://i.imgur.com/VnxdQFJ.png)
+![alt text](https://i.imgur.com/zFFosRF.png)![alt text](https://i.imgur.com/ztlOuCV.png)![alt text](https://i.imgur.com/I7rJsD4.png)![alt text](https://i.imgur.com/VnxdQFJ.png)
 
 ## Description 
 Help find other playful puppies to have play dates with.
