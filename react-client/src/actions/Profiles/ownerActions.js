@@ -1,5 +1,11 @@
 import axios from 'axios';
 
+/**
+ Request to server to get owner using facebook id
+ 
+ @param Facebook public profile and a callback
+ @return Owner obj from Mongo DB.
+ */
 export const findOrCreateOwner = fb => (dispatch) => {
   axios.get(`https://serene-atoll-31576.herokuapp.com/api/fbuser/${fb.id}`)
     .then(({ data }) => {
@@ -30,6 +36,11 @@ export const findOrCreateOwner = fb => (dispatch) => {
     });
 };
 
+/**
+  Save AWS credentials into Redux Store
+
+  @param AWS credentials
+*/
 export const saveAwsSecretSauce = (accessKeyId, secretAccessKey, sessionToken) => (dispatch) => {
   const aws = {
     accessKeyId: accessKeyId,

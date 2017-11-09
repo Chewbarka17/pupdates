@@ -143,6 +143,9 @@ class ViewDogsScreen extends React.Component {
 
         {/* dog card */}
         <SwipeCards
+          nopeText = {'GRRR!'}
+          yupText = {'WOOF!'}
+          fontWeight = {'bold'}
           ref = {'swiper'}
           cards={this.props.unseenDogs}
           containerStyle = {{ backgroundColor: 'white', alignItems:'center', margin:20 }}

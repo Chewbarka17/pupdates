@@ -11,6 +11,10 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import SplashPageView from '../../Splash/splashPageView';
 import * as ownerActions from '../../../actions/Profiles/ownerActions';
 
+/**
+  Logout from Facebook button
+
+ */
 class LogoutScreen extends React.Component {
 
   constructor(props) {
@@ -19,6 +23,11 @@ class LogoutScreen extends React.Component {
     this.navigateToHome = this.navigateToHome.bind(this);
   }
   
+  /**
+    Verifies user is logged in. Logs out afterwards.
+
+    @param void
+  */
   componentDidMount() {
     AccessToken.getCurrentAccessToken()
     .then(data => {
@@ -35,6 +44,11 @@ class LogoutScreen extends React.Component {
     });
   }
 
+  /**
+    Redirects user to splash screen after logging out.
+
+    @param void
+  */
   navigateToHome() {
     const navigateToHome = NavigationActions.reset({
       index: 0,
