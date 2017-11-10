@@ -6,7 +6,7 @@ Doggy pun goes here.
 ![alt text](https://i.imgur.com/zFFosRF.png)![alt text](https://i.imgur.com/ztlOuCV.png)![alt text](https://i.imgur.com/I7rJsD4.png)![alt text](https://i.imgur.com/VnxdQFJ.png)
 
 ## Description 
-Help find other playful puppies to have play dates with.
+Pupdates is a social mobile app that is designed for those who want to meet people through their dogs. Users are able to flip through pictures of dogs on their phones and chat with owners of the dogs they like.
 
 ## Installation
 
@@ -19,8 +19,14 @@ https://github.com/ivpusic/react-native-image-crop-picker
 .env file
 ```
 DB=MONGO_DB_URL_GOES_HERE
-GOOGLE_API=API_KEY_GOES_HERE
+GOOGLE_API=GOOGLE_MAPS_GEOCODING_API_KEY_GOES_HERE
+API_KEY=GOOGLE_MAPS_DISTANCE_MATRIX_API_KEY_GOES_HERE
 ```
+
+More about [Geocoding](https://developers.google.com/maps/documentation/geocoding/intro)
+
+More about [Distance Matrix](https://developers.google.com/maps/documentation/distance-matrix/intro)
+
 ```
 npm install
 npm start

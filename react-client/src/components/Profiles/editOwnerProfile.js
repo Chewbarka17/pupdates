@@ -176,7 +176,6 @@ const styles = StyleSheet.create({
   },
   boxThree: {
     flex: 1,
-    //flexWrap: 'wrap'
     justifyContent: 'center',
     alignItems: 'center',
   }
