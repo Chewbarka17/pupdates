@@ -49,6 +49,7 @@ class EditOwnerProfile extends Component {
     });
   }
 
+  // checks to see if user has filled out any information, if not keep it the same
   handleSubmit() {
     console.log(this.props)
     const { name, age, bio, picture } = this.state;
