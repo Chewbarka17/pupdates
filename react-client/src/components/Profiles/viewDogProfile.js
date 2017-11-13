@@ -26,6 +26,7 @@ class viewDogProfile extends Component {
     this.props.actions.showDog(this.props.navigation.state.params)
   }
 
+  // clicking on edit button routes user to edit dog profile page
   handlePress() {
     const { navigate } = this.props.navigation
     navigate('EditDogProfile', this.props.navigation.state.params);

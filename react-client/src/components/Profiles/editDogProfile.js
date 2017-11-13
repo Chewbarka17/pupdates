@@ -53,6 +53,8 @@ class EditDogProfile extends Component {
     });
   }
 
+  // checks see if user has filled anything out. If so, pass that info to actions.
+  // If not, we want to pass in the old information to update dog profile
   handleSubmit() {
     const { name, age, breed, gender, bio, picture } = this.state;
     const { params } = this.props.navigation.state;
@@ -82,7 +84,6 @@ class EditDogProfile extends Component {
       }
     });
   }
-
 
   navigateToTabBar() {
     const backAction = NavigationActions.back();
