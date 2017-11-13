@@ -41,14 +41,17 @@ class viewOwnerProfile extends Component {
     this.props.dogActions.getOwnersDogs(this.props.userId);
   }
 
+  // edit user navigates to edit owner profile form
   handlePressToEditUser() {
     this.props.navigation.navigate('EditOwnerProfile');
   }
   
+  // edit add a dog navigates to add dog form
   handlePressToAddDog() {
     this.props.navigation.navigate('AddDogProfile');
   }
 
+  // retrieve user geolocation
   handleGeolocation() {
     navigator.geolocation.getCurrentPosition(
       (position) => {
@@ -64,6 +67,7 @@ class viewOwnerProfile extends Component {
     );
   }
 
+  // retrieve address of geolocation coordinates
   getLocation(position) {
     axios.get(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${position.coords.latitude},${position.coords.longitude}&key=${GOOGLE_API}`)
       .then(({data}) => {
@@ -83,10 +87,12 @@ class viewOwnerProfile extends Component {
       });
   }
 
+  // logout button functionality
   logout() {
     this.props.ownerActions.logOut()
   }
   
+  // react native specific
   _keyExtractor(item, index) {
     return item._id
   };
