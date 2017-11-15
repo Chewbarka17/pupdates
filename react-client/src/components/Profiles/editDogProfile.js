@@ -66,6 +66,7 @@ class EditDogProfile extends Component {
     let pictureCheck = picture || params.pictures[0];
     let dogid = params._id;
 
+    // get a dog by dogid to update dog profile picture
     this.props.actions.getADog(dogid, (data) => {
       if (this.state.image) {
         uploadProfilePicture(this.props.awsSauce, dogid, this.state.image, (err, result) => {
