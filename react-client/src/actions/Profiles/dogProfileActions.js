@@ -1,5 +1,6 @@
 import axios from 'axios';
 
+// Get a dog by dogid to update dog profile picture
 export const getADog = (dogid, callback) => (dispatch) => {
   axios.get(`https://serene-atoll-31576.herokuapp.com/api/dogs/${dogid}`)
     .then((response) => {
@@ -11,6 +12,7 @@ export const getADog = (dogid, callback) => (dispatch) => {
     });
 };
 
+// takes ownerid to get owner's dogs
 export const getOwnersDogs = ownerid => (dispatch) => {
   axios.get(`https://serene-atoll-31576.herokuapp.com/api/users/dogs/${ownerid}`)
     .then(({ data }) => {
@@ -21,6 +23,7 @@ export const getOwnersDogs = ownerid => (dispatch) => {
     });
 };
 
+// posts new dog with all info. Callback used to resolve async call for pictures
 export const postDogs = (name, age, breed, gender, bio, owner, pictures, callback) => (dispatch) => {
   axios.post('https://serene-atoll-31576.herokuapp.com/api/dogs', {
     name,
@@ -40,7 +43,8 @@ export const postDogs = (name, age, breed, gender, bio, owner, pictures, callbac
     });
 };
 
-export const updateDogs = (name, age, breed, gender, bio, dogid, pictures, data) => (dispatch) => {
+// update dog with new info
+export const updateDogs = (name, age, breed, gender, bio, dogid, pictures) => (dispatch) => {
   axios.patch(`https://serene-atoll-31576.herokuapp.com/api/dogs/${dogid}`, {
     name,
     age,
@@ -57,6 +61,7 @@ export const updateDogs = (name, age, breed, gender, bio, dogid, pictures, data)
     });
 };
 
+// delete dog from dog and user table => could be better with relational database
 export const deleteDogs = (dogid, uid) => (dispatch) => {
   axios({
     method: 'delete',
