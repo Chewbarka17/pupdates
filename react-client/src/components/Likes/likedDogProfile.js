@@ -24,6 +24,7 @@ class likedDogProfile extends React.Component {
     this.getOwnersInfo();
   };
 
+  // gets owners info and saves it in component state. Could probably refactor to redux
   getOwnersInfo() {
     axios.get(`https://serene-atoll-31576.herokuapp.com/api/users/${this.props.navigation.state.params.owner}`)
       .then(({ data }) => {
@@ -40,6 +41,7 @@ class likedDogProfile extends React.Component {
       });
   };
 
+  // could also refactor to redux
   createRoom() {
     axios.post('https://serene-atoll-31576.herokuapp.com/api/rooms', {
       ownerIds: [this.props.uid, this.state.ownerId],
