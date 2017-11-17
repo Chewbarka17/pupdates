@@ -38,6 +38,8 @@ class LikedDogsView extends React.Component {
     this.makeRemoteRequest();
   }
 
+  // tab navigator does not provide way to unmount and remount a component
+  // this is way to refresh a component by checking if props is different
   componentWillReceiveProps() {
     this.makeRemoteRequest();    
   }
@@ -62,6 +64,7 @@ class LikedDogsView extends React.Component {
       });
   };
 
+  // react native specific. extracts key for flatlist so no confusion with duplicate items
   _keyExtractor(item, index) {
     return item._id
   };
