@@ -31,9 +31,6 @@ class CustomTabBar extends React.Component {
   }
 
   iconColor(progress) {
-    // const red = 59 + (204 - 59) * progress;
-    // const green = 89 + (204 - 89) * progress;
-    // const blue = 152 + (204 - 152) * progress;
     const red = 244 + (204 - 244) * progress;
     const green = 78 + (204 - 78) * progress;
     const blue = 100 + (204 - 100) * progress;
