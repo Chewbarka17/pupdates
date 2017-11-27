@@ -1,5 +1,3 @@
-// require user database
-// const db = require('../../db');
 const Owners = require('../../db/Owners/ownerSchema');
 const mongoose = require('mongoose');
 
@@ -101,8 +99,8 @@ module.exports = {
 
   updateLikedDogs: (req, res) => {
     Owners.findOneAndUpdate({ _id: req.params.userid }, { $push: { dogsLiked: req.body.dogid, dogsSeen: req.body.dogid } },
-      { new: true } , (err, data) => {
-        if(err) {
+      { new: true }, (err, data) => {
+        if (err) {
           res.status(500).send('error', err);
         }
         res.status(201).send(data);
