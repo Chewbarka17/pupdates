@@ -1,12 +1,9 @@
 import React, { Component } from 'react';
 import { NavigationActions } from 'react-navigation';
 import {
-  Platform,
   StyleSheet,
   Text,
   View,
-  ScrollView,
-  TextInput,
   Image,
 } from 'react-native';
 import { FormLabel, FormInput } from 'react-native-elements';
@@ -39,6 +36,7 @@ class EditDogProfile extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.selectProfilePhoto = this.selectProfilePhoto.bind(this);
     this.navigateToTabBar = this.navigateToTabBar.bind(this);  
+    console.log('these are your props for edit dog', this.props);
   };
   
   selectProfilePhoto() {
