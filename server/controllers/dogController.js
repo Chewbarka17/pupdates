@@ -155,10 +155,6 @@ module.exports = {
           }
         })
           .then((result) => {
-          // the result will be an array of dog IDs instead of an array of dog objects
-          // result = result.map(function(likedDog) {
-          //   return likedDog._id;
-          // });
             res.status(200).send(result);
           })
           .catch((err) => {

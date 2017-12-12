@@ -23,7 +23,7 @@ class viewDogProfile extends Component {
   }
 
   componentWillMount() {
-    this.props.actions.showDog(this.props.navigation.state.params)
+    this.props.actions.showDog(this.props.navigation.state.params);
   }
 
   // clicking on edit button routes user to edit dog profile page
