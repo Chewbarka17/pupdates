@@ -2,23 +2,30 @@ import React, { Component } from 'react';
 import { StackNavigator } from 'react-navigation';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { View, Text, FlatList, AsyncStorage, StyleSheet, Image, ScrollView } from 'react-native';
-import { List, ListItem, Avatar } from 'react-native-elements';
+import { View, 
+         Text, 
+         FlatList, 
+         StyleSheet, 
+         Image, } from 'react-native';
+import { List, 
+         ListItem, 
+         Avatar } from 'react-native-elements';
 import { GOOGLE_API } from 'react-native-dotenv';
 
-import Swipeout from 'react-native-swipeout';
 import axios from 'axios';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import ViewDogProfileScreen from '../Profiles/viewDogProfile';
 
+import Swipeout from 'react-native-swipeout';
+import Button from 'react-native-button'
+import Icon from 'react-native-vector-icons/MaterialIcons';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import PropTypes from 'prop-types';
+
+import ViewDogProfileScreen from '../Profiles/viewDogProfile';
+import corgiGif from '../../../images/profileCoolCorgiCropped.gif';
 import * as dogActions from '../../actions/Profiles/dogProfileActions';
 import * as ownerActions from '../../actions/Profiles/ownerActions';
 
-import Button from 'react-native-button'
-import Icon from 'react-native-vector-icons/MaterialIcons';
-
-
-class viewOwnerProfile extends Component {
+class ViewOwnerProfile extends Component {
   constructor(props) {
     super(props);
 
@@ -71,7 +78,6 @@ class viewOwnerProfile extends Component {
   getLocation(position) {
     axios.get(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${position.coords.latitude},${position.coords.longitude}&key=${GOOGLE_API}`)
       .then(({data}) => {
-        console.log('api request', data);
         this.props.ownerActions.updateOwners(
           this.props.user.name, 
           this.props.user.age, 
@@ -98,32 +104,33 @@ class viewOwnerProfile extends Component {
   };
 
   render () {
-    const { user, profilePic } = this.props;
+    const { user, profilePic, dogs } = this.props;
     return (
       <View style={styles.container}>
+
         <View style={[styles.boxContainer, styles.boxOne]}>
           <Image
-            style={{width: 235, height: 140}}
-            source={require('../../../images/profileCoolCorgiCropped.gif')}
+            style={styles.corgiImage}
+            source={corgiGif}
           />
         </View>
-        <View style={[styles.boxContainer, styles.boxTwo]}>
 
+        <View style={[styles.boxContainer, styles.boxTwo]}>
           <Avatar
             xlarge
             rounded
             source={{uri: profilePic}}
             activeOpacity={0.7}
           />
-
         </View>
-        <View style={[styles.boxContainer, styles.boxThree]}>
+
+        <View style={[styles.boxContainer, styles.boxThree]}>          
           <Text style={styles.titleText}>
            {user.name}, {user.age}
           </Text>
+
           <Button
-            containerStyle={{height:30, width: 65, overflow:'hidden', borderRadius:25, backgroundColor: 'white', justifyContent:'center', alignItems:'center'}}
-            style={{fontSize: 15, color: '#a3a3a3', justifyContent:'center', alignItems:'center'}}
+            containerStyle={styles.editDogContainer}
             onPress={this.handlePressToEditUser}
           >
             <Icon
@@ -133,24 +140,30 @@ class viewOwnerProfile extends Component {
             />
           </Button>
         </View>
+
         <View style={[styles.boxContainer, styles.boxFour]}>
+         
          { user.age ?
          <Text style={styles.baseText}>
          </Text> : null
          }
+
          { user.bio ?
          <Text style={styles.baseText}>
            {user.bio}
          </Text> : null
          }
+
          <Text style={styles.baseText}>
            {user.location.split(',')[1]}
          </Text>
+
         </View>
+
         <View style={[styles.boxContainer, styles.boxFive]}>
 
            <FlatList
-           data={this.props.dogs}
+           data={dogs}
            keyExtractor={this._keyExtractor}
            renderItem={({ item }) => 
              <Swipeout right={[{
@@ -163,7 +176,7 @@ class viewOwnerProfile extends Component {
                autoClose={true}
                backgroundColor='transparent'
              >
-             <ListItem containerStyle={{ borderTopWidth: 0, borderBottomWidth: 0 }}
+             <ListItem containerStyle={styles.listItemLines}
                roundAvatar
                onPress={() =>
                  this.props.navigation.navigate('ViewDogProfile', item)
@@ -176,26 +189,34 @@ class viewOwnerProfile extends Component {
            }
          />
         </View>
+
         <View style={[styles.boxContainer, styles.boxSix]}>
 
-        <Button
-            containerStyle={{height:30, width: 160, overflow:'hidden', borderRadius:25, backgroundColor: '#f44e64', justifyContent:'center', alignItems:'center'}}
-            style={{fontSize: 19, color: 'white', justifyContent:'center', alignItems:'center'}}
+          <Button
+            containerStyle={styles.addDogContainer}
+            style={styles.addDogButton}
             onPress={this.handlePressToAddDog}
           >
             Add Dog
           </Button>
+
           <Button
-            containerStyle={{height:35, width: 250, overflow:'hidden', borderRadius:20, backgroundColor: 'white', justifyContent:'center', alignItems:'center'}}
-            style={{fontSize: 18, color: '#92aefc', justifyContent:'center', alignItems:'center'}}
+            containerStyle={styles.logoutContainer}
+            style={styles.logoutButton}
             onPress={() => this.logout()}
           >
             Logout
           </Button>
+
         </View>
       </View>
     )
   }
+}
+
+ViewOwnerProfile.PropTypes = {
+  dogs: PropTypes.array,
+  user: PropTypes.object,
 }
 
 const styles = StyleSheet.create({
@@ -258,6 +279,53 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#3f3f3f',
   },
+  addDogButton: {
+    fontSize: 19, 
+    color: 'white', 
+    justifyContent:'center', 
+    alignItems:'center',
+  },
+  editDogContainer: {
+    height:30, 
+    width: 65, 
+    overflow:'hidden', 
+    borderRadius:25, 
+    backgroundColor:'white', 
+    justifyContent:'center', 
+    alignItems:'center',
+  },
+  addDogContainer: {
+    height:30, 
+    width: 160, 
+    overflow:'hidden', 
+    borderRadius:25, 
+    backgroundColor: '#f44e64', 
+    justifyContent:'center', 
+    alignItems:'center',
+  },
+  logoutContainer: {
+    height:35, 
+    width: 250, 
+    overflow:'hidden', 
+    borderRadius:20, 
+    backgroundColor: 'white', 
+    justifyContent:'center', 
+    alignItems:'center',
+  },
+  logoutButton: {
+    fontSize: 18, 
+    color: '#92aefc', 
+    justifyContent:'center', 
+    alignItems:'center',
+  },
+  corgiImage: {
+    width: 235, 
+    height: 140,
+  },
+  listItemLines: {
+    borderTopWidth: 0, 
+    borderBottomWidth: 0,
+  }
 });
 
 const viewOwnerState = (store) => {
@@ -277,4 +345,4 @@ const viewOwnerDispatch = (dispatch) => {
   }
 };
 
-export default connect(viewOwnerState, viewOwnerDispatch)(viewOwnerProfile);
+export default connect(viewOwnerState, viewOwnerDispatch)(ViewOwnerProfile);
